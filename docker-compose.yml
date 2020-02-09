@@ -9,8 +9,7 @@ services:
     #env_file: web/venv
     environment:
       DEBUG: 'true'
-    command: ["sh", "-c", "pwd && tail -f /dev/null"]
-    #command: [ "python", "manage.py runserver 0.0.0.0:8000" ]
+    command: [ "python", "manage.py runserver 0.0.0.0:8000" ]
 
   #nginx:
   #  restart: always
