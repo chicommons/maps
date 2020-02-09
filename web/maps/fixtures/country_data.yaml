@@ -1,0 +1,1245 @@
+- model: address.country
+  pk: 250
+  fields:
+    name: Aruba
+    code: AW
+- model: address.country
+  pk: 251
+  fields:
+    name: Afghanistan
+    code: AF
+- model: address.country
+  pk: 252
+  fields:
+    name: Angola
+    code: AO
+- model: address.country
+  pk: 253
+  fields:
+    name: Anguilla
+    code: AI
+- model: address.country
+  pk: 254
+  fields:
+    name: "\xC5land Islands"
+    code: AX
+- model: address.country
+  pk: 255
+  fields:
+    name: Albania
+    code: AL
+- model: address.country
+  pk: 256
+  fields:
+    name: Andorra
+    code: AD
+- model: address.country
+  pk: 257
+  fields:
+    name: United Arab Emirates
+    code: AE
+- model: address.country
+  pk: 258
+  fields:
+    name: Argentina
+    code: AR
+- model: address.country
+  pk: 259
+  fields:
+    name: Armenia
+    code: AM
+- model: address.country
+  pk: 260
+  fields:
+    name: American Samoa
+    code: AS
+- model: address.country
+  pk: 261
+  fields:
+    name: Antarctica
+    code: AQ
+- model: address.country
+  pk: 262
+  fields:
+    name: French Southern Territories
+    code: TF
+- model: address.country
+  pk: 263
+  fields:
+    name: Antigua and Barbuda
+    code: AG
+- model: address.country
+  pk: 264
+  fields:
+    name: Australia
+    code: AU
+- model: address.country
+  pk: 265
+  fields:
+    name: Austria
+    code: AT
+- model: address.country
+  pk: 266
+  fields:
+    name: Azerbaijan
+    code: AZ
+- model: address.country
+  pk: 267
+  fields:
+    name: Burundi
+    code: BI
+- model: address.country
+  pk: 268
+  fields:
+    name: Belgium
+    code: BE
+- model: address.country
+  pk: 269
+  fields:
+    name: Benin
+    code: BJ
+- model: address.country
+  pk: 270
+  fields:
+    name: Bonaire, Sint Eustatius and Saba
+    code: BQ
+- model: address.country
+  pk: 271
+  fields:
+    name: Burkina Faso
+    code: BF
+- model: address.country
+  pk: 272
+  fields:
+    name: Bangladesh
+    code: BD
+- model: address.country
+  pk: 273
+  fields:
+    name: Bulgaria
+    code: BG
+- model: address.country
+  pk: 274
+  fields:
+    name: Bahrain
+    code: BH
+- model: address.country
+  pk: 275
+  fields:
+    name: Bahamas
+    code: BS
+- model: address.country
+  pk: 276
+  fields:
+    name: Bosnia and Herzegovina
+    code: BA
+- model: address.country
+  pk: 277
+  fields:
+    name: "Saint Barth\xE9lemy"
+    code: BL
+- model: address.country
+  pk: 278
+  fields:
+    name: Belarus
+    code: BY
+- model: address.country
+  pk: 279
+  fields:
+    name: Belize
+    code: BZ
+- model: address.country
+  pk: 280
+  fields:
+    name: Bermuda
+    code: BM
+- model: address.country
+  pk: 281
+  fields:
+    name: Bolivia, Plurinational State of
+    code: BO
+- model: address.country
+  pk: 282
+  fields:
+    name: Brazil
+    code: BR
+- model: address.country
+  pk: 283
+  fields:
+    name: Barbados
+    code: BB
+- model: address.country
+  pk: 284
+  fields:
+    name: Brunei Darussalam
+    code: BN
+- model: address.country
+  pk: 285
+  fields:
+    name: Bhutan
+    code: BT
+- model: address.country
+  pk: 286
+  fields:
+    name: Bouvet Island
+    code: BV
+- model: address.country
+  pk: 287
+  fields:
+    name: Botswana
+    code: BW
+- model: address.country
+  pk: 288
+  fields:
+    name: Central African Republic
+    code: CF
+- model: address.country
+  pk: 289
+  fields:
+    name: Canada
+    code: CA
+- model: address.country
+  pk: 290
+  fields:
+    name: Cocos (Keeling) Islands
+    code: CC
+- model: address.country
+  pk: 291
+  fields:
+    name: Switzerland
+    code: CH
+- model: address.country
+  pk: 292
+  fields:
+    name: Chile
+    code: CL
+- model: address.country
+  pk: 293
+  fields:
+    name: China
+    code: CN
+- model: address.country
+  pk: 294
+  fields:
+    name: "C\xF4te d'Ivoire"
+    code: CI
+- model: address.country
+  pk: 295
+  fields:
+    name: Cameroon
+    code: CM
+- model: address.country
+  pk: 296
+  fields:
+    name: Congo, The Democratic Republic of the
+    code: CD
+- model: address.country
+  pk: 297
+  fields:
+    name: Congo
+    code: CG
+- model: address.country
+  pk: 298
+  fields:
+    name: Cook Islands
+    code: CK
+- model: address.country
+  pk: 299
+  fields:
+    name: Colombia
+    code: CO
+- model: address.country
+  pk: 300
+  fields:
+    name: Comoros
+    code: KM
+- model: address.country
+  pk: 301
+  fields:
+    name: Cabo Verde
+    code: CV
+- model: address.country
+  pk: 302
+  fields:
+    name: Costa Rica
+    code: CR
+- model: address.country
+  pk: 303
+  fields:
+    name: Cuba
+    code: CU
+- model: address.country
+  pk: 304
+  fields:
+    name: "Cura\xE7ao"
+    code: CW
+- model: address.country
+  pk: 305
+  fields:
+    name: Christmas Island
+    code: CX
+- model: address.country
+  pk: 306
+  fields:
+    name: Cayman Islands
+    code: KY
+- model: address.country
+  pk: 307
+  fields:
+    name: Cyprus
+    code: CY
+- model: address.country
+  pk: 308
+  fields:
+    name: Czechia
+    code: CZ
+- model: address.country
+  pk: 309
+  fields:
+    name: Germany
+    code: DE
+- model: address.country
+  pk: 310
+  fields:
+    name: Djibouti
+    code: DJ
+- model: address.country
+  pk: 311
+  fields:
+    name: Dominica
+    code: DM
+- model: address.country
+  pk: 312
+  fields:
+    name: Denmark
+    code: DK
+- model: address.country
+  pk: 313
+  fields:
+    name: Dominican Republic
+    code: DO
+- model: address.country
+  pk: 314
+  fields:
+    name: Algeria
+    code: DZ
+- model: address.country
+  pk: 315
+  fields:
+    name: Ecuador
+    code: EC
+- model: address.country
+  pk: 316
+  fields:
+    name: Egypt
+    code: EG
+- model: address.country
+  pk: 317
+  fields:
+    name: Eritrea
+    code: ER
+- model: address.country
+  pk: 318
+  fields:
+    name: Western Sahara
+    code: EH
+- model: address.country
+  pk: 319
+  fields:
+    name: Spain
+    code: ES
+- model: address.country
+  pk: 320
+  fields:
+    name: Estonia
+    code: EE
+- model: address.country
+  pk: 321
+  fields:
+    name: Ethiopia
+    code: ET
+- model: address.country
+  pk: 322
+  fields:
+    name: Finland
+    code: FI
+- model: address.country
+  pk: 323
+  fields:
+    name: Fiji
+    code: FJ
+- model: address.country
+  pk: 324
+  fields:
+    name: Falkland Islands (Malvinas)
+    code: FK
+- model: address.country
+  pk: 325
+  fields:
+    name: France
+    code: FR
+- model: address.country
+  pk: 326
+  fields:
+    name: Faroe Islands
+    code: FO
+- model: address.country
+  pk: 327
+  fields:
+    name: Micronesia, Federated States of
+    code: FM
+- model: address.country
+  pk: 328
+  fields:
+    name: Gabon
+    code: GA
+- model: address.country
+  pk: 329
+  fields:
+    name: United Kingdom
+    code: GB
+- model: address.country
+  pk: 330
+  fields:
+    name: Georgia
+    code: GE
+- model: address.country
+  pk: 331
+  fields:
+    name: Guernsey
+    code: GG
+- model: address.country
+  pk: 332
+  fields:
+    name: Ghana
+    code: GH
+- model: address.country
+  pk: 333
+  fields:
+    name: Gibraltar
+    code: GI
+- model: address.country
+  pk: 334
+  fields:
+    name: Guinea
+    code: GN
+- model: address.country
+  pk: 335
+  fields:
+    name: Guadeloupe
+    code: GP
+- model: address.country
+  pk: 336
+  fields:
+    name: Gambia
+    code: GM
+- model: address.country
+  pk: 337
+  fields:
+    name: Guinea-Bissau
+    code: GW
+- model: address.country
+  pk: 338
+  fields:
+    name: Equatorial Guinea
+    code: GQ
+- model: address.country
+  pk: 339
+  fields:
+    name: Greece
+    code: GR
+- model: address.country
+  pk: 340
+  fields:
+    name: Grenada
+    code: GD
+- model: address.country
+  pk: 341
+  fields:
+    name: Greenland
+    code: GL
+- model: address.country
+  pk: 342
+  fields:
+    name: Guatemala
+    code: GT
+- model: address.country
+  pk: 343
+  fields:
+    name: French Guiana
+    code: GF
+- model: address.country
+  pk: 344
+  fields:
+    name: Guam
+    code: GU
+- model: address.country
+  pk: 345
+  fields:
+    name: Guyana
+    code: GY
+- model: address.country
+  pk: 346
+  fields:
+    name: Hong Kong
+    code: HK
+- model: address.country
+  pk: 347
+  fields:
+    name: Heard Island and McDonald Islands
+    code: HM
+- model: address.country
+  pk: 348
+  fields:
+    name: Honduras
+    code: HN
+- model: address.country
+  pk: 349
+  fields:
+    name: Croatia
+    code: HR
+- model: address.country
+  pk: 350
+  fields:
+    name: Haiti
+    code: HT
+- model: address.country
+  pk: 351
+  fields:
+    name: Hungary
+    code: HU
+- model: address.country
+  pk: 352
+  fields:
+    name: Indonesia
+    code: ID
+- model: address.country
+  pk: 353
+  fields:
+    name: Isle of Man
+    code: IM
+- model: address.country
+  pk: 354
+  fields:
+    name: India
+    code: IN
+- model: address.country
+  pk: 355
+  fields:
+    name: British Indian Ocean Territory
+    code: IO
+- model: address.country
+  pk: 356
+  fields:
+    name: Ireland
+    code: IE
+- model: address.country
+  pk: 357
+  fields:
+    name: Iran, Islamic Republic of
+    code: IR
+- model: address.country
+  pk: 358
+  fields:
+    name: Iraq
+    code: IQ
+- model: address.country
+  pk: 359
+  fields:
+    name: Iceland
+    code: IS
+- model: address.country
+  pk: 360
+  fields:
+    name: Israel
+    code: IL
+- model: address.country
+  pk: 361
+  fields:
+    name: Italy
+    code: IT
+- model: address.country
+  pk: 362
+  fields:
+    name: Jamaica
+    code: JM
+- model: address.country
+  pk: 363
+  fields:
+    name: Jersey
+    code: JE
+- model: address.country
+  pk: 364
+  fields:
+    name: Jordan
+    code: JO
+- model: address.country
+  pk: 365
+  fields:
+    name: Japan
+    code: JP
+- model: address.country
+  pk: 366
+  fields:
+    name: Kazakhstan
+    code: KZ
+- model: address.country
+  pk: 367
+  fields:
+    name: Kenya
+    code: KE
+- model: address.country
+  pk: 368
+  fields:
+    name: Kyrgyzstan
+    code: KG
+- model: address.country
+  pk: 369
+  fields:
+    name: Cambodia
+    code: KH
+- model: address.country
+  pk: 370
+  fields:
+    name: Kiribati
+    code: KI
+- model: address.country
+  pk: 371
+  fields:
+    name: Saint Kitts and Nevis
+    code: KN
+- model: address.country
+  pk: 372
+  fields:
+    name: Korea, Republic of
+    code: KR
+- model: address.country
+  pk: 373
+  fields:
+    name: Kuwait
+    code: KW
+- model: address.country
+  pk: 374
+  fields:
+    name: Lao People's Democratic Republic
+    code: LA
+- model: address.country
+  pk: 375
+  fields:
+    name: Lebanon
+    code: LB
+- model: address.country
+  pk: 376
+  fields:
+    name: Liberia
+    code: LR
+- model: address.country
+  pk: 377
+  fields:
+    name: Libya
+    code: LY
+- model: address.country
+  pk: 378
+  fields:
+    name: Saint Lucia
+    code: LC
+- model: address.country
+  pk: 379
+  fields:
+    name: Liechtenstein
+    code: LI
+- model: address.country
+  pk: 380
+  fields:
+    name: Sri Lanka
+    code: LK
+- model: address.country
+  pk: 381
+  fields:
+    name: Lesotho
+    code: LS
+- model: address.country
+  pk: 382
+  fields:
+    name: Lithuania
+    code: LT
+- model: address.country
+  pk: 383
+  fields:
+    name: Luxembourg
+    code: LU
+- model: address.country
+  pk: 384
+  fields:
+    name: Latvia
+    code: LV
+- model: address.country
+  pk: 385
+  fields:
+    name: Macao
+    code: MO
+- model: address.country
+  pk: 386
+  fields:
+    name: Saint Martin (French part)
+    code: MF
+- model: address.country
+  pk: 387
+  fields:
+    name: Morocco
+    code: MA
+- model: address.country
+  pk: 388
+  fields:
+    name: Monaco
+    code: MC
+- model: address.country
+  pk: 389
+  fields:
+    name: Moldova, Republic of
+    code: MD
+- model: address.country
+  pk: 390
+  fields:
+    name: Madagascar
+    code: MG
+- model: address.country
+  pk: 391
+  fields:
+    name: Maldives
+    code: MV
+- model: address.country
+  pk: 392
+  fields:
+    name: Mexico
+    code: MX
+- model: address.country
+  pk: 393
+  fields:
+    name: Marshall Islands
+    code: MH
+- model: address.country
+  pk: 394
+  fields:
+    name: North Macedonia
+    code: MK
+- model: address.country
+  pk: 395
+  fields:
+    name: Mali
+    code: ML
+- model: address.country
+  pk: 396
+  fields:
+    name: Malta
+    code: MT
+- model: address.country
+  pk: 397
+  fields:
+    name: Myanmar
+    code: MM
+- model: address.country
+  pk: 398
+  fields:
+    name: Montenegro
+    code: ME
+- model: address.country
+  pk: 399
+  fields:
+    name: Mongolia
+    code: MN
+- model: address.country
+  pk: 400
+  fields:
+    name: Northern Mariana Islands
+    code: MP
+- model: address.country
+  pk: 401
+  fields:
+    name: Mozambique
+    code: MZ
+- model: address.country
+  pk: 402
+  fields:
+    name: Mauritania
+    code: MR
+- model: address.country
+  pk: 403
+  fields:
+    name: Montserrat
+    code: MS
+- model: address.country
+  pk: 404
+  fields:
+    name: Martinique
+    code: MQ
+- model: address.country
+  pk: 405
+  fields:
+    name: Mauritius
+    code: MU
+- model: address.country
+  pk: 406
+  fields:
+    name: Malawi
+    code: MW
+- model: address.country
+  pk: 407
+  fields:
+    name: Malaysia
+    code: MY
+- model: address.country
+  pk: 408
+  fields:
+    name: Mayotte
+    code: YT
+- model: address.country
+  pk: 409
+  fields:
+    name: Namibia
+    code: NA
+- model: address.country
+  pk: 410
+  fields:
+    name: New Caledonia
+    code: NC
+- model: address.country
+  pk: 411
+  fields:
+    name: Niger
+    code: NE
+- model: address.country
+  pk: 412
+  fields:
+    name: Norfolk Island
+    code: NF
+- model: address.country
+  pk: 413
+  fields:
+    name: Nigeria
+    code: NG
+- model: address.country
+  pk: 414
+  fields:
+    name: Nicaragua
+    code: NI
+- model: address.country
+  pk: 415
+  fields:
+    name: Niue
+    code: NU
+- model: address.country
+  pk: 416
+  fields:
+    name: Netherlands
+    code: NL
+- model: address.country
+  pk: 417
+  fields:
+    name: Norway
+    code: 'NO'
+- model: address.country
+  pk: 418
+  fields:
+    name: Nepal
+    code: NP
+- model: address.country
+  pk: 419
+  fields:
+    name: Nauru
+    code: NR
+- model: address.country
+  pk: 420
+  fields:
+    name: New Zealand
+    code: NZ
+- model: address.country
+  pk: 421
+  fields:
+    name: Oman
+    code: OM
+- model: address.country
+  pk: 422
+  fields:
+    name: Pakistan
+    code: PK
+- model: address.country
+  pk: 423
+  fields:
+    name: Panama
+    code: PA
+- model: address.country
+  pk: 424
+  fields:
+    name: Pitcairn
+    code: PN
+- model: address.country
+  pk: 425
+  fields:
+    name: Peru
+    code: PE
+- model: address.country
+  pk: 426
+  fields:
+    name: Philippines
+    code: PH
+- model: address.country
+  pk: 427
+  fields:
+    name: Palau
+    code: PW
+- model: address.country
+  pk: 428
+  fields:
+    name: Papua New Guinea
+    code: PG
+- model: address.country
+  pk: 429
+  fields:
+    name: Poland
+    code: PL
+- model: address.country
+  pk: 430
+  fields:
+    name: Puerto Rico
+    code: PR
+- model: address.country
+  pk: 431
+  fields:
+    name: Korea, Democratic People's Republic of
+    code: KP
+- model: address.country
+  pk: 432
+  fields:
+    name: Portugal
+    code: PT
+- model: address.country
+  pk: 433
+  fields:
+    name: Paraguay
+    code: PY
+- model: address.country
+  pk: 434
+  fields:
+    name: Palestine, State of
+    code: PS
+- model: address.country
+  pk: 435
+  fields:
+    name: French Polynesia
+    code: PF
+- model: address.country
+  pk: 436
+  fields:
+    name: Qatar
+    code: QA
+- model: address.country
+  pk: 437
+  fields:
+    name: "R\xE9union"
+    code: RE
+- model: address.country
+  pk: 438
+  fields:
+    name: Romania
+    code: RO
+- model: address.country
+  pk: 439
+  fields:
+    name: Russian Federation
+    code: RU
+- model: address.country
+  pk: 440
+  fields:
+    name: Rwanda
+    code: RW
+- model: address.country
+  pk: 441
+  fields:
+    name: Saudi Arabia
+    code: SA
+- model: address.country
+  pk: 442
+  fields:
+    name: Sudan
+    code: SD
+- model: address.country
+  pk: 443
+  fields:
+    name: Senegal
+    code: SN
+- model: address.country
+  pk: 444
+  fields:
+    name: Singapore
+    code: SG
+- model: address.country
+  pk: 445
+  fields:
+    name: South Georgia and the South Sandwich Isl
+    code: GS
+- model: address.country
+  pk: 446
+  fields:
+    name: Saint Helena, Ascension and Tristan da C
+    code: SH
+- model: address.country
+  pk: 447
+  fields:
+    name: Svalbard and Jan Mayen
+    code: SJ
+- model: address.country
+  pk: 448
+  fields:
+    name: Solomon Islands
+    code: SB
+- model: address.country
+  pk: 449
+  fields:
+    name: Sierra Leone
+    code: SL
+- model: address.country
+  pk: 450
+  fields:
+    name: El Salvador
+    code: SV
+- model: address.country
+  pk: 451
+  fields:
+    name: San Marino
+    code: SM
+- model: address.country
+  pk: 452
+  fields:
+    name: Somalia
+    code: SO
+- model: address.country
+  pk: 453
+  fields:
+    name: Saint Pierre and Miquelon
+    code: PM
+- model: address.country
+  pk: 454
+  fields:
+    name: Serbia
+    code: RS
+- model: address.country
+  pk: 455
+  fields:
+    name: South Sudan
+    code: SS
+- model: address.country
+  pk: 456
+  fields:
+    name: Sao Tome and Principe
+    code: ST
+- model: address.country
+  pk: 457
+  fields:
+    name: Suriname
+    code: SR
+- model: address.country
+  pk: 458
+  fields:
+    name: Slovakia
+    code: SK
+- model: address.country
+  pk: 459
+  fields:
+    name: Slovenia
+    code: SI
+- model: address.country
+  pk: 460
+  fields:
+    name: Sweden
+    code: SE
+- model: address.country
+  pk: 461
+  fields:
+    name: Eswatini
+    code: SZ
+- model: address.country
+  pk: 462
+  fields:
+    name: Sint Maarten (Dutch part)
+    code: SX
+- model: address.country
+  pk: 463
+  fields:
+    name: Seychelles
+    code: SC
+- model: address.country
+  pk: 464
+  fields:
+    name: Syrian Arab Republic
+    code: SY
+- model: address.country
+  pk: 465
+  fields:
+    name: Turks and Caicos Islands
+    code: TC
+- model: address.country
+  pk: 466
+  fields:
+    name: Chad
+    code: TD
+- model: address.country
+  pk: 467
+  fields:
+    name: Togo
+    code: TG
+- model: address.country
+  pk: 468
+  fields:
+    name: Thailand
+    code: TH
+- model: address.country
+  pk: 469
+  fields:
+    name: Tajikistan
+    code: TJ
+- model: address.country
+  pk: 470
+  fields:
+    name: Tokelau
+    code: TK
+- model: address.country
+  pk: 471
+  fields:
+    name: Turkmenistan
+    code: TM
+- model: address.country
+  pk: 472
+  fields:
+    name: Timor-Leste
+    code: TL
+- model: address.country
+  pk: 473
+  fields:
+    name: Tonga
+    code: TO
+- model: address.country
+  pk: 474
+  fields:
+    name: Trinidad and Tobago
+    code: TT
+- model: address.country
+  pk: 475
+  fields:
+    name: Tunisia
+    code: TN
+- model: address.country
+  pk: 476
+  fields:
+    name: Turkey
+    code: TR
+- model: address.country
+  pk: 477
+  fields:
+    name: Tuvalu
+    code: TV
+- model: address.country
+  pk: 478
+  fields:
+    name: Taiwan, Province of China
+    code: TW
+- model: address.country
+  pk: 479
+  fields:
+    name: Tanzania, United Republic of
+    code: TZ
+- model: address.country
+  pk: 480
+  fields:
+    name: Uganda
+    code: UG
+- model: address.country
+  pk: 481
+  fields:
+    name: Ukraine
+    code: UA
+- model: address.country
+  pk: 482
+  fields:
+    name: United States Minor Outlying Islands
+    code: UM
+- model: address.country
+  pk: 483
+  fields:
+    name: Uruguay
+    code: UY
+- model: address.country
+  pk: 484
+  fields:
+    name: United States
+    code: US
+- model: address.country
+  pk: 485
+  fields:
+    name: Uzbekistan
+    code: UZ
+- model: address.country
+  pk: 486
+  fields:
+    name: Holy See (Vatican City State)
+    code: VA
+- model: address.country
+  pk: 487
+  fields:
+    name: Saint Vincent and the Grenadines
+    code: VC
+- model: address.country
+  pk: 488
+  fields:
+    name: Venezuela, Bolivarian Republic of
+    code: VE
+- model: address.country
+  pk: 489
+  fields:
+    name: Virgin Islands, British
+    code: VG
+- model: address.country
+  pk: 490
+  fields:
+    name: Virgin Islands, U.S.
+    code: VI
+- model: address.country
+  pk: 491
+  fields:
+    name: Viet Nam
+    code: VN
+- model: address.country
+  pk: 492
+  fields:
+    name: Vanuatu
+    code: VU
+- model: address.country
+  pk: 493
+  fields:
+    name: Wallis and Futuna
+    code: WF
+- model: address.country
+  pk: 494
+  fields:
+    name: Samoa
+    code: WS
+- model: address.country
+  pk: 495
+  fields:
+    name: Yemen
+    code: YE
+- model: address.country
+  pk: 496
+  fields:
+    name: South Africa
+    code: ZA
+- model: address.country
+  pk: 497
+  fields:
+    name: Zambia
+    code: ZM
+- model: address.country
+  pk: 498
+  fields:
+    name: Zimbabwe
+    code: ZW
