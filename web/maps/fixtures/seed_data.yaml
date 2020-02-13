@@ -4,7 +4,8 @@
   fields:
     name: "Chicago"
     postal_code: ""
-    state: ['IL', 'United States']
+    state:
+    - ['IL', 'United States']
 - model: address.locality
   pk: 2
   fields:
