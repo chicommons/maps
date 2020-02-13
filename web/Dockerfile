@@ -12,6 +12,7 @@ RUN mkdir -p /app/
 
 WORKDIR /app/
 
+RUN pip3 freeze > requirements.txt
 COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
 

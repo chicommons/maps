@@ -6,20 +6,19 @@ services:
     build: ./web
     ports:           # to access the container from outside
       - "8000:8000"
-    #env_file: web/venv
     environment:
       DEBUG: 'true'
-    command: [ "python", "manage.py runserver 0.0.0.0:8000" ]
+    command: /usr/local/bin/gunicorn maps.wsgi:application -w 2 -b :8000
 
-  #nginx:
-  #  restart: always
-  #  build: ./nginx/
-  #  ports:
-  #    - "80:80"
-  #  volumes:
-  #    - web-static:/www/static
-  #  links:
-  #    - web:web
+  apache:
+    restart: always
+    build: ./apache/
+    ports:
+      - "80:80"
+    #volumes:
+    #  - web-static:/www/static
+    links:
+      - web:web
 
   mysql:
     restart: always
