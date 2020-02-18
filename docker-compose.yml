@@ -1,26 +1,6 @@
 version: '3'
 
 services:
-  web:
-    restart: always
-    build: ./web
-    ports:           # to access the container from outside
-      - "8000:8000"
-    env_file: .env
-    environment:
-      DEBUG: 'true'
-    command: /usr/local/bin/gunicorn maps.wsgi:application -w 2 -b :8000
-
-  apache:
-    restart: always
-    build: ./apache/
-    ports:
-      - "80:80"
-    #volumes:
-    #  - web-static:/www/static
-    links:
-      - web:web
-
   mysql:
     restart: always
     image: mysql:5.7
@@ -36,6 +16,28 @@ services:
       - "3406:3406"
     volumes:
       - my-db:/var/lib/mysql
+
+  web:
+    restart: always
+    build: ./web
+    ports:           # to access the container from outside
+      - "8000:8000"
+    env_file: .env
+    environment:
+      DEBUG: 'true'
+    command: /usr/local/bin/gunicorn maps.wsgi:application -w 2 -b :8000
+    depends_on:
+      - mysql
+
+  apache:
+    restart: always
+    build: ./apache/
+    ports:
+      - "80:80"
+    #volumes:
+    #  - web-static:/www/static
+    links:
+      - web:web
 
 volumes:
   my-db:

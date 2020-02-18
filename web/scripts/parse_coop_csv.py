@@ -27,7 +27,7 @@ def get_address_pks(file_path, city_pks):
         parts = street.split(" ") if street is not None else [" "]
         num = parts[0]
         route = parts[-1]
-        city = row['city'].strip().encode("utf-8", 'ignore').decode("utf-8")
+        city = row['city'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
         postal_code = row['zipcode'].strip().encode("utf-8", 'ignore').decode("utf-8")
         state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
         try:
@@ -43,7 +43,7 @@ def get_address_pks(file_path, city_pks):
                 #print("    formatted: ",dump(street, Dumper=Dumper), sep='')
                 print("    raw: ",street, sep='')
                 print("    formatted: ",street, sep='')
-                city_pk = city_pks[tuple([city, postal_code, state_id.upper()])]
+                city_pk = city_pks[tuple([city, postal_code, state_id.title()])]
                 print("    locality:", city_pk)
                 #print("      name:",city)
                 #print("      postal_code:",postal_code)
@@ -59,39 +59,24 @@ def get_address_pks(file_path, city_pks):
 
 
 def get_city_pks(file_path):
-    #input_file = csv.DictReader(open(file_path))
-    #f = itemgetter("city", "zipcode", "st")
-    #cities = list(
-    #    map(
-    #        lambda set_x: 
-    #            set(map(lambda x: x.encode("utf-8", 'ignore').decode("utf-8"), set_x)),
-    #        filter(None, [set(f(d)) for d in input_file])
-    #    )
-    #)
     input_file = csv.DictReader(open(file_path))
     upper = lambda k: lambda d: {**d, k: d[k].upper()}
     res = map(upper('st'), input_file)
     #print(res)
-    cities = {tuple(d[i].strip() for i in ["city", "zipcode", "st"]) for d in res}
-    #print("CITIES",cities,"\n\n\n")
+    cities = {tuple(d[i].strip().title() for i in ["city", "zipcode", "st"]) for d in res}
     i=1
     cities_pks = dict()
     country = "United States"
     for city_set in cities:
         city = list(city_set)[0]
         zipcode = list(city_set)[1]
-        state_id = list(city_set)[2]
+        state_id = list(city_set)[2].upper() 
         print("- model: address.locality")
         print("  pk:",i)
         print("  fields:")
         print("    name: \"",city,"\"", sep='')
         print("    postal_code: \"",zipcode,"\"", sep='')
         print("    state: ['", state_id, "', '", country, "']", sep='')
-        #print("      name:", state_id) 
-        #print("      country:")
-        #print("      -", country)
-        #print("    state_id:", 1)
-        #print("    state_id: \"",state_id,"\"", sep='')
         cities_pks[tuple(city_set)] = i 
         i = i + 1
     return cities_pks
@@ -124,6 +109,7 @@ for row in input_file:
         phone = row['phone_public'].strip().encode("utf-8", 'ignore').decode("utf-8")
         email = row['email'].strip().encode("utf-8", 'ignore').decode("utf-8")
         web_site = row['website'].strip().encode("utf-8", 'ignore').decode("utf-8")
+        print("web site:", web_site)
         lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
         lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
         address_pk = address_pks.get(tuple([lat, lon])) 
