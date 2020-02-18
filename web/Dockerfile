@@ -12,9 +12,12 @@ RUN mkdir -p /app/
 
 WORKDIR /app/
 
-RUN pip3 freeze > requirements.txt
 COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
 
+COPY entrypoint.sh /app/
 COPY . /app/ 
+RUN ["chmod", "+x", "/app/entrypoint.sh"]
+
+ENTRYPOINT ["/app/entrypoint.sh"]
 

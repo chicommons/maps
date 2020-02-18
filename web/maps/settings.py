@@ -80,15 +80,19 @@ WSGI_APPLICATION = 'maps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
-        'NAME': 'maps_data',
-        'USER': 'chicommons',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '3306',
-#        'PORT': '3406',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASS'],
+        'HOST': os.environ['DB_SERVICE'],
+        'PORT': os.environ['DB_PORT']
+        #'OPTIONS': {
+        #    'sql_mode': 'traditional',
+        #},
+        #'NAME': 'maps_data',
+        #'USER': 'chicommons',
+        #'PASSWORD': 'password',
+        #'HOST': 'mysql',
+        #'PORT': '3406',
     }
 }
 

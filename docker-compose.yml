@@ -6,6 +6,7 @@ services:
     build: ./web
     ports:           # to access the container from outside
       - "8000:8000"
+    env_file: .env
     environment:
       DEBUG: 'true'
     command: /usr/local/bin/gunicorn maps.wsgi:application -w 2 -b :8000
