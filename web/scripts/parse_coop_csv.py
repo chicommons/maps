@@ -62,7 +62,6 @@ def get_city_pks(file_path):
     input_file = csv.DictReader(open(file_path))
     upper = lambda k: lambda d: {**d, k: d[k].upper()}
     res = map(upper('st'), input_file)
-    #print(res)
     cities = {tuple(d[i].strip().title() for i in ["city", "zipcode", "st"]) for d in res}
     i=1
     cities_pks = dict()
@@ -108,8 +107,8 @@ for row in input_file:
         state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
         phone = row['phone_public'].strip().encode("utf-8", 'ignore').decode("utf-8")
         email = row['email'].strip().encode("utf-8", 'ignore').decode("utf-8")
-        web_site = row['website'].strip().encode("utf-8", 'ignore').decode("utf-8")
-        print("web site:", web_site)
+        #web_site = row['website'].strip().encode("utf-8", 'ignore').decode("utf-8")
+        web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
         lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
         lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
         address_pk = address_pks.get(tuple([lat, lon])) 
