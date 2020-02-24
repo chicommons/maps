@@ -3,39 +3,24 @@ from maps.models import Coop, CoopType
 from address.models import Address, AddressField, Locality, State, Country 
 
 
-class CoopSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Coop
-        fields = ['id', 'name', 'type', 'address', 'enabled', 'phone', 'email', 'web_site']
+class CoopTypeField(serializers.PrimaryKeyRelatedField):
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['type'] = CoopTypeSerializer(instance.type).data
-        rep['address'] = AddressSerializer(instance.address).data
-        return rep
+    def to_internal_value(self, data):
+        if type(data) == dict:
+            cooptype, created = CoopType.objects.get_or_create(**data)
+            # Replace the dict with the ID of the newly obtained object
+            data = cooptype.pk
+        return super().to_internal_value(data)
 
-    def create(self, validated_data):
-        """
-        Create and return a new `Snippet` instance, given the validated data.
-        """
-        type = validated_data.pop('type')
-        coop_type_instance = CoopType.objects.get(name=type['name'])
-        print("coop type:",coop_type_instance)
-        return Coop.objects.create(type=coop_type_instance, **validated_data)
 
-    def update(self, instance, validated_data):
-        """
-        Update and return an existing `Coop` instance, given the validated data.
-        """
-        instance.name = validated_data.get('name', instance.name)
-        instance.type = validated_data.get('type', instance.type)
-        instance.address = validated_data.get('address', instance.address)
-        instance.enabled = validated_data.get('enabled', instance.enabled)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.email = validated_data.get('email', instance.email)
-        instance.web_site = validated_data.get('web_site', instance.web_site)
-        instance.save()
-        return instance
+class AddressTypeField(serializers.PrimaryKeyRelatedField):
+
+    def to_internal_value(self, data):
+        if type(data) == dict:
+            address, created = CoopType.objects.get_or_create(**data)
+            # Replace the dict with the ID of the newly obtained object
+            data = cooptype.pk
+        return super().to_internal_value(data)
 
 
 class CoopTypeSerializer(serializers.ModelSerializer):
@@ -56,6 +41,53 @@ class CoopTypeSerializer(serializers.ModelSerializer):
         instance.name = validated_data.get('name', instance.name)
         instance.save()
         return instance
+
+
+class CoopSerializer(serializers.ModelSerializer):
+    type = CoopTypeSerializer()  # Change 1
+
+    class Meta:
+        model = Coop
+        fields = ['id', 'name', 'type', 'address', 'enabled', 'phone', 'email', 'web_site']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        # Change 4
+
+        # rep['type'] = CoopTypeSerializer(instance.type).data # comment this line.
+        # since we defined a `CoopTypeSerializer` as "nested serializer" in in this class
+        # we don't need this here
+
+        rep['address'] = AddressSerializer(instance.address).data
+        return rep
+
+    def get_coop_type_instance_from_validated_data(self, validated_date):
+        """
+        Retrieving CoopType instance from the validated_data
+        """
+        coop_type = validated_data.pop('type')
+        return CoopType.objects.get(name=coop_type['name'])
+
+    def create(self, validated_data):
+        coop_type_instance = self.get_coop_type_instance_from_validated_data(validated_data)  # Change 2
+        return Coop.objects.create(type=coop_type_instance, **validated_data)  # Change 2
+
+    def update(self, instance, validated_data):
+        # Change 3 [starts]
+        try:
+            instance.type = self.get_coop_type_instance_from_validated_data(validated_data)
+        except KeyError:
+            pass
+        # Change 3 [ends]
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.address = validated_data.get('address', instance.address)
+        instance.enabled = validated_data.get('enabled', instance.enabled)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.email = validated_data.get('email', instance.email)
+        instance.web_site = validated_data.get('web_site', instance.web_site)
+        instance.web_site = validated_data.get('web_site', instance.web_site)
+        instance.save()
 
 
 class AddressSerializer(serializers.ModelSerializer):
