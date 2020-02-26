@@ -1,5 +1,6 @@
 from maps.models import Coop
-from maps.serializers import CoopSerializer
+from address.models import State, Country, Locality
+from maps.serializers import CoopSerializer, CountrySerializer, StateSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -50,5 +51,31 @@ class CoopDetail(APIView):
         coop = self.get_object(pk)
         coop.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CountryList(APIView):
+    """
+    List all countries
+    """
+    def get(self, request, format=None):
+        countries = Country.objects.all()
+        serializer = CountrySerializer(countries, many=True)
+        return Response(serializer.data)
+
+
+class StateList(APIView):
+    """
+    List all states based on country 
+    """
+    def get_object(self, pk):
+        try:
+            return State.objects.filter(country=pk)
+        except Coop.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        states = State.objects.filter(country=pk)
+        serializer = StateSerializer(states, many=True)
+        return Response(serializer.data)
 
 

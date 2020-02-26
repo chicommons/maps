@@ -33,7 +33,7 @@ services:
     restart: always
     build: ./apache/
     ports:
-      - "80:80"
+      - "9090:80"
     #volumes:
     #  - web-static:/www/static
     links:

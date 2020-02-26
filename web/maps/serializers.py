@@ -5,6 +5,8 @@ from address.models import Address, AddressField, Locality, State, Country
 
 class CoopTypeField(serializers.PrimaryKeyRelatedField):
 
+    queryset = CoopType.objects
+
     def to_internal_value(self, data):
         if type(data) == dict:
             cooptype, created = CoopType.objects.get_or_create(**data)
@@ -15,11 +17,28 @@ class CoopTypeField(serializers.PrimaryKeyRelatedField):
 
 class AddressTypeField(serializers.PrimaryKeyRelatedField):
 
+    queryset = Address.objects
+
     def to_internal_value(self, data):
         if type(data) == dict:
-            address, created = CoopType.objects.get_or_create(**data)
+            locality = data['locality']
+            locality, created = Locality.objects.get_or_create(**locality)
+            data['locality'] = locality
+            address = Address.objects.create(**data)
             # Replace the dict with the ID of the newly obtained object
-            data = cooptype.pk
+            data = address.pk
+        return super().to_internal_value(data)
+
+
+class LocalityTypeField(serializers.PrimaryKeyRelatedField):
+
+    queryset = Locality.objects
+
+    def to_internal_value(self, data):
+        if type(data) == dict:
+            locality, created = Locality.objects.get_or_create(**data)
+            # Replace the dict with the ID of the newly obtained object
+            data = locality.pk
         return super().to_internal_value(data)
 
 
@@ -44,7 +63,8 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class CoopSerializer(serializers.ModelSerializer):
-    type = CoopTypeSerializer()  # Change 1
+    type = CoopTypeField()
+    address = AddressTypeField()
 
     class Meta:
         model = Coop
@@ -52,35 +72,22 @@ class CoopSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        # Change 4
-
-        # rep['type'] = CoopTypeSerializer(instance.type).data # comment this line.
-        # since we defined a `CoopTypeSerializer` as "nested serializer" in in this class
-        # we don't need this here
-
+        rep['type'] = CoopTypeSerializer(instance.type).data
         rep['address'] = AddressSerializer(instance.address).data
         return rep
 
-    def get_coop_type_instance_from_validated_data(self, validated_date):
-        """
-        Retrieving CoopType instance from the validated_data
-        """
-        coop_type = validated_data.pop('type')
-        return CoopType.objects.get(name=coop_type['name'])
-
     def create(self, validated_data):
-        coop_type_instance = self.get_coop_type_instance_from_validated_data(validated_data)  # Change 2
-        return Coop.objects.create(type=coop_type_instance, **validated_data)  # Change 2
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Coop.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        # Change 3 [starts]
-        try:
-            instance.type = self.get_coop_type_instance_from_validated_data(validated_data)
-        except KeyError:
-            pass
-        # Change 3 [ends]
-
+        """
+        Update and return an existing `Coop` instance, given the validated data.
+        """
         instance.name = validated_data.get('name', instance.name)
+        instance.type = validated_data.get('type', instance.type)
         instance.address = validated_data.get('address', instance.address)
         instance.enabled = validated_data.get('enabled', instance.enabled)
         instance.phone = validated_data.get('phone', instance.phone)
@@ -88,9 +95,12 @@ class CoopSerializer(serializers.ModelSerializer):
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.save()
+        return instance
 
 
 class AddressSerializer(serializers.ModelSerializer):
+    locality = LocalityTypeField()
+
     class Meta:
         model = Address
         fields = ['id', 'street_number', 'route', 'raw', 'formatted', 'latitude', 'longitude', 'locality']
@@ -104,7 +114,7 @@ class AddressSerializer(serializers.ModelSerializer):
         """
         Create and return a new `AddressField` instance, given the validated data.
         """
-        return AddressField.objects.create(**validated_data)
+        return AddressTypeField.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """
@@ -128,7 +138,6 @@ class LocalitySerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['state'] = StateSerializer(instance.state).data
         return rep
 
     def create(self, validated_data):
@@ -163,5 +172,9 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ['id', 'name', 'code']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        return rep
 
 
