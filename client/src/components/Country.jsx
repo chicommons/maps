@@ -8,7 +8,7 @@ class Country extends React.Component {
     render () {
         let countries = this.props.options;
         let optionItems = countries.map((country) =>
-                <option value={country.id}>{country.name}</option>
+                <option key={country.id} value={country.id}>{country.name}</option>
             );
 
         return (

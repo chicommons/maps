@@ -16,7 +16,9 @@ class FormContainer extends Component {
       provinces: [],
       newCoop: {
         name: '',
-        type: '',
+        type: {
+          name: ''
+        },
         address: {
           street: '',
           city: '',
@@ -28,9 +30,6 @@ class FormContainer extends Component {
         phone: '',
         web_site: '' 
       },
-
-      genderOptions: ['Male', 'Female', 'Others'],
-      skillOptions: ['Programming', 'Development', 'Design', 'Testing']
 
     }
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -61,9 +60,11 @@ class FormContainer extends Component {
     // Logic for resetting the form
   }
   handleInput(e) {
-       let value = e.target.value;
-       let name = e.target.name;
-   this.setState( prevState => ({ newCoop : 
+    let value = e.target.value;
+    let name = e.target.name;
+    console.log("value:" + value);
+    console.log("name:" + name);
+    this.setState( prevState => ({ newCoop : 
         {...prevState.newCoop, [name]: value
         }
       }), () => console.log(this.state.newCoop))
@@ -85,7 +86,7 @@ class FormContainer extends Component {
             <Input inputType={'text'}
                    title= {'Type'} 
                    name= {'type'}
-                   value={this.state.newCoop.type} 
+                   value={this.state.newCoop.type.name} 
                    placeholder = {'Enter cooperative type'}
                    handleChange = {this.handleInput}
                    
@@ -120,7 +121,7 @@ class FormContainer extends Component {
           <Province title={'State'}
                   name={'state'}
                   options = {this.state.provinces} 
-                  value = {this.state.newCoop.address.state}
+                  value = {this.state.newCoop.address.state.id}
                   placeholder = {'Select State'}
                   handleChange = {this.handleInput}
                   /> {/* State Selection */}
