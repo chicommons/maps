@@ -41,7 +41,21 @@ class FormContainer extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let coopData = this.state.newCoop;
+    let coopData = { 
+      name: this.state.newCoop.name, 
+      type: {
+        name: this.state.newCoop.type
+      },
+      address: {
+        street: this.state.newCoop.address.street,
+        city: this.state.newCoop.address.city,
+        postal_code: this.state.newCoop.address.postal_code,
+        state: this.state.newCoop.address.state,
+      },
+      email: this.state.newCoop.email, 
+      phone: this.state.newCoop.phone, 
+      web_site: this.state.newCoop.web_site
+    }; 
 
     fetch('/coops/',{
         method: "POST",
@@ -60,14 +74,23 @@ class FormContainer extends Component {
     // Logic for resetting the form
   }
   handleInput(e) {
+    let self=this
     let value = e.target.value;
-    let name = e.target.name;
     console.log("value:" + value);
-    console.log("name:" + name);
-    this.setState( prevState => ({ newCoop : 
-        {...prevState.newCoop, [name]: value
-        }
-      }), () => console.log(this.state.newCoop))
+    let name = e.target.name;
+    //update State
+    this.setValue(self.state.newCoop,name,value)
+  }
+
+  setValue = (obj,is, value) => {
+       if (typeof is == 'string')
+         return this.setValue(obj,is.split('.'), value);
+       else if (is.length === 1 && value!==undefined)
+         return this.setState({obj: obj[is[0]] = value});
+       else if (is.length === 0)
+         return obj;
+       else
+         return this.setValue(obj[is[0]],is.slice(1), value);
   }
 
   render() {
