@@ -7,11 +7,14 @@ import Province from '../components/Province';
 import Button from '../components/Button'
 
 class FormContainer extends Component {  
+  statics: {
+    DEFAULT_COUNTRY: 484;
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      defaultCountry: 484,
       countries: [],
       provinces: [],
       newCoop: {
@@ -20,12 +23,15 @@ class FormContainer extends Component {
           name: ''
         },
         address: {
-          street: '',
-          city: '',
-          postal_code: '',
-          country: '',
-          state: '',
+          formatted: '',
+          locality: {
+            name: '',
+            postal_code: '',
+            state: ''
+          },
+          country: 484, //FormContainer.DEFAULT_COUNTRY,
         },
+        enabled: true,
         email: '',
         phone: '',
         web_site: '' 
@@ -41,25 +47,10 @@ class FormContainer extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let coopData = { 
-      name: this.state.newCoop.name, 
-      type: {
-        name: this.state.newCoop.type
-      },
-      address: {
-        street: this.state.newCoop.address.street,
-        city: this.state.newCoop.address.city,
-        postal_code: this.state.newCoop.address.postal_code,
-        state: this.state.newCoop.address.state,
-      },
-      email: this.state.newCoop.email, 
-      phone: this.state.newCoop.phone, 
-      web_site: this.state.newCoop.web_site
-    }; 
 
-    fetch('/coops/',{
+    fetch('http://localhost:9090/coops/',{
         method: "POST",
-        body: JSON.stringify(coopData),
+        body: JSON.stringify(this.state.newCoop),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -108,7 +99,7 @@ class FormContainer extends Component {
  
             <Input inputType={'text'}
                    title= {'Type'} 
-                   name= {'type'}
+                   name= {'type.name'}
                    value={this.state.newCoop.type.name} 
                    placeholder = {'Enter cooperative type'}
                    handleChange = {this.handleInput}
@@ -117,8 +108,8 @@ class FormContainer extends Component {
  
             <Input inputType={'text'}
                    title= {'Street'} 
-                   name= {'street'}
-                   value={this.state.newCoop.address.street} 
+                   name= {'address.formatted'}
+                   value={this.state.newCoop.address.formatted} 
                    placeholder = {'Enter address street'}
                    handleChange = {this.handleInput}
                    
@@ -126,33 +117,33 @@ class FormContainer extends Component {
  
             <Input inputType={'text'}
                    title= {'City'} 
-                   name= {'city'}
-                   value={this.state.newCoop.address.city} 
+                   name= {'address.locality.name'}
+                   value={this.state.newCoop.address.locality.name} 
                    placeholder = {'Enter address city'}
                    handleChange = {this.handleInput}
                    
                    /> {/* Address city of the cooperative */}
         
           <Country title={'Country'}
-                  name={'country'}
+                  name={'address.country'}
                   options = {this.state.countries} 
-                  value = {this.state.defaultCountry}
+                  value = {this.state.newCoop.address.country}
                   placeholder = {'Select Country'}
                   handleChange = {this.handleInput}
                   /> {/* Country Selection */}
 
           <Province title={'State'}
-                  name={'state'}
+                  name={'address.locality.state'}
                   options = {this.state.provinces} 
-                  value = {this.state.newCoop.address.state.id}
+                  value = {this.state.newCoop.address.locality.state}
                   placeholder = {'Select State'}
                   handleChange = {this.handleInput}
                   /> {/* State Selection */}
 
           <Input inputType={'text'}
                    title= {'Postal Code'} 
-                   name= {'postal_code'}
-                   value={this.state.newCoop.address.postal_code} 
+                   name= {'address.locality.postal_code'}
+                   value={this.state.newCoop.address.locality.postal_code} 
                    placeholder = {'Enter postal code'}
                    handleChange = {this.handleInput}
                    
@@ -222,7 +213,8 @@ class FormContainer extends Component {
         });
     });
     // Get initial provinces (states) 
-    fetch('http://localhost:9090/states/' + this.state.defaultCountry + '/')
+    //fetch('http://localhost:9090/states/' + this.state.newCoop.address.country + '/')
+    fetch('http://localhost:9090/states/484/')
         .then(response => {
             return response.json();
         }).then(data => {
