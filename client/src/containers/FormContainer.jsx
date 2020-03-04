@@ -47,6 +47,8 @@ class FormContainer extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
+    const NC = this.state.newCoop;
+    delete NC.address.country;
 
     fetch('http://localhost:9090/coops/',{
         method: "POST",
