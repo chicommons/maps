@@ -10,10 +10,10 @@ docker-compose up
 
 Visit http://localhost:9090/coops/1/ in a browser and verify something appears.
 
-To get the client running locally, run 
+To get the client running locally, in a different terminal window, run 
 
 ```
-cd client
+cd maps/client
 npm start
 ```
 
