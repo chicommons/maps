@@ -50,7 +50,7 @@ class FormContainer extends Component {
     const NC = this.state.newCoop;
     delete NC.address.country;
 
-    fetch('http://localhost:9090/coops/',{
+    fetch('/coops/',{
         method: "POST",
         body: JSON.stringify(this.state.newCoop),
         headers: {
@@ -201,7 +201,7 @@ class FormContainer extends Component {
     let initialCountries = [];
     let initialProvinces = [];
     // Get initial countries 
-    fetch('http://localhost:9090/countries/')
+    fetch('/countries/')
         .then(response => {
             return response.json();
         }).then(data => {
@@ -215,8 +215,7 @@ class FormContainer extends Component {
         });
     });
     // Get initial provinces (states) 
-    //fetch('http://localhost:9090/states/' + this.state.newCoop.address.country + '/')
-    fetch('http://localhost:9090/states/484/')
+    fetch('/states/484/')
         .then(response => {
             return response.json();
         }).then(data => {

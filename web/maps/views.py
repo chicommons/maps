@@ -5,6 +5,30 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+import csv
+from django.http import HttpResponse
+
+
+def data(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['name','address','city','postal code','type','website','lon','lat'])
+    type = request.GET.get("type", -1)
+    contains = request.GET.get("contains", -1)
+    if type:
+        coops = Coop.objects.get_by_type(type)
+    else if contains:
+        coops = Coop.objects.contains(contains.split(","))
+
+    for coop in coops:
+        postal_code = coop.address.locality.postal_code
+        city = coop.address.locality.name + ", " + coop.address.locality.state.code + " " + postal_code 
+        writer.writerow([coop.name, coop.address.formatted, city, postal_code, coop.type.name, coop.web_site, coop.address.latitude, coop.address.longitude])
+
+    return response
 
 
 class CoopList(APIView):

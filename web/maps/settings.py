@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'maps',
+    'phonenumber_field',
     'address',
     'django_extensions',
 ]
@@ -136,3 +137,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Configuration for phone numbers.
+PHONENUMBER_DB_FORMAT="RFC3966"
+#PHONENUMBER_DEFAULT_REGION='US'
+ 

@@ -25,7 +25,7 @@ services:
     env_file: .env
     environment:
       DEBUG: 'true'
-    command: /usr/local/bin/gunicorn maps.wsgi:application -w 2 -b :8000
+    command: /usr/local/bin/gunicorn maps.wsgi:application --reload -w 2 -b :8000
     depends_on:
       - mysql
 

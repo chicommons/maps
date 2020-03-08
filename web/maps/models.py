@@ -20,7 +20,22 @@ class CoopType(models.Model):
         unique_together = ("name",)
 
 
+class CoopManager(models.Manager):
+    # Look up by coop type
+    def get_by_type(self, type):
+        qset = Coop.objects.filter(type__name=type)
+        return qset
+
+    # Meant to look up coops case-insensitively by part of a type
+    def contains_type(self, types_arr):
+        queryset = Coop.objects.all()
+        for type in types_arr:
+            queryset = queryset.filter(type__name__icontains=type)
+        return queryset
+
+
 class Coop(models.Model):
+    objects = CoopManager()
     name = models.CharField(max_length=250, null=False)
     type = models.ForeignKey(CoopType, on_delete=None) 
     address = AddressField(on_delete=models.CASCADE)
