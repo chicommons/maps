@@ -50,9 +50,9 @@ def country_get_by_natural_key(self, name):
 Country.add_to_class("get_by_natural_key",country_get_by_natural_key)
 
 class StateCustomManager(models.Manager):
-    def get_by_natural_key(self, state_name, country):
+    def get_by_natural_key(self, code, country):
         country = Country.objects.get_or_create(name=country)[0]
-        return State.objects.get_or_create(name=state_name, country=country)[0]
+        return State.objects.get_or_create(code=code, country=country)[0]
 
 setattr(State._meta, 'default_manager', StateCustomManager())
 

@@ -20,7 +20,7 @@ def data(request):
     contains = request.GET.get("contains", -1)
     if type:
         coops = Coop.objects.get_by_type(type)
-    else if contains:
+    elif contains:
         coops = Coop.objects.contains(contains.split(","))
 
     for coop in coops:

@@ -9,5 +9,6 @@ class Command(BaseCommand):
         if not Country.objects.exists():
             self.stdout.write('Seeding initial data')
             call_command('loaddata', 'maps/fixtures/country_data.yaml')
+            call_command('loaddata', 'maps/fixtures/state_data.yaml')
             call_command('loaddata', 'maps/fixtures/seed_data.yaml')
 

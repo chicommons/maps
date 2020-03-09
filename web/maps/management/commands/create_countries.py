@@ -1,15 +1,20 @@
+import pycountry
+from django.core.management.base import BaseCommand, CommandError
+
 from address.models import Country
-from pycountry import countries
-from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
-    help = 'Initialize Country model'
+    help = "Populates address.Country with data from pycountry."
 
-    def handle(self, *args, **kwargs):
-        create_countries = [
-            Country(name=country.name, code=country.alpha_2)
-            for country in countries
+    def handle(self, *args, **options):
+        countries = [
+            Country(
+                code=country.alpha_2,
+                name=country.name[:40],  # NOTE - concat to 40 chars because of limit on the model field
+            )
+            for country in pycountry.countries
         ]
-        Country.objects.bulk_create(create_countries)
-        self.stdout.write(f'Created {len(countries)} countries.\n')
+
+        Country.objects.bulk_create(countries)
+        self.stdout.write("Successfully added %s countries." % len(countries))
 
