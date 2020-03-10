@@ -13,9 +13,10 @@ services:
       # Password for root access
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "3406:3406"
+      - "3406:3306"
     volumes:
       - my-db:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   web:
     restart: always
