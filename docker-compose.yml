@@ -27,6 +27,8 @@ services:
     environment:
       DEBUG: 'true'
     command: /usr/local/bin/gunicorn maps.wsgi:application --reload -w 2 -b :8000
+    #volumes:
+    #  - .:/app/
     depends_on:
       - mysql
 

@@ -1,3 +1,5 @@
+# This script is used to generate the countries.yml fixtures file.  You should never need
+# to execute this script.
 import pycountry
 from django.core.management.base import BaseCommand, CommandError
 

@@ -1,3 +1,5 @@
+# This script is used to create the states.yml file.  You should never need to execute
+# this script.
 from address.models import Country, State
 from pycountry import countries, subdivisions
 from django.core.management.base import BaseCommand

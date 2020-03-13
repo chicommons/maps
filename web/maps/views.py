@@ -16,12 +16,12 @@ def data(request):
 
     writer = csv.writer(response)
     writer.writerow(['name','address','city','postal code','type','website','lon','lat'])
-    type = request.GET.get("type", -1)
-    contains = request.GET.get("contains", -1)
+    type = request.GET.get("type", "")
+    contains = request.GET.get("contains", "")
     if type:
         coops = Coop.objects.get_by_type(type)
     elif contains:
-        coops = Coop.objects.contains(contains.split(","))
+        coops = Coop.objects.contains_type(contains.split(","))
 
     for coop in coops:
         postal_code = coop.address.locality.postal_code

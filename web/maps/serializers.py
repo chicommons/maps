@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from maps.models import Coop, CoopType
 from address.models import Address, AddressField, Locality, State, Country 
+from geopy.geocoders import Nominatim
 
 
 class CoopTypeField(serializers.PrimaryKeyRelatedField):
@@ -80,6 +81,16 @@ class CoopSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         rep['type'] = CoopTypeSerializer(instance.type).data
         rep['address'] = AddressSerializer(instance.address).data
+        locator = Nominatim(user_agent="myGeocoder")
+        state = State.objects.get(pk=int(rep['address']['locality']['state']))
+        country = state.country
+        # This is an example of a formatted address string that will return lat and lon:
+        #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
+        address_str = rep['address']['formatted'] + ", " + rep['address']['locality']['name'] + ", " + state.code + " " + rep['address']['locality']['postal_code'] + " " + country.name
+        location = locator.geocode(address_str)
+        if location:
+            rep['address']['latitude'] = location.latitude
+            rep['address']['longitude'] = location.longitude
         return rep
 
     def create(self, validated_data):
@@ -120,7 +131,9 @@ class AddressSerializer(serializers.ModelSerializer):
         """
         Create and return a new `AddressField` instance, given the validated data.
         """
-        return AddressTypeField.objects.create(**validated_data)
+        print("validated data: #{validated_data}\n")
+        address = AddressTypeField.objects.create(**validated_data)
+        return address
 
     def update(self, instance, validated_data):
         """

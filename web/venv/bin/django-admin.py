@@ -1,4 +1,4 @@
-#!/Users/davea/Documents/workspace/chicommons/maps/web/venv/bin/python3
+#!/Users/davea/Documents/workspace/chicommons/maps/web/venv/bin/python3.7
 from django.core import management
 
 if __name__ == "__main__":

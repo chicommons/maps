@@ -31,8 +31,9 @@ class CoopManager(models.Manager):
         queryset = Coop.objects.all()
         for type in types_arr:
             queryset = queryset.filter(type__name__icontains=type)
+        print(queryset.query)
         return queryset
-
+        
 
 class Coop(models.Model):
     objects = CoopManager()
