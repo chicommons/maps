@@ -81,22 +81,13 @@ class CoopSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         rep['type'] = CoopTypeSerializer(instance.type).data
         rep['address'] = AddressSerializer(instance.address).data
-        locator = Nominatim(user_agent="myGeocoder")
-        state = State.objects.get(pk=int(rep['address']['locality']['state']))
-        country = state.country
-        # This is an example of a formatted address string that will return lat and lon:
-        #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
-        address_str = rep['address']['formatted'] + ", " + rep['address']['locality']['name'] + ", " + state.code + " " + rep['address']['locality']['postal_code'] + " " + country.name
-        location = locator.geocode(address_str)
-        if location:
-            rep['address']['latitude'] = location.latitude
-            rep['address']['longitude'] = location.longitude
         return rep
 
     def create(self, validated_data):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
+        CoopSerializer.update_coords(validated_data)
         return Coop.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
@@ -112,8 +103,27 @@ class CoopSerializer(serializers.ModelSerializer):
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.save()
+        CoopSerializer.update_coords(validated_data)
         return instance
 
+    # Set address coordinate data 
+    @staticmethod
+    def update_coords(data):
+        locator = Nominatim(user_agent="myGeocoder")
+        if locator:
+            print(data)
+            print(data['address'])
+            address = data['address']
+            state = address.locality.state
+            country = state.country
+            # This is an example of a formatted address string that will return lat and lon:
+            #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
+            address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
+            location = locator.geocode(address_str)
+            if location:
+                address.latitude = location.latitude
+                address.longitude = location.longitude
+                address.save(update_fields=["latitude", "longitude"])
 
 class AddressSerializer(serializers.ModelSerializer):
     locality = LocalityTypeField()
