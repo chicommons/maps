@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from address.models import AddressField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -28,9 +29,11 @@ class CoopManager(models.Manager):
 
     # Meant to look up coops case-insensitively by part of a type
     def contains_type(self, types_arr):
-        queryset = Coop.objects.all()
-        for type in types_arr:
-            queryset = queryset.filter(type__name__icontains=type)
+        filter = Q(
+            *[('type__name__icontains', type) for type in types_arr],
+            _connector=Q.OR
+        )
+        queryset = Coop.objects.filter(filter)
         print(queryset.query)
         return queryset
         
