@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import csv
 from django.http import HttpResponse
+from django.db.models.functions import Lower
 
 
 def data(request):
@@ -23,7 +24,7 @@ def data(request):
     elif contains:
         coops = Coop.objects.contains_type(contains.split(","))
 
-    for coop in coops:
+    for coop in coops.order_by(Lower('name')):
         postal_code = coop.address.locality.postal_code
         city = coop.address.locality.name + ", " + coop.address.locality.state.code + " " + postal_code 
         writer.writerow([coop.name, coop.address.formatted, city, postal_code, coop.type.name, coop.web_site, coop.address.latitude, coop.address.longitude])

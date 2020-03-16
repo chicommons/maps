@@ -24,7 +24,8 @@ class CoopType(models.Model):
 class CoopManager(models.Manager):
     # Look up by coop type
     def get_by_type(self, type):
-        qset = Coop.objects.filter(type__name=type)
+        qset = Coop.objects.filter(type__name=type,
+                                   enabled=True)
         return qset
 
     # Meant to look up coops case-insensitively by part of a type
@@ -33,7 +34,8 @@ class CoopManager(models.Manager):
             *[('type__name__icontains', type) for type in types_arr],
             _connector=Q.OR
         )
-        queryset = Coop.objects.filter(filter)
+        queryset = Coop.objects.filter(filter,
+                                       enabled=True)
         print(queryset.query)
         return queryset
         

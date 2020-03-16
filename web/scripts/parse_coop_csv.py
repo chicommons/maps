@@ -108,6 +108,7 @@ for row in input_file:
         lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
         lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
         address_pk = address_pks.get(tuple([lat, lon])) 
+        enabled = row['Include'].lower() == 'yes'
         if address_pk:
             print("- model: maps.coop")
             print("  pk:",id)
@@ -116,7 +117,7 @@ for row in input_file:
             print("    type:")
             print("    -", type) 
             print("    address:", address_pk)
-            print("    enabled: True")
+            print("    enabled:",enabled)
             print("    phone:",phone)
             print("    email:",email)
             print("    web_site: \"",web_site,"\"", sep='')
