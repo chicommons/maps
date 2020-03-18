@@ -31,8 +31,8 @@ services:
     #           ./manage.py migrate &&
     #           ./manage.py runserver 0.0.0.0:8000"
     command: /usr/local/bin/gunicorn maps.wsgi:application --reload -w 2 -b :8000
-    #volumes:
-    #- ./web/:/app
+    volumes:
+    - ./web/:/app
     depends_on:
       - mysql
 
