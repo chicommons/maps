@@ -8,16 +8,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python -m pip install --upgrade pip
-#RUN mkdir -p /app/
 
 WORKDIR /app/
 
 COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
 
-#COPY entrypoint.sh /app/
-#COPY . /app/ 
-#RUN ["chmod", "+x", "/app/entrypoint.sh"]
-
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["bash", "/app/entrypoint.sh"]
 
