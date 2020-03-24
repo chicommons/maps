@@ -1,4 +1,5 @@
 import React, {Component} from 'react';  
+import {FormControl, FormGroup} from 'react-bootstrap';
 
 /* Import Components */
 import Input from '../components/Input';  
@@ -57,12 +58,15 @@ class FormContainer extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-      }).then(response => {
-        response.json().then(data =>{
-          console.log("Successful" + data);
-        })
-    })
-  }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    }).catch(error => {
+        console.log('error', error);
+    }); 
+  } 
   handleClearForm() {
     // Logic for resetting the form
   }
@@ -89,8 +93,10 @@ class FormContainer extends Component {
   render() {
     return (
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-       
-            <Input inputType={'text'}
+            <FormGroup
+                controlId="formBasicText">      
+
+                <Input inputType={'text'}
                    title= {'Name'} 
                    name= {'name'}
                    value={this.state.newCoop.name} 
@@ -99,7 +105,7 @@ class FormContainer extends Component {
                    
                    /> {/* Name of the cooperative */}
  
-            <Input inputType={'text'}
+                <Input inputType={'text'}
                    title= {'Type'} 
                    name= {'type.name'}
                    value={this.state.newCoop.type.name} 
@@ -108,7 +114,7 @@ class FormContainer extends Component {
                    
                    /> {/* Type of the cooperative */}
  
-            <Input inputType={'text'}
+                <Input inputType={'text'}
                    title= {'Street'} 
                    name= {'address.formatted'}
                    value={this.state.newCoop.address.formatted} 
@@ -117,7 +123,7 @@ class FormContainer extends Component {
                    
                    /> {/* Address street of the cooperative */}
  
-            <Input inputType={'text'}
+                <Input inputType={'text'}
                    title= {'City'} 
                    name= {'address.locality.name'}
                    value={this.state.newCoop.address.locality.name} 
@@ -126,7 +132,7 @@ class FormContainer extends Component {
                    
                    /> {/* Address city of the cooperative */}
         
-          <Country title={'Country'}
+              <Country title={'Country'}
                   name={'address.country'}
                   options = {this.state.countries} 
                   value = {this.state.newCoop.address.country}
@@ -134,7 +140,7 @@ class FormContainer extends Component {
                   handleChange = {this.handleInput}
                   /> {/* Country Selection */}
 
-          <Province title={'State'}
+              <Province title={'State'}
                   name={'address.locality.state'}
                   options = {this.state.provinces} 
                   value = {this.state.newCoop.address.locality.state}
@@ -142,7 +148,7 @@ class FormContainer extends Component {
                   handleChange = {this.handleInput}
                   /> {/* State Selection */}
 
-          <Input inputType={'text'}
+              <Input inputType={'text'}
                    title= {'Postal Code'} 
                    name= {'address.locality.postal_code'}
                    value={this.state.newCoop.address.locality.postal_code} 
@@ -151,7 +157,7 @@ class FormContainer extends Component {
                    
                    /> {/* Address postal code of the cooperative */}
  
-          <Input inputType={'text'}
+              <Input inputType={'text'}
                    title= {'Email'} 
                    name= {'email'}
                    value={this.state.newCoop.email} 
@@ -160,7 +166,7 @@ class FormContainer extends Component {
                    
                    /> {/* Email of the cooperative */}
  
-          <Input inputType={'text'}
+              <Input inputType={'text'}
                    title= {'Phone'} 
                    name= {'phone'}
                    value={this.state.newCoop.phone} 
@@ -169,7 +175,7 @@ class FormContainer extends Component {
                    
                    /> {/* Phone number of the cooperative */}
 
-          <Input inputType={'text'}
+              <Input inputType={'text'}
                    title= {'Web Site'} 
                    name= {'web_site'}
                    value={this.state.newCoop.web_site} 
@@ -179,20 +185,21 @@ class FormContainer extends Component {
                    /> {/* Web site of the cooperative */}
 
 
-          <Button 
-              action = {this.handleFormSubmit}
-              type = {'primary'} 
-              title = {'Submit'} 
-            style={buttonStyle}
-          /> { /*Submit */ }
+              <Button 
+                  action = {this.handleFormSubmit}
+                  type = {'primary'} 
+                  title = {'Submit'} 
+                  style={buttonStyle}
+              /> { /*Submit */ }
           
-          <Button 
-            action = {this.handleClearForm}
-            type = {'secondary'}
-            title = {'Clear'}
-            style={buttonStyle}
-          /> {/* Clear the form */}
-          
+              <Button 
+                  action = {this.handleClearForm}
+                  type = {'secondary'}
+                  title = {'Clear'}
+                  style={buttonStyle}
+              /> {/* Clear the form */}
+
+            </FormGroup>
         </form>
     );
   }
