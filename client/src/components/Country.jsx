@@ -13,7 +13,7 @@ class Country extends React.Component {
 
         return (
           <div className="form-group">
-			<label for={this.props.name}> {this.props.title} </label>
+		<label htmlFor={this.props.name}> {this.props.title} </label>
 	    <select
 		      id = {this.props.name}
 		      name={this.props.name}

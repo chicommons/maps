@@ -28,6 +28,12 @@ class CoopManager(models.Manager):
                                    enabled=True)
         return qset
 
+    # Look up coops by a partial name (case insensitive)
+    def find_by_name(self, partial_name):
+        queryset = Coop.objects.filter(name__icontains=partial_name, enabled=True)
+        print(queryset.query)
+        return queryset
+
     # Meant to look up coops case-insensitively by part of a type
     def contains_type(self, types_arr):
         filter = Q(
@@ -36,7 +42,6 @@ class CoopManager(models.Manager):
         )
         queryset = Coop.objects.filter(filter,
                                        enabled=True)
-        print(queryset.query)
         return queryset
         
 

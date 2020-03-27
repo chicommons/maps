@@ -18,6 +18,7 @@ class FormContainer extends Component {
     this.state = {
       countries: [],
       provinces: [],
+      errors: [],
       newCoop: {
         name: '',
         type: {
@@ -58,14 +59,34 @@ class FormContainer extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error(response.statusText);
-    }).catch(error => {
-        console.log('error', error);
-    }); 
+    }).then( response => {
+      console.log( "ok?" + response.ok);
+      if (!response.ok) { throw response }
+      return response.json()  //we only get here if there is no error
+    })
+    .then( json => {
+      console.log(json);  //this.props.dispatch(doSomethingWithResult(json))
+    })
+    .catch( errors => {
+      console.log(errors.text);
+      console.log(errors);
+      this.setState({
+          errors: errors,
+      });
+    })
+
+    /* }).then(response => response.json())
+      .then(data => {
+        console.log(response.ok);
+        console.log(data);
+        //throw new Error(response.statusText);
+    }).catch(errors => {
+        
+        console.log(errors['phone']);
+        this.setState({
+            errors: errors,
+        });
+    });  */
   } 
   handleClearForm() {
     // Logic for resetting the form
@@ -92,6 +113,7 @@ class FormContainer extends Component {
 
   render() {
     return (
+      <div>
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
             <FormGroup
                 controlId="formBasicText">      
@@ -172,7 +194,8 @@ class FormContainer extends Component {
                    value={this.state.newCoop.phone} 
                    placeholder = {'Enter phone number'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors} 
+ 
                    /> {/* Phone number of the cooperative */}
 
               <Input inputType={'text'}
@@ -201,6 +224,7 @@ class FormContainer extends Component {
 
             </FormGroup>
         </form>
+      </div>
     );
   }
 

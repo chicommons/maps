@@ -37,7 +37,11 @@ class CoopList(APIView):
     List all coops, or create a new coop.
     """
     def get(self, request, format=None):
-        coops = Coop.objects.all()
+        contains = request.GET.get("contains", "")
+        if contains:
+            coops = Coop.objects.find_by_name(contains)
+        else:
+            coops = Coop.objects.all()
         serializer = CoopSerializer(coops, many=True)
         return Response(serializer.data)
 

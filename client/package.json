@@ -11,6 +11,8 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.12.0",
+    "react-native-flash-message": "^0.1.15",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.1",
     "typescript": "^3.8.3"
   },
@@ -23,7 +25,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "http://localhost:9090",
+  "proxy": "http://localhost:8000",
   "browserslist": {
     "production": [
       ">0.2%",

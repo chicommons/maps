@@ -3,8 +3,8 @@ import {FormControl, FormLabel} from 'react-bootstrap';
 
 const Input = (props) => {
     return (  
-  <div>
-      <FormLabel>{props.name}</FormLabel>
+  <div className="form-group">
+      <FormLabel>{props.title}</FormLabel>
       <FormControl
             type={props.type}
             id={props.name}
@@ -13,6 +13,14 @@ const Input = (props) => {
             placeholder={props.placeholder}
             onChange={props.handleChange}
           />
+
+      {props.errors && props.errors[props.name] && (
+          <FormControl.Feedback>
+                <div className="fieldError">
+                     {props.errors[props.name]} 
+                </div>
+          </FormControl.Feedback>
+      )}
   </div>
     )
 }

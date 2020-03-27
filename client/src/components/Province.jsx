@@ -1,9 +1,6 @@
 import React from 'react';
 
 class Province extends React.Component {
-    constructor() {
-        super();
-    }
 
     render () {
         let provinces = this.props.options;
