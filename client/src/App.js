@@ -7,10 +7,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Add from "./components/Add";
 import Search from "./components/Search";
+import { Flash } from './components/Flash';
 
 function App() {
   return (<Router> 
     <div className="App">
+      <Flash />
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/add"}>Chicommons</Link>

@@ -25,7 +25,7 @@ SECRET_KEY = '!7$l@$thnj@q-txtptk557nvgsc&17srn=7b7yh8)@*_p^ub8s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dentalassistantskills.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dentalassistantskills.com', 'maps.example.com']
 
 
 # Application definition
@@ -86,14 +86,11 @@ DATABASES = {
         'PASSWORD': os.environ['DB_PASS'],
         'HOST': os.environ['DB_SERVICE'],
         'PORT': os.environ['DB_PORT']
-        #'OPTIONS': {
-        #    'sql_mode': 'traditional',
-        #},
-        #'NAME': 'maps_data',
-        #'USER': 'chicommons',
-        #'PASSWORD': 'password',
-        #'HOST': 'mysql',
-        #'PORT': '3406',
+        #'NAME': "maps_data",
+        #'USER': "chicommons",
+        #'PASSWORD': "password",
+        #'HOST': "localhost",
+        #'PORT': "3306"
     }
 }
 

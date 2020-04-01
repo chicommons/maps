@@ -26,15 +26,41 @@ services:
     env_file: .env
     environment:
       DEBUG: 'true'
-    #command: >
-    #  bash -c "python wait_for_db.py &&
-    #           ./manage.py migrate &&
-    #           ./manage.py runserver 0.0.0.0:8000"
     command: /usr/local/bin/gunicorn maps.wsgi:application --reload -w 2 -b :8000
     volumes:
     - ./web/:/app
     depends_on:
       - mysql
+  client:
+    build:
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - '3001:3000'
+    restart: always
+    container_name: web-app
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_PROXY=http://web:8000/
+    command: npm run start
+    depends_on:
+      - web
+
+  #client:
+  #  restart: always
+  #  build: ./client
+  #  volumes:
+  #    - './client/:/app'
+  #    - '/app/node_modules'
+  #  ports:
+  #    - '3001:3000'
+  #  environment:
+  #    - NODE_ENV=development
+  #    - REACT_APP_PROXY=http://web:8000/
+  #  depends_on:
+  #    - web
 
   apache:
     restart: always

@@ -1,10 +1,6 @@
 import React from 'react';
 
 class Country extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render () {
         let countries = this.props.options;
         let optionItems = countries.map((country) =>

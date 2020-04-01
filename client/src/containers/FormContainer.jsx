@@ -1,5 +1,6 @@
 import React, {Component} from 'react';  
 import {FormControl, FormGroup} from 'react-bootstrap';
+import EventEmitter from 'events';
 
 /* Import Components */
 import Input from '../components/Input';  
@@ -8,9 +9,8 @@ import Province from '../components/Province';
 import Button from '../components/Button'
 
 class FormContainer extends Component {  
-  statics: {
-    DEFAULT_COUNTRY: 484;
-  }
+  static DEFAULT_COUNTRY = 484
+  static REACT_APP_PROXY = process.env.REACT_APP_PROXY
 
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class FormContainer extends Component {
             postal_code: '',
             state: ''
           },
-          country: 484, //FormContainer.DEFAULT_COUNTRY,
+          country: FormContainer.DEFAULT_COUNTRY,
         },
         enabled: true,
         email: '',
@@ -47,50 +47,39 @@ class FormContainer extends Component {
 
   /* This life cycle hook gets executed when the component mounts */
 
-  handleFormSubmit(e) {
+  async handleFormSubmit(e) {
     e.preventDefault();
     const NC = this.state.newCoop;
     delete NC.address.country;
 
-    fetch('/coops/',{
+    try {
+      console.log("proxy: " + FormContainer.REACT_APP_PROXY);  
+      const response = await fetch(FormContainer.REACT_APP_PROXY + '/coops/',{
         method: "POST",
         body: JSON.stringify(this.state.newCoop),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-    }).then( response => {
-      console.log( "ok?" + response.ok);
-      if (!response.ok) { throw response }
-      return response.json()  //we only get here if there is no error
-    })
-    .then( json => {
-      console.log(json);  //this.props.dispatch(doSomethingWithResult(json))
-    })
-    .catch( errors => {
-      console.log(errors.text);
-      console.log(errors);
-      this.setState({
-          errors: errors,
       });
-    })
 
-    /* }).then(response => response.json())
-      .then(data => {
-        console.log(response.ok);
-        console.log(data);
-        //throw new Error(response.statusText);
-    }).catch(errors => {
-        
-        console.log(errors['phone']);
-        this.setState({
-            errors: errors,
-        });
-    });  */
+      if (response.ok) {
+        const result = await response.json();
+        console.log('_result_: ', result);
+        window.flash('Record has been created successfully!', 'success') 
+        return result;
+      }
+      throw await response.json();
+    } catch (errors) {
+      console.log('_error_: ', errors);
+      this.setState({ errors });
+    }  
   } 
+
   handleClearForm() {
     // Logic for resetting the form
   }
+
   handleInput(e) {
     let self=this
     let value = e.target.value;
@@ -232,7 +221,7 @@ class FormContainer extends Component {
     let initialCountries = [];
     let initialProvinces = [];
     // Get initial countries 
-    fetch('/countries/')
+    fetch(FormContainer.REACT_APP_PROXY + '/countries/')
         .then(response => {
             return response.json();
         }).then(data => {
@@ -246,7 +235,7 @@ class FormContainer extends Component {
         });
     });
     // Get initial provinces (states) 
-    fetch('/states/484/')
+    fetch(FormContainer.REACT_APP_PROXY + '/states/484/')
         .then(response => {
             return response.json();
         }).then(data => {

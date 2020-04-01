@@ -16,9 +16,9 @@ const Input = (props) => {
 
       {props.errors && props.errors[props.name] && (
           <FormControl.Feedback>
-                <div className="fieldError">
-                     {props.errors[props.name]} 
-                </div>
+                 {props.errors[props.name].map((error, index) => (
+                     <div key={`field-error-${props.name}-${index}`} className="fieldError">{error}</div>
+                 ))} 
           </FormControl.Feedback>
       )}
   </div>
