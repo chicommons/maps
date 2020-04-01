@@ -1,16 +1,15 @@
 FROM node:10-alpine AS alpine
-
-WORKDIR /app
-
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json /app/
-
-## install only the packages defined in the package-lock.json (faster than the normal npm install)
+# A directory within the virtualized Docker environment
+# Becomes more relevant when using Docker Compose later
+WORKDIR /usr/src/app
+# Copies package.json and package-lock.json to Docker environment
+COPY package*.json ./
+# Installs all node packages
 RUN npm install
-
-# Copy the contents of the project to the image
+# Copies everything over to Docker environment
 COPY . .
-
-# Run 'npm start' when the container starts.
-#CMD ["npm", "run", "start"]
+# Uses port which is used by the actual application
+EXPOSE 3000
+# Finally runs the application
+CMD [ "npm", "start" ]
 

@@ -43,24 +43,10 @@ services:
     container_name: web-app
     environment:
       - NODE_ENV=development
-      - REACT_APP_PROXY=http://web:8000/
+      - REACT_APP_PROXY=http://localhost:9090
     command: npm run start
     depends_on:
       - web
-
-  #client:
-  #  restart: always
-  #  build: ./client
-  #  volumes:
-  #    - './client/:/app'
-  #    - '/app/node_modules'
-  #  ports:
-  #    - '3001:3000'
-  #  environment:
-  #    - NODE_ENV=development
-  #    - REACT_APP_PROXY=http://web:8000/
-  #  depends_on:
-  #    - web
 
   apache:
     restart: always
