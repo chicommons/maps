@@ -1,6 +1,5 @@
 import React, {Component} from 'react';  
-import {FormControl, FormGroup} from 'react-bootstrap';
-import EventEmitter from 'events';
+import {FormGroup} from 'react-bootstrap';
 
 /* Import Components */
 import Input from '../components/Input';  
@@ -65,8 +64,8 @@ class FormContainer extends Component {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('_result_: ', result);
         window.flash('Record has been created successfully!', 'success') 
+        this.handleClearForm();
         return result;
       }
       throw await response.json();

@@ -1,13 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import FormContainer from './containers/FormContainer';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Add from "./components/Add";
 import Search from "./components/Search";
 import { Flash } from './components/Flash';
+import Bus from './components/Utils/Bus';
 
 function App() {
   return (<Router> 
@@ -42,5 +41,7 @@ function App() {
     </Router>
   );
 }
+
+window.flash = (message, type="success") => Bus.emit('flash', ({message, type}));
 
 export default App;

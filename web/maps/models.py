@@ -13,7 +13,7 @@ class CoopTypeManager(models.Manager):
 
 
 class CoopType(models.Model):
-    name = models.CharField(max_length=200, null=False)
+    name = models.CharField(max_length=200, null=False, unique=True)
 
     objects = CoopTypeManager()
 
@@ -48,7 +48,7 @@ class CoopManager(models.Manager):
 class Coop(models.Model):
     objects = CoopManager()
     name = models.CharField(max_length=250, null=False)
-    type = models.ForeignKey(CoopType, on_delete=None) 
+    types = models.ManyToManyField(CoopType)
     address = AddressField(on_delete=models.CASCADE)
     enabled = models.BooleanField(default=True, null=False)
     phone = PhoneNumberField(null=True)

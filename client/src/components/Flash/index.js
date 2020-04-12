@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-//import Bus from '../Utils/Bus';
+import Bus from '../Utils/Bus';
 
 import './index.css';
 
@@ -9,22 +9,21 @@ export const Flash = () => {
     let [type, setType] = useState('');
 
     useEffect(() => {
-        /* Bus.addListener('flash', ({message, type}) => {
+        Bus.addListener('flash', ({message, type}) => {
             setVisibility(true);
             setMessage(message);
             setType(type);
             setTimeout(() => {
                 setVisibility(false);
             }, 4000);
-        }); */
+        });
                 
 
     }, []);
 
     useEffect(() => {
         if(document.querySelector('.close') !== null) {
-            document.
-            querySelector('.close').
+            document.querySelector('.close').
             addEventListener('click', () => setVisibility(false));
         }
     })

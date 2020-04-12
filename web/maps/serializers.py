@@ -64,12 +64,13 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class CoopSerializer(serializers.ModelSerializer):
-    type = CoopTypeField()
+    #type = CoopTypeField()
+    types = CoopTypeSerializer(many=True)
     address = AddressTypeField()
 
     class Meta:
         model = Coop
-        fields = ['id', 'name', 'type', 'address', 'phone', 'enabled', 'email', 'web_site']
+        fields = ['id', 'name', 'types', 'address', 'phone', 'enabled', 'email', 'web_site']
         extra_kwargs = {
             'phone': {
                 'required': False, 
@@ -79,23 +80,38 @@ class CoopSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['type'] = CoopTypeSerializer(instance.type).data
+        rep['types'] = CoopTypeSerializer(instance.types).data
         rep['address'] = AddressSerializer(instance.address).data
         return rep
 
     def create(self, validated_data):
-        """
-        Create and return a new `Snippet` instance, given the validated data.
-        """
-        CoopSerializer.update_coords(validated_data)
-        return Coop.objects.create(**validated_data)
+        #"""
+        #Create and return a new `Snippet` instance, given the validated data.
+        #"""
+        #CoopSerializer.update_coords(validated_data)
+        #return Coop.objects.create(**validated_data)
+        coop_types = validated_data.pop('types', {})
+        instance = super().create(validated_data)
+        for item in coop_types:
+            coop_type, _ = CoopType.objects.get_or_create(**item)
+            instance.types.add(coop_type)
+        #instance = super().create(validated_data)
+        return instance
 
     def update(self, instance, validated_data):
         """
         Update and return an existing `Coop` instance, given the validated data.
         """
         instance.name = validated_data.get('name', instance.name)
-        instance.type = validated_data.get('type', instance.type)
+        #instance.type = validated_data.get('type', instance.type)
+        try:
+            coop_types = validated_data['types']
+            instance.types.clear()  # Disassociates all  CoopTypes from instance.
+            for item in coop_types:
+                coop_type, _ = CoopType.objects.get_or_create(**item)
+                instance.types.add(coop_type)
+        except KeyError:
+            pass
         instance.address = validated_data.get('address', instance.address)
         instance.enabled = validated_data.get('enabled', instance.enabled)
         instance.phone = validated_data.get('phone', instance.phone)

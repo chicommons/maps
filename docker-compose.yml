@@ -44,7 +44,7 @@ services:
     environment:
       - NODE_ENV=development
       - REACT_APP_PROXY=http://localhost:9090
-    command: npm run start
+    #command: npm run start
     depends_on:
       - web
 
