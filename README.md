@@ -10,5 +10,7 @@ docker-compose up
 
 Visit http://localhost:3001/ to see the application.
 
- 
+## Contributing
+
+Want to contribute?  Please check out [CONTRIBUTING.md](/CONTRIBUTING.md) 
 
