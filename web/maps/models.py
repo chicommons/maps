@@ -17,9 +17,6 @@ class CoopType(models.Model):
 
     objects = CoopTypeManager()
 
-    class Meta:
-        unique_together = ("name",)
-
 
 class CoopManager(models.Manager):
     # Look up by coop type
