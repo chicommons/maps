@@ -7,7 +7,7 @@ import codecs
 from operator import itemgetter
 from yaml import load, dump
 from yaml import Loader, Dumper
-
+from commons.util.case_insensitive_set import CaseInsensitiveSet
 
 def strip_invalid(s):
     res = ''
