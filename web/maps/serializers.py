@@ -91,13 +91,13 @@ class CoopSerializer(serializers.ModelSerializer):
         #CoopSerializer.update_coords(validated_data)
         #return Coop.objects.create(**validated_data)
 
-        #coop_types = validated_data.pop('types', {})
-        #instance = super().create(validated_data)
-        #for item in coop_types:
-        #    coop_type, _ = CoopType.objects.get_or_create(**item)
-        #    instance.types.add(coop_type)
-
+        coop_types = validated_data.pop('types', {})
         instance = super().create(validated_data)
+        for item in coop_types:
+            coop_type, _ = CoopType.objects.get_or_create(name=item['name'])  #**item)
+            instance.types.add(coop_type)
+
+        #instance = super().create(validated_data)
         return instance
 
     def update(self, instance, validated_data):

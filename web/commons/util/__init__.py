@@ -1,4 +1,4 @@
-from . import case_insensitive_set 
+from .case_insensitive_set import CaseInsensitiveSet
 
 
 

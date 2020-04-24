@@ -25,7 +25,7 @@ SECRET_KEY = '!7$l@$thnj@q-txtptk557nvgsc&17srn=7b7yh8)@*_p^ub8s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '208.113.200.133', 'localhost', 'lab.chicommons.com', 'maps.example.com']
+ALLOWED_HOSTS = ['127.0.0.1', '208.113.200.133', 'localhost', 'lab.chicommons.coop', 'maps.example.com']
 
 
 # Application definition
