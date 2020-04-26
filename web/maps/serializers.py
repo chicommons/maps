@@ -80,7 +80,8 @@ class CoopSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['types'] = CoopTypeSerializer(instance.types).data
+        #rep['types'] = CoopTypeSerializer(instance.types).data
+        rep['types'] = CoopTypeSerializer(instance.types.all()).data
         rep['address'] = AddressSerializer(instance.address).data
         return rep
 
