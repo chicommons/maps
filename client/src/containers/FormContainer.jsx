@@ -20,9 +20,9 @@ class FormContainer extends Component {
       errors: [],
       newCoop: {
         name: '',
-        type: {
+        types: [{
           name: ''
-        },
+        }],
         address: {
           formatted: '',
           locality: {
@@ -42,6 +42,7 @@ class FormContainer extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
   /* This life cycle hook gets executed when the component mounts */
@@ -82,18 +83,29 @@ class FormContainer extends Component {
   handleInput(e) {
     let self=this
     let value = e.target.value;
-    console.log("value:" + value);
     let name = e.target.name;
     //update State
     this.setValue(self.state.newCoop,name,value)
   }
 
+  handleTypeChange(e) {
+    let self=this
+    let value = e.target.value;
+    let name = e.target.name;
+    //update State
+    this.setState({
+      newCoop: { ...this.state.newCoop, types: [{ name: e.target.value }] }
+    });
+    //this.setState({newCoop: types[0].name = value}); 
+  }
+
+
   setValue = (obj,is, value) => {
        if (typeof is == 'string')
          return this.setValue(obj,is.split('.'), value);
-       else if (is.length === 1 && value!==undefined)
+       else if (is.length === 1 && value!==undefined) { 
          return this.setState({obj: obj[is[0]] = value});
-       else if (is.length === 0)
+       } else if (is.length === 0)
          return obj;
        else
          return this.setValue(obj[is[0]],is.slice(1), value);
@@ -117,10 +129,10 @@ class FormContainer extends Component {
  
                 <Input inputType={'text'}
                    title= {'Type'} 
-                   name= {'type.name'}
-                   value={this.state.newCoop.type.name} 
+                   name= {'types[0].name'}
+                   value={this.state.newCoop.types[0].name} 
                    placeholder = {'Enter cooperative type'}
-                   handleChange = {this.handleInput}
+                   handleChange = {this.handleTypeChange}
                    
                    /> {/* Type of the cooperative */}
  
@@ -227,18 +239,15 @@ class FormContainer extends Component {
         initialCountries = data.map((country) => {
             return country
         });
-        console.log("output ...");
-        console.log(initialCountries);
         this.setState({
             countries: initialCountries,
         });
     });
     // Get initial provinces (states) 
-    fetch(FormContainer.REACT_APP_PROXY + '/states/484/')
+    fetch(FormContainer.REACT_APP_PROXY + '/states/' + FormContainer.DEFAULT_COUNTRY)
         .then(response => {
             return response.json();
         }).then(data => {
-        console.log(data); 
         initialProvinces = data.map((province) => {
             return province
         });
