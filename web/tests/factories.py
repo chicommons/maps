@@ -1,5 +1,5 @@
 import factory
-from .models import CoopType, Coop 
+from maps.models import CoopType, Coop
 
 
 class CoopTypeFactory(factory.DjangoModelFactory):

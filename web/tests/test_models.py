@@ -1,6 +1,6 @@
 import pytest
 from django.test import TestCase
-from .tests.factories import CoopTypeFactory, CoopFactory
+from .factories import CoopTypeFactory, CoopFactory
 
 
 class ModelTests(TestCase):
@@ -16,9 +16,8 @@ class ModelTests(TestCase):
         pass
 
     @pytest.mark.django_db
-    def test_coop_type_model():
+    def test_coop_type_model(self):
         """ Test customer model """    # create customer model instance
         coop_type = CoopTypeFactory(name="Test Coop Type Name")
         assert coop_type.name == "Test Coop Type Name"
-
 
