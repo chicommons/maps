@@ -27,7 +27,8 @@ def data(request):
     for coop in coops.order_by(Lower('name')):
         postal_code = coop.address.locality.postal_code
         city = coop.address.locality.name + ", " + coop.address.locality.state.code + " " + postal_code 
-        writer.writerow([coop.name, coop.address.formatted, city, postal_code, coop.type.name, coop.web_site, coop.address.latitude, coop.address.longitude])
+        coop_types = ', '.join([type.name for type in coop.types.all()]) 
+        writer.writerow([coop.name, coop.address.formatted, city, postal_code, coop_types, coop.web_site, coop.address.latitude, coop.address.longitude])
 
     return response
 

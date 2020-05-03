@@ -34,7 +34,7 @@ class CoopManager(models.Manager):
     # Meant to look up coops case-insensitively by part of a type
     def contains_type(self, types_arr):
         filter = Q(
-            *[('type__name__icontains', type) for type in types_arr],
+            *[('types__name__icontains', type) for type in types_arr],
             _connector=Q.OR
         )
         queryset = Coop.objects.filter(filter,
