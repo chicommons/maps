@@ -1,0 +1,12 @@
+.hamburgerDropDown {
+  background-color: black;
+  border: 1px solid bisque;
+}
+
+ul.hamburgerDropDown {
+  padding: 10px;
+}
+
+.navbar div {
+  display: inline-block;
+}

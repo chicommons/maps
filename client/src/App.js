@@ -3,6 +3,7 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import NavBar from "./components/NavBar";
 import Add from "./components/Add";
 import Search from "./components/Search";
 import { Flash } from './components/Flash';
@@ -15,16 +16,7 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/add"}>Chicommons</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/add"}>Add</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/search"}>Search</Link>
-              </li>
-            </ul>
-          </div>
+          <NavBar />
         </div>
       </nav>
 
