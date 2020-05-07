@@ -53,10 +53,10 @@ class NavBar extends Component {
 
     render() {
         return (
-            <div className='navbar'>
-                { this.state.open ? this.displayMobileMenu() : null}
-                {isMobile ? this.displayHamburgerMenu() : this.displayNavBar()}
-            </div>
+          <div className="navbar">
+            {isMobile ? this.displayHamburgerMenu() : this.displayNavBar()}
+            {this.state.open ? this.displayMobileMenu() : null}
+          </div>
         );
     }
 }
