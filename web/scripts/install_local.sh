@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash -l
 
 if [[ -z "${DB_NAME}" ]]; then
   echo "The environment variable DB_NAME is not defined."
@@ -41,11 +41,10 @@ if [ ! -d ".venv" ]; then
 fi
 # Activate virtual environment
 source ./venv/bin/activate
-echo $PATH
-which python
 python -m pip install -r requirements.txt
+
+# Run migrations and seed the database
 python manage.py migrate maps
-#python manage.py docker_init_db_data
-#./entrypoint.sh
+python manage.py docker_init_db_data
  
  

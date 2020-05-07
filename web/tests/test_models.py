@@ -1,6 +1,6 @@
 import pytest
 from django.test import TestCase
-from .factories import CoopTypeFactory, CoopFactory
+from .factories import CoopTypeFactory, CoopFactory, AddressFactory
 
 
 class ModelTests(TestCase):
@@ -16,8 +16,23 @@ class ModelTests(TestCase):
         pass
 
     @pytest.mark.django_db
-    def test_coop_type_model(self):
-        """ Test customer model """    # create customer model instance
+    def test_coop_type_create(self):
+        """ Test coop type model """    # create customer model instance
         coop_type = CoopTypeFactory(name="Test Coop Type Name")
         assert coop_type.name == "Test Coop Type Name"
+
+    @pytest.mark.django_db
+    def test_address_create(self):
+        """ Test address model """    # create customer model instance
+        address = AddressFactory()
+        assert address is not None
+
+'''
+    @pytest.mark.django_db
+    def test_coop_create(self):
+        """ Test customer model """    # create customer model instance
+        coop = CoopFactory(name="Test Coop")
+        assert coop.name == "Test Coop"
+        assert len(coop.coop_types) == 1
+'''
 
