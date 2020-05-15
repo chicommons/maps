@@ -14,7 +14,7 @@ sys.path.append(pathlib.Path(__file__).parent.parent.parent.absolute())
 sys.path.append('/var/www/html/web/venv/lib/python3.6/site-packages')
 
 # poiting to the project settings
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "maps.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "directory.settings")
 
 from django.core.wsgi import get_wsgi_application
 
@@ -22,8 +22,7 @@ from django.core.wsgi import get_wsgi_application
 # adjust the Python version in the line below as needed
 #sys.path.append('/var/www/html/web/venv/lib/python3.6/site-packages')
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'maps.settings')
-#os.environ['DB_NAME'] = "maps_data"
+#os.environ['DB_NAME'] = "directory_data"
 #os.environ['DB_USER'] = "chicommons"
 #os.environ['DB_PASS'] = "ChiCommons1$"
 #os.environ['DB_SERVICE'] = "localhost"

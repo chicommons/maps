@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 address_pk = address_pks.get(tuple([lat, lon])) 
                 enabled = row['Include'].lower() == 'yes'
                 if address_pk:
-                    print("- model: maps.coop")
+                    print("- model: directory.coop")
                     print("  pk:",id)
                     print("  fields:")
                     print("    name: \"",name,"\"", sep='')

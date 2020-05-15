@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from maps.models import Coop, CoopType
+from directory.models import Coop, CoopType
 from address.models import Address, AddressField, Locality, State, Country 
 from geopy.geocoders import Nominatim
 

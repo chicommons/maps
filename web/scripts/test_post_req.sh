@@ -16,7 +16,7 @@ read -d '' req << EOF
         },
         "enabled": true,
         "phone": "7739441426",
-        "email": "myemail@msn.com",
+        "email": "myemail",
         "web_site": "http://www.1871.com/"
 }
 EOF

@@ -7,7 +7,7 @@ check_timeout = os.getenv("DB_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("DB_CHECK_INTERVAL", 1)
 interval_unit = "second" if check_interval == 1 else "seconds"
 config = {
-    "dbname": os.getenv("MYSQL_DATABASE", "maps_data"),
+    "dbname": os.getenv("MYSQL_DATABASE", "directory_data"),
     "user": os.getenv("MYSQL_USER", "chicommons"),
     "password": os.getenv("MYSQL_PASSWORD", "password"),
     "host": os.getenv("DATABASE_URL", "mysql")

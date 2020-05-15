@@ -1,6 +1,6 @@
-from maps.models import Coop
+from directory.models import Coop
 from address.models import State, Country, Locality
-from maps.serializers import CoopSerializer, CountrySerializer, StateSerializer
+from directory.serializers import CoopSerializer, CountrySerializer, StateSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response

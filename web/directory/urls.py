@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from maps import views
+from directory import views
 
 urlpatterns = [
     path('data', views.data, name='data'),
