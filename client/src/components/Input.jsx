@@ -6,6 +6,7 @@ const Input = (props) => {
   <div className="form-group">
       <FormLabel>{props.title}</FormLabel>
       <FormControl
+            isInvalid={props.errors && Boolean(props.errors[props.name])}
             type={props.type}
             id={props.name}
             name={props.name}
@@ -15,7 +16,7 @@ const Input = (props) => {
           />
 
       {props.errors && props.errors[props.name] && (
-          <FormControl.Feedback>
+          <FormControl.Feedback type="invalid">
                  {props.errors[props.name].map((error, index) => (
                      <div key={`field-error-${props.name}-${index}`} className="fieldError">{error}</div>
                  ))} 

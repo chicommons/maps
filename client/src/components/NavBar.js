@@ -17,6 +17,10 @@ class NavBar extends Component {
         this.setState({open: !this.state.open});
     }
 
+    handleSelect = () => {
+      this.setState({ open: false });
+    };
+
     displayHamburgerMenu = () => {
         return (
             <HamburgerMenu
@@ -44,7 +48,7 @@ class NavBar extends Component {
 
     displayMobileMenu = () => {
         return (
-            <ul className='hamburgerDropDown'>
+            <ul className='hamburgerDropDown' onClick={this.handleSelect}>
                     <li className='nav-link'><NavLink to='/add'>Add</NavLink></li>
                     <li className='nav-link'><NavLink to='/search'>Search</NavLink></li>
                 </ul>

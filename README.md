@@ -23,7 +23,7 @@ If you want to get things running locally without using Docker, you must install
 Then you must add the following environment variables.  On Mac, you will want to open your ~/.profile file and add
 
 ```
-export DB_NAME=maps_data
+export DB_NAME=directory_data
 export DB_USER=chicommons
 export DB_PASS=password
 export DB_SERVICE=localhost

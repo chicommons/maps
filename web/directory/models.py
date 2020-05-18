@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Q
 
-from address.models import AddressField
+from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
 

@@ -1,6 +1,6 @@
 import factory
 from django.db import models
-from maps.models import CoopType, Coop
+from directory.models import CoopType, Coop
 from address.models import AddressField
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality

@@ -124,7 +124,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.name} 
                    placeholder = {'Enter cooperative name'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors} 
                    /> {/* Name of the cooperative */}
  
                 <Input inputType={'text'}
@@ -133,7 +133,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.types[0].name} 
                    placeholder = {'Enter cooperative type'}
                    handleChange = {this.handleTypeChange}
-                   
+                   errors = {this.state.errors} 
                    /> {/* Type of the cooperative */}
  
                 <Input inputType={'text'}
@@ -142,8 +142,8 @@ class FormContainer extends Component {
                    value={this.state.newCoop.address.formatted} 
                    placeholder = {'Enter address street'}
                    handleChange = {this.handleInput}
-                   
-                   /> {/* Address street of the cooperative */}
+                   errors = {this.state.errors} 
+                  /> {/* Address street of the cooperative */}
  
                 <Input inputType={'text'}
                    title= {'City'} 
@@ -151,7 +151,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.address.locality.name} 
                    placeholder = {'Enter address city'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors} 
                    /> {/* Address city of the cooperative */}
         
               <Country title={'Country'}
@@ -176,7 +176,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.address.locality.postal_code} 
                    placeholder = {'Enter postal code'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors} 
                    /> {/* Address postal code of the cooperative */}
  
               <Input inputType={'text'}
@@ -185,7 +185,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.email} 
                    placeholder = {'Enter email'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors}
                    /> {/* Email of the cooperative */}
  
               <Input inputType={'text'}
@@ -195,7 +195,6 @@ class FormContainer extends Component {
                    placeholder = {'Enter phone number'}
                    handleChange = {this.handleInput}
                    errors = {this.state.errors} 
- 
                    /> {/* Phone number of the cooperative */}
 
               <Input inputType={'text'}
@@ -204,7 +203,7 @@ class FormContainer extends Component {
                    value={this.state.newCoop.web_site} 
                    placeholder = {'Enter web site'}
                    handleChange = {this.handleInput}
-                   
+                   errors = {this.state.errors} 
                    /> {/* Web site of the cooperative */}
 
 

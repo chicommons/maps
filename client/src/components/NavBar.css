@@ -1,10 +1,17 @@
+.fixed-bottom, .fixed-top {
+position: initial;
+right: 0;
+left: 0;
+z-index: 1030;
+}
+
 .hamburgerDropDown {
   background-color: black;
   border: 1px solid bisque;
   position: absolute;
   top: 50px;
-  right: 0;
-}
+  right: -1rem;
+} 
 
 ul.hamburgerDropDown {
   padding: 10px;

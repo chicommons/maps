@@ -3,9 +3,9 @@ version: '3'
 services:
   mysql:
     restart: always
-    image: mysql:5.7
+    image: mysql:8.0
     environment:
-      MYSQL_DATABASE: 'maps_data'
+      MYSQL_DATABASE: 'directory_data'
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'root'
       # You can use whatever password you like
@@ -26,7 +26,7 @@ services:
     env_file: .env
     environment:
       DEBUG: 'true'
-    command: /usr/local/bin/gunicorn maps.wsgi:application --reload -w 2 -b :8000
+    command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 2 -b :8000
     volumes:
     - ./web/:/app
     depends_on:
@@ -35,7 +35,6 @@ services:
     build:
       context: ./client
     volumes:
-      - /app/node_modules
       - ./client:/app
     ports:
       - '3001:3000'

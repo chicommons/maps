@@ -44,7 +44,7 @@ source ./venv/bin/activate
 python -m pip install -r requirements.txt
 
 # Run migrations and seed the database
-python manage.py migrate maps
+python manage.py migrate directory
 python manage.py docker_init_db_data
  
  
