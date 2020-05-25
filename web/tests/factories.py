@@ -1,7 +1,7 @@
 import factory
 from django.db import models
 from directory.models import CoopType, Coop
-from address.models import AddressField
+from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
 
@@ -44,10 +44,9 @@ class AddressFactory(factory.DjangoModelFactory):
     """
         Define Address Factory
     """
-    objects = models.Manager()
 
     class Meta:
-        model = AddressField
+        model = 'address.Address'
 
     street_number = "123"
     route = "Rd"
@@ -87,9 +86,16 @@ class CoopFactory(factory.DjangoModelFactory):
             return
 
         if extracted:
-            # A list of groups were passed in, use them
+            # A list of types were passed in, use them
             for type in extracted:
                 self.types.add(type)
         else:
-            type = factory.SubFactory(CoopTypeFactory)
-            self.types.add( type )
+            for n in range(1):
+                CoopTypeFactory()
+            #type = factory.SubFactory(CoopTypeFactory)
+            #print("\n\n\n\ntype:")
+            #print(type(self.types))
+            #print("\n\n\n")
+            #self.types.set([type])
+            #self.types.add(type)
+            #self.types.all().set( (type) )

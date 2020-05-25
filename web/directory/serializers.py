@@ -64,7 +64,6 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class CoopSerializer(serializers.ModelSerializer):
-    #type = CoopTypeField()
     types = CoopTypeSerializer(many=True)
     address = AddressTypeField()
 
@@ -88,8 +87,6 @@ class CoopSerializer(serializers.ModelSerializer):
         #"""
         #Create and return a new `Snippet` instance, given the validated data.
         #"""
-        #CoopSerializer.update_coords(validated_data)
-        #return Coop.objects.create(**validated_data)
 
         coop_types = validated_data.pop('types', {})
         instance = super().create(validated_data)
@@ -97,7 +94,6 @@ class CoopSerializer(serializers.ModelSerializer):
             coop_type, _ = CoopType.objects.get_or_create(name=item['name'])  #**item)
             instance.types.add(coop_type)
 
-        #instance = super().create(validated_data)
         return instance
 
     def update(self, instance, validated_data):
