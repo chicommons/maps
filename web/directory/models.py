@@ -13,9 +13,13 @@ class CoopTypeManager(models.Manager):
 
 
 class CoopType(models.Model):
-    name = models.CharField(max_length=200, null=False, unique=True)
+    name = models.CharField(max_length=200, null=False)
 
     objects = CoopTypeManager()
+
+    class Meta:
+        # Creates a new unique constraint with the `name` field
+        constraints = [models.UniqueConstraint(fields=['name'], name='coop_type_unq')]
 
 
 class CoopManager(models.Manager):

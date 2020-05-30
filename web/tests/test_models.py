@@ -40,14 +40,10 @@ class ModelTests(TestCase):
     @pytest.mark.django_db
     def test_coop_create_with_existing_type(self):
         """ Test customer model """    # create customer model instance
-        coop_type = CoopTypeFactory(name='test')
-        self.assertIsNotNone(coop_type)
-        
         coop_from_factory = CoopFactory()
         self.assertIsNotNone(coop_from_factory)
 
-        coop_types = list()
-        coop_types.append(coop_type) 
-        coop = CoopFactory.create(types=coop_types, address=coop_from_factory.address)
+        coop_types = coop_from_factory.types
+        coop = CoopFactory.create(types=coop_types.all(), address=coop_from_factory.address)
         self.assertIsNotNone(coop)
 

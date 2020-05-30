@@ -44,23 +44,37 @@ class LocalityTypeField(serializers.PrimaryKeyRelatedField):
 
 
 class CoopTypeSerializer(serializers.ModelSerializer):
+    default_error_messages = {'name_exists': 'The name already exists'}
+
     class Meta:
         model = CoopType
         fields = ['id', 'name']
 
-    def create(self, validated_data):
-        """
-        Create and return a new `CoopType` instance, given the validated data.
-        """
-        return CoopType.objects.create(**validated_data)
+    def validate(self, attrs):
+        validated_attrs = super().validate(attrs)
+        errors = {}
 
-    def update(self, instance, validated_data):
-        """
-        Update and return an existing `CoopType` instance, given the validated data.
-        """
-        instance.name = validated_data.get('name', instance.name)
-        instance.save()
-        return instance
+        # check if the new `name` doesn't exist for other db record, this is only for updates
+        if (
+            self.instance  # the instance to be updated
+            and 'name' in validated_attrs  # if name is in the attributes
+            and self.instance.name != validated_attrs['name']  # if the name is updated
+        ):
+            if (
+                CoopType.objects.filter(name=validated_attrs['name'])
+                .exclude(id=self.instance.id)
+                .exists()
+            ):
+                errors['name'] = self.error_messages['name_exists']
+
+        if errors:
+            raise ValidationError(errors)
+
+        return validated_attrs
+
+    def create(self, validated_data):
+        # get_or_create returns a tuple with (instance, boolean). The boolean is True if a new instance was created and False otherwise
+        return CoopType.objects.get_or_create(**validated_data)[0]
 
 
 class CoopSerializer(serializers.ModelSerializer):

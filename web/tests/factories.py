@@ -64,6 +64,8 @@ class CoopTypeFactory(factory.DjangoModelFactory):
     class Meta:
         model = CoopType
 
+    name = "test name"
+
 
 class CoopFactory(factory.DjangoModelFactory):
     """
@@ -90,12 +92,6 @@ class CoopFactory(factory.DjangoModelFactory):
             for type in extracted:
                 self.types.add(type)
         else:
-            for n in range(1):
-                CoopTypeFactory()
-            #type = factory.SubFactory(CoopTypeFactory)
-            #print("\n\n\n\ntype:")
-            #print(type(self.types))
-            #print("\n\n\n")
-            #self.types.set([type])
-            #self.types.add(type)
-            #self.types.all().set( (type) )
+            type = CoopTypeFactory()
+            self.types.add( type )
+

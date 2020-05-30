@@ -1,6 +1,6 @@
-from directory.models import Coop
+from directory.models import Coop, CoopType
 from address.models import State, Country, Locality
-from directory.serializers import CoopSerializer, CountrySerializer, StateSerializer
+from directory.serializers import CoopSerializer, CoopTypeSerializer, CountrySerializer, StateSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -81,6 +81,16 @@ class CoopDetail(APIView):
         coop = self.get_object(pk)
         coop.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CoopTypeList(APIView):
+    """
+    List all coop types 
+    """
+    def get(self, request, format=None):
+        coop_types = CoopType.objects.all()
+        serializer = CoopTypeSerializer(coop_types, many=True)
+        return Response(serializer.data)
 
 
 class CountryList(APIView):
