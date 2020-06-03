@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {FormGroup} from 'react-bootstrap';
 
 /* Import Components */
-import Input from '../components/Input';  
+import Input from '../components/Input'; 
+import CoopTypes from '../components/CoopTypes'; 
 import Country from '../components/Country';
 import Province from '../components/Province';
 import Button from '../components/Button'
@@ -20,9 +21,7 @@ class FormContainer extends Component {
       errors: [],
       newCoop: {
         name: '',
-        types: [{
-          name: ''
-        }],
+        types: [],
         address: {
           formatted: '',
           locality: {
@@ -42,7 +41,8 @@ class FormContainer extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleCoopTypeAddition = this.handleCoopTypeAddition.bind(this);
+    this.handleCoopTypeDeletion = this.handleCoopTypeDeletion.bind(this);
   }
 
   /* This life cycle hook gets executed when the component mounts */
@@ -80,23 +80,29 @@ class FormContainer extends Component {
     // Logic for resetting the form
   }
 
+  handleCoopTypeAddition(tag) {
+    const types = this.state.newCoop.types;
+    types[types.length] = {name: tag.text};
+    this.setState({
+      newCoop: { ...this.state.newCoop, types: types }
+    });
+  }
+
+  handleCoopTypeDeletion(i) {
+    const types = this.state.newCoop.types;
+    console.log("removing " + i);
+    console.log(types.filter((type, index) => index !== i));
+    this.setState({
+      newCoop: { ...this.state.newCoop, types: types.filter((type, index) => index !== i) }
+    });
+  }
+
   handleInput(e) {
     let self=this
     let value = e.target.value;
     let name = e.target.name;
     //update State
     this.setValue(self.state.newCoop,name,value)
-  }
-
-  handleTypeChange(e) {
-    let self=this
-    let value = e.target.value;
-    let name = e.target.name;
-    //update State
-    this.setState({
-      newCoop: { ...this.state.newCoop, types: [{ name: e.target.value }] }
-    });
-    //this.setState({newCoop: types[0].name = value}); 
   }
 
 
@@ -112,6 +118,9 @@ class FormContainer extends Component {
   }
 
   render() {
+    if (this.state.coopTypes && !this.state.coopTypes.length) {
+      return null;
+    }
     return (
       <div>
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
@@ -127,14 +136,15 @@ class FormContainer extends Component {
                    errors = {this.state.errors} 
                    /> {/* Name of the cooperative */}
  
-                <Input inputType={'text'}
-                   title= {'Type'} 
-                   name= {'types[0].name'}
-                   value={this.state.newCoop.types[0].name} 
-                   placeholder = {'Enter cooperative type'}
-                   handleChange = {this.handleTypeChange}
-                   errors = {this.state.errors} 
-                   /> {/* Type of the cooperative */}
+                <CoopTypes 
+                  name={'types'}
+                  suggestions={this.state.coopTypes} 
+                  values={this.state.newCoop.types}
+                  placeholder = {'Enter coop type(s)'}
+                  handleAddition = {this.handleCoopTypeAddition}
+                  handleDeletion = {this.handleCoopTypeDeletion}
+                  errors = {this.state.errors}
+                /> {/* Coop Type Selection */}
  
                 <Input inputType={'text'}
                    title= {'Street'} 
@@ -230,6 +240,7 @@ class FormContainer extends Component {
   componentDidMount() {
     let initialCountries = [];
     let initialProvinces = [];
+    let coopTypes = [];
     // Get initial countries 
     fetch(FormContainer.REACT_APP_PROXY + '/countries/')
         .then(response => {
@@ -254,6 +265,20 @@ class FormContainer extends Component {
             provinces: initialProvinces,
         });
     });
+    // Get all possible coop types 
+    fetch(FormContainer.REACT_APP_PROXY + '/coop_types/')
+        .then(response => {
+            return response.json();
+        }).then(data => {
+        coopTypes = data.map((coopType) => {
+            return coopType
+        });
+        console.log("coop types:");
+        console.log(coopTypes);
+        this.setState({
+            coopTypes: coopTypes,
+        });
+    });    
   }
 }
 
