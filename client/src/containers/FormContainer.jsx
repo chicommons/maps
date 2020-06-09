@@ -41,6 +41,7 @@ class FormContainer extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handlePhoneInput = this.handlePhoneInput.bind(this);
     this.handleCoopTypeAddition = this.handleCoopTypeAddition.bind(this);
     this.handleCoopTypeDeletion = this.handleCoopTypeDeletion.bind(this);
   }
@@ -53,7 +54,7 @@ class FormContainer extends Component {
     delete NC.address.country;
 
     try {
-      console.log("proxy: " + FormContainer.REACT_APP_PROXY);  
+      console.log("about to fetch ...");
       const response = await fetch(FormContainer.REACT_APP_PROXY + '/coops/',{
         method: "POST",
         body: JSON.stringify(this.state.newCoop),
@@ -63,9 +64,11 @@ class FormContainer extends Component {
         },
       });
 
+      console.log("response:" + response.ok);
       if (response.ok) {
         const result = await response.json();
-        window.flash('Record has been created successfully!', 'success') 
+        window.scrollTo(0, 0);
+        window.flash('Record has been created successfully!', 'success');
         this.handleClearForm();
         return result;
       }
@@ -101,10 +104,22 @@ class FormContainer extends Component {
     let self=this
     let value = e.target.value;
     let name = e.target.name;
-    //update State
     this.setValue(self.state.newCoop,name,value)
   }
 
+  /**
+   * Verify phone field conforms to US phone (10 digits)
+   * 
+   * @param  e 
+   */
+  handlePhoneInput(e) {
+    let self=this
+    let value = e.target.value.replace(/\D/,'');
+    value = value.length > 10 ? value.substring(0, 10) : value;
+    let name = e.target.name;
+    //update phone
+    this.setValue(self.state.newCoop,name,value)    
+  }
 
   setValue = (obj,is, value) => {
        if (typeof is == 'string')
@@ -203,7 +218,7 @@ class FormContainer extends Component {
                    name= {'phone'}
                    value={this.state.newCoop.phone} 
                    placeholder = {'Enter phone number'}
-                   handleChange = {this.handleInput}
+                   handleChange = {this.handlePhoneInput}
                    errors = {this.state.errors} 
                    /> {/* Phone number of the cooperative */}
 

@@ -50,7 +50,7 @@ class Coop(models.Model):
     objects = CoopManager()
     name = models.CharField(max_length=250, null=False)
     types = models.ManyToManyField(CoopType)
-    address = AddressField(on_delete=models.CASCADE)
+    addresses = models.ManyToManyField(Address)
     enabled = models.BooleanField(default=True, null=False)
     phone = PhoneNumberField(null=True)
     email = models.EmailField(null=True)

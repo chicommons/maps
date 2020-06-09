@@ -49,8 +49,6 @@ class CoopTypes extends React.Component {
                 id: result.name,
                 text: result.name
             }));
-        console.log("tags ...");
-        console.log(tags);
         this.state = {
             tags: tags,
             suggestions: this.props.suggestions ? this.props.suggestions.map(result => ({

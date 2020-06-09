@@ -45,6 +45,7 @@ services:
       - REACT_APP_PROXY=http://localhost:9090
     depends_on:
       - web
+    stdin_open: true
 
   apache:
     restart: always
