@@ -79,11 +79,11 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True)
-    address = AddressTypeField()
+    addresses = AddressTypeField(many=True)
 
     class Meta:
         model = Coop
-        fields = ['id', 'name', 'types', 'address', 'phone', 'enabled', 'email', 'web_site']
+        fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
         extra_kwargs = {
             'phone': {
                 'required': False, 
@@ -94,7 +94,7 @@ class CoopSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['types'] = CoopTypeSerializer(instance.types.all(), many=True).data
-        rep['address'] = AddressSerializer(instance.address).data
+        rep['addresses'] = AddressSerializer(instance.addresses.all(), many=True).data
         return rep
 
     def create(self, validated_data):
@@ -115,7 +115,6 @@ class CoopSerializer(serializers.ModelSerializer):
         Update and return an existing `Coop` instance, given the validated data.
         """
         instance.name = validated_data.get('name', instance.name)
-        #instance.type = validated_data.get('type', instance.type)
         try:
             coop_types = validated_data['types']
             instance.types.clear()  # Disassociates all  CoopTypes from instance.
@@ -124,7 +123,7 @@ class CoopSerializer(serializers.ModelSerializer):
                 instance.types.add(coop_type)
         except KeyError:
             pass
-        instance.address = validated_data.get('address', instance.address)
+        instance.addresses = validated_data.get('addresses', instance.addresses)
         instance.enabled = validated_data.get('enabled', instance.enabled)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.email = validated_data.get('email', instance.email)

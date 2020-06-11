@@ -34,7 +34,8 @@ class ModelTests(TestCase):
         coop_from_factory = CoopFactory()
         self.assertIsNotNone(coop_from_factory)
 
-        coop = Coop.objects.create(name='test', address=coop_from_factory.address)
+        coop = Coop.objects.create(name='test')
+        coop.addresses.set(coop_from_factory.addresses.all()) 
         self.assertIsNotNone(coop)
 
     @pytest.mark.django_db
@@ -44,6 +45,6 @@ class ModelTests(TestCase):
         self.assertIsNotNone(coop_from_factory)
 
         coop_types = coop_from_factory.types
-        coop = CoopFactory.create(types=coop_types.all(), address=coop_from_factory.address)
+        coop = CoopFactory.create(types=coop_types.all(), addresses=coop_from_factory.addresses.all())
         self.assertIsNotNone(coop)
 

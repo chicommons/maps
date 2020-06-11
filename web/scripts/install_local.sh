@@ -24,9 +24,8 @@ fi
 read -p "What is the root MySql password? "  ROOT_MYSQL_PASSWORD
 
 create_db_command='create database if not exists $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
-#create_user_command="CREATE USER '$DB_USER'@'$DB_SERVICE' IDENTIFIED BY '$DB_PASS';"
-#grant_privs_command="grant all privileges on $DB_NAME.* to '$DB_USER'@'$DB_SERVICE';"  
-grant_privs_command="GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'$DB_SERVICE' IDENTIFIED BY '$DB_PASS';"
+create_user_command="CREATE USER '$DB_USER'@'$DB_SERVICE' IDENTIFIED BY '$DB_PASS';"
+grant_privs_command="GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'$DB_SERVICE';"
 
 mysql -u root --password=$ROOT_MYSQL_PASSWORD -h $DB_SERVICE --port=$DB_PORT -e "$create_db_command"
 #mysql -u root --password=$ROOT_MYSQL_PASSWORD -h $DB_SERVICE --port=$DB_PORT -e "$create_user_command"

@@ -13,11 +13,12 @@ read -d '' req << EOF
                 "name": "Chicago",
                 "postal_code": "60654",
                 "state": 19313
+            }
           }
         ],
         "enabled": true,
         "phone": "7739441426",
-        "email": "myemail",
+        "email": "myemail@example.com",
         "web_site": "http://www.1871.com/"
 }
 EOF

@@ -56,6 +56,24 @@ class Command(BaseCommand):
                 address_pk = address_pks.get(tuple([lat, lon])) 
                 enabled = row['Include'].lower() == 'yes'
                 if address_pk:
+                    # Output the contact methods
+                    if email:
+                        contact_email_pk = int(id) * 2
+                        print("- model: directory.contactmethod")
+                        print("  pk:",contact_email_pk)
+                        print("  fields:")
+                        print("    type: \"EMAIL\"")
+                        print("    email:",email)
+
+                    if phone:
+                        print("- model: directory.contactmethod")
+                        contact_phone_pk = int(id) * 2 + 1
+                        print("  pk:",contact_phone_pk)
+                        print("  fields:")
+                        print("    type: \"PHONE\"")
+                        print("    phone:",phone)
+
+                    # Output the coop
                     print("- model: directory.coop")
                     print("  pk:",id)
                     print("  fields:")
@@ -65,8 +83,10 @@ class Command(BaseCommand):
                     print("    addresses: [", address_pk, "]")
                     #print("    - [", address_pk, "]")                    
                     print("    enabled:",enabled)
-                    print("    phone:",phone)
-                    print("    email:",email)
+                    if phone:
+                        print("    phone:",contact_phone_pk)
+                    if email:
+                        print("    email:",contact_email_pk)
                     print("    web_site: \"",web_site,"\"", sep='')
 
     @staticmethod

@@ -1,10 +1,27 @@
 from django.db import models
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
-from address.models import Address, AddressField
+from address.models import Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
 
+
+class ContactMethod(models.Model):
+    class ContactTypes(models.TextChoices):
+        EMAIL = 'EMAIL', _('Email')
+        PHONE = 'PHONE', _('Phone')
+
+    type = models.CharField(
+        null=False,
+        max_length=5,
+        choices=ContactTypes.choices,
+    )
+    phone = PhoneNumberField(null=True)
+    email = models.EmailField(null=True)
+
+    class Meta:
+        unique_together = ('phone', 'email',)
 
 class CoopTypeManager(models.Manager):
 
@@ -52,9 +69,17 @@ class Coop(models.Model):
     types = models.ManyToManyField(CoopType)
     addresses = models.ManyToManyField(Address)
     enabled = models.BooleanField(default=True, null=False)
-    phone = PhoneNumberField(null=True)
-    email = models.EmailField(null=True)
+    phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
+    email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
+
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=250, null=False)
+    last_name = models.CharField(max_length=250, null=False)
+    coops = models.ManyToManyField(Coop)
+    contact_methods = models.ManyToManyField(ContactMethod)
+
 
 def country_get_by_natural_key(self, name):
     return self.get_or_create(name=name)[0]

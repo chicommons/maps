@@ -67,14 +67,14 @@ class ModelTests(TestCase):
             "types": [
                 {"name": coop_type_name}
             ],
-            "address": {
+            "addresses": [{
                 "formatted": street,
                 "locality": {
                     "name": city,
                     "postal_code": postal_code, 
                     "state_id": state.id
                 }
-            },
+            }],
             "enabled": enabled,
             "phone": phone,
             "email": email,
@@ -91,9 +91,9 @@ class ModelTests(TestCase):
             assert coop_type.name == coop_type_name
             type_count = type_count + 1
         assert type_count == 1
-        assert coop.address.locality.name == city
-        assert coop.address.locality.postal_code == postal_code
-        assert coop.address.locality.state.id == state.id
+        assert coop.addresses.first().locality.name == city
+        assert coop.addresses.first().locality.postal_code == postal_code
+        assert coop.addresses.first().locality.state.id == state.id
         assert coop.enabled == enabled
         assert coop.phone == phone
         assert coop.email == email

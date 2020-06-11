@@ -75,11 +75,25 @@ class CoopFactory(factory.DjangoModelFactory):
         model = Coop
 
     name = "test model"
-    address = factory.SubFactory(AddressFactory)
+    #address = factory.SubFactory(AddressFactory)
     enabled = True
     phone = "312-999-1234"
     email = "test@hello.com"
     web_site = "http://www.hello.com"
+
+    @factory.post_generation
+    def addresses(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted:
+            # A list of types were passed in, use them
+            for address in extracted:
+                self.addresses.add(address)
+        else:
+            address = AddressFactory()
+            self.addresses.add( address )
 
     @factory.post_generation
     def types(self, create, extracted, **kwargs):

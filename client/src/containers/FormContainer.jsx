@@ -22,7 +22,7 @@ class FormContainer extends Component {
       newCoop: {
         name: '',
         types: [],
-        address: {
+        addresses: [{
           formatted: '',
           locality: {
             name: '',
@@ -30,7 +30,7 @@ class FormContainer extends Component {
             state: ''
           },
           country: FormContainer.DEFAULT_COUNTRY,
-        },
+        }],
         enabled: true,
         email: '',
         phone: '',
@@ -64,7 +64,6 @@ class FormContainer extends Component {
         },
       });
 
-      console.log("response:" + response.ok);
       if (response.ok) {
         const result = await response.json();
         window.scrollTo(0, 0);
@@ -104,6 +103,9 @@ class FormContainer extends Component {
     let self=this
     let value = e.target.value;
     let name = e.target.name;
+    console.log(self.state.newCoop);
+    console.log("name:" + name);
+    console.log("value:" + value);
     this.setValue(self.state.newCoop,name,value)
   }
 
@@ -163,8 +165,8 @@ class FormContainer extends Component {
  
                 <Input inputType={'text'}
                    title= {'Street'} 
-                   name= {'address.formatted'}
-                   value={this.state.newCoop.address.formatted} 
+                   name= {'addresses[0].formatted'}
+                   value={this.state.newCoop.addresses[0].formatted} 
                    placeholder = {'Enter address street'}
                    handleChange = {this.handleInput}
                    errors = {this.state.errors} 
@@ -172,33 +174,33 @@ class FormContainer extends Component {
  
                 <Input inputType={'text'}
                    title= {'City'} 
-                   name= {'address.locality.name'}
-                   value={this.state.newCoop.address.locality.name} 
+                   name= {'addresses[0].locality.name'}
+                   value={this.state.newCoop.addresses[0].locality.name} 
                    placeholder = {'Enter address city'}
                    handleChange = {this.handleInput}
                    errors = {this.state.errors} 
                    /> {/* Address city of the cooperative */}
         
               <Country title={'Country'}
-                  name={'address.country'}
+                  name={'addresses[0].country'}
                   options = {this.state.countries} 
-                  value = {this.state.newCoop.address.country}
+                  value = {this.state.newCoop.addresses[0].country}
                   placeholder = {'Select Country'}
                   handleChange = {this.handleInput}
                   /> {/* Country Selection */}
 
               <Province title={'State'}
-                  name={'address.locality.state'}
+                  name={'addresses[0].locality.state'}
                   options = {this.state.provinces} 
-                  value = {this.state.newCoop.address.locality.state}
+                  value = {this.state.newCoop.addresses[0].locality.state}
                   placeholder = {'Select State'}
                   handleChange = {this.handleInput}
                   /> {/* State Selection */}
 
               <Input inputType={'text'}
                    title= {'Postal Code'} 
-                   name= {'address.locality.postal_code'}
-                   value={this.state.newCoop.address.locality.postal_code} 
+                   name= {'addresses[0].locality.postal_code'}
+                   value={this.state.newCoop.addresses[0].locality.postal_code} 
                    placeholder = {'Enter postal code'}
                    handleChange = {this.handleInput}
                    errors = {this.state.errors} 
