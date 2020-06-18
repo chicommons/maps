@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from directory.models import Coop, CoopType
+from directory.models import Coop, CoopType, ContactMethod
 from address.models import Address, AddressField, Locality, State, Country 
 from geopy.geocoders import Nominatim
 
@@ -43,6 +43,24 @@ class LocalityTypeField(serializers.PrimaryKeyRelatedField):
         return super().to_internal_value(data)
 
 
+class ContactMethodSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactMethod
+        fields = ['type', 'phone', 'email']
+
+    def create(self, validated_data):
+        contact_method = ContactMethod.objects.create(**validated_data)
+        return contact_method
+
+    def to_internal_value(self, data):
+        if type(data) == dict:
+            contatcmethod, created = CoopType.objects.create(**data)
+            # Replace the dict with the ID of the newly obtained object
+            data = contactmethod.pk
+        return super().to_internal_value(data)
+
+
 class CoopTypeSerializer(serializers.ModelSerializer):
     default_error_messages = {'name_exists': 'The name already exists'}
 
@@ -77,19 +95,37 @@ class CoopTypeSerializer(serializers.ModelSerializer):
         return CoopType.objects.get_or_create(**validated_data)[0]
 
 
+class ContactMethodPhoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMethod
+        fields = ['type', 'phone']
+        read_only_fields = ['type']
+        extra_kwargs = {'type': {'default': 'PHONE'}}
+
+
+class ContactMethodEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMethod
+        fields = ['type', 'email']
+        read_only_fields = ['type']
+        extra_kwargs = {'type': {'default': 'EMAIL'}}
+
+
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True)
     addresses = AddressTypeField(many=True)
+    phone = ContactMethodPhoneSerializer()
+    email = ContactMethodEmailSerializer()
 
     class Meta:
         model = Coop
         fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
-        extra_kwargs = {
-            'phone': {
-                'required': False, 
-                'allow_blank': True
-            }
-        }
+        #extra_kwargs = {
+        #    'phone': {
+        #        'required': False, 
+        #        'allow_blank': True
+        #    }
+        #}
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -103,11 +139,15 @@ class CoopSerializer(serializers.ModelSerializer):
         #"""
 
         coop_types = validated_data.pop('types', {})
+        #phone = validated_data.pop('phone', {})
+        #email = validated_data.pop('email', {})
         instance = super().create(validated_data)
         for item in coop_types:
-            coop_type, _ = CoopType.objects.get_or_create(name=item['name'])  #**item)
+            coop_type, _ = CoopType.objects.get_or_create(name=item['name']) 
             instance.types.add(coop_type)
-
+        print("phone:",phone)
+        #instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, phone=phone.phone)
+        #instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, email=email.email)
         return instance
 
     def update(self, instance, validated_data):

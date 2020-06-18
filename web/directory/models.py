@@ -23,6 +23,7 @@ class ContactMethod(models.Model):
     class Meta:
         unique_together = ('phone', 'email',)
 
+
 class CoopTypeManager(models.Manager):
 
     def get_by_natural_key(self, name):

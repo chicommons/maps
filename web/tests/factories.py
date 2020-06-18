@@ -1,6 +1,6 @@
 import factory
 from django.db import models
-from directory.models import CoopType, Coop
+from directory.models import CoopType, Coop, ContactMethod
 from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
@@ -40,6 +40,7 @@ class LocalityFactory(factory.DjangoModelFactory):
     postal_code = "60605"
     state = factory.SubFactory(StateFactory) 
 
+
 class AddressFactory(factory.DjangoModelFactory):
     """
         Define Address Factory
@@ -55,6 +56,28 @@ class AddressFactory(factory.DjangoModelFactory):
     latitude = 87.1234
     longitude = -100.12342
     locality = factory.SubFactory(LocalityFactory)
+
+
+class PhoneContactMethodFactory(factory.DjangoModelFactory):
+    """
+        Define Contact Method Factory for a phone number 
+    """
+    class Meta:
+        model = ContactMethod
+
+    type = ContactMethod.ContactTypes.EMAIL
+    phone = "8005551234"
+
+
+class EmailContactMethodFactory(factory.DjangoModelFactory):
+    """
+        Define Contact Method Factory for emails 
+    """
+    class Meta:
+        model = ContactMethod
+
+    type = ContactMethod.ContactTypes.EMAIL
+    email = "test@example.com"
 
 
 class CoopTypeFactory(factory.DjangoModelFactory):
@@ -75,10 +98,9 @@ class CoopFactory(factory.DjangoModelFactory):
         model = Coop
 
     name = "test model"
-    #address = factory.SubFactory(AddressFactory)
     enabled = True
-    phone = "312-999-1234"
-    email = "test@hello.com"
+    phone = factory.SubFactory(PhoneContactMethodFactory)
+    email = factory.SubFactory(EmailContactMethodFactory) 
     web_site = "http://www.hello.com"
 
     @factory.post_generation

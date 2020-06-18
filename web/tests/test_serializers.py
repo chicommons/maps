@@ -1,6 +1,6 @@
 import pytest
 from django.test import TestCase
-from .factories import CoopTypeFactory, CoopFactory, AddressFactory, StateFactory
+from .factories import CoopTypeFactory, CoopFactory, AddressFactory, StateFactory, EmailContactMethodFactory, PhoneContactMethodFactory
 from directory.models import Coop, CoopType
 from directory.serializers import *
 
@@ -50,7 +50,6 @@ class ModelTests(TestCase):
     @pytest.mark.django_db
     def test_coop_create(self):
         """ Test coop serizlizer model """
-        print("\n\n\n\n========= start ===========\n")
         name = "Test 8899"
         coop_type_name = "Library"
         street = "222 W. Merchandise Mart Plaza, Suite 1212"
@@ -58,8 +57,8 @@ class ModelTests(TestCase):
         postal_code = "60654"
         enabled = True
         postal_code = "60654"
-        email = "myemail@hello.com"
-        phone = "7739441426"
+        email = "test@example.com"
+        phone = "7732441468"
         web_site = "http://www.1871.com"
         state = StateFactory()
         serializer_data = {
@@ -76,8 +75,12 @@ class ModelTests(TestCase):
                 }
             }],
             "enabled": enabled,
-            "phone": phone,
-            "email": email,
+            "phone": {
+              "phone": phone
+            },
+            "email": {
+              "email": email
+            },
             "web_site": web_site
         }
 
@@ -95,6 +98,6 @@ class ModelTests(TestCase):
         assert coop.addresses.first().locality.postal_code == postal_code
         assert coop.addresses.first().locality.state.id == state.id
         assert coop.enabled == enabled
-        assert coop.phone == phone
-        assert coop.email == email
+        assert coop.phone.phone == phone
+        assert coop.email.email == email
         assert coop.web_site == web_site 
