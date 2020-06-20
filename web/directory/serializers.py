@@ -139,15 +139,17 @@ class CoopSerializer(serializers.ModelSerializer):
         #"""
 
         coop_types = validated_data.pop('types', {})
-        #phone = validated_data.pop('phone', {})
-        #email = validated_data.pop('email', {})
+        phone = validated_data.pop('phone', {})
+        email = validated_data.pop('email', {})
         instance = super().create(validated_data)
         for item in coop_types:
             coop_type, _ = CoopType.objects.get_or_create(name=item['name']) 
             instance.types.add(coop_type)
         print("phone:",phone)
+        instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
         #instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, phone=phone.phone)
         #instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, email=email.email)
+        instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
         return instance
 
     def update(self, instance, validated_data):
