@@ -9,7 +9,7 @@ import Province from '../components/Province';
 import Button from '../components/Button'
 
 class FormContainer extends Component {  
-  static DEFAULT_COUNTRY = 484
+  static DEFAULT_COUNTRY_CODE = 'US'
   static REACT_APP_PROXY = process.env.REACT_APP_PROXY
 
   constructor(props) {
@@ -29,7 +29,7 @@ class FormContainer extends Component {
             postal_code: '',
             state: ''
           },
-          country: FormContainer.DEFAULT_COUNTRY,
+          country: FormContainer.DEFAULT_COUNTRY_CODE,
         }],
         enabled: true,
         email: '',
@@ -106,7 +106,24 @@ class FormContainer extends Component {
     console.log(self.state.newCoop);
     console.log("name:" + name);
     console.log("value:" + value);
-    this.setValue(self.state.newCoop,name,value)
+    //this.setValue(self.state.newCoop,name,value)
+    const keys = name.split(/[\[\].]+/);
+    this.setState(this.updateValue(this.state, keys, value));
+  }
+
+  updateValue = (obj, name, value, index = 0) => {
+    if (name.length - 1 > index) {
+        const isArray = Array.isArray(obj[name[index]]);
+        obj[name[index]] = this.updateValue(
+            isArray ? [...obj[name[index]]] : { ...obj[name[index]] },
+            name,
+            value,
+            index + 1
+        );
+    } else {
+        obj = { ...obj, [name[index]]: value };
+    }
+    return obj;
   }
 
   /**
@@ -165,7 +182,7 @@ class FormContainer extends Component {
  
                 <Input inputType={'text'}
                    title= {'Street'} 
-                   name= {'addresses[0].formatted'}
+                   name= {'newCoop.addresses[0].formatted'}
                    value={this.state.newCoop.addresses[0].formatted} 
                    placeholder = {'Enter address street'}
                    handleChange = {this.handleInput}
@@ -174,7 +191,7 @@ class FormContainer extends Component {
  
                 <Input inputType={'text'}
                    title= {'City'} 
-                   name= {'addresses[0].locality.name'}
+                   name= {'newCoop.addresses[0].locality.name'}
                    value={this.state.newCoop.addresses[0].locality.name} 
                    placeholder = {'Enter address city'}
                    handleChange = {this.handleInput}
@@ -182,7 +199,7 @@ class FormContainer extends Component {
                    /> {/* Address city of the cooperative */}
         
               <Country title={'Country'}
-                  name={'addresses[0].country'}
+                  name={'newCoop.addresses[0].country'}
                   options = {this.state.countries} 
                   value = {this.state.newCoop.addresses[0].country}
                   placeholder = {'Select Country'}
@@ -190,7 +207,7 @@ class FormContainer extends Component {
                   /> {/* Country Selection */}
 
               <Province title={'State'}
-                  name={'addresses[0].locality.state'}
+                  name={'newCoop.addresses[0].locality.state'}
                   options = {this.state.provinces} 
                   value = {this.state.newCoop.addresses[0].locality.state}
                   placeholder = {'Select State'}
@@ -199,7 +216,7 @@ class FormContainer extends Component {
 
               <Input inputType={'text'}
                    title= {'Postal Code'} 
-                   name= {'addresses[0].locality.postal_code'}
+                   name= {'newCoop.addresses[0].locality.postal_code'}
                    value={this.state.newCoop.addresses[0].locality.postal_code} 
                    placeholder = {'Enter postal code'}
                    handleChange = {this.handleInput}
@@ -271,7 +288,7 @@ class FormContainer extends Component {
         });
     });
     // Get initial provinces (states) 
-    fetch(FormContainer.REACT_APP_PROXY + '/states/' + FormContainer.DEFAULT_COUNTRY)
+    fetch(FormContainer.REACT_APP_PROXY + '/states/' + FormContainer.DEFAULT_COUNTRY_CODE)
         .then(response => {
             return response.json();
         }).then(data => {

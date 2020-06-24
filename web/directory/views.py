@@ -107,14 +107,15 @@ class StateList(APIView):
     """
     List all states based on country 
     """
-    def get_object(self, pk):
+    def get_object(self, country_code):
         try:
-            return State.objects.filter(country=pk)
+            return State.objects.first(country__code=country_code) 
+            #return State.objects.filter(country=pk)
         except Coop.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        states = State.objects.filter(country=pk)
+    def get(self, request, country_code, format=None):
+        states = State.objects.filter(country__code=country_code)
         serializer = StateSerializer(states, many=True)
         return Response(serializer.data)
 
