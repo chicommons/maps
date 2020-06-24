@@ -22,11 +22,11 @@ from django.core.wsgi import get_wsgi_application
 # adjust the Python version in the line below as needed
 #sys.path.append('/var/www/html/web/venv/lib/python3.6/site-packages')
 
-#os.environ['DB_NAME'] = "directory_data"
-#os.environ['DB_USER'] = "chicommons"
-#os.environ['DB_PASS'] = "ChiCommons1$"
-#os.environ['DB_SERVICE'] = "localhost"
-#os.environ['DB_PORT'] = "3306"
+os.environ['DB_NAME'] = "directory_data"
+os.environ['DB_USER'] = "chicommons"
+os.environ['DB_PASS'] = "ChiCommons1$"
+os.environ['DB_SERVICE'] = "localhost"
+os.environ['DB_PORT'] = "3306"
 
 try:
     application = get_wsgi_application()
