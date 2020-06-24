@@ -15,13 +15,14 @@ def data(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="data.csv"'
 
-    writer = csv.writer(response)
+    writer = csv.writer(response, quoting=csv.QUOTE_ALL)
     writer.writerow(['name','address','city','postal code','type','website','lon','lat'])
     type = request.GET.get("type", "")
     contains = request.GET.get("contains", "")
     if type:
         coops = Coop.objects.get_by_type(type)
     elif contains:
+        print("containns:",contains)
         coops = Coop.objects.contains_type(contains.split(","))
 
     for coop in coops.order_by(Lower('name')):
