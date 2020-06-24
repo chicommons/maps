@@ -6,6 +6,7 @@ class Country extends React.Component {
         let optionItems = countries.map((country) =>
                 <option key={country.id} value={country.id}>{country.name}</option>
             );
+        const country = countries.find(country => country.code === this.props.countryCode);
 
         return (
           <div className="form-group">
@@ -13,7 +14,7 @@ class Country extends React.Component {
 	    <select
 		      id = {this.props.name}
 		      name={this.props.name}
-		      value={this.props.value}
+		      value={country?.id}
 		      onChange={this.props.handleChange}
 		      className="form-control">
 		      <option value="" disabled>{this.props.placeholder}</option>

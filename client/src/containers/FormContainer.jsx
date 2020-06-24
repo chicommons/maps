@@ -29,7 +29,9 @@ class FormContainer extends Component {
             postal_code: '',
             state: ''
           },
-          country: FormContainer.DEFAULT_COUNTRY_CODE,
+          country: {
+            code: FormContainer.DEFAULT_COUNTRY_CODE,
+          }
         }],
         enabled: true,
         email: '',
@@ -201,7 +203,7 @@ class FormContainer extends Component {
               <Country title={'Country'}
                   name={'newCoop.addresses[0].country'}
                   options = {this.state.countries} 
-                  value = {this.state.newCoop.addresses[0].country}
+                  countryCode = {this.state.newCoop.addresses[0].country.code}
                   placeholder = {'Select Country'}
                   handleChange = {this.handleInput}
                   /> {/* Country Selection */}
@@ -307,8 +309,6 @@ class FormContainer extends Component {
         coopTypes = data.map((coopType) => {
             return coopType
         });
-        console.log("coop types:");
-        console.log(coopTypes);
         this.setState({
             coopTypes: coopTypes,
         });
