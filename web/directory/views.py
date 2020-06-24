@@ -25,10 +25,11 @@ def data(request):
         coops = Coop.objects.contains_type(contains.split(","))
 
     for coop in coops.order_by(Lower('name')):
-        postal_code = coop.address.locality.postal_code
-        city = coop.address.locality.name + ", " + coop.address.locality.state.code + " " + postal_code 
-        coop_types = ', '.join([type.name for type in coop.types.all()]) 
-        writer.writerow([coop.name, coop.address.formatted, city, postal_code, coop_types, coop.web_site, coop.address.latitude, coop.address.longitude])
+        for address in coop.addresses.all():
+            postal_code = address.locality.postal_code
+            city = address.locality.name + ", " + address.locality.state.code + " " + postal_code 
+            coop_types = ', '.join([type.name for type in coop.types.all()]) 
+            writer.writerow([coop.name, address.formatted, city, postal_code, coop_types, coop.web_site, address.latitude, address.longitude])
 
     return response
 
