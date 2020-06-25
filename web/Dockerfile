@@ -6,12 +6,13 @@ RUN apt-get install -y libmariadb-dev-compat libmariadb-dev
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc \
     && rm -rf /var/lib/apt/lists/*
-#RUN apt-get install libgdal-dev
-RUN apt-get update &&\
-    apt-get install -y binutils libproj-dev gdal-bin
-RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
-RUN export C_INCLUDE_PATH=/usr/include/gdal
 
+#RUN apt-get update && \
+#    apt-get install -y --reinstall build-essential && \
+#    apt-get install -y gdal-bin libgdal-dev && \ 
+#    export CPLUS_INCLUDE_PATH=/usr/include/gdal && \ 
+#    export C_INCLUDE_PATH=/usr/include/gdal && \ 
+#    apt-get install -y libcurl4-gnutls-dev libgnutls28-dev 
 
 RUN python -m pip install --upgrade pip
 
