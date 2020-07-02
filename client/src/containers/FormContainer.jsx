@@ -105,12 +105,12 @@ class FormContainer extends Component {
     let self=this
     let value = e.target.value;
     let name = e.target.name;
-    console.log(self.state.newCoop);
-    console.log("name:" + name);
-    console.log("value:" + value);
-    //this.setValue(self.state.newCoop,name,value)
-    const keys = name.split(/[\[\].]+/);
-    this.setState(this.updateValue(this.state, keys, value));
+    if (name.indexOf('[') == -1) {
+        this.setValue(self.state.newCoop,name,value)
+    } else {
+        const keys = name.split(/[\[\].]+/);
+        this.setState(this.updateValue(this.state, keys, value));
+    }
   }
 
   updateValue = (obj, name, value, index = 0) => {
@@ -302,17 +302,21 @@ class FormContainer extends Component {
         });
     });
     // Get all possible coop types 
+    console.log("getting coop types ...");
     fetch(FormContainer.REACT_APP_PROXY + '/coop_types/')
         .then(response => {
             return response.json();
         }).then(data => {
+        console.log(data);
         coopTypes = data.map((coopType) => {
             return coopType
         });
+        console.log("coop types:");
+        console.log(coopTypes); 
         this.setState({
             coopTypes: coopTypes,
-        });
-    });    
+        }); 
+    });
   }
 }
 

@@ -5,7 +5,7 @@ from directory.models import Coop, CoopType
 from directory.serializers import *
 
 
-class ModelTests(TestCase):
+class SerializerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         print("setUpTestData: Run once to set up non-modified data for all class methods.")

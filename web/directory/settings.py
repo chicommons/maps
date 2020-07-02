@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'address',
     'django_extensions',
     'corsheaders',
+    'pytest',
 ]
 
 MIDDLEWARE = [

@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "env-cmd": "^10.1.0",
     "jquery": "^1.9.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -24,8 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "NODE_ENV=development react-scripts build",
-    "build:test": "NODE_ENV=test react-scripts build",
-    "build:prod": "NODE_ENV=production react-scripts build",
+    "build:test": "env-cmd -f .env.test react-scripts build",
+    "build:prod": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
