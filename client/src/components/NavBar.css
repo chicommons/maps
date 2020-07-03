@@ -1,8 +1,9 @@
-.fixed-bottom, .fixed-top {
-position: initial;
-right: 0;
-left: 0;
-z-index: 1030;
+.fixed-bottom,
+.fixed-top {
+  position: initial;
+  right: 0;
+  left: 0;
+  z-index: 1030;
 }
 
 .hamburgerDropDown {
@@ -11,7 +12,7 @@ z-index: 1030;
   position: absolute;
   top: 50px;
   right: -1rem;
-} 
+}
 
 ul.hamburgerDropDown {
   padding: 10px;
