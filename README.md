@@ -11,7 +11,7 @@ docker-compose up
 ```
 
 Visit http://localhost:3001/ to see the application.
-
+ 
 ## Local setup (without Docker)
 
 If you want to get things running locally without using Docker, you must install
