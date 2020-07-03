@@ -1,5 +1,5 @@
 # maps
-
+ 
 ## Getting up and running via Docker 
 
 To get the application running locally, verify docker and docker-compose are installed, and then run ...
