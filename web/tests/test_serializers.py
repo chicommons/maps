@@ -71,7 +71,7 @@ class SerializerTests(TestCase):
                 "locality": {
                     "name": city,
                     "postal_code": postal_code, 
-                    "state_id": state.id
+                    "state": state.id
                 }
             }],
             "enabled": enabled,

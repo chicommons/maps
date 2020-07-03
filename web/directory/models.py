@@ -96,7 +96,6 @@ setattr(State._meta, 'default_manager', StateCustomManager())
 
 class LocalityCustomManager(models.Manager):
     def get_by_natural_key(self, city, postal_code, state):
-        state = State.objects.get(id=state)[0]
         return Locality.objects.get_or_create(city=city, postal_code=postal_code, state=state)[0]
 
 setattr(Locality._meta, 'default_manager', LocalityCustomManager())

@@ -23,6 +23,8 @@ class AddressTypeField(serializers.PrimaryKeyRelatedField):
     def to_internal_value(self, data):
         if type(data) == dict:
             locality = data['locality']
+            state = State.objects.get(id=locality['state'])
+            locality['state'] = state
             locality, created = Locality.objects.get_or_create(**locality)
             data['locality'] = locality
             address = Address.objects.create(**data)

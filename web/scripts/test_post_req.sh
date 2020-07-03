@@ -12,13 +12,17 @@ read -d '' req << EOF
             "locality": {
                 "name": "Chicago",
                 "postal_code": "60654",
-                "state": 19313
+                "state": "19313" 
             }
           }
         ],
-        "enabled": true,
-        "phone": "7739441426",
-        "email": "myemail@example.com",
+        "enabled": "true",
+        "phone": {
+          "phone": "7739441426"
+        },
+        "email": {
+          "email" : "myemail@example.com"
+        },
         "web_site": "http://www.1871.com/"
 }
 EOF

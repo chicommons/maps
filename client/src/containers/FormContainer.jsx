@@ -8,18 +8,8 @@ import Country from "../components/Country";
 import Province from "../components/Province";
 import Button from "../components/Button";
 
-class FormContainer extends Component {
-  static DEFAULT_COUNTRY_CODE = "US";
-  static REACT_APP_PROXY = process.env.REACT_APP_PROXY;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      countries: [],
-      provinces: [],
-      errors: [],
-      newCoop: {
+const initNewCoop = () => {
+  return {
         name: "",
         types: [],
         addresses: [
@@ -33,13 +23,31 @@ class FormContainer extends Component {
             country: {
               code: FormContainer.DEFAULT_COUNTRY_CODE,
             },
-          },
+          }
         ],
         enabled: true,
-        email: "",
-        phone: "",
+        email: {
+          email: ""
+        },
+        phone: {
+          phone: ""
+        },
         web_site: "",
-      },
+      }
+}
+
+class FormContainer extends Component {
+  static DEFAULT_COUNTRY_CODE = "US";
+  static REACT_APP_PROXY = process.env.REACT_APP_PROXY;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      countries: [],
+      provinces: [],
+      errors: [],
+      newCoop: initNewCoop(),
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
@@ -53,14 +61,14 @@ class FormContainer extends Component {
 
   async handleFormSubmit(e) {
     e.preventDefault();
-    const NC = this.state.newCoop;
-    delete NC.address.country;
+    // Make a copy of the object in order to remove unneeded properties
+    const NC = JSON.parse(JSON.stringify(this.state.newCoop)) 
+    delete NC.addresses[0].country;
 
     try {
-      console.log("about to fetch ...");
       const response = await fetch(FormContainer.REACT_APP_PROXY + "/coops/", {
         method: "POST",
-        body: JSON.stringify(this.state.newCoop),
+        body: JSON.stringify(NC),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -72,6 +80,8 @@ class FormContainer extends Component {
         window.scrollTo(0, 0);
         window.flash("Record has been created successfully!", "success");
         this.handleClearForm();
+        // reset state
+        this.setState({newCoop: initNewCoop()});
         return result;
       }
       throw await response.json();
@@ -110,7 +120,7 @@ class FormContainer extends Component {
     let self = this;
     let value = e.target.value;
     let name = e.target.name;
-    if (name.indexOf("[") == -1) {
+    if (name.indexOf("[") === -1) {
       this.setValue(self.state.newCoop, name, value);
     } else {
       const keys = name.split(/[\[\].]+/);
@@ -234,8 +244,8 @@ class FormContainer extends Component {
             <Input
               inputType={"text"}
               title={"Email"}
-              name={"email"}
-              value={this.state.newCoop.email}
+              name={"email.email"}
+              value={this.state.newCoop.email.email}
               placeholder={"Enter email"}
               handleChange={this.handleInput}
               errors={this.state.errors}
@@ -244,8 +254,8 @@ class FormContainer extends Component {
             <Input
               inputType={"text"}
               title={"Phone"}
-              name={"phone"}
-              value={this.state.newCoop.phone}
+              name={"phone.phone"}
+              value={this.state.newCoop.phone.phone}
               placeholder={"Enter phone number"}
               handleChange={this.handlePhoneInput}
               errors={this.state.errors}
