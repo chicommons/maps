@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
 import Add from "./components/Add";
+import Edit from "./components/Edit";
 import Search from "./components/Search";
 import { Flash } from "./components/Flash";
 import Bus from "./components/Utils/Bus";
@@ -28,6 +29,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Add} />
               <Route path="/add" component={Add} />
+              <Route path="/edit/:id" component={Edit} />
               <Route path="/search" component={Search} />
             </Switch>
           </div>

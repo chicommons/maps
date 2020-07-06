@@ -245,7 +245,7 @@ class FormContainer extends Component {
               inputType={"text"}
               title={"Email"}
               name={"email.email"}
-              value={this.state.newCoop.email.email}
+              value={this.state.newCoop.email?.email}
               placeholder={"Enter email"}
               handleChange={this.handleInput}
               errors={this.state.errors}
@@ -255,7 +255,7 @@ class FormContainer extends Component {
               inputType={"text"}
               title={"Phone"}
               name={"phone.phone"}
-              value={this.state.newCoop.phone.phone}
+              value={this.state.newCoop.phone?.phone}
               placeholder={"Enter phone number"}
               handleChange={this.handlePhoneInput}
               errors={this.state.errors}
@@ -295,6 +295,24 @@ class FormContainer extends Component {
     let initialCountries = [];
     let initialProvinces = [];
     let coopTypes = [];
+    // Load form object, if present in URL 
+    const url = window.location.href; 
+    const id = url.split("/").pop();
+    if (id) {
+      fetch(FormContainer.REACT_APP_PROXY + "/coops/" + id)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const coop = data;
+          coop.addresses.map(address => {
+            address.country = FormContainer.DEFAULT_COUNTRY_CODE;  // address.locality.state.country.id;
+          });
+          this.setState({
+            newCoop: coop,
+          });
+        });
+    }
     // Get initial countries
     fetch(FormContainer.REACT_APP_PROXY + "/countries/")
       .then((response) => {
@@ -331,12 +349,9 @@ class FormContainer extends Component {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         coopTypes = data.map((coopType) => {
           return coopType;
         });
-        console.log("coop types loaded!");
-        console.log(coopTypes);
         this.setState({
           coopTypes: coopTypes,
         });

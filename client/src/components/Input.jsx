@@ -2,11 +2,14 @@ import React from "react";
 import { FormControl, FormLabel } from "react-bootstrap";
 
 const Input = (props) => {
+  const errorKey = ("props.errors." + props.name).replaceAll(".", "\?\.");
+  const errorsArr = eval(errorKey);
+
   return (
     <div className="form-group">
       <FormLabel>{props.title}</FormLabel>
       <FormControl
-        isInvalid={props.errors && Boolean(props.errors[props.name])}
+        isInvalid={props.errors && errorsArr}
         type={props.type}
         id={props.name}
         name={props.name}
@@ -15,9 +18,9 @@ const Input = (props) => {
         onChange={props.handleChange}
       />
 
-      {props.errors && props.errors[props.name] && (
+      {errorsArr && (
         <FormControl.Feedback type="invalid">
-          {props.errors[props.name].map((error, index) => (
+          {errorsArr.map((error, index) => (
             <div
               key={`field-error-${props.name}-${index}`}
               className="fieldError"
