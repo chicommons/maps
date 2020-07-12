@@ -3,8 +3,8 @@
   border-radius: 10px;
   position: absolute;
   top: 50px;
-  right: 10px;
   padding: 20px;
+  width: 100%;
   display: flex;
   align-items: center;
   z-index: 1111;
@@ -26,4 +26,30 @@
   color: white;
   cursor: pointer;
   margin-right: 10px;
+}
+
+.sample-enter {
+  opacity: 0;
+}
+
+.sample-enter-active {
+  opacity: 0.5;
+  transition: opacity 1000ms;
+}
+
+.sample-enter-done {
+  opacity: 1;
+}
+
+.sample-exit {
+  opacity: 1;
+}
+
+.sample-exit-active {
+  opacity: 0.5;
+  transition: opacity 1000ms;
+}
+
+.sample-exit-done {
+  opacity: 0;
 }

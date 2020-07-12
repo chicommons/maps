@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../Search.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
-import { PencilSquare } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { PencilSquare } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 export default class Search extends Component {
   constructor(props) {
@@ -55,12 +55,12 @@ export default class Search extends Component {
           <ListGroup variant="flush">
             {searchResults.map((item) => (
               <ListGroupItem key={item.id} value={item.name}>
-                {item.name} 
+                {item.name}
                 <span className="float-right">
-                  <Link to={"/edit/"+item.id}>
+                  <Link to={"/edit/" + item.id}>
                     <PencilSquare color="royalblue" size={26} />
                   </Link>
-              </span>
+                </span>
               </ListGroupItem>
             ))}
           </ListGroup>

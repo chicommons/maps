@@ -7,6 +7,8 @@ import NavBar from "./components/NavBar";
 import Add from "./components/Add";
 import Edit from "./components/Edit";
 import Search from "./components/Search";
+import AddPerson from "./components/people/AddPerson";
+import ListPeople from "./components/people/ListPeople";
 import { Flash } from "./components/Flash";
 import Bus from "./components/Utils/Bus";
 
@@ -31,6 +33,8 @@ function App() {
               <Route path="/add" component={Add} />
               <Route path="/edit/:id" component={Edit} />
               <Route path="/search" component={Search} />
+              <Route path="/:coop_id/people" component={AddPerson} />
+              <Route path="/:coop_id/listpeople" component={ListPeople} />
             </Switch>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Bus from "../Utils/Bus";
+import { CSSTransition } from "react-transition-group";
 
 import "./index.css";
 
@@ -29,12 +30,14 @@ export const Flash = () => {
 
   return (
     visibility && (
-      <div className={`alert alert-${type}`}>
-        <span className="close">
-          <strong>X</strong>
-        </span>
-        <p>{message}</p>
-      </div>
+      <CSSTransition in={visibility} timeout={1000} classNames="sample">
+        <div className={`alert alert-${type}`}>
+          <span className="close">
+            <strong>X</strong>
+          </span>
+          <p>{message}</p>
+        </div>
+      </CSSTransition>
     )
   );
 };

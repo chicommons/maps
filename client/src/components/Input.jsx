@@ -1,9 +1,9 @@
 import React from "react";
 import { FormControl, FormLabel } from "react-bootstrap";
+import _ from "lodash";
 
 const Input = (props) => {
-  const errorKey = ("props.errors." + props.name).replaceAll(".", "\?\.");
-  const errorsArr = eval(errorKey);
+  const errorsArr = _.get(props.errors, props.name);
 
   return (
     <div className="form-group">
