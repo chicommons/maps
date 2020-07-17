@@ -67,7 +67,7 @@ class CoopManager(models.Manager):
 class Coop(models.Model):
     objects = CoopManager()
     name = models.CharField(max_length=250, null=False)
-    types = models.ManyToManyField(CoopType)
+    types = models.ManyToManyField(CoopType, blank=False)
     addresses = models.ManyToManyField(Address)
     enabled = models.BooleanField(default=True, null=False)
     phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')

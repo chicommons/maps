@@ -16,7 +16,7 @@ export const Flash = () => {
       setType(type);
       setTimeout(() => {
         setVisibility(false);
-      }, 4000);
+      }, 5000);
     });
   }, []);
 
@@ -29,15 +29,18 @@ export const Flash = () => {
   });
 
   return (
-    visibility && (
-      <CSSTransition in={visibility} timeout={1000} classNames="sample">
-        <div className={`alert alert-${type}`}>
-          <span className="close">
-            <strong>X</strong>
-          </span>
-          <p>{message}</p>
-        </div>
-      </CSSTransition>
-    )
+    <CSSTransition
+      in={visibility}
+      appear={visibility}
+      timeout={500}
+      classNames="fade"
+    >
+      <div className={`alert alert-${type}`}>
+        <span className="close">
+          <strong>X</strong>
+        </span>
+        <p>{message}</p>
+      </div>
+    </CSSTransition>
   );
 };

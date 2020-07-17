@@ -13,7 +13,9 @@ const initNewCoop = () => {
         locality: {
           name: "",
           postal_code: "",
-          state: "",
+          state: {
+            id: "",
+          },
         },
         country: {
           code: DEFAULT_COUNTRY_CODE,

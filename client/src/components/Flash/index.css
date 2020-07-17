@@ -28,28 +28,35 @@
   margin-right: 10px;
 }
 
-.sample-enter {
+.fade-appear {
   opacity: 0;
+  z-index: 1;
 }
 
-.sample-enter-active {
-  opacity: 0.5;
-  transition: opacity 1000ms;
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 1000ms linear;
 }
 
-.sample-enter-done {
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 5000ms linear 5000ms;
+}
+
+.fade-exit {
   opacity: 1;
 }
 
-.sample-exit {
-  opacity: 1;
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 5000ms linear;
 }
 
-.sample-exit-active {
-  opacity: 0.5;
-  transition: opacity 1000ms;
-}
-
-.sample-exit-done {
+.fade-exit-done {
   opacity: 0;
 }

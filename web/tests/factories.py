@@ -1,6 +1,6 @@
 import factory
 from django.db import models
-from directory.models import CoopType, Coop, ContactMethod
+from directory.models import CoopType, Coop, ContactMethod, Person
 from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
@@ -125,9 +125,52 @@ class CoopFactory(factory.DjangoModelFactory):
 
         if extracted:
             # A list of types were passed in, use them
-            for type in extracted:
-                self.types.add(type)
+            for _ in range(extracted):
+            #for type in extracted:
+                self.types.add(CoopTypeFactory())
+        #else:
+        #    print("Creating type ...\n")
+        #    type = CoopTypeFactory()
+        #    self.types.add( type )
+
+
+class PersonFactory(factory.DjangoModelFactory):
+    """
+        Define Person Factory
+    """
+    class Meta:
+        model = Person
+
+    first_name = "first name"
+    last_name = "last name"
+
+    @factory.post_generation
+    def contact_methods(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted:
+            # A list of contact methods were passed in, use them
+            for contact_method in extracted:
+                self.contact_methods.add(contact_method)
         else:
-            type = CoopTypeFactory()
-            self.types.add( type )
+            contact_method = ContactMethodFactory()
+            self.contact_methods.add( contact_method )
+
+    @factory.post_generation
+    def coops(self, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted:
+            print("calling this branch ...")
+            # A list of coops were passed in, use them
+            for _ in range(extracted):
+            #for coop in extracted:
+                self.coops.add(coop)
+        else:
+            coop = CoopFactory()
+            self.coops.add( coop )
 

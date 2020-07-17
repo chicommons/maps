@@ -101,3 +101,119 @@ class SerializerTests(TestCase):
         assert coop.phone.phone == phone
         assert coop.email.email == email
         assert coop.web_site == web_site 
+
+    @pytest.mark.django_db
+    def test_coop_create_with_no_state(self):
+        """ Test coop serizlizer model """
+        name = "Test 8899"
+        coop_type_name = "Library"
+        street = "222 W. Merchandise Mart Plaza, Suite 1212"
+        city = "Chicago"
+        postal_code = "60654"
+        enabled = True
+        postal_code = "60654"
+        email = "test@example.com"
+        phone = "7739441422"
+        web_site = "http://www.1871.com"
+        serializer_data = {
+            "name": name,
+            "types": [
+                {"name": coop_type_name}
+            ],
+            "addresses": [{
+                "formatted": street,
+                "locality": {
+                    "name": city,
+                    "postal_code": postal_code, 
+                    "state": ''
+                }
+            }],
+            "enabled": enabled,
+            "phone": {
+              "phone": phone
+            },
+            "email": {
+              "email": email
+            },
+            "web_site": web_site
+        }
+
+        serializer = CoopSerializer(data=serializer_data)
+        assert not serializer.is_valid()
+        assert len(serializer.errors.keys()) == 1
+        assert serializer.errors['phone']['phone'][0].code == "invalid_phone_number"
+
+
+    @pytest.mark.django_db
+    def test_coop_create_with_invalid_phone(self):
+        """ Test coop serizlizer model """
+        name = "Test 8899"
+        coop_type_name = "Library"
+        street = "222 W. Merchandise Mart Plaza, Suite 1212"
+        city = "Chicago"
+        postal_code = "60654"
+        enabled = True
+        postal_code = "60654"
+        email = "test@example.com"
+        phone = "7771112222"
+        web_site = "http://www.1871.com"
+        state = StateFactory()
+        serializer_data = {
+            "name": name,
+            "types": [
+                {"name": coop_type_name}
+            ],
+            "addresses": [{
+                "formatted": street,
+                "locality": {
+                    "name": city,
+                    "postal_code": postal_code, 
+                    "state": state.id
+                }
+            }],
+            "enabled": enabled,
+            "phone": {
+              "phone": phone
+            },
+            "email": {
+              "email": email
+            },
+            "web_site": web_site
+        }
+
+        serializer = CoopSerializer(data=serializer_data)
+        assert not serializer.is_valid()
+        assert len(serializer.errors.keys()) == 1
+        assert serializer.errors['phone']['phone'][0].code == "invalid_phone_number"
+
+
+    @pytest.mark.django_db
+    def test_person_create(self):
+        """ Test person serizlizer model """
+        first_name = "Moe"
+        last_name = "Howard"
+        email = "test@example.com"
+        coop = CoopFactory()
+        serializer_data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "coops": [
+                coop.id 
+            ],
+            "contact_methods": [{
+                "email": email,
+                "type": "EMAIL"
+            }],
+        }
+
+        serializer = PersonSerializer(data=serializer_data)
+        serializer.is_valid()
+        assert serializer.is_valid(), serializer.errors
+        person = serializer.save() 
+        assert person.first_name == first_name
+        assert person.last_name == last_name
+        coop_count = 0
+        for coop in person.coops.all():
+            coop_count = coop_count + 1
+        assert coop_count == 1
+        assert person.contact_methods.first().email == email

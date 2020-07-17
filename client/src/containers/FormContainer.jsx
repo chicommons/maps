@@ -10,6 +10,7 @@ import Country from "../components/Country";
 import Province from "../components/Province";
 import Button from "../components/Button";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
+import { useAlert } from "../components/AlertProvider";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -20,6 +21,7 @@ const FormContainer = (props) => {
   const [coopTypes, setCoopTypes] = React.useState([]);
   const [coop, setCoop] = React.useState(props.coop);
   const history = useHistory();
+  const [open, close] = useAlert();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -27,8 +29,12 @@ const FormContainer = (props) => {
     const NC = JSON.parse(JSON.stringify(coop));
     delete NC.addresses[0].country;
 
-    fetch(REACT_APP_PROXY + "/coops/", {
-      method: "POST",
+    const url = coop.id
+      ? REACT_APP_PROXY + "/coops/" + coop.id
+      : REACT_APP_PROXY + "/coops/";
+    const method = coop.id ? "PATCH" : "POST";
+    fetch(url, {
+      method: method,
       body: JSON.stringify(NC),
       headers: {
         Accept: "application/json",
@@ -46,10 +52,10 @@ const FormContainer = (props) => {
         const result = data;
         history.push({
           pathname: "/" + result.id + "/people",
-          state: { coop: result },
+          state: { coop: result, message: "Success" },
         });
         window.scrollTo(0, 0);
-        window.flash("Record has been created successfully!", "success");
+        //open("Success");
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +94,6 @@ const FormContainer = (props) => {
       const keys = name.split(/[\[\].]+/);
       _.set(coopCopy, name, value);
       setCoop(coopCopy);
-      //setCoop(updateValue(keys, value));
     }
   };
 
@@ -127,7 +132,6 @@ const FormContainer = (props) => {
    * @param  e
    */
   const handlePhoneInput = (e) => {
-    let self = this;
     let value = e.target.value.replace(/\D/, "");
     value = value.length > 10 ? value.substring(0, 10) : value;
     let name = e.target.name;
@@ -136,7 +140,6 @@ const FormContainer = (props) => {
   };
 
   const setValue = (is, value) => {
-    console.log("setting " + is + " of value: " + value);
     const coopCopy = JSON.parse(JSON.stringify(coop));
     if (typeof is == "string") {
       console.log("setting string value");
@@ -258,7 +261,7 @@ const FormContainer = (props) => {
             title={"State"}
             name={"addresses[0].locality.state"}
             options={provinces}
-            value={coop.addresses[0].locality.state}
+            value={coop.addresses[0].locality.state.id}
             placeholder={"Select State"}
             handleChange={handleInput}
           />{" "}

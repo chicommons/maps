@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from directory.models import Coop, CoopType, ContactMethod
+from directory.models import Coop, CoopType, ContactMethod, Person
 from address.models import Address, AddressField, Locality, State, Country 
 from geopy.geocoders import Nominatim
+import re
 
 
 class CoopTypeField(serializers.PrimaryKeyRelatedField):
@@ -23,7 +24,11 @@ class AddressTypeField(serializers.PrimaryKeyRelatedField):
     def to_internal_value(self, data):
         if type(data) == dict:
             locality = data['locality']
-            state = State.objects.get(id=locality['state'])
+            print("\n\n\n\n\n\n locality state ... ", locality['state'])
+            print( type(locality['state']) )
+            #state = None  #State.objects.filter(pk=locality['state']).first() 
+            state = None if not re.match(r"[0-9]+", str(locality['state'])) else State.objects.get(pk=locality['state']) 
+            print("Finished ...\n\n\n\n\n")
             locality['state'] = state
             locality, created = Locality.objects.get_or_create(**locality)
             data['locality'] = locality
@@ -45,6 +50,17 @@ class LocalityTypeField(serializers.PrimaryKeyRelatedField):
         return super().to_internal_value(data)
 
 
+class ContactMethodField(serializers.PrimaryKeyRelatedField):
+
+    queryset = ContactMethod.objects
+
+    def to_internal_value(self, data):
+        if type(data) == dict:
+            contact_method = ContactMethod.objects.create(**data)
+            data = contact_method.pk
+        return super().to_internal_value(data)
+
+
 class ContactMethodSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -57,7 +73,7 @@ class ContactMethodSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         if type(data) == dict:
-            contatcmethod, created = CoopType.objects.create(**data)
+            contactmethod = ContactMethod.objects.create(**data)
             # Replace the dict with the ID of the newly obtained object
             data = contactmethod.pk
         return super().to_internal_value(data)
@@ -122,12 +138,6 @@ class CoopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coop
         fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
-        #extra_kwargs = {
-        #    'phone': {
-        #        'required': False, 
-        #        'allow_blank': True
-        #    }
-        #}
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -149,8 +159,6 @@ class CoopSerializer(serializers.ModelSerializer):
             instance.types.add(coop_type)
         print("phone:",phone)
         instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
-        #instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, phone=phone.phone)
-        #instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, email=email.email)
         instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
         return instance
 
@@ -196,6 +204,44 @@ class CoopSerializer(serializers.ModelSerializer):
                 address.longitude = location.longitude
                 address.save(update_fields=["latitude", "longitude"])
 
+
+class PersonSerializer(serializers.ModelSerializer):
+    #coops = CoopSerializer(many=True)
+    contact_methods = ContactMethodField(many=True)
+
+    class Meta:
+        model = Person
+        fields = ['id', 'first_name', 'last_name', 'coops', 'contact_methods']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['coops'] = CoopSerializer(instance.coops.all(), many=True).data
+        rep['contact_methods'] = ContactMethodSerializer(instance.contact_methods.all(), many=True).data
+        return rep
+
+    def create(self, validated_data):
+        #"""
+        #Create and return a new `Snippet` instance, given the validated data.
+        #"""
+        #contact_methods = validated_data.pop('contact_methods', {})
+        instance = super().create(validated_data)
+        #for item in contact_methods:
+        #    contact_method, _ = ContactMethod.objects.create(**item)
+        #    instance.contact_methods.add(contact_method)
+        return instance
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Coop` instance, given the validated data.
+        """
+        instance.coops = validated_data.get('coops', instance.coops)
+        instance.contact_methods = validated_data.get('contact_methods', instance.contact_methods)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+        return instance
+
+
 class AddressSerializer(serializers.ModelSerializer):
     locality = LocalityTypeField()
 
@@ -212,7 +258,6 @@ class AddressSerializer(serializers.ModelSerializer):
         """
         Create and return a new `AddressField` instance, given the validated data.
         """
-        print("validated data: #{validated_data}\n")
         address = AddressTypeField.objects.create(**validated_data)
         return address
 
@@ -238,6 +283,7 @@ class LocalitySerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
+        rep['state'] = StateSerializer(instance.state).data
         return rep
 
     def create(self, validated_data):

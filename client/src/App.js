@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Alert } from "reactstrap";
 
 import NavBar from "./components/NavBar";
 import Add from "./components/Add";
@@ -9,14 +10,12 @@ import Edit from "./components/Edit";
 import Search from "./components/Search";
 import AddPerson from "./components/people/AddPerson";
 import ListPeople from "./components/people/ListPeople";
-import { Flash } from "./components/Flash";
-import Bus from "./components/Utils/Bus";
+import { AlertProvider } from "./components/AlertProvider";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Flash />
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <Link className="navbar-brand" to={"/add"}>
@@ -26,24 +25,23 @@ function App() {
           </div>
         </nav>
 
-        <div className="auth-wrapper">
-          <div className="auth-inner">
-            <Switch>
-              <Route exact path="/" component={Add} />
-              <Route path="/add" component={Add} />
-              <Route path="/edit/:id" component={Edit} />
-              <Route path="/search" component={Search} />
-              <Route path="/:coop_id/people" component={AddPerson} />
-              <Route path="/:coop_id/listpeople" component={ListPeople} />
-            </Switch>
+        <AlertProvider>
+          <div className="auth-wrapper">
+            <div className="auth-inner">
+              <Switch>
+                <Route exact path="/" component={Add} />
+                <Route path="/add" component={Add} />
+                <Route path="/edit/:id" component={Edit} />
+                <Route path="/search" component={Search} />
+                <Route path="/:coop_id/people" component={AddPerson} />
+                <Route path="/:coop_id/listpeople" component={ListPeople} />
+              </Switch>
+            </div>
           </div>
-        </div>
+        </AlertProvider>
       </div>
     </Router>
   );
 }
-
-window.flash = (message, type = "success") =>
-  Bus.emit("flash", { message, type });
 
 export default App;

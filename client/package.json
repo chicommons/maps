@@ -6,10 +6,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/react-transition-group": "^4.4.0",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",
     "jquery": "^1.9.1",
     "lodash": "^4.17.19",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-bootstrap-icons": "^1.0.3-alpha5",
@@ -22,6 +24,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-tag-input": "^6.4.3",
+    "reactstrap": "^8.5.1",
+    "rxjs": "^6.6.0",
     "typescript": "^3.8.3"
   },
   "scripts": {

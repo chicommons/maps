@@ -1,104 +1,42 @@
 import React, { Component } from "react";
 import { FormGroup } from "react-bootstrap";
+import _ from "lodash";
+import { useHistory } from "react-router-dom";
 
 /* Import Components */
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { useHistory } from "react-router-dom";
 
-const initPerson = (coop) => {
-  return {
-    first_name: "",
-    last_name: "",
-    coops: [coop],
-    email: "",
-    phone: "",
-  };
+const { REACT_APP_PROXY } = process.env;
+
+const handleClearForm = () => {
+  // Logic for resetting the form
 };
 
-class PersonFormContainer extends Component {
-  static REACT_APP_PROXY = process.env.REACT_APP_PROXY;
+const PersonFormContainer = (props) => {
+  const [person, setPerson] = React.useState(props.person);
+  const [errors, setErrors] = React.useState([]);
+  const [coop, setCoop] = React.useState(props.coop);
+  const history = useHistory();
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      errors: [],
-      person: initPerson(props.coop),
-    };
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.handleClearForm = this.handleClearForm.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handlePhoneInput = this.handlePhoneInput.bind(this);
-  }
-
-  /* This life cycle hook gets executed when the component mounts */
-
-  async handleFormSubmit(e) {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        PersonFormContainer.REACT_APP_PROXY + "/people/",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            first_name: this.state.person.first_name,
-            last_name: this.state.person.last_name,
-            coops: this.state.person.coops.map((coop) => coop.id),
-            contact_methods: [
-              {
-                type: "PHONE",
-                phone: this.state.person.phone,
-              },
-              {
-                type: "EMAIL",
-                email: this.state.person.email,
-              },
-            ],
-          }),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        const history = useHistory();
-        history.push({
-          pathname: "/" + this.state.person.coops[0].id + "/listpeople",
-          state: { coop: this.state.person.coops[0] },
-        });
-        window.scrollTo(0, 0);
-        window.flash("Record has been created successfully!", "success");
-        return result;
-      }
-      throw await response.json();
-    } catch (errors) {
-      console.log("_error_: ", errors);
-      this.setState({ errors });
-    }
-  }
-
-  handleClearForm() {
-    // Logic for resetting the form
-  }
-
-  handleInput(e) {
-    let self = this;
+  const handleInput = (e) => {
     let value = e.target.value;
     let name = e.target.name;
-    console.log("name:" + name + " val:" + e.target.value);
+    console.log("changing " + name + " to " + value);
+    console.log(person);
     if (name.indexOf("[") === -1) {
-      this.setValue(self.state.person, name, value);
+      setValue(name, value);
     } else {
+      const personCopy = JSON.parse(JSON.stringify(person));
       const keys = name.split(/[\[\].]+/);
-      this.setState(this.updateValue(this.state, keys, value));
+      _.set(personCopy, name, value);
+      console.log("changed person to ...");
+      console.log(personCopy);
+      setPerson(personCopy);
     }
-  }
+  };
 
-  updateValue = (obj, name, value, index = 0) => {
+  const updateValue = (obj, name, value, index = 0) => {
     if (name.length - 1 > index) {
       const isArray = Array.isArray(obj[name[index]]);
       obj[name[index]] = this.updateValue(
@@ -118,115 +56,146 @@ class PersonFormContainer extends Component {
    *
    * @param  e
    */
-  handlePhoneInput(e) {
-    let self = this;
+  const handlePhoneInput = (e) => {
     let value = e.target.value.replace(/\D/, "");
     value = value.length > 10 ? value.substring(0, 10) : value;
     let name = e.target.name;
     //update phone
-    this.setValue(self.state.person, name, value);
-  }
-
-  setValue = (obj, is, value) => {
-    if (typeof is == "string") return this.setValue(obj, is.split("."), value);
-    else if (is.length === 1 && value !== undefined) {
-      return this.setState({ obj: (obj[is[0]] = value) });
-    } else if (is.length === 0) return obj;
-    else return this.setValue(obj[is[0]], is.slice(1), value);
+    setValue(name, value);
   };
 
-  render() {
-    console.log(" coop name: " + this.state.person.coops[0]?.name);
-    return (
-      <div>
-        <div>{this.state.person.coops[0]?.name}</div>
-        <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-          <FormGroup controlId="formBasicText">
-            <Input
-              inputType={"text"}
-              title={"First Name"}
-              name={"first_name"}
-              value={this.state.person.first_name}
-              placeholder={"Enter first name"}
-              handleChange={this.handleInput}
-              errors={this.state.errors}
-            />{" "}
-            {/* First name of the person */}
-            <Input
-              inputType={"text"}
-              title={"Last Name"}
-              name={"last_name"}
-              value={this.state.person.last_name}
-              placeholder={"Enter last name"}
-              handleChange={this.handleInput}
-              errors={this.state.errors}
-            />{" "}
-            {/* Last name of the person */}
-            <Input
-              inputType={"text"}
-              title={"Email"}
-              name={"email"}
-              value={this.state.person.email}
-              placeholder={"Enter email"}
-              handleChange={this.handleInput}
-              errors={this.state.errors}
-            />{" "}
-            {/* Email of the person */}
-            <Input
-              inputType={"text"}
-              title={"Phone"}
-              name={"phone"}
-              value={this.state.person.phone}
-              placeholder={"Enter primary phone number"}
-              handleChange={this.handlePhoneInput}
-              errors={this.state.errors}
-            />{" "}
-            {/* Phone number of the person */}
-            <Button
-              action={this.handleFormSubmit}
-              type={"primary"}
-              title={"Submit"}
-              style={buttonStyle}
-            />{" "}
-            {/*Submit */}
-            <Button
-              action={this.handleClearForm}
-              type={"secondary"}
-              title={"Clear"}
-              style={buttonStyle}
-            />{" "}
-            {/* Clear the form */}
-          </FormGroup>
-        </form>
-      </div>
-    );
-  }
+  const setValue = (is, value) => {
+    const personCopy = JSON.parse(JSON.stringify(person));
+    if (typeof is == "string") {
+      console.log("setting string value");
+      _.set(personCopy, is, value);
+      return setPerson(personCopy);
+    } else if (is.length === 1 && value !== undefined) {
+      _.set(personCopy, is, value);
+      return setPerson(personCopy);
+    } else if (is.length === 0) return person;
+    else {
+      console.log("is:" + is + " value:" + value);
+      return setValue(is.slice(1), value);
+    }
+  };
 
-  componentDidMount() {
-    // Load form object, if present in URL
-    // URL will look like http://servername/coops/coop_id/people
-    /* const url = window.location.href;
-    console.log(url.split("/"));
-    const urlParts = url.split("/");
-    const coop_id = urlParts[urlParts.length - 2];
-    console.log("starting fetch with coop id:" + coop_id);
-    fetch(PersonFormContainer.REACT_APP_PROXY + "/coops/" + coop_id)
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // Make a copy of the object in order to remove unneeded properties
+
+    const url = person.id
+      ? REACT_APP_PROXY + "/people/" + person.id
+      : REACT_APP_PROXY + "/people/";
+    const method = person.id ? "PATCH" : "POST";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        first_name: person.first_name,
+        last_name: person.last_name,
+        coops: person.coops.map((coop) => coop.id),
+        contact_methods: [
+          {
+            type: "PHONE",
+            phone: person.phone,
+          },
+          {
+            type: "EMAIL",
+            email: person.email,
+          },
+        ],
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
-        return response.json();
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
       })
       .then((data) => {
-        const coop = data;
-        const { person } = { ...this.state };
-        console.log(coop);
-        person.coops.push(coop);
-        console.log("added coop with name: " + person.coops[0].name);
-        this.setState({
-          person: person,
+        const result = data;
+        window.location.href = "/" + person.coops[0].id + "/listpeople";
+        window.scrollTo(0, 0);
+      })
+      .catch((err) => {
+        console.log(err);
+        err.text().then((errorMessage) => {
+          setErrors(JSON.parse(errorMessage));
         });
       });
-    */
-  }
-}
+  };
+
+  /* This life cycle hook gets executed when the component mounts */
+
+  return (
+    <div>
+      <div>{person.coops[0]?.name}</div>
+      <form className="container-fluid" onSubmit={handleFormSubmit}>
+        <FormGroup controlId="formBasicText">
+          <Input
+            inputType={"text"}
+            title={"First Name"}
+            name={"first_name"}
+            value={person.first_name}
+            placeholder={"Enter first name"}
+            handleChange={handleInput}
+            errors={errors}
+          />{" "}
+          {/* First name of the person */}
+          <Input
+            inputType={"text"}
+            title={"Last Name"}
+            name={"last_name"}
+            value={person.last_name}
+            placeholder={"Enter last name"}
+            handleChange={handleInput}
+            errors={errors}
+          />{" "}
+          {/* Last name of the person */}
+          <Input
+            inputType={"text"}
+            title={"Email"}
+            name={"email"}
+            value={person.email}
+            placeholder={"Enter email"}
+            handleChange={handleInput}
+            errors={errors}
+          />{" "}
+          {/* Email of the person */}
+          <Input
+            inputType={"text"}
+            title={"Phone"}
+            name={"phone"}
+            value={person.phone}
+            placeholder={"Enter primary phone number"}
+            handleChange={handlePhoneInput}
+            errors={errors}
+          />{" "}
+          {/* Phone number of the person */}
+          <Button
+            action={handleFormSubmit}
+            type={"primary"}
+            title={"Submit"}
+            style={buttonStyle}
+          />{" "}
+          {/*Submit */}
+          <Button
+            action={handleClearForm}
+            type={"secondary"}
+            title={"Clear"}
+            style={buttonStyle}
+          />{" "}
+          {/* Clear the form */}
+        </FormGroup>
+      </form>
+    </div>
+  );
+};
 
 const buttonStyle = {
   margin: "10px 10px 10px 10px",

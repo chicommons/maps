@@ -45,6 +45,19 @@ class ModelTests(TestCase):
         self.assertIsNotNone(coop_from_factory)
 
         coop_types = coop_from_factory.types
-        coop = CoopFactory.create(types=coop_types.all(), addresses=coop_from_factory.addresses.all())
+        coop = CoopFactory.create(types=[coop_types.all().first()], addresses=coop_from_factory.addresses.all())
         self.assertIsNotNone(coop)
+
+    @pytest.mark.django_db
+    def test_coop_create_with_no_types(self):
+        """ Test customer model """    # create customer model instance
+        print("\n\n\n\n-------- starting test ....]n")
+        coop = CoopFactory.create(types=[])
+        coop.full_clean()
+        print("size: ", coop.types.all().count())
+        print("first: ", coop.types.all().first())
+        self.assertIsNotNone(coop)
+        self.assertIsNone( coop.id )
+        print("========= end of test ==============\n\n\n\n\n")
+ 
 
