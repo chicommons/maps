@@ -1,6 +1,6 @@
 import pytest
 from django.test import TestCase
-from .factories import CoopTypeFactory, CoopFactory, AddressFactory
+from .factories import CoopTypeFactory, CoopFactory, AddressFactory, PhoneContactMethodFactory 
 from directory.models import Coop, CoopType
 
 
@@ -15,6 +15,23 @@ class ModelTests(TestCase):
         print("setUp: Run once for every test method to setup clean data.")
         #management.call_command('flush', verbosity=0, interactive=False)
         pass
+
+    @pytest.mark.django_db
+    def test_phone_create(self):
+        """ Test phone contact method """    # create phone instance
+        phone_num = "7739441467"
+        phone = PhoneContactMethodFactory.create(phone=phone_num) 
+        assert phone_num == phone.phone
+        assert phone.id is not None
+
+    @pytest.mark.django_db
+    def test_phone_create_invalid_num(self):
+        """ Test phone contact method """    # create phone instance
+        phone_num = "abcdefsfdsf"
+        phone = PhoneContactMethodFactory.create(phone=phone_num) 
+        assert phone_num == phone.phone  
+        assert phone.id is not None
+        print("\n\n\n\n-------------id is ", id) 
 
     @pytest.mark.django_db
     def test_coop_type_create(self):

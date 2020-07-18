@@ -2,7 +2,7 @@
 
 read -d '' req << EOF
 {
-        "name": "Test 8899",
+        "name": "Test 9999",
         "types": [
             {"name": "Library"}
         ],
@@ -18,7 +18,7 @@ read -d '' req << EOF
         ],
         "enabled": "true",
         "phone": {
-          "phone": "7739441426"
+          "phone": "+17739441426"
         },
         "email": {
           "email" : "myemail@example.com"

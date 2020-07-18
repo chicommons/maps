@@ -5,6 +5,7 @@ import { Tabs, Tab } from "react-bootstrap";
 import FormContainer from "../containers/FormContainer";
 import ListPeople from "../components/people/ListPeople";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
+import CoopService from '../services/CoopService';
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -15,19 +16,7 @@ const Edit = (props) => {
 
   useEffect(() => {
     if (coop == null) {
-      fetch(REACT_APP_PROXY + "/coops/" + id)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const coop = data;
-          coop.addresses.map((address) => {
-            address.country = { code: address.locality.state.country.code };
-          });
-          console.log("edit cop ...");
-          console.log(coop);
-          setCoop(data);
-        });
+      CoopService.getById(id, setCoop); 
     }
   }, [props]);
 

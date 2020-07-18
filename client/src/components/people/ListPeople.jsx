@@ -9,12 +9,13 @@ const { REACT_APP_PROXY } = process.env;
 
 const ListPeople = (props) => {
   const [coop, setCoop] = useState(props?.location?.state?.coop);
-  const { coop_id } = useParams();
+  //const { coop_id } = useParams();
+  let { id } = useParams();
   let [people, setPeople] = useState(null);
 
   useEffect(() => {
     if (coop == null) {
-      fetch(REACT_APP_PROXY + "/people?coop=" + coop_id)
+      fetch(REACT_APP_PROXY + "/people?coop=" + id)
         .then((response) => {
           return response.json();
         })

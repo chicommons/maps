@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import PersonFormContainer from "../../containers/PersonFormContainer";
 import { DEFAULT_COUNTRY_CODE } from "../../utils/constants";
 import { useAlert } from "../../components/AlertProvider";
+import CoopService from '../../services/CoopService';
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -31,11 +32,9 @@ const AddPerson = (props) => {
 
   useEffect(() => {
     if (coop == null) {
-      fetch(REACT_APP_PROXY + "/coops/" + id)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
+      CoopService.getById(
+        id,
+        function(data) {
           const coop = data;
           coop.addresses.map((address) => {
             address.country = DEFAULT_COUNTRY_CODE; // address.locality.state.country.id;
@@ -44,8 +43,9 @@ const AddPerson = (props) => {
           let personCopy = JSON.parse(JSON.stringify(person));
           personCopy.coop = coop;
           setPerson(personCopy);
-        });
-    }
+        }
+      );
+    }  
   }, [props]);
 
   return <PersonFormContainer person={person} />;
