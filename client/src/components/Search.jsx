@@ -57,7 +57,7 @@ export default class Search extends Component {
               <ListGroupItem key={item.id} value={item.name}>
                 {item.name}
                 <span className="float-right">
-                  <Link to={"/edit/" + item.id}>
+                  <Link to={"/edit/" + item.id + "/home"}>
                     <PencilSquare color="royalblue" size={26} />
                   </Link>
                 </span>

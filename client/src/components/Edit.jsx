@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
+import {Route} from 'react-router-dom';
 
 import FormContainer from "../containers/FormContainer";
 import ListPeople from "../components/people/ListPeople";
@@ -23,19 +24,27 @@ const Edit = (props) => {
   if (coop == null) {
     return <></>;
   }
-  return (
-    <div className="container">
-      <h1>{coop.name}</h1>
 
-      <Tabs id="controlled-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
+  return (
+    <Route path="/edit/:id/:tab">
+      {({ match, history }) => {
+        const { tab } = match ? match.params : {};
+
+        return (
+          <Tabs
+            activeKey={tab}
+            onSelect={(nextTab) => history.replace(`/tab/${id}/${nextTab}`)}
+          >
         <Tab eventKey="home" title="Home">
           <FormContainer coop={coop} />
         </Tab>
         <Tab eventKey="people" title="People">
           <ListPeople coop={coop} />
         </Tab>
-      </Tabs>
-    </div>
+          </Tabs>
+        );
+      }}
+    </Route>
   );
 };
 
