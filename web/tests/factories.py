@@ -123,10 +123,11 @@ class CoopFactory(factory.DjangoModelFactory):
             # Simple build, do nothing.
             return
 
-        if extracted:
+        if extracted is not None:
+        #if extracted:
             # A list of types were passed in, use them
-            for _ in range(extracted):
-            #for type in extracted:
+            #for _ in range(extracted):
+            for type in extracted:
                 self.types.add(CoopTypeFactory())
         #else:
         #    print("Creating type ...\n")
@@ -164,7 +165,8 @@ class PersonFactory(factory.DjangoModelFactory):
             # Simple build, do nothing.
             return
 
-        if extracted:
+        if extracted is not None:
+        #if extracted:
             print("calling this branch ...")
             # A list of coops were passed in, use them
             for _ in range(extracted):

@@ -68,13 +68,12 @@ class ModelTests(TestCase):
     @pytest.mark.django_db
     def test_coop_create_with_no_types(self):
         """ Test customer model """    # create customer model instance
-        print("\n\n\n\n-------- starting test ....]n")
-        coop = CoopFactory.create(types=[])
+        print("\n\n\n\n**********-------- starting test ....\n")
+        coop = CoopFactory.build(types=[])
+        print("phone:",coop.phone.phone)
+        print("email:",coop.email.email)
         coop.full_clean()
-        print("size: ", coop.types.all().count())
-        print("first: ", coop.types.all().first())
         self.assertIsNotNone(coop)
         self.assertIsNone( coop.id )
-        print("========= end of test ==============\n\n\n\n\n")
  
 

@@ -85,7 +85,6 @@ class SerializerTests(TestCase):
         }
 
         serializer = CoopSerializer(data=serializer_data)
-        serializer.is_valid()
         assert serializer.is_valid(), serializer.errors
         coop = serializer.save() 
         assert coop.name == name
@@ -101,6 +100,59 @@ class SerializerTests(TestCase):
         assert coop.phone.phone == phone
         assert coop.email.email == email
         assert coop.web_site == web_site 
+
+    @pytest.mark.django_db
+    def test_coop_create_no_coop_types(self):
+        """ Test coop serizlizer model """
+        name = "Test 8899"
+        street = "222 W. Merchandise Mart Plaza, Suite 1212"
+        city = "Chicago"
+        postal_code = "60654"
+        enabled = True
+        postal_code = "60654"
+        email = "test@example.com"
+        phone = "7732441468"
+        web_site = "http://www.1871.com"
+        state = StateFactory()
+        serializer_data = {
+            "name": name,
+            "types": [
+            ],
+            "addresses": [{
+                "formatted": street,
+                "locality": {
+                    "name": city,
+                    "postal_code": postal_code, 
+                    "state": state.id
+                }
+            }],
+            "enabled": enabled,
+            "phone": {
+              "phone": phone
+            },
+            "email": {
+              "email": email
+            },
+            "web_site": web_site
+        }
+
+        serializer = CoopSerializer(data=serializer_data)
+        assert serializer.is_valid(True), serializer.errors
+        coop = serializer.save() 
+        assert coop.name == name
+        type_count = 0
+        for coop_type in coop.types.all():
+            assert coop_type.name == coop_type_name
+            type_count = type_count + 1
+        assert type_count == 1
+        assert coop.addresses.first().locality.name == city
+        assert coop.addresses.first().locality.postal_code == postal_code
+        assert coop.addresses.first().locality.state.id == state.id
+        assert coop.enabled == enabled
+        assert coop.phone.phone == phone
+        assert coop.email.email == email
+        assert coop.web_site == web_site 
+
 
     @pytest.mark.django_db
     def test_coop_create_with_no_state(self):

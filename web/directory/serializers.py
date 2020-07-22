@@ -137,7 +137,13 @@ class CoopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
+        #fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
+        fields = '__all__'
+        extra_kwargs = {
+            'types': {
+                'allow_empty': False
+            }
+        }
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
