@@ -4,14 +4,26 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { PencilSquare } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+import Button from "../../components/Button";
 
 const { REACT_APP_PROXY } = process.env;
 
 const ListPeople = (props) => {
   const [coop, setCoop] = useState(props?.location?.state?.coop);
-  //const { coop_id } = useParams();
   let { id } = useParams();
   let [people, setPeople] = useState(null);
+  const history = useHistory();
+
+  const addPeople = () => {
+    const result = coop;
+    history.push({
+      pathname: "/" + id + "/people",
+      state: { coop: result },
+    });
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     if (coop == null) {
@@ -39,8 +51,18 @@ const ListPeople = (props) => {
           </ListGroupItem>
         ))}
       </ListGroup>
+      <Button
+        action={addPeople}
+        type={"primary"}
+        title={"Add People"}
+        style={buttonStyle}
+      />
     </div>
   );
+};
+
+const buttonStyle = {
+  margin: "10px 10px 10px 10px",
 };
 
 export default ListPeople;

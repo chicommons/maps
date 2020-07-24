@@ -55,7 +55,6 @@ const FormContainer = (props) => {
           state: { coop: result, message: "Success" },
         });
         window.scrollTo(0, 0);
-        //open("Success");
       })
       .catch((err) => {
         console.log(err);

@@ -15,16 +15,21 @@ export function AlertProvider(props) {
     (message) => {
       setMessage(message);
       setOpen(true);
-      window.setTimeout(()=>{
-        setOpen(false)
-      },2000); 
+      window.setTimeout(() => {
+        setOpen(false);
+      }, 2000);
     },
     [setMessage, setOpen]
   );
 
   return (
     <AlertContext.Provider value={[handleOpen, handleClose]}>
-      <Alert color="info" isOpen={open} fade={true} style={{marginBottom: '0rem'}}>
+      <Alert
+        color="info"
+        isOpen={open}
+        fade={true}
+        style={{ marginBottom: "0rem" }}
+      >
         {message}
       </Alert>
       {props.children}
