@@ -21,31 +21,60 @@ const initPerson = (coop) => {
 const AddPerson = (props) => {
   const [coop, setCoop] = useState(props?.location?.state?.coop);
   const [person, setPerson] = useState(initPerson(coop));
-  const { id } = useParams();
+  const { coop_id } = useParams();
   const [open, close] = useAlert();
 
   useEffect(() => {
+    console.log("checking use effect ...");
+    console.log("coop ...");
+    console.log(coop);
     // when some condition is met
     const message = props?.location?.state?.message;
     if (message) open(message); // closable with the toggle, or in code via close()
-  }, []);
-
-  useEffect(() => {
-    if (coop == null) {
-      CoopService.getById(id, function (data) {
+    /* if (coop == null) {
+      console.log("called ...");
+      CoopService.getById(coop_id, function (data) {
+        console.log("done!");
         const coop = data;
         coop.addresses.map((address) => {
           address.country = DEFAULT_COUNTRY_CODE; // address.locality.state.country.id;
         });
         setCoop(coop);
+        console.log("retrieved coop ...");
+        console.log(coop);
         let personCopy = JSON.parse(JSON.stringify(person));
         personCopy.coop = coop;
         setPerson(personCopy);
       });
+    } */ 
+  }, []);
+
+  useEffect(() => {
+    if (coop == null) {
+      CoopService.getById(coop_id, function (data) {
+        console.log("done 2!");
+        const coop = data;
+        coop.addresses.map((address) => {
+          address.country = DEFAULT_COUNTRY_CODE; // address.locality.state.country.id;
+        });
+        setCoop(coop);
+        console.log("retrieved coop ...");
+        console.log(coop);
+        let personCopy = JSON.parse(JSON.stringify(person));
+        personCopy.coops = [coop];
+        setPerson(personCopy);
+        console.log("person ...");
+        console.log(personCopy);
+      });
     }
   }, [props]);
 
-  return <PersonFormContainer person={person} />;
+  return (
+    <>
+    <h5>Add Person Info</h5> 
+    <PersonFormContainer person={person} />
+    </>
+  );
 };
 
 export default AddPerson;

@@ -51,6 +51,7 @@ class CoopList(APIView):
     def post(self, request, format=None):
         serializer = CoopSerializer(data=request.data)
         if serializer.is_valid():
+            print(" \n\n\n**** saving *****\n\n\n")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

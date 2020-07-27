@@ -44,7 +44,7 @@ const ListPeople = (props) => {
           <ListGroupItem key={item.id} value={item.name}>
             {item.first_name} {item.last_name}
             <span className="float-right">
-              <Link to={"/edit/" + item.id}>
+              <Link to={"/person/" + item.id + "/edit"}>
                 <PencilSquare color="royalblue" size={26} />
               </Link>
             </span>

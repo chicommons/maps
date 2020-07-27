@@ -9,6 +9,7 @@ import Add from "./components/Add";
 import Edit from "./components/Edit";
 import Search from "./components/Search";
 import AddPerson from "./components/people/AddPerson";
+import EditPerson from "./components/people/EditPerson";
 import ListPeople from "./components/people/ListPeople";
 import { AlertProvider } from "./components/AlertProvider";
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/edit/:id" component={Edit} />
                 <Route path="/search" component={Search} />
                 <Route path="/:coop_id/people" component={AddPerson} />
+                <Route path="/person/:id/edit" component={EditPerson} />
                 <Route path="/:coop_id/listpeople" component={ListPeople} />
               </Switch>
             </div>

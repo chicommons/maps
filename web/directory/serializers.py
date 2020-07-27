@@ -24,11 +24,7 @@ class AddressTypeField(serializers.PrimaryKeyRelatedField):
     def to_internal_value(self, data):
         if type(data) == dict:
             locality = data['locality']
-            print("\n\n\n\n\n\n locality state ... ", locality['state'])
-            print( type(locality['state']) )
-            #state = None  #State.objects.filter(pk=locality['state']).first() 
             state = None if not re.match(r"[0-9]+", str(locality['state'])) else State.objects.get(pk=locality['state']) 
-            print("Finished ...\n\n\n\n\n")
             locality['state'] = state
             locality, created = Locality.objects.get_or_create(**locality)
             data['locality'] = locality
@@ -130,20 +126,14 @@ class ContactMethodEmailSerializer(serializers.ModelSerializer):
 
 
 class CoopSerializer(serializers.ModelSerializer):
-    types = CoopTypeSerializer(many=True)
+    types = CoopTypeSerializer(many=True, allow_empty=False)
     addresses = AddressTypeField(many=True)
     phone = ContactMethodPhoneSerializer()
     email = ContactMethodEmailSerializer()
 
     class Meta:
         model = Coop
-        #fields = ['id', 'name', 'types', 'addresses', 'phone', 'enabled', 'email', 'web_site']
         fields = '__all__'
-        extra_kwargs = {
-            'types': {
-                'allow_empty': False
-            }
-        }
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -152,9 +142,9 @@ class CoopSerializer(serializers.ModelSerializer):
         return rep
 
     def create(self, validated_data):
-        #"""
-        #Create and return a new `Snippet` instance, given the validated data.
-        #"""
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
 
         coop_types = validated_data.pop('types', {})
         phone = validated_data.pop('phone', {})
@@ -163,9 +153,11 @@ class CoopSerializer(serializers.ModelSerializer):
         for item in coop_types:
             coop_type, _ = CoopType.objects.get_or_create(name=item['name']) 
             instance.types.add(coop_type)
-        print("phone:",phone)
         instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
         instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
+        print("\n\n\n\n-------------instance phone: ", instance.phone)
+        print("instnace.phone", instance.phone)
+        instance.save()
         return instance
 
     def update(self, instance, validated_data):
@@ -183,12 +175,14 @@ class CoopSerializer(serializers.ModelSerializer):
             pass
         instance.addresses = validated_data.get('addresses', instance.addresses)
         instance.enabled = validated_data.get('enabled', instance.enabled)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.email = validated_data.get('email', instance.email)
+        phone = validated_data.pop('phone', {})
+        email = validated_data.pop('email', {})
+        instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
+        instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.web_site = validated_data.get('web_site', instance.web_site)
         instance.save()
-        CoopSerializer.update_coords(validated_data)
+        #CoopSerializer.update_coords(validated_data)
         return instance
 
     # Set address coordinate data 
@@ -197,18 +191,19 @@ class CoopSerializer(serializers.ModelSerializer):
         locator = Nominatim(user_agent="myGeocoder")
         if locator:
             print(data)
-            print(data['address'])
-            address = data['address']
-            state = address.locality.state
-            country = state.country
-            # This is an example of a formatted address string that will return lat and lon:
-            #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
-            address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
-            location = locator.geocode(address_str)
-            if location:
-                address.latitude = location.latitude
-                address.longitude = location.longitude
-                address.save(update_fields=["latitude", "longitude"])
+            print(data['addresses'])
+            addresses = data['addresses']
+            for address in addresses:
+                state = address.locality.state
+                country = state.country
+                # This is an example of a formatted address string that will return lat and lon:
+                #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
+                address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
+                location = locator.geocode(address_str)
+                if location:
+                    address.latitude = location.latitude
+                    address.longitude = location.longitude
+                    address.save(update_fields=["latitude", "longitude"])
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -302,9 +297,11 @@ class LocalitySerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Locality` instance, given the validated data.
         """
+        print("\n\n\n\nupdating entity \n\n\n\n") 
         instance.name = validated_data.get('name', instance.name)
         instance.postal_code = validated_data.get('postal_code', instance.name)
-        instance.state = validated_data.get('state', instance.name)
+        state = validated_data.get('state', instance.name)
+        instance.state_id = state.id 
         instance.save()
         return instance
 

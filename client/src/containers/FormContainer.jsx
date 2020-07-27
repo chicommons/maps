@@ -20,6 +20,8 @@ const FormContainer = (props) => {
   const [errors, setErrors] = React.useState([]);
   const [coopTypes, setCoopTypes] = React.useState([]);
   const [coop, setCoop] = React.useState(props.coop);
+  console.log("coop ...");
+  console.log(coop);
   const history = useHistory();
   const [open, close] = useAlert();
 
@@ -28,14 +30,14 @@ const FormContainer = (props) => {
     // Make a copy of the object in order to remove unneeded properties
     const NC = JSON.parse(JSON.stringify(coop));
     delete NC.addresses[0].country;
-
+    const body = JSON.stringify(NC);
     const url = coop.id
-      ? REACT_APP_PROXY + "/coops/" + coop.id
+      ? REACT_APP_PROXY + "/coops/" + coop.id + "/" 
       : REACT_APP_PROXY + "/coops/";
-    const method = coop.id ? "PATCH" : "POST";
+    const method = coop.id ? "PUT" : "POST";
     fetch(url, {
       method: method,
-      body: JSON.stringify(NC),
+      body: body,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -108,12 +110,6 @@ const FormContainer = (props) => {
         console.log("name:" + name);
         console.log("name index: " + name[index]);
       }
-      //obj[name[index]] = updateValue(
-      //  isArray ? [...obj[name[index]]] : { ...obj[name[index]] },
-      //  name,
-      //  value,
-      //  index + 1
-      //);
     } else {
       console.log("name:" + name + " index:" + index);
       _.set(coopCopy, [name[index]], value);

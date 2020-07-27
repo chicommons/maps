@@ -17,7 +17,12 @@ const Edit = (props) => {
 
   useEffect(() => {
     if (coop == null) {
-      CoopService.getById(id, setCoop);
+      CoopService.getById(id, function(data) {
+        data.addresses.map((address) => {
+          address.locality.state = address.locality.state.id;
+        });
+        setCoop(data);
+      });
     }
   }, [props]);
 
@@ -35,7 +40,7 @@ const Edit = (props) => {
             <h5>{coop.name}</h5>
             <Tabs
               activeKey={tab}
-              onSelect={(nextTab) => history.replace(`/edit/${id}/${nextTab}`)}
+              onSelect={(nextTab) => history.push(`/edit/${id}/${nextTab}`)}
             >
               <Tab eventKey="home" title="Home">
                 <FormContainer coop={coop} />

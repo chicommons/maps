@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { FormGroup } from "react-bootstrap";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
@@ -19,11 +19,15 @@ const PersonFormContainer = (props) => {
   const [coop, setCoop] = React.useState(props.coop);
   const history = useHistory();
 
+  useEffect(() => {
+    setPerson( props.person );
+    console.log("form container person set to ...");
+    console.log(props.person);
+  }, [props]);
+
   const handleInput = (e) => {
     let value = e.target.value;
     let name = e.target.name;
-    console.log("changing " + name + " to " + value);
-    console.log(person);
     if (name.indexOf("[") === -1) {
       setValue(name, value);
     } else {
@@ -85,11 +89,11 @@ const PersonFormContainer = (props) => {
     // Make a copy of the object in order to remove unneeded properties
 
     const url = person.id
-      ? REACT_APP_PROXY + "/people/" + person.id
+      ? REACT_APP_PROXY + "/people/" + person.id + "/" 
       : REACT_APP_PROXY + "/people/";
-    const method = person.id ? "PATCH" : "POST";
+    const method = person.id ? "PUT" : "POST";
     fetch(url, {
-      method: "POST",
+      method: method,
       body: JSON.stringify({
         first_name: person.first_name,
         last_name: person.last_name,
@@ -134,7 +138,6 @@ const PersonFormContainer = (props) => {
 
   return (
     <div>
-      <h5>Add Person Info</h5>
       <div>{person.coops[0]?.name}</div>
       <form className="container-fluid" onSubmit={handleFormSubmit}>
         <FormGroup controlId="formBasicText">

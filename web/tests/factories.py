@@ -4,7 +4,9 @@ from directory.models import CoopType, Coop, ContactMethod, Person
 from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
+from faker import Faker
 
+myFactory = Faker()
 
 class CountryFactory(factory.DjangoModelFactory):
     """
@@ -13,7 +15,7 @@ class CountryFactory(factory.DjangoModelFactory):
     class Meta:
         model = Country
 
-    name = "Narnia"
+    name = myFactory.name() 
     code = "NN"
 
 
