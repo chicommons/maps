@@ -46,6 +46,34 @@ class SerializerTests(TestCase):
         result = serializer.save() 
         assert result.name == coop_type.name
 
+    @pytest.mark.django_db
+    def test_address_create(self):
+        """ Test address serizlizer model """
+        street = "222 W. Merchandise Mart Plaza, Suite 1212"
+        city = "Chicago"
+        postal_code = "60654"
+        enabled = True
+        postal_code = "60654"
+        state = StateFactory()
+        serializer_data = {
+            "raw": street,
+            "formatted": street,
+            "locality": {
+                "name": city,
+                "postal_code": postal_code, 
+                "state": {
+                  "id": state.id, 
+                  "country": {
+                    "id": state.country.id, 
+                    "name": state.country.name
+                  }
+                }
+            }
+        }
+
+        serializer = AddressSerializer(data=serializer_data)
+        assert serializer.is_valid(), serializer.errors
+        address_saved = serializer.save() 
 
     @pytest.mark.django_db
     def test_coop_create(self):

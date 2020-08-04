@@ -116,6 +116,8 @@ class ContactMethodEmailSerializer(serializers.ModelSerializer):
 
 
 class CountrySerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+
     class Meta:
         model = Country
         fields = ['id', 'name', 'code']
