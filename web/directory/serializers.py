@@ -5,18 +5,6 @@ from geopy.geocoders import Nominatim
 import re
 
 
-class CoopTypeField(serializers.PrimaryKeyRelatedField):
-
-    queryset = CoopType.objects
-
-    def to_internal_value(self, data):
-        if type(data) == dict:
-            cooptype, created = CoopType.objects.get_or_create(**data)
-            # Replace the dict with the ID of the newly obtained object
-            data = cooptype.pk
-        return super().to_internal_value(data)
-
-
 class AddressTypeField(serializers.PrimaryKeyRelatedField):
 
     queryset = Address.objects
@@ -25,6 +13,8 @@ class AddressTypeField(serializers.PrimaryKeyRelatedField):
         if type(data) == dict:
             locality = data['locality']
             state = None if not re.match(r"[0-9]+", str(locality['state'])) else State.objects.get(pk=locality['state']) 
+            if not state:
+                raise serializers.ValidationError({'state': 'This field is required.'})
             locality['state'] = state
             locality, created = Locality.objects.get_or_create(**locality)
             data['locality'] = locality
@@ -125,9 +115,103 @@ class ContactMethodEmailSerializer(serializers.ModelSerializer):
         extra_kwargs = {'type': {'default': 'EMAIL'}}
 
 
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'name', 'code']
+        extra_kwargs = {
+            'name': {
+                'validators': []
+            }
+        }
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        return rep
+
+
+class StateSerializer(serializers.ModelSerializer):
+    country = CountrySerializer()
+    class Meta:
+        model = State
+        fields = ['id', 'code', 'country']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['country'] = CountrySerializer(instance.country).data
+        return rep
+
+
+class LocalitySerializer(serializers.ModelSerializer):
+    state = StateSerializer()
+    class Meta:
+        model = Locality 
+        fields = ['id', 'name', 'postal_code', 'state']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['state'] = StateSerializer(instance.state).data
+        return rep
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Locality` instance, given the validated data.
+        """
+        validated_data['state'] = validated_data['state'].id
+        print("\n\n\n\n****####\n\n", validated_data, "\n\n\n\n")
+        return "{bogus}"
+        #return Locality.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Locality` instance, given the validated data.
+        """
+        print("\n\n\n\nupdating entity \n\n\n\n") 
+        instance.name = validated_data.get('name', instance.name)
+        instance.postal_code = validated_data.get('postal_code', instance.name)
+        state = validated_data.get('state', instance.name)
+        instance.state_id = state.id 
+        instance.save()
+        return instance
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    locality = LocalitySerializer()   #LocalityTypeField()
+
+    class Meta:
+        model = Address
+        fields = ['id', 'street_number', 'route', 'raw', 'formatted', 'latitude', 'longitude', 'locality']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['locality'] = LocalitySerializer(instance.locality).data
+        return rep
+
+    def create(self, validated_data):
+        """
+        Create and return a new `AddressField` instance, given the validated data.
+        """
+        address = AddressTypeField.objects.create(**validated_data)
+        return address
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `AddresssField` instance, given the validated data.
+        """
+        instance.street_number = validated_data.get('street_number', instance.name)
+        instance.route = validated_data.get('route', instance.name)
+        instance.raw = validated_data.get('raw', instance.name)
+        instance.formatted = validated_data.get('formatted', instance.name)
+        instance.latitude = validated_data.get('latitude', instance.name)
+        instance.longitude = validated_data.get('longitude', instance.name)
+        instance.locality = validated_data.get('locality', instance.name)
+        instance.save()
+        return instance
+
+
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
-    addresses = AddressTypeField(many=True)
+    addresses = AddressSerializer(many=True)   # AddressTypeField(many=True)
     phone = ContactMethodPhoneSerializer()
     email = ContactMethodEmailSerializer()
 
@@ -242,88 +326,5 @@ class PersonSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-class AddressSerializer(serializers.ModelSerializer):
-    locality = LocalityTypeField()
-
-    class Meta:
-        model = Address
-        fields = ['id', 'street_number', 'route', 'raw', 'formatted', 'latitude', 'longitude', 'locality']
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['locality'] = LocalitySerializer(instance.locality).data
-        return rep
-
-    def create(self, validated_data):
-        """
-        Create and return a new `AddressField` instance, given the validated data.
-        """
-        address = AddressTypeField.objects.create(**validated_data)
-        return address
-
-    def update(self, instance, validated_data):
-        """
-        Update and return an existing `AddresssField` instance, given the validated data.
-        """
-        instance.street_number = validated_data.get('street_number', instance.name)
-        instance.route = validated_data.get('route', instance.name)
-        instance.raw = validated_data.get('raw', instance.name)
-        instance.formatted = validated_data.get('formatted', instance.name)
-        instance.latitude = validated_data.get('latitude', instance.name)
-        instance.longitude = validated_data.get('longitude', instance.name)
-        instance.locality = validated_data.get('locality', instance.name)
-        instance.save()
-        return instance
-
-
-class LocalitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Locality 
-        fields = ['id', 'name', 'postal_code', 'state']
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['state'] = StateSerializer(instance.state).data
-        return rep
-
-    def create(self, validated_data):
-        """
-        Create and return a new `Locality` instance, given the validated data.
-        """
-        return Locality.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        """
-        Update and return an existing `Locality` instance, given the validated data.
-        """
-        print("\n\n\n\nupdating entity \n\n\n\n") 
-        instance.name = validated_data.get('name', instance.name)
-        instance.postal_code = validated_data.get('postal_code', instance.name)
-        state = validated_data.get('state', instance.name)
-        instance.state_id = state.id 
-        instance.save()
-        return instance
-
-
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = State
-        fields = ['id', 'name', 'code', 'country']
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['country'] = CountrySerializer(instance.country).data
-        return rep
-
-
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = ['id', 'name', 'code']
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        return rep
 
 

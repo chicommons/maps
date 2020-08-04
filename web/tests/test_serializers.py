@@ -67,11 +67,18 @@ class SerializerTests(TestCase):
                 {"name": coop_type_name}
             ],
             "addresses": [{
+                "raw": street,
                 "formatted": street,
                 "locality": {
                     "name": city,
                     "postal_code": postal_code, 
-                    "state": state.id
+                    "state": {
+                      "id": state.id, 
+                      "country": {
+                        "id": state.country.id, 
+                        "name": state.country.name
+                      }
+                    }
                 }
             }],
             "enabled": enabled,
@@ -238,7 +245,7 @@ class SerializerTests(TestCase):
         serializer = CoopSerializer(data=serializer_data)
         assert not serializer.is_valid()
         assert len(serializer.errors.keys()) == 1
-        assert serializer.errors['phone']['phone'][0].code == "invalid_phone_number"
+        assert serializer.errors['addresses']['state'] == "This field is required.", serializer.errors['addresses']['state']
 
 
     @pytest.mark.django_db
