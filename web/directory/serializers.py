@@ -134,9 +134,11 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class StateSerializer(serializers.ModelSerializer):
     country = CountrySerializer()
+    id = serializers.ReadOnlyField()
+
     class Meta:
         model = State
-        fields = ['id', 'code', 'country']
+        fields = ['id', 'code', 'name', 'country']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -159,10 +161,11 @@ class LocalitySerializer(serializers.ModelSerializer):
         """
         Create and return a new `Locality` instance, given the validated data.
         """
+        print("start create locality method.")
+        country_id = validated_data['state']['country']
         validated_data['state'] = validated_data['state'].id
         print("\n\n\n\n****####\n\n", validated_data, "\n\n\n\n")
-        return "{bogus}"
-        #return Locality.objects.create(**validated_data)
+        return Locality.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """
@@ -178,7 +181,7 @@ class LocalitySerializer(serializers.ModelSerializer):
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    locality = LocalitySerializer()   #LocalityTypeField()
+    locality = LocalitySerializer()
 
     class Meta:
         model = Address
@@ -191,10 +194,10 @@ class AddressSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Create and return a new `AddressField` instance, given the validated data.
+        Create and return a new `Address` instance, given the validated data.
         """
-        address = AddressTypeField.objects.create(**validated_data)
-        return address
+        print("arg type:",type(validated_data))
+        return self.create_obj(validated_data)
 
     def update(self, instance, validated_data):
         """
@@ -210,10 +213,22 @@ class AddressSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def create_obj(self, validated_data):
+        locality_data = validated_data.pop('locality', {})
+        state_data = locality_data['state']
+        country = Country.objects.get(name=state_data['country']['name'])
+        state = State.objects.get(code=state_data['code'], country=country.id)
+        locality_data['state'] = state
+
+        locality = Locality.objects.get_or_create(**locality_data)
+        validated_data['locality'] = Locality.objects.get(name=locality_data['name'], state=state, postal_code=locality_data['postal_code']) 
+        address = Address.objects.create(**validated_data)
+        return address
+
 
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
-    addresses = AddressSerializer(many=True)   # AddressTypeField(many=True)
+    addresses = AddressSerializer(many=True)
     phone = ContactMethodPhoneSerializer()
     email = ContactMethodEmailSerializer()
 
@@ -231,8 +246,17 @@ class CoopSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
+        return self.save_obj(validated_data)
 
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Coop` instance, given the validated data.
+        """
+        return self.save_obj(validated_data)
+
+    def save_obj(self, validated_data):
         coop_types = validated_data.pop('types', {})
+        addresses = validated_data.pop('addresses', {})
         phone = validated_data.pop('phone', {})
         email = validated_data.pop('email', {})
         instance = super().create(validated_data)
@@ -241,34 +265,11 @@ class CoopSerializer(serializers.ModelSerializer):
             instance.types.add(coop_type)
         instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
         instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
-        print("\n\n\n\n-------------instance phone: ", instance.phone)
-        print("instnace.phone", instance.phone)
+        for address in addresses:
+            serializer = AddressSerializer()
+            addr = serializer.create_obj(validated_data=address)
+            instance.addresses.add(addr) 
         instance.save()
-        return instance
-
-    def update(self, instance, validated_data):
-        """
-        Update and return an existing `Coop` instance, given the validated data.
-        """
-        instance.name = validated_data.get('name', instance.name)
-        try:
-            coop_types = validated_data['types']
-            instance.types.clear()  # Disassociates all  CoopTypes from instance.
-            for item in coop_types:
-                coop_type, _ = CoopType.objects.get_or_create(**item)
-                instance.types.add(coop_type)
-        except KeyError:
-            pass
-        instance.addresses = validated_data.get('addresses', instance.addresses)
-        instance.enabled = validated_data.get('enabled', instance.enabled)
-        phone = validated_data.pop('phone', {})
-        email = validated_data.pop('email', {})
-        instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
-        instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
-        instance.web_site = validated_data.get('web_site', instance.web_site)
-        instance.web_site = validated_data.get('web_site', instance.web_site)
-        instance.save()
-        #CoopSerializer.update_coords(validated_data)
         return instance
 
     # Set address coordinate data 
@@ -310,23 +311,21 @@ class PersonSerializer(serializers.ModelSerializer):
         #"""
         #Create and return a new `Snippet` instance, given the validated data.
         #"""
-        #contact_methods = validated_data.pop('contact_methods', {})
         instance = super().create(validated_data)
-        #for item in contact_methods:
-        #    contact_method, _ = ContactMethod.objects.create(**item)
-        #    instance.contact_methods.add(contact_method)
         return instance
 
     def update(self, instance, validated_data):
         """
         Update and return an existing `Coop` instance, given the validated data.
         """
-        instance.coops = validated_data.get('coops', instance.coops)
-        instance.contact_methods = validated_data.get('contact_methods', instance.contact_methods)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.save()
+        instance = super().update(validated_data)
         return instance
+        #instance.coops = validated_data.get('coops', instance.coops)
+        #instance.contact_methods = validated_data.get('contact_methods', instance.contact_methods)
+        #instance.first_name = validated_data.get('first_name', instance.first_name)
+        #instance.last_name = validated_data.get('last_name', instance.last_name)
+        #instance.save()
+        #return instance
 
 
 

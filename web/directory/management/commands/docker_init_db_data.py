@@ -2,11 +2,14 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from address.models import State, Country, Locality, Address
-from directory.models import Coop, CoopType
+from directory.models import Coop, CoopType, StateCustomManager, LocalityCustomManager 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
+        setattr(State._meta, 'default_manager', StateCustomManager())
+        setattr(Locality._meta, 'default_manager', LocalityCustomManager())
+
         self.stdout.write('Deleting existing data')
         if CoopType.objects.exists():
             CoopType.objects.all().delete()

@@ -85,19 +85,25 @@ class Person(models.Model):
 def country_get_by_natural_key(self, name):
     return self.get_or_create(name=name)[0]
 
-Country.add_to_class("get_by_natural_key",country_get_by_natural_key)
+Country.add_to_class("get_by_natural_key", country_get_by_natural_key)
+
+def state_get_by_natural_key(self, code, country):
+  country = Country.objects.get_or_create(name=country)[0]
+  return State.objects.get_or_create(code=code, country=country)[0]
 
 class StateCustomManager(models.Manager):
     def get_by_natural_key(self, code, country):
         country = Country.objects.get_or_create(name=country)[0]
         return State.objects.get_or_create(code=code, country=country)[0]
 
-setattr(State._meta, 'default_manager', StateCustomManager())
+#State.add_to_class("get_by_natural_key", state_get_by_natural_key)
+#setattr(State._meta, 'default_manager', StateCustomManager())
+State.add_to_class('objects', StateCustomManager())
 
 class LocalityCustomManager(models.Manager):
     def get_by_natural_key(self, city, postal_code, state):
-        return Locality.objects.get_or_create(city=city, postal_code=postal_code, state=state)[0]
+        return Locality.objects.get_or_create(name=city, postal_code=postal_code, state=state)[0]
 
-setattr(Locality._meta, 'default_manager', LocalityCustomManager())
+#setattr(Locality._meta, 'default_manager', LocalityCustomManager())
 
 

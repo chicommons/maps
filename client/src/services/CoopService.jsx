@@ -19,6 +19,42 @@ class CoopService {
         if (callback) callback(data);
       });
   }
+
+  save(coop, setErrors, callback) {
+    // Make a copy of the object in order to remove unneeded properties
+    coop.addresses[0].raw = coop.addresses[0].formatted;
+    const NC = JSON.parse(JSON.stringify(coop));
+    delete NC.addresses[0].country;
+    const body = JSON.stringify(NC);
+    const url = coop.id
+      ? REACT_APP_PROXY + "/coops/" + coop.id + "/"
+      : REACT_APP_PROXY + "/coops/";
+    const method = coop.id ? "PUT" : "POST";
+    fetch(url, {
+      method: method,
+      body: body,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      })
+      .then((data) => {
+        callback(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        err.text().then((errorMessage) => {
+          setErrors(JSON.parse(errorMessage));
+        });
+      });
+  }
 }
 
 export default new CoopService();

@@ -158,7 +158,7 @@ class PersonFactory(factory.DjangoModelFactory):
             for contact_method in extracted:
                 self.contact_methods.add(contact_method)
         else:
-            contact_method = ContactMethodFactory()
+            contact_method = EmailContactMethodFactory()
             self.contact_methods.add( contact_method )
 
     @factory.post_generation

@@ -6,8 +6,6 @@ import { DEFAULT_COUNTRY_CODE } from "../../utils/constants";
 import { useAlert } from "../../components/AlertProvider";
 import CoopService from "../../services/CoopService";
 
-const { REACT_APP_PROXY } = process.env;
-
 const initPerson = (coop) => {
   return {
     first_name: "",
@@ -25,23 +23,17 @@ const AddPerson = (props) => {
   const [open, close] = useAlert();
 
   useEffect(() => {
-    console.log("checking use effect ...");
-    console.log("coop ...");
-    console.log(coop);
     // when some condition is met
     const message = props?.location?.state?.message;
     if (message) open(message); // closable with the toggle, or in code via close()
     /* if (coop == null) {
       console.log("called ...");
       CoopService.getById(coop_id, function (data) {
-        console.log("done!");
         const coop = data;
         coop.addresses.map((address) => {
           address.country = DEFAULT_COUNTRY_CODE; // address.locality.state.country.id;
         });
         setCoop(coop);
-        console.log("retrieved coop ...");
-        console.log(coop);
         let personCopy = JSON.parse(JSON.stringify(person));
         personCopy.coop = coop;
         setPerson(personCopy);

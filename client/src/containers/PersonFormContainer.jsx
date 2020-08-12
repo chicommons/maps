@@ -21,8 +21,6 @@ const PersonFormContainer = (props) => {
 
   useEffect(() => {
     setPerson( props.person );
-    console.log("form container person set to ...");
-    console.log(props.person);
   }, [props]);
 
   const handleInput = (e) => {
@@ -123,7 +121,11 @@ const PersonFormContainer = (props) => {
       })
       .then((data) => {
         const result = data;
-        window.location.href = "/" + person.coops[0].id + "/listpeople";
+        //window.location.href = "/edit/" + person.coops[0].id + "/people"; 
+        history.push({
+          pathname: "/edit/" + person.coops[0].id + "/people",
+          state: { coop: result, message: person.id ? "Updated successfully." : "Created successfully." },
+        });
         window.scrollTo(0, 0);
       })
       .catch((err) => {

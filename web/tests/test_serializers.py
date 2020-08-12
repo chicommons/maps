@@ -1,6 +1,6 @@
 import pytest
 from django.test import TestCase
-from .factories import CoopTypeFactory, CoopFactory, AddressFactory, StateFactory, EmailContactMethodFactory, PhoneContactMethodFactory
+from .factories import * 
 from directory.models import Coop, CoopType
 from directory.serializers import *
 
@@ -63,10 +63,12 @@ class SerializerTests(TestCase):
                 "postal_code": postal_code, 
                 "state": {
                   "id": state.id, 
+                  "name": state.name,
+                  "code": state.code,
                   "country": {
-                    "id": state.country.id, 
-                    "name": state.country.name
-                  }
+                    "id": state.country.id,
+                    "name": state.country.name 
+                  } 
                 }
             }
         }
@@ -78,6 +80,7 @@ class SerializerTests(TestCase):
     @pytest.mark.django_db
     def test_coop_create(self):
         """ Test coop serizlizer model """
+        print("\n\n\n\n\n-o-o-o-o-o  start of test -o-o-o-o-o-oo-o")
         name = "Test 8899"
         coop_type_name = "Library"
         street = "222 W. Merchandise Mart Plaza, Suite 1212"
@@ -102,6 +105,8 @@ class SerializerTests(TestCase):
                     "postal_code": postal_code, 
                     "state": {
                       "id": state.id, 
+                      "name": state.name,
+                      "code": state.code,
                       "country": {
                         "id": state.country.id, 
                         "name": state.country.name
@@ -159,12 +164,20 @@ class SerializerTests(TestCase):
                 {"name": coop_type_name}
             ],
             "addresses": [{
-                "id": coop.addresses.all().first().id,
+                "raw": street,
                 "formatted": street,
                 "locality": {
                     "name": city,
                     "postal_code": postal_code, 
-                    "state": state.id
+                    "state": {
+                      "id": state.id, 
+                      "name": state.name,
+                      "code": state.code,
+                      "country": {
+                        "id": state.country.id, 
+                        "name": state.country.name
+                      }
+                    }
                 }
             }],
             "enabled": enabled,
@@ -253,11 +266,12 @@ class SerializerTests(TestCase):
                 {"name": coop_type_name}
             ],
             "addresses": [{
+                "raw": street,
                 "formatted": street,
                 "locality": {
                     "name": city,
                     "postal_code": postal_code, 
-                    "state": ''
+                    "state": {} 
                 }
             }],
             "enabled": enabled,
@@ -273,7 +287,9 @@ class SerializerTests(TestCase):
         serializer = CoopSerializer(data=serializer_data)
         assert not serializer.is_valid()
         assert len(serializer.errors.keys()) == 1
-        assert serializer.errors['addresses']['state'] == "This field is required.", serializer.errors['addresses']['state']
+        print("--------- keys ----------")
+        print(serializer.errors['addresses'][0]['locality'])
+        assert serializer.errors['addresses'][0]['locality']['state']['name'][0].code == "required", serializer.errors['addresses'][0]['locality']['state']['name'][0].code 
 
 
     @pytest.mark.django_db
@@ -349,3 +365,44 @@ class SerializerTests(TestCase):
             coop_count = coop_count + 1
         assert coop_count == 1
         assert person.contact_methods.first().email == email
+        people = Person.objects.get(first_name=first_name, last_name=last_name)
+        assert people is not None, "Failed to save person object."
+ 
+    @pytest.mark.django_db
+    def test_person_update(self):
+        """ Test person serizlizer model """
+        first_name = "Curly"
+        last_name = "Howard"
+        email = "jtest@aaa.com"
+        person = PersonFactory()
+        serializer_data = {
+            "id": person.id, 
+            "first_name": first_name,
+            "last_name": last_name,
+            "coops": [
+                person.coops.first().id 
+            ],
+            "contact_methods": [{
+                "email": email,
+                "type": "EMAIL"
+            }],
+        }
+
+        serializer = PersonSerializer(data=serializer_data)
+        serializer.is_valid()
+        assert serializer.is_valid(), serializer.errors
+        person = serializer.save() 
+        assert person.first_name == first_name
+        assert person.last_name == last_name
+        coop_count = 0
+        for coop in person.coops.all():
+            coop_count = coop_count + 1
+        assert coop_count == 1
+        assert person.contact_methods.first().email == email
+        people = Person.objects.get(first_name=first_name, last_name=last_name)
+        assert people is not None, "Failed to save person object."
+ 
+
+
+
+

@@ -4,7 +4,7 @@ class Province extends React.Component {
   render() {
     let provinces = this.props.options;
     let optionItems = provinces.map((province) => (
-      <option key={province.id} value={province.id}>
+      <option key={province.code} value={province.code}>
         {province.name}
       </option>
     ));

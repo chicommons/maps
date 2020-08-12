@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import _ from "lodash";
 
 /* Import Components */
+import CoopService from "../services/CoopService";
 import Input from "../components/Input";
 import CoopTypes from "../components/CoopTypes";
 import Country from "../components/Country";
@@ -27,43 +28,14 @@ const FormContainer = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Make a copy of the object in order to remove unneeded properties
-    const NC = JSON.parse(JSON.stringify(coop));
-    delete NC.addresses[0].country;
-    const body = JSON.stringify(NC);
-    const url = coop.id
-      ? REACT_APP_PROXY + "/coops/" + coop.id + "/" 
-      : REACT_APP_PROXY + "/coops/";
-    const method = coop.id ? "PUT" : "POST";
-    fetch(url, {
-      method: method,
-      body: body,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw response;
-        }
-      })
-      .then((data) => {
-        const result = data;
-        history.push({
-          pathname: "/" + result.id + "/people",
-          state: { coop: result, message: "Success" },
-        });
-        window.scrollTo(0, 0);
-      })
-      .catch((err) => {
-        console.log(err);
-        err.text().then((errorMessage) => {
-          setErrors(JSON.parse(errorMessage));
-        });
+    CoopService.save(coop, setErrors, function(data) {
+      const result = data;
+      history.push({
+        pathname: "/" + result.id + "/people",
+        state: { coop: result, message: "Success" },
       });
+      window.scrollTo(0, 0);
+    });
   };
 
   const handleClearForm = () => {
@@ -93,10 +65,33 @@ const FormContainer = (props) => {
     } else {
       const coopCopy = JSON.parse(JSON.stringify(coop));
       const keys = name.split(/[\[\].]+/);
+      console.log("setting " + name + " to " + value);
       _.set(coopCopy, name, value);
       setCoop(coopCopy);
     }
   };
+
+  const handleProvinceChange = (e) => {
+    const coopCopy = JSON.parse(JSON.stringify(coop));
+    const name = e.target.name.replace("\.name", ".code");
+    const value = e.target.value; 
+    console.log("setting " + name + " to " + value);
+    _.set(coopCopy, name, value);
+    const stateElt = document.getElementById(e.target.name);
+    const stateText = stateElt.options[stateElt.selectedIndex].text;
+    const coopStateName = e.target.name;
+    _.set(coopCopy, coopStateName, stateText);
+    
+    // Update the parent country
+    const countryName = e.target.name.replace("\.name", ".country.code");
+    console.log("country name:" + countryName);
+    const countryElt = document.getElementById(countryName);
+    const countryNameText = countryElt.options[countryElt.selectedIndex].text; 
+    const coopCountryAttrName = e.target.name.replace("\.name", ".country.name");
+    _.set(coopCopy, coopCountryAttrName, countryNameText);
+    setCoop(coopCopy);
+  };
+
 
   const updateValue = (name, value, index = 0) => {
     const coopCopy = JSON.parse(JSON.stringify(coop));
@@ -245,20 +240,20 @@ const FormContainer = (props) => {
           {/* Address city of the cooperative */}
           <Country
             title={"Country"}
-            name={"addresses[0].country"}
+            name={"addresses[0].locality.state.country.code"}
             options={countries}
-            countryCode={coop.addresses[0].country.code}
+            countryCode={coop.addresses[0].locality.state.country.code}
             placeholder={"Select Country"}
             handleChange={handleInput}
           />{" "}
           {/* Country Selection */}
           <Province
             title={"State"}
-            name={"addresses[0].locality.state"}
+            name={"addresses[0].locality.state.name"}
             options={provinces}
-            value={coop.addresses[0].locality.state.id}
+            value={coop.addresses[0].locality.state.code}
             placeholder={"Select State"}
-            handleChange={handleInput}
+            handleChange={handleProvinceChange}
           />{" "}
           {/* State Selection */}
           <Input

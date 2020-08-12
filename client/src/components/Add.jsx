@@ -14,7 +14,12 @@ const initNewCoop = () => {
           name: "",
           postal_code: "",
           state: {
-            id: "",
+            name: "",
+            code: "",
+            country: {
+              name: "",
+              code: DEFAULT_COUNTRY_CODE
+            }
           },
         },
         country: {
