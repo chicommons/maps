@@ -8,12 +8,10 @@ from directory.serializers import *
 class SerializerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        print("setUpTestData: Run once to set up non-modified data for all class methods.")
         #management.call_command('loaddata', 'test_data.yaml', verbosity=0)
         pass
 
     def setUp(self):
-        print("setUp: Run once for every test method to setup clean data.")
         #management.call_command('flush', verbosity=0, interactive=False)
         pass
 
@@ -27,7 +25,6 @@ class SerializerTests(TestCase):
 
         serializer = CoopTypeSerializer(data=serializer_data)
         serializer.is_valid()
-        print(serializer.errors)
         assert serializer.is_valid(), serializer.errors
         coop_type = serializer.save() 
         assert coop_type.name == name
@@ -80,7 +77,6 @@ class SerializerTests(TestCase):
     @pytest.mark.django_db
     def test_coop_create(self):
         """ Test coop serizlizer model """
-        print("\n\n\n\n\n-o-o-o-o-o  start of test -o-o-o-o-o-oo-o")
         name = "Test 8899"
         coop_type_name = "Library"
         street = "222 W. Merchandise Mart Plaza, Suite 1212"
@@ -287,8 +283,6 @@ class SerializerTests(TestCase):
         serializer = CoopSerializer(data=serializer_data)
         assert not serializer.is_valid()
         assert len(serializer.errors.keys()) == 1
-        print("--------- keys ----------")
-        print(serializer.errors['addresses'][0]['locality'])
         assert serializer.errors['addresses'][0]['locality']['state']['name'][0].code == "required", serializer.errors['addresses'][0]['locality']['state']['name'][0].code 
 
 
@@ -375,6 +369,8 @@ class SerializerTests(TestCase):
         last_name = "Howard"
         email = "jtest@aaa.com"
         person = PersonFactory()
+        #email_contact_method = EmailContactMethodFactory()
+        #phone_contact_method = PhoneContactMethodFactory()
         serializer_data = {
             "id": person.id, 
             "first_name": first_name,
@@ -388,7 +384,7 @@ class SerializerTests(TestCase):
             }],
         }
 
-        serializer = PersonSerializer(data=serializer_data)
+        serializer = PersonSerializer(person, data=serializer_data)
         serializer.is_valid()
         assert serializer.is_valid(), serializer.errors
         person = serializer.save() 
@@ -398,7 +394,11 @@ class SerializerTests(TestCase):
         for coop in person.coops.all():
             coop_count = coop_count + 1
         assert coop_count == 1
-        assert person.contact_methods.first().email == email
+        cm_count = 0
+        for cm in person.contact_methods.all():
+            cm_count = cm_count + 1
+        assert cm_count == 1, "Incorrect number of contact methods: {}".format(cm_count) 
+        assert person.contact_methods.first().email == email, "Failed to create new email.  Is still {}".format(person.contact_methods.first().email) 
         people = Person.objects.get(first_name=first_name, last_name=last_name)
         assert people is not None, "Failed to save person object."
  

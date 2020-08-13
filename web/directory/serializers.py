@@ -3,6 +3,7 @@ from directory.models import Coop, CoopType, ContactMethod, Person
 from address.models import Address, AddressField, Locality, State, Country 
 from geopy.geocoders import Nominatim
 import re
+import ssl
 
 
 class AddressTypeField(serializers.PrimaryKeyRelatedField):
@@ -171,7 +172,7 @@ class LocalitySerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Locality` instance, given the validated data.
         """
-        print("\n\n\n\nupdating entity \n\n\n\n") 
+        print("\n\n\n\nupdating address entity \n\n\n\n") 
         instance.name = validated_data.get('name', instance.name)
         instance.postal_code = validated_data.get('postal_code', instance.name)
         state = validated_data.get('state', instance.name)
@@ -269,28 +270,28 @@ class CoopSerializer(serializers.ModelSerializer):
             serializer = AddressSerializer()
             addr = serializer.create_obj(validated_data=address)
             instance.addresses.add(addr) 
+            self.update_coords(addr)
         instance.save()
         return instance
 
     # Set address coordinate data 
     @staticmethod
-    def update_coords(data):
+    def update_coords(address):
+        ssl._create_default_https_context = ssl._create_unverified_context
         locator = Nominatim(user_agent="myGeocoder")
         if locator:
-            print(data)
-            print(data['addresses'])
-            addresses = data['addresses']
-            for address in addresses:
-                state = address.locality.state
-                country = state.country
-                # This is an example of a formatted address string that will return lat and lon:
-                #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
-                address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
-                location = locator.geocode(address_str)
-                if location:
-                    address.latitude = location.latitude
-                    address.longitude = location.longitude
-                    address.save(update_fields=["latitude", "longitude"])
+            print(address)
+            #for address in addresses:
+            state = address.locality.state
+            country = state.country
+            # This is an example of a formatted address string that will return lat and lon:
+            #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
+            address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
+            location = locator.geocode(address_str)
+            if location:
+                address.latitude = location.latitude
+                address.longitude = location.longitude
+                address.save(update_fields=["latitude", "longitude"])
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -318,14 +319,22 @@ class PersonSerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Coop` instance, given the validated data.
         """
-        instance = super().update(validated_data)
+        print("\n\n\n\n-------------")
+        print(validated_data)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        coops = validated_data.pop('coops', {})
+        for coop in coops:
+            #coop_obj = Coop.objects.get(pk=coop) 
+            instance.coops.add(coop)
+        contact_methods = validated_data.pop('contact_methods', {})
+        instance.contact_methods.clear()
+        for contact_method in contact_methods:
+            print("contact method:",contact_method)
+            print("email:",contact_method.email)
+            #contact_method_obj = ContactMethod.objects.create(**contact_method)
+            instance.contact_methods.add(contact_method)
+        instance.save() 
         return instance
-        #instance.coops = validated_data.get('coops', instance.coops)
-        #instance.contact_methods = validated_data.get('contact_methods', instance.contact_methods)
-        #instance.first_name = validated_data.get('first_name', instance.first_name)
-        #instance.last_name = validated_data.get('last_name', instance.last_name)
-        #instance.save()
-        #return instance
-
 
 
