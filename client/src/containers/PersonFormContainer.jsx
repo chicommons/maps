@@ -93,6 +93,7 @@ const PersonFormContainer = (props) => {
     fetch(url, {
       method: method,
       body: JSON.stringify({
+        id: person?.id,
         first_name: person.first_name,
         last_name: person.last_name,
         coops: person.coops.map((coop) => coop.id),

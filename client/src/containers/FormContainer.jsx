@@ -21,10 +21,10 @@ const FormContainer = (props) => {
   const [errors, setErrors] = React.useState([]);
   const [coopTypes, setCoopTypes] = React.useState([]);
   const [coop, setCoop] = React.useState(props.coop);
-  console.log("coop ...");
-  console.log(coop);
   const history = useHistory();
   const [open, close] = useAlert();
+  console.log("coop:");
+  console.log(coop);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -266,6 +266,9 @@ const FormContainer = (props) => {
             errors={errors}
           />{" "}
           {/* Address postal code of the cooperative */}
+          {coop.addresses[0]?.latitude && coop.addresses[0]?.longitude && ( 
+          <div>Lat: {coop.addresses[0]?.latitude.toFixed(3)} Lon: {coop.addresses[0]?.longitude.toFixed(3)}</div>
+          )}
           <Input
             inputType={"text"}
             title={"Email"}

@@ -4,7 +4,7 @@ class Country extends React.Component {
   render() {
     let countries = this.props.options;
     let optionItems = countries.map((country) => (
-      <option key={country.id} value={country.id}>
+      <option key={country.code} value={country.code}>
         {country.name}
       </option>
     ));
@@ -18,7 +18,7 @@ class Country extends React.Component {
         <select
           id={this.props.name}
           name={this.props.name}
-          value={country?.id}
+          value={country?.code}
           onChange={this.props.handleChange}
           className="form-control"
         >

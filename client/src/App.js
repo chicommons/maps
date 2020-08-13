@@ -12,6 +12,7 @@ import AddPerson from "./components/people/AddPerson";
 import EditPerson from "./components/people/EditPerson";
 import ListPeople from "./components/people/ListPeople";
 import { AlertProvider } from "./components/AlertProvider";
+import Logo from './logo.png';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <Link className="navbar-brand" to={"/add"}>
-              Chicommons
+              <img src={Logo} alt="Chicommons" />
             </Link>
             <NavBar />
           </div>
