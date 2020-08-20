@@ -49,8 +49,9 @@ class CoopService {
         callback(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("errors ...");
         err.text().then((errorMessage) => {
+          console.log(JSON.parse(errorMessage));
           setErrors(JSON.parse(errorMessage));
         });
       });

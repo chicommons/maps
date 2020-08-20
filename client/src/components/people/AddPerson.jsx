@@ -38,7 +38,7 @@ const AddPerson = (props) => {
         personCopy.coop = coop;
         setPerson(personCopy);
       });
-    } */ 
+    } */
   }, []);
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const AddPerson = (props) => {
 
   return (
     <>
-    <h5>Add Person Info</h5> 
-    <PersonFormContainer person={person} />
+      <h5>Add Person Info</h5>
+      <PersonFormContainer person={person} />
     </>
   );
 };

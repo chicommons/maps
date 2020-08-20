@@ -21,14 +21,14 @@ const EditPerson = (props) => {
 
   if (person) {
     return (
-    <>
-    <h5>Edit Person Info</h5> 
-    <PersonFormContainer person={person} />
-    </>
-    ); 
+      <>
+        <h5>Edit Person Info</h5>
+        <PersonFormContainer person={person} />
+      </>
+    );
   } else {
-    return (<></>);
-  } 
+    return <></>;
+  }
 };
 
 export default EditPerson;

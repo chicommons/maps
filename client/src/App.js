@@ -12,7 +12,7 @@ import AddPerson from "./components/people/AddPerson";
 import EditPerson from "./components/people/EditPerson";
 import ListPeople from "./components/people/ListPeople";
 import { AlertProvider } from "./components/AlertProvider";
-import Logo from './logo.png';
+import Logo from "./logo.png";
 
 function App() {
   return (

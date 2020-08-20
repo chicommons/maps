@@ -23,19 +23,28 @@ const FormContainer = (props) => {
   const [coop, setCoop] = React.useState(props.coop);
   const history = useHistory();
   const [open, close] = useAlert();
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   console.log("coop:");
   console.log(coop);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    CoopService.save(coop, setErrors, function(data) {
-      const result = data;
-      history.push({
-        pathname: "/" + result.id + "/people",
-        state: { coop: result, message: "Success" },
-      });
-      window.scrollTo(0, 0);
-    });
+    setButtonDisabled(true);
+    CoopService.save(
+      coop,
+      (errors) => {
+        setButtonDisabled(false);
+        setErrors(errors);
+      },
+      function (data) {
+        const result = data;
+        history.push({
+          pathname: "/" + result.id + "/people",
+          state: { coop: result, message: "Success" },
+        });
+        window.scrollTo(0, 0);
+      }
+    );
   };
 
   const handleClearForm = () => {
@@ -73,25 +82,24 @@ const FormContainer = (props) => {
 
   const handleProvinceChange = (e) => {
     const coopCopy = JSON.parse(JSON.stringify(coop));
-    const name = e.target.name.replace("\.name", ".code");
-    const value = e.target.value; 
+    const name = e.target.name.replace(".name", ".code");
+    const value = e.target.value;
     console.log("setting " + name + " to " + value);
     _.set(coopCopy, name, value);
     const stateElt = document.getElementById(e.target.name);
     const stateText = stateElt.options[stateElt.selectedIndex].text;
     const coopStateName = e.target.name;
     _.set(coopCopy, coopStateName, stateText);
-    
+
     // Update the parent country
-    const countryName = e.target.name.replace("\.name", ".country.code");
+    const countryName = e.target.name.replace(".name", ".country.code");
     console.log("country name:" + countryName);
     const countryElt = document.getElementById(countryName);
-    const countryNameText = countryElt.options[countryElt.selectedIndex].text; 
-    const coopCountryAttrName = e.target.name.replace("\.name", ".country.name");
+    const countryNameText = countryElt.options[countryElt.selectedIndex].text;
+    const coopCountryAttrName = e.target.name.replace(".name", ".country.name");
     _.set(coopCopy, coopCountryAttrName, countryNameText);
     setCoop(coopCopy);
   };
-
 
   const updateValue = (name, value, index = 0) => {
     const coopCopy = JSON.parse(JSON.stringify(coop));
@@ -266,8 +274,11 @@ const FormContainer = (props) => {
             errors={errors}
           />{" "}
           {/* Address postal code of the cooperative */}
-          {coop.addresses[0]?.latitude && coop.addresses[0]?.longitude && ( 
-          <div>Lat: {coop.addresses[0]?.latitude.toFixed(3)} Lon: {coop.addresses[0]?.longitude.toFixed(3)}</div>
+          {coop.addresses[0]?.latitude && coop.addresses[0]?.longitude && (
+            <div>
+              Lat: {coop.addresses[0]?.latitude.toFixed(3)} Lon:{" "}
+              {coop.addresses[0]?.longitude.toFixed(3)}
+            </div>
           )}
           <Input
             inputType={"text"}
@@ -307,6 +318,7 @@ const FormContainer = (props) => {
           />{" "}
           {/*Submit */}
           <Button
+            disabled={buttonDisabled}
             action={handleClearForm}
             type={"secondary"}
             title={"Clear"}

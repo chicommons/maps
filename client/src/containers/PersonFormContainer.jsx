@@ -14,13 +14,14 @@ const handleClearForm = () => {
 };
 
 const PersonFormContainer = (props) => {
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [person, setPerson] = React.useState(props.person);
   const [errors, setErrors] = React.useState([]);
   const [coop, setCoop] = React.useState(props.coop);
   const history = useHistory();
 
   useEffect(() => {
-    setPerson( props.person );
+    setPerson(props.person);
   }, [props]);
 
   const handleInput = (e) => {
@@ -84,10 +85,11 @@ const PersonFormContainer = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setButtonDisabled(true);
     // Make a copy of the object in order to remove unneeded properties
 
     const url = person.id
-      ? REACT_APP_PROXY + "/people/" + person.id + "/" 
+      ? REACT_APP_PROXY + "/people/" + person.id + "/"
       : REACT_APP_PROXY + "/people/";
     const method = person.id ? "PUT" : "POST";
     fetch(url, {
@@ -122,15 +124,20 @@ const PersonFormContainer = (props) => {
       })
       .then((data) => {
         const result = data;
-        //window.location.href = "/edit/" + person.coops[0].id + "/people"; 
+        setButtonDisabled(false);
         history.push({
           pathname: "/edit/" + person.coops[0].id + "/people",
-          state: { coop: result, message: person.id ? "Updated successfully." : "Created successfully." },
+          state: {
+            coop: result,
+            message: person.id
+              ? "Updated successfully."
+              : "Created successfully.",
+          },
         });
         window.scrollTo(0, 0);
       })
       .catch((err) => {
-        console.log(err);
+        setButtonDisabled(false);
         err.text().then((errorMessage) => {
           setErrors(JSON.parse(errorMessage));
         });
@@ -185,6 +192,7 @@ const PersonFormContainer = (props) => {
           />{" "}
           {/* Phone number of the person */}
           <Button
+            disabled={buttonDisabled}
             action={handleFormSubmit}
             type={"primary"}
             title={"Submit"}

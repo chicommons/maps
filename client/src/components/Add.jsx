@@ -18,8 +18,8 @@ const initNewCoop = () => {
             code: "",
             country: {
               name: "",
-              code: DEFAULT_COUNTRY_CODE
-            }
+              code: DEFAULT_COUNTRY_CODE,
+            },
           },
         },
         country: {

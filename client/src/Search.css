@@ -13,3 +13,8 @@
   text-decoration: none;
   box-shadow: 2px 2px 2px #898989;
 }
+
+.loading {
+  text-align: center;
+  padding-top: 10px;
+}

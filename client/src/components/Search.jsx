@@ -1,56 +1,60 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "../Search.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { PencilSquare } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 
-export default class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchTerm: "",
-      setSearchTerm: "",
-      searchResults: [],
-      setSearchResults: [],
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
+let abortController = new window.AbortController();
 
-  handleChange(event) {
-    const query = event.target.value;
-    if (!query) {
-      this.setState({ searchTerm: query, searchResults: [] });
-    } else {
-      this.setState({ searchTerm: query, loading: true }, () => {
-        this.doSearch(query);
-      });
-    }
-  }
-
-  doSearch = (query) => {
-    const searchUrl = "/coops/?contains=" + encodeURIComponent(query);
-    fetch(searchUrl, {
-      method: "GET",
+const doSearch = (query, setSearchResults, setLoading) => {
+  abortController.abort();
+  abortController = new window.AbortController();
+  setLoading(true);
+  const searchUrl = "/coops/?contains=" + encodeURIComponent(query);
+  fetch(searchUrl, {
+    method: "GET",
+    signal: abortController.signal,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(" query:" + query);
+      console.log(data);
+      setSearchResults(data);
+      setLoading(false);
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("query:" + query + " searchterm:" + this.state.searchTerm);
-        console.log(data);
-        if (query === this.state.searchTerm) {
-          this.setState({
-            searchResults: data,
-            loading: false,
-          });
-        }
-      });
+    .catch((e) => {
+      console.log(`Fetch 2 error: ${e.message}`);
+    });
+};
+
+const doSearchDebounced = _.debounce(doSearch, 100);
+
+const Search = (props) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!searchTerm) {
+      setSearchResults([]);
+      return;
+    }
+
+    // Let the debounced function do it's thing
+    const results = doSearchDebounced(searchTerm, setSearchResults, setLoading);
+    setSearchResults(results);
+  }, [searchTerm]);
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  renderSearchResults = () => {
-    const { searchResults } = this.state;
+  const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
       return (
-        <div>
+        <>
           <div>Results</div>
           <ListGroup variant="flush">
             {searchResults.map((item) => (
@@ -64,22 +68,32 @@ export default class Search extends Component {
               </ListGroupItem>
             ))}
           </ListGroup>
-        </div>
+        </>
       );
     }
   };
 
-  render() {
-    return (
-      <div className="searchForm">
-        <input
-          type="text"
-          placeholder="Search"
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-        />
-        {this.renderSearchResults()}
+  const debouncedHandleChange = _.debounce(handleChange, 100);
+  return (
+    <div className="searchForm">
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleChange}
+      />
+      <div>
+        {renderSearchResults()}
+        {loading && (
+          <div class="loading">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Search;
