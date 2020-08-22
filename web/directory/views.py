@@ -45,7 +45,7 @@ class CoopList(APIView):
             coops = Coop.objects.find_by_name(contains)
         else:
             coops = Coop.objects.all()
-        serializer = CoopSerializer(coops, many=True)
+        serializer = CoopSearchSerializer(coops, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

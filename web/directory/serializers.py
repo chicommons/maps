@@ -337,4 +337,14 @@ class PersonSerializer(serializers.ModelSerializer):
         instance.save() 
         return instance
 
+class CoopSearchSerializer(serializers.ModelSerializer):
+    """
+    This Coop serializer contains a scaled down version of the model to streamline
+    bandwidth used and processing.
+    """
+
+    class Meta:
+        model = Coop
+        fields = 'id', 'name'
+
 
