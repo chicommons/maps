@@ -16,8 +16,8 @@ Visit http://localhost:3001/ to see the application.
 
 If you want to get things running locally without using Docker, you must install
 
-- MySql 5.7
-- Python 3.7
+- MySql 8.0
+- Python 3.8
 - Node 12 or above
 
 Then you must add the following environment variables.  On Mac, you will want to open your ~/.profile file and add
