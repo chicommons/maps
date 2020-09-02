@@ -1,5 +1,7 @@
 FROM node:10-alpine AS alpine
 
+RUN apk update && apk add bash
+
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
 WORKDIR /app/
@@ -8,11 +10,11 @@ WORKDIR /app/
 COPY package*.json ./
 
 # Installs all node packages
-RUN npm install
+RUN npm install --force -g yarn
 
 # Copies everything over to Docker environment
 #COPY . .
 
+RUN echo "finished with Dockerfile."
 # Finally runs the application
-CMD [ "npm", "start" ]
-
+#CMD [ "npm", "start" ]

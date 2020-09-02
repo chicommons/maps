@@ -31,6 +31,15 @@ services:
     - ./web/:/app
     depends_on:
       - mysql
+
+  apache:
+    restart: always
+    build: ./apache/
+    ports:
+      - "9090:80"
+    links:
+      - web:web
+
   client:
     build:
       context: ./client
@@ -41,21 +50,11 @@ services:
     restart: always
     container_name: web-app
     environment:
-      - NODE_ENV=development
-      - REACT_APP_PROXY=http://localhost:9090
+      - NODE_ENV=dockerdev
     depends_on:
-      - web
+      - apache 
     stdin_open: true
-
-  apache:
-    restart: always
-    build: ./apache/
-    ports:
-      - "9090:80"
-    #volumes:
-    #  - web-static:/www/static
-    links:
-      - web:web
+    command: /bin/bash /app/install_and_run.sh
 
 volumes:
   my-db:

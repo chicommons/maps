@@ -6,13 +6,15 @@ import { PencilSquare } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
+const { REACT_APP_PROXY } = process.env;
+
 let abortController = new window.AbortController();
 
 const doSearch = (query, setSearchResults, setLoading) => {
   abortController.abort();
   abortController = new window.AbortController();
   setLoading(true);
-  const searchUrl = "/coops/?contains=" + encodeURIComponent(query);
+  const searchUrl = REACT_APP_PROXY + "/coops/?contains=" + encodeURIComponent(query);
   fetch(searchUrl, {
     method: "GET",
     signal: abortController.signal,
