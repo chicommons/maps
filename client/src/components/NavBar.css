@@ -1,23 +1,27 @@
 .fixed-bottom,
 .fixed-top {
-  position: initial;
-  right: 0;
-  left: 0;
-  z-index: 1030;
+	position: initial;
+	right: 0;
+	left: 0;
+	z-index: 1030;
 }
 
 .hamburgerDropDown {
-  background-color: black;
-  border: 1px solid bisque;
-  position: absolute;
-  top: 50px;
-  right: -1rem;
+	background-color: black;
+	border: 1px solid bisque;
+	position: absolute;
+	top: 50px;
+	right: -1rem;
 }
 
 ul.hamburgerDropDown {
-  padding: 10px;
+	padding: 10px;
 }
 
 .navbar div {
-  display: inline-block;
+	display: inline-block;
+}
+
+.nav-link {
+	color: #2295a2;
 }
