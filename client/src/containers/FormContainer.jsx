@@ -214,6 +214,7 @@ const FormContainer = (props) => {
             placeholder={"Enter cooperative name"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Name of the cooperative */}
           <CoopTypes
@@ -224,6 +225,7 @@ const FormContainer = (props) => {
             handleAddition={handleCoopTypeAddition}
             handleDeletion={handleCoopTypeDeletion}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Coop Type Selection */}
           <Input
@@ -234,6 +236,7 @@ const FormContainer = (props) => {
             placeholder={"Enter address street"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Address street of the cooperative */}
           <Input
@@ -244,6 +247,7 @@ const FormContainer = (props) => {
             placeholder={"Enter address city"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Address city of the cooperative */}
           <Country
@@ -253,6 +257,7 @@ const FormContainer = (props) => {
             countryCode={coop.addresses[0].locality.state.country.code}
             placeholder={"Select Country"}
             handleChange={handleInput}
+            style={inputStyle}
           />{" "}
           {/* Country Selection */}
           <Province
@@ -262,6 +267,7 @@ const FormContainer = (props) => {
             value={coop.addresses[0].locality.state.code}
             placeholder={"Select State"}
             handleChange={handleProvinceChange}
+            style={inputStyle}
           />{" "}
           {/* State Selection */}
           <Input
@@ -272,6 +278,7 @@ const FormContainer = (props) => {
             placeholder={"Enter postal code"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Address postal code of the cooperative */}
           {coop.addresses[0]?.latitude && coop.addresses[0]?.longitude && (
@@ -288,6 +295,7 @@ const FormContainer = (props) => {
             placeholder={"Enter email"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Email of the cooperative */}
           <Input
@@ -298,6 +306,7 @@ const FormContainer = (props) => {
             placeholder={"Enter phone number"}
             handleChange={handlePhoneInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Phone number of the cooperative */}
           <Input
@@ -308,6 +317,7 @@ const FormContainer = (props) => {
             placeholder={"Enter web site"}
             handleChange={handleInput}
             errors={errors}
+            style={inputStyle}
           />{" "}
           {/* Web site of the cooperative */}
           <Button
@@ -333,6 +343,11 @@ const FormContainer = (props) => {
 
 const buttonStyle = {
   margin: "10px 10px 10px 10px",
+  color: "#F6FBFB", 
+  backgroundColor: "#2295A2"
 };
+const inputStyle = {
+color: "#124E54"
+}
 
 export default FormContainer;
