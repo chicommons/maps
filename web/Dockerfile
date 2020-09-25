@@ -2,6 +2,7 @@ FROM python:3.7-slim
 
 RUN apt-get update && apt-get install
 
+RUN apt-get install -y dos2unix
 RUN apt-get install -y libmariadb-dev-compat libmariadb-dev
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc \
@@ -20,6 +21,8 @@ WORKDIR /app/
 
 COPY requirements.txt requirements.txt
 RUN python -m pip install -r requirements.txt
+
+RUN dos2unix /app/entrypoint.sh
 
 ENTRYPOINT ["bash", "/app/entrypoint.sh"]
 

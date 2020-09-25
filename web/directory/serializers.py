@@ -247,20 +247,21 @@ class CoopSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        return self.save_obj(validated_data)
+        return self.save_obj(validated_data=validated_data)
 
     def update(self, instance, validated_data):
         """
         Update and return an existing `Coop` instance, given the validated data.
         """
-        return self.save_obj(validated_data)
+        return self.save_obj(instance=instance, validated_data=validated_data)
 
-    def save_obj(self, validated_data):
+    def save_obj(self, validated_data, instance=None):
         coop_types = validated_data.pop('types', {})
         addresses = validated_data.pop('addresses', {})
         phone = validated_data.pop('phone', {})
         email = validated_data.pop('email', {})
-        instance = super().create(validated_data)
+        if not instance:
+            instance = super().create(validated_data)
         for item in coop_types:
             coop_type, _ = CoopType.objects.get_or_create(name=item['name']) 
             instance.types.add(coop_type)
@@ -271,6 +272,8 @@ class CoopSerializer(serializers.ModelSerializer):
             addr = serializer.create_obj(validated_data=address)
             instance.addresses.add(addr) 
             self.update_coords(addr)
+        instance.name = validated_data.pop('name', None)
+        instance.web_site = validated_data.pop('web_site', None)
         instance.save()
         return instance
 
@@ -319,8 +322,6 @@ class PersonSerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Coop` instance, given the validated data.
         """
-        print("\n\n\n\n-------------")
-        print(validated_data)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         coops = validated_data.pop('coops', {})

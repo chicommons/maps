@@ -1,6 +1,6 @@
 #!/bin/bash
 
-id=971
+id=26
 read -d '' req << EOF
 {
         "id": "$id",
@@ -10,11 +10,12 @@ read -d '' req << EOF
         ],
         "addresses": [
           {
+            "raw": "222 W. Merchandise Mart Plaza, Suite 1212",
             "formatted": "222 W. Merchandise Mart Plaza, Suite 1212",
             "locality": {
                 "name": "Chicago",
                 "postal_code": "60654",
-                "state": "19313" 
+                "state": {"id":19313,"code":"IL","name":"Illinois","country":{"id":484,"name":"United States","code":"US"}}
             }
           }
         ],
@@ -31,5 +32,5 @@ EOF
 
 echo $req
 
-curl --header "Content-type: application/json" --data "$req" --request PUT "http://localhost:8000/coops/$id/"  
+curl --header "Content-type: application/json" --data "$req" --request PUT "http://localhost:9090/coops/$id/"  
  

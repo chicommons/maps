@@ -142,6 +142,7 @@ class SerializerTests(TestCase):
     def test_coop_update(self):
         """ Test coop serizlizer model """
         coop = CoopFactory()
+        id = coop.id
         name = "Update 8899"
         coop_type_name = "Test type"
         street = "123 Beverly St."
@@ -186,10 +187,16 @@ class SerializerTests(TestCase):
             "web_site": web_site
         }
 
-        serializer = CoopSerializer(data=serializer_data)
+        # Count number of objects before save (we'll verify no new ones were
+        # created after)
+        count= Coop.objects.all().count()
+
+        serializer = CoopSerializer(coop, data=serializer_data)
         assert serializer.is_valid(), serializer.errors
         coop_saved = serializer.save() 
-        coop = Coop.objects.get(pk=coop_saved.id) 
+        new_count= Coop.objects.all().count()
+        assert count == new_count, "Created a new object when we should not have."
+        coop = Coop.objects.get(pk=id) 
         assert coop.name == name
         type_count = 0
         for coop_type in coop.types.all():
@@ -384,10 +391,13 @@ class SerializerTests(TestCase):
             }],
         }
 
+        count = Person.objects.all().count()
         serializer = PersonSerializer(person, data=serializer_data)
         serializer.is_valid()
         assert serializer.is_valid(), serializer.errors
         person = serializer.save() 
+        new_count = Person.objects.all().count()
+        assert count == new_count, "Created new object when we should not have."
         assert person.first_name == first_name
         assert person.last_name == last_name
         coop_count = 0

@@ -2,6 +2,8 @@ FROM node:10-alpine AS alpine
 
 RUN apk update && apk add bash
 
+RUN apt-get install -y dos2unix
+
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
 WORKDIR /app/
@@ -11,6 +13,8 @@ COPY package*.json ./
 
 # Installs all node packages
 RUN npm install --force -g yarn
+
+RUN dos2unix /app/install_and_run.sh
 
 # Copies everything over to Docker environment
 #COPY . .
