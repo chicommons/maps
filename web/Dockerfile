@@ -20,6 +20,7 @@ RUN python -m pip install --upgrade pip
 WORKDIR /app/
 
 COPY requirements.txt requirements.txt
+COPY entrypoint.sh entrypoint.sh
 RUN python -m pip install -r requirements.txt
 
 RUN dos2unix /app/entrypoint.sh
