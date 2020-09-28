@@ -4,6 +4,8 @@ services:
   mysql:
     restart: always
     image: mysql:8.0
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     environment:
       MYSQL_DATABASE: 'directory_data'
       # So you don't have to use root, but you can if you like
@@ -32,14 +34,6 @@ services:
     depends_on:
       - mysql
 
-  apache:
-    restart: always
-    build: ./apache/
-    ports:
-      - "9090:80"
-    links:
-      - web:web
-
   client:
     build:
       context: ./client
@@ -52,9 +46,18 @@ services:
     environment:
       - NODE_ENV=dockerdev
     depends_on:
-      - apache 
+      - web
     stdin_open: true
     command: /bin/bash /app/install_and_run.sh
+
+  apache:
+    restart: always
+    build: ./apache/
+    ports:
+      - "9090:80"
+    links:
+      - web:web
+      - client:client
 
 volumes:
   my-db:
