@@ -13,7 +13,7 @@ import Button from "../components/Button";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 import { useAlert } from "../components/AlertProvider";
 
-///add a checkbox that changes props.coop.enabled to to !props.coop.enabled
+import './FormContainer.css'
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -215,7 +215,7 @@ const FormContainer = (props) => {
   }
   console.log(props.coop.enabled)
   return (
-    <div>
+    <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>
         <FormGroup controlId="formBasicText">
           <Input
