@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
 .App {
 	text-align: center;
-	background-color: #f6fbfb;
+	background-color: #fffcf5;
 }
 
 .App-logo {
@@ -15,7 +18,7 @@
 }
 
 .App-header {
-	background-color: #282c34;
+	background-color: #fffcf5;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -23,6 +26,7 @@
 	justify-content: center;
 	font-size: calc(10px + 2vmin);
 	color: white;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 .App-link {

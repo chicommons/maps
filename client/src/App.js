@@ -18,7 +18,7 @@ function App() {
 	return (
 		<Router>
 			<div className="App">
-				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
+				<nav className="navbar navbar-expand-lg navbar-light fixed-top" style={{ backgroundColor: '#fffcf5' }}>
 					<div className="container">
 						<Link className="navbar-brand" to={'/add'}>
 							<img src={Logo} alt="Chicommons" />

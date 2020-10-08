@@ -13,6 +13,8 @@ import Button from "../components/Button";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 import { useAlert } from "../components/AlertProvider";
 
+import './FormContainer.css'
+
 const { REACT_APP_PROXY } = process.env;
 
 const FormContainer = (props) => {
@@ -124,6 +126,15 @@ const FormContainer = (props) => {
     return coopCopy;
   };
 
+  const[checked, setChecked]=useState(true)
+
+  const handleClick = (e) => {
+    props.coop.enabled=!props.coop.enabled
+
+    setChecked(!checked)
+
+  }
+
   /**
    * Verify phone field conforms to US phone (10 digits)
    *
@@ -202,8 +213,9 @@ const FormContainer = (props) => {
   if (coopTypes && !coopTypes.length) {
     return null;
   }
+  console.log(props.coop.enabled)
   return (
-    <div>
+    <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>
         <FormGroup controlId="formBasicText">
           <Input
@@ -335,7 +347,10 @@ const FormContainer = (props) => {
             style={buttonStyle}
           />{" "}
           {/* Clear the form */}
+           
         </FormGroup>
+        <input type="checkbox" id="enabled" onClick={e=>{handleClick(e)}} style={{margin: ".5rem"}} checked={checked}/>
+        <label for="enabled">Show on Map</label>
       </form>
     </div>
   );
@@ -347,7 +362,7 @@ const buttonStyle = {
   backgroundColor: "#2295A2"
 };
 const inputStyle = {
-color: "#124E54"
-}
+  color: "#124E54"
+  }
 
 export default FormContainer;
