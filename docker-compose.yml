@@ -19,7 +19,7 @@ services:
       - "3406:3306"
     volumes:
       - my-db:/var/lib/mysql
-      - ./mysql/mysqlconf:/etc/mysql/conf.d
+      - ./mysql/mysqlconf:/etc/mysql/conf.d:ro 
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   web:
