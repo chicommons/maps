@@ -1,26 +1,19 @@
 version: '3'
 
 services:
-  mysql:
-    restart: always
-    image: mysql:8.0
-    cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
-    environment:
-      MYSQL_DATABASE: 'directory_data'
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'root'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'password'
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: 'password'
-      MYSQL_ROOT_HOST: '%' 
+
+  postgres:
+    image: postgres:10.5
     ports:
-      - "3406:3306"
-    volumes:
-      - my-db:/var/lib/mysql
-      - ./mysql/mysqlconf:/etc/mysql/conf.d:ro 
-    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+      - 5105:5432
+    environment:
+      POSTGRES_DB: directory_data
+      POSTGRES_USER: chicommons
+      POSTGRES_PASSWORD: password
+    #volumes:
+    #  - my-db:/var/lib/mysql
+    #  - ./mysql/mysqlconf:/etc/mysql/conf.d:ro 
+    #command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   web:
     restart: always
@@ -34,7 +27,7 @@ services:
     volumes:
     - ./web/:/app
     depends_on:
-      - mysql
+      - postgres 
 
   client:
     build:
