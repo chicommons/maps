@@ -219,6 +219,7 @@ const FormContainer = (props) => {
       <form className="container-fluid" onSubmit={handleFormSubmit}>
         <FormGroup controlId="formBasicText">
           <Input
+            className={"required"}
             inputType={"text"}
             title={"Name"}
             name={"name"}
@@ -230,6 +231,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Name of the cooperative */}
           <CoopTypes
+            className={"required"}
             name={"types"}
             suggestions={coopTypes}
             values={coop.types}
@@ -241,6 +243,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Coop Type Selection */}
           <Input
+            className={"required"}
             inputType={"text"}
             title={"Street"}
             name={"addresses[0].formatted"}
@@ -252,6 +255,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Address street of the cooperative */}
           <Input
+            className={"required"}
             inputType={"text"}
             title={"City"}
             name={"addresses[0].locality.name"}
@@ -263,6 +267,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Address city of the cooperative */}
           <Country
+            className={"required"}
             title={"Country"}
             name={"addresses[0].locality.state.country.code"}
             options={countries}
@@ -273,6 +278,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Country Selection */}
           <Province
+            className={"required"}
             title={"State"}
             name={"addresses[0].locality.state.name"}
             options={provinces}
@@ -283,6 +289,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* State Selection */}
           <Input
+            className={"required"}
             inputType={"text"}
             title={"Postal Code"}
             name={"addresses[0].locality.postal_code"}
@@ -300,6 +307,7 @@ const FormContainer = (props) => {
             </div>
           )}
           <Input
+            className={"required"}
             inputType={"text"}
             title={"Email"}
             name={"email.email"}
@@ -311,6 +319,7 @@ const FormContainer = (props) => {
           />{" "}
           {/* Email of the cooperative */}
           <Input
+            className={"required"}
             inputType={"text"}
             title={"Phone"}
             name={"phone.phone"}

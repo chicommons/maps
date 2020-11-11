@@ -7,7 +7,7 @@ const Input = (props) => {
 
 	return (
 		<div className="form-group">
-			<FormLabel style={inputStyle}>{props.title}</FormLabel>
+			<FormLabel className={props.className} style={inputStyle}>{props.title}</FormLabel>
 			<FormControl
 				isInvalid={props.errors && errorsArr}
 				type={props.type}

@@ -49,7 +49,7 @@ const CoopTypes = (props) => {
 
 	return (
 		<div className="form-group">
-			<FormLabel style={inputStyle}>Coop Type(s)</FormLabel>
+			<FormLabel className={props.className} style={inputStyle}>Coop Type(s)</FormLabel>
 			<ReactTags
 				tags={tags ? tags : []}
 				suggestions={suggestions ? suggestions : []}
