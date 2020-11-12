@@ -11,7 +11,7 @@ class Province extends React.Component {
 
 		return (
 			<div className="form-group">
-				<label htmlFor={this.props.name} style={inputStyle}>
+				<label className={this.props.className} htmlFor={this.props.name} style={inputStyle}>
 					{' '}
 					{this.props.title}{' '}
 				</label>
