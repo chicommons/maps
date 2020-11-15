@@ -21,29 +21,31 @@ if [[ -z "${DB_PORT}" ]]; then
   exit 1
 fi
 
-read -p "What is the root MySql password? "  ROOT_MYSQL_PASSWORD
+read -s -p "What is the root Postgres (user=postgres) password? "  ROOT_PASSWORD
 
-create_db_command='create database if not exists $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
-create_user_command="CREATE USER '$DB_USER'@'$DB_SERVICE' IDENTIFIED BY '$DB_PASS';"
-grant_privs_command="GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'$DB_SERVICE';"
+create_db_command="SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec"
+create_user_command="create user $DB_USER with encrypted password '$DB_PASS';"
+grant_privs_command="grant all privileges on database $DB_NAME to $DB_USER;"
 
-mysql -u root --password=$ROOT_MYSQL_PASSWORD -h $DB_SERVICE --port=$DB_PORT -e "$create_db_command"
-#mysql -u root --password=$ROOT_MYSQL_PASSWORD -h $DB_SERVICE --port=$DB_PORT -e "$create_user_command"
-mysql -u root --password=$ROOT_MYSQL_PASSWORD -h $DB_SERVICE --port=$DB_PORT -e "$grant_privs_command"
+PGPASSWORD=$ROOT_PASSWORD 
+# This command creates the db if it doesn't already exist
+echo "SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec" | psql -Upostgres
+PGPASSWORD=$ROOT_PASSWORD psql -Upostgres -c "$create_user_command" 
+PGPASSWORD=$ROOT_PASSWORD psql -Upostgres -c "$grant_privs_command" 
 
 # Create Django environment, run migrations, and seed data
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $SCRIPT_DIR
 cd ../
 if [ ! -d ".venv" ]; then
-  python -m venv venv
+  python3 -m venv venv
 fi
 # Activate virtual environment
 source ./venv/bin/activate
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 
 # Run migrations and seed the database
-python manage.py migrate directory
-python manage.py docker_init_db_data
+python3 manage.py migrate 
+python3 manage.py docker_init_db_data
  
  
