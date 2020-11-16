@@ -3,8 +3,6 @@ FROM python:3.8-slim
 RUN apt-get update && apt-get install
 
 RUN apt-get install -y dos2unix
-RUN apt-get install -y libpq-dev python-dev
-RUN apt-get install -y python3-psycopg2
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc \
     && rm -rf /var/lib/apt/lists/*
