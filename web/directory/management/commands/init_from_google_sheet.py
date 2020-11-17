@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        sheets = Sheets.from_files('/Users/davea/Documents/workspace/chicommons/maps/web/configuration_g_client.json')
+        sheets = Sheets.from_files('/Users/davea/Documents/workspace/chicommons/maps/web/chicommons-ecf14d1c7040.json')
         url = 'https://docs.google.com/spreadsheets/d/1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U'
         s = sheets.get(url)
         out = s.sheets[3].to_csv('Spam.csv', encoding='utf-8', dialect='excel')
