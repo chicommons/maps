@@ -57,8 +57,30 @@ cd web/scripts
 ./install_local.sh
 ```
 
-to install the application and create and seed the database.  The script will prompt you for your root Postgres password so that it can create the database.
+to create a virtual enviroonment, install the application, and create and seed the database.  The script will prompt you for your root Postgres password so that it can create the database.
 
+### Run the Python app
 
+To start the Python app, run the following
+
+```
+cd web
+. venv/bin/activate
+python manage.py runserver
+```
+
+This starts the Python app on port 8000 (http://localhost:8000).  
+
+### React app
+
+To run the React app, run the following
+
+```
+cd client
+npm install --force -g yarn
+npm run start
+```
+
+This will start the React application on port 3000.  If you also have the Python app running locally, you should be able to visit http://localhost:3000 and see the start page.
 
 
