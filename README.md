@@ -31,7 +31,7 @@ local   all             chicommons                              md5
 
 Then restart PostGres.
 
-### Environment variables
+### Python/Django app 
 
 You must add the following environment variables.  On Mac or Linux, you will want to open your ~/.profile file and add
 
