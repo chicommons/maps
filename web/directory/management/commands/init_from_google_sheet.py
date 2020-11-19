@@ -1,48 +1,70 @@
-from gsheets import Sheets
-import httplib2
-import oauth2client
-import re
-import requests
-import shutil
-import urllib.parse
+#from gsheets import Sheets
+#import httplib2
+#import oauth2client
+#import re
+#import requests
+#import shutil
+#import urllib.parse
+#from django.core.management.base import BaseCommand, CommandError
+#import requests
+#from oauth2client.service_account import ServiceAccountCredentials
+#from googleapiclient.discovery import build
+#from apiclient import discovery
+#import httplib2
+#import oauth2client
+#import re
+#import requests
+#import shutil
+#import urllib.parse
 from django.core.management.base import BaseCommand, CommandError
+import gspread
+import pandas as pd
+from oauth2client.service_account import ServiceAccountCredentials
+import requests
+import sys
+import os
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        sheets = Sheets.from_files('/Users/davea/Documents/workspace/chicommons/maps/web/chicommons-ecf14d1c7040.json')
-        url = 'https://docs.google.com/spreadsheets/d/1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U'
-        s = sheets.get(url)
-        out = s.sheets[3].to_csv('Spam.csv', encoding='utf-8', dialect='excel')
-        print(out)
-        """
-        SCOPES = 'https://www.googleapis.com/auth/drive.readonly'
-        SPREADSHEET_ID = '1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U'
+        #sheets = Sheets.from_files('/Users/davea/Documents/workspace/chicommons/maps/web/credentials.json')
+        #url = 'https://docs.google.com/spreadsheets/d/1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U'
+        #credentialFileOfServiceAccount = '/Users/davea/Documents/workspace/chicommons/maps/web/credentials.json'
+        #emailOfServiceAccount = 'chicommons-google-sheets@chicommons-1605735260362.iam.gserviceaccount.com'
+        #file_id = '1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U'
 
-        store = oauth2client.file.Storage('/Users/davea/Documents/workspace/chicommons/maps/web/configuration_g_client.json')
-        creds = store.get()
-        if not creds or creds.invalid:
-            flow = oauth2client.client.flow_from_clientsecrets('client_secret.json', SCOPES)
-            creds = oauth2client.tools.run_flow(flow, store)
+        #creds = ServiceAccountCredentials.from_json_keyfile_name(credentialFileOfServiceAccount, scopes='https://www.googleapis.com/auth/drive.readonly')
+        
+        #access_token = creds.create_delegated(emailOfServiceAccount).get_access_token().access_token
 
-            service = apiclient.discovery.build('sheets', 'v4', http=creds.authorize(httplib2.Http()))
+        #url = 'https://www.googleapis.com/drive/v3/files/' + file_id + '/export?gid=974370180&mimeType=text%2Fcsv'
+        #url = 'https://docs.google.com/spreadsheets/d/1ifpqYM0uV1S3YVPrce5gmvevJ7jc-cFmOk5jDS8Me7U?output=csv'
+        #headers = {'Authorization': 'Bearer ' + access_token}
+        #res = requests.get(url, headers=headers)
+        #print(res.text)
 
-            result = service.spreadsheets().get(spreadsheetId = SPREADSHEET_ID).execute()
-            spreadsheetUrl = result['spreadsheetUrl']
-            exportUrl = re.sub("\/edit$", '/export', spreadsheetUrl)
-            headers = {
-                'Authorization': 'Bearer ' + creds.access_token,
-            }
-            for sheet in result['sheets']:
-                params = {
-                    'format': 'csv',
-                    'gid': sheet['properties']['sheetId'],
-                } 
-                queryParams = urllib.parse.urlencode(params)
-                url = exportUrl + '?' + queryParams
-                response = requests.get(url, headers = headers)
-                filePath = '/tmp/foo-%s.csv' % (+ params['gid'])
-                with open(filePath, 'wb') as csvFile:
-                    csvFile.write(response.content)
-        """
+        #with open('Spam.csv', 'wb') as f:
+        #    f.write(res.content)        
+              
+        scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+
+        # add credentials to the account
+        creds_file_path = os.environ['SERVICE_CREDS_JSON_FILE']
+        creds = ServiceAccountCredentials.from_json_keyfile_name(creds_file_path, scope)
+
+        client = gspread.authorize(creds)
+        sheet = client.open('ChiCommons_Directory')
+
+        # get the third sheet of the Spreadsheet.  This
+        # contains the data we want
+        sheet_instance = sheet.get_worksheet(3)
+
+        records_data = sheet_instance.get_all_records()
+
+        records_df = pd.DataFrame.from_dict(records_data)
+
+        # view the top records
+        records_df.to_csv(sys.stdout)  #(r'Spam.csv', index = False)
+
+
