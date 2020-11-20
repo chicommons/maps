@@ -50,6 +50,11 @@ class NavBar extends Component {
 						Search
 					</NavLink>
 				</li>
+				<li className="nav-link">
+					<NavLink to="/advancedsearch" className="nav-link">
+						Advanced Search
+					</NavLink>
+				</li>
 			</ul>
 		);
 	};
