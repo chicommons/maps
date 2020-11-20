@@ -8,7 +8,7 @@ import NavBar from './components/NavBar';
 import Add from './components/Add';
 import Edit from './components/Edit';
 import Search from './components/Search';
-import AdvancedSearch from './components/Search'
+import AdvancedSearch from './components/AdvancedSearch'
 import AddPerson from './components/people/AddPerson';
 import EditPerson from './components/people/EditPerson';
 import ListPeople from './components/people/ListPeople';

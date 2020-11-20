@@ -6,6 +6,7 @@ import { PencilSquare } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
+
 const AdvancedSearch = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -18,7 +19,7 @@ const AdvancedSearch = (props) => {
       }
   
       // Let the debounced function do it's thing
-      const results = doSearchDebounced(searchTerm, setSearchResults, setLoading);
+      const results = searchResults;
       setSearchResults(results);
     }, [searchTerm]);
   
@@ -48,15 +49,27 @@ const AdvancedSearch = (props) => {
       }
     };
   
-    const debouncedHandleChange = _.debounce(handleChange, 100);
     return (
       <div className="searchForm">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Name"
           value={searchTerm}
           onChange={handleChange}
         />
+        <form>
+            Enabled <br></br>
+            <input name ="enabled" type="radio" id="None Selected"></input>
+            <label for="None Selected">None Selected</label><br></br>
+            <input  name ="enabled" type="radio" id="True"></input>
+            <label for="True">True</label><br></br>
+            <input name ="enabled" type="radio" id="False"></input>
+            <label for="False">True</label><br></br>
+
+        </form>
+
+    
+
         <div>
           {renderSearchResults()}
           {loading && (
