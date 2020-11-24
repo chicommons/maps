@@ -8,6 +8,7 @@ from operator import itemgetter
 from yaml import load, dump
 from yaml import Loader, Dumper
 from commons.util.case_insensitive_set import CaseInsensitiveSet
+from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
 
@@ -115,14 +116,28 @@ class Command(BaseCommand):
             try:
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                # If there are no lat or lon coords provided, attempt to figure
+                # them out
+                if not lat or not lon:
+                    svc = LocationService()
+                    ret = svc.get_coords(
+                        street,
+                        city,
+                        postal_code,
+                        state_id,
+                        "USA"
+                    )
+                    if ret:
+                        print("ret: %s" % ret)
+                        lat = ret[0]
+                        lon = ret[1]
+
                 if float(lat) != 0 and float(lon) != 0:
                     print("- model: address.address")
                     print("  pk:",i)
                     print("  fields:")
                     print("    street_number:",num)
                     print("    route:",route)
-                    #print("    raw: ",dump(street, Dumper=Dumper), sep='')
-                    #print("    formatted: ",dump(street, Dumper=Dumper), sep='')
                     print("    raw: ",street, sep='')
                     print("    formatted: ",street, sep='')
                     city_pk = city_pks[tuple([city, postal_code, state_id.title()])]

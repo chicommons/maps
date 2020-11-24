@@ -5,6 +5,8 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
@@ -34,6 +36,16 @@ def data(request):
 
     return response
 
+@api_view(('GET',))
+#@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def coops_wo_coordinates(request):
+    """
+    Returns all the coops that currently have no coordiantes (or at least
+    are missing either latitude or longitude)
+    """
+    coops = Coop.objects.find_wo_coords()
+    serializer = CoopSearchSerializer(coops, many=True)
+    return Response(serializer.data)
 
 class CoopList(APIView):
     """

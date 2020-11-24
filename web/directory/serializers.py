@@ -1,9 +1,8 @@
 from rest_framework import serializers
 from directory.models import Coop, CoopType, ContactMethod, Person
 from address.models import Address, AddressField, Locality, State, Country 
-from geopy.geocoders import Nominatim
+from .services.location_service import LocationService
 import re
-import ssl
 
 
 class AddressTypeField(serializers.PrimaryKeyRelatedField):
@@ -280,22 +279,8 @@ class CoopSerializer(serializers.ModelSerializer):
     # Set address coordinate data 
     @staticmethod
     def update_coords(address):
-        ssl._create_default_https_context = ssl._create_unverified_context
-        locator = Nominatim(user_agent="myGeocoder")
-        if locator:
-            print(address)
-            #for address in addresses:
-            state = address.locality.state
-            country = state.country
-            # This is an example of a formatted address string that will return lat and lon:
-            #     "1600 Pennsylvania Avenue NW, Washington, DC 20500 United States"
-            address_str = address.formatted + ", " + address.locality.name + ", " + state.code + " " + address.locality.postal_code + " " + country.name
-            location = locator.geocode(address_str)
-            if location:
-                address.latitude = location.latitude
-                address.longitude = location.longitude
-                address.save(update_fields=["latitude", "longitude"])
-
+        svc = LocationService()
+        svc.save_coords(address)
 
 class PersonSerializer(serializers.ModelSerializer):
     #coops = CoopSerializer(many=True)

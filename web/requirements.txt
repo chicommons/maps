@@ -15,7 +15,7 @@ django-address==0.2.2
 django-cors-headers==3.4.0
 django-extensions==2.2.8
 django-phonenumber-field==4.0.0
-djangorestframework==3.11.0
+djangorestframework==3.12.2
 factory-boy==2.12.0
 Faker==4.0.3
 Fiona==1.8.13.post1

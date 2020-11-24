@@ -62,7 +62,18 @@ class CoopManager(models.Manager):
         queryset = Coop.objects.filter(filter,
                                        enabled=True)
         return queryset
-        
+ 
+    def find_wo_coords(self):
+        """
+        Look up coops with addresses that don't have either a latitude
+        or a longitude.
+        """
+        queryset = Coop.objects.filter(
+            Q(addresses__latitude__isnull=True) |
+            Q(addresses__longitude__isnull=True)
+        )
+        return queryset
+
 
 class Coop(models.Model):
     objects = CoopManager()
@@ -96,8 +107,6 @@ class StateCustomManager(models.Manager):
         country = Country.objects.get_or_create(name=country)[0]
         return State.objects.get_or_create(code=code, country=country)[0]
 
-#State.add_to_class("get_by_natural_key", state_get_by_natural_key)
-#setattr(State._meta, 'default_manager', StateCustomManager())
 State.add_to_class('objects', StateCustomManager())
 
 class LocalityCustomManager(models.Manager):

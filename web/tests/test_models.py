@@ -75,5 +75,17 @@ class ModelTests(TestCase):
         coop.full_clean()
         self.assertIsNotNone(coop)
         self.assertIsNone( coop.id )
+
+    def test_search_coops_wo_coords(self):
+        """
+        Look for coops with addresses without latitude/longitude coords
+        """
+        address = AddressFactory(latitude=None, longitude=None)
+        coop_from_factory = CoopFactory(addresses=[address])
+        # Verify coop appears when we search for those without a lat/lon
+        coops = Coop.objects.find_wo_coords()
+        results = list(coops)
+        assert len(results) > 0, "Failed to find any matching results."
+        assert coop_from_factory in list(coops), "Failed to find coop."
  
 
