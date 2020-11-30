@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Search.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
+import {ListGroupItem, Button, ButtonGroup, ToggleButton, ToggleButtonGroup, Dropdown} from "react-bootstrap";
 import { PencilSquare } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import _ from "lodash";
@@ -11,6 +11,15 @@ const AdvancedSearch = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [enabled, setEnabled] = useState("none")
+  
+
+    const radios = [
+      { name: 'Active', value: '1' },
+      { name: 'Radio', value: '2' },
+      { name: 'Radio', value: '3' },
+    ];
+  
   
     useEffect(() => {
       if (!searchTerm) {
@@ -26,6 +35,13 @@ const AdvancedSearch = (props) => {
     const handleChange = (e) => {
       setSearchTerm(e.target.value);
     };
+
+    const handleClick = (enabled) => {
+      setEnabled(enabled)
+      console.log(
+        "working"
+      )
+    }
   
     const renderSearchResults = () => {
       if (searchResults && searchResults.length) {
@@ -51,22 +67,31 @@ const AdvancedSearch = (props) => {
   
     return (
       <div className="searchForm">
+       
+
         <input
           type="text"
           placeholder="Name"
           value={searchTerm}
           onChange={handleChange}
         />
-        <form>
-            Enabled <br></br>
-            <input name ="enabled" type="radio" id="None Selected"></input>
-            <label for="None Selected">None Selected</label><br></br>
-            <input  name ="enabled" type="radio" id="True"></input>
-            <label for="True">True</label><br></br>
-            <input name ="enabled" type="radio" id="False"></input>
-            <label for="False">True</label><br></br>
+  <br />
 
-        </form>
+           
+  <Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Enabled
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Button onClick={()=>handleClick("true")}>True</Button>
+    <Button onClick={()=>handleClick("false")}>False</Button>
+    <Button onClick={()=>handleClick("true")}>None Selected</Button>
+  </Dropdown.Menu>
+</Dropdown>
+
+      
+
 
     
 
