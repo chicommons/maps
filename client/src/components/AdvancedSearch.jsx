@@ -38,75 +38,45 @@ const AdvancedSearch = (props) => {
 
     const handleClick = (enabled) => {
       setEnabled(enabled)
-      console.log(
-        "working"
-      )
     }
-  
-    const renderSearchResults = () => {
-      if (searchResults && searchResults.length) {
-        return (
-          <>
-            <div>Results</div>
-            <ListGroup variant="flush">
-              {searchResults.map((item) => (
-                <ListGroupItem key={item.id} value={item.name}>
-                  {item.name}
-                  <span className="float-right">
-                    <Link to={"/edit/" + item.id + "/home"}>
-                      <PencilSquare color="royalblue" size={26} />
-                    </Link>
-                  </span>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-          </>
-        );
-      }
-    };
+    const handleSubmit = () =>{
+
+    }
   
     return (
       <div className="searchForm">
-       
-
         <input
           type="text"
           placeholder="Name"
           value={searchTerm}
           onChange={handleChange}
         />
-  <br />
+        <br />
 
-           
-  <Dropdown>
-  <Dropdown.Toggle variant="success" id="dropdown-basic">
-    Enabled
-  </Dropdown.Toggle>
+       <br></br>   
+      <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic" style={style}>
+                 Enabled
+          </Dropdown.Toggle>
 
-  <Dropdown.Menu>
-    <Button onClick={()=>handleClick("true")}>True</Button>
-    <Button onClick={()=>handleClick("false")}>False</Button>
-    <Button onClick={()=>handleClick("true")}>None Selected</Button>
-  </Dropdown.Menu>
-</Dropdown>
-
-      
-
-
-    
-
-        <div>
-          {renderSearchResults()}
-          {loading && (
-            <div class="loading">
-              <div className="spinner-border" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
-            </div>
-          )}
-        </div>
+          <Dropdown.Menu>
+            <Button onClick={()=>handleClick("true")} style={style}>True</Button>
+            <Button onClick={()=>handleClick("false")} style={style}>False</Button>
+            <Button onClick={()=>handleClick("none")} style={style}>None Selected</Button>
+          </Dropdown.Menu>
+      </Dropdown>
+    <br></br>
+    <Button onClick={()=>handleSubmit()} style={style}>Submit</Button>
+  <div>
+ </div>
       </div>
     );
   };
+
+  const style = {
+    color: "#F6FBFB", 
+    backgroundColor: "#2295A2"
+  };
   
   export default AdvancedSearch;
+
