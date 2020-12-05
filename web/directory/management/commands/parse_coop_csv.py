@@ -113,6 +113,9 @@ class Command(BaseCommand):
             city = row['city'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
             postal_code = row['zipcode'].strip().encode("utf-8", 'ignore').decode("utf-8")
             state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            # Don't output an address if no street, city, postal code or state is provided
+            if not (street and city and postal_code and state_id):
+                continue 
             try:
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
