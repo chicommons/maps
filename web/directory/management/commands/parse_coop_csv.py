@@ -128,7 +128,6 @@ class Command(BaseCommand):
                         "USA"
                     )
                     if ret:
-                        print("ret: %s" % ret)
                         lat = ret[0]
                         lon = ret[1]
 

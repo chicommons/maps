@@ -37,7 +37,6 @@ def data(request):
     return response
 
 @api_view(('GET',))
-#@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def coops_wo_coordinates(request):
     """
     Returns all the coops that currently have no coordiantes (or at least
