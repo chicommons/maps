@@ -7399,8 +7399,6 @@
     raw: 1241 S. Pulaski Rd.
     formatted: 1241 S. Pulaski Rd.
     locality: 7
-    latitude: 41.86543127
-    longitude: -87.72505562
 - model: address.address
   pk: 698
   fields:
