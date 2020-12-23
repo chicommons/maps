@@ -30,8 +30,13 @@ class Command(BaseCommand):
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
         types_hash = {}
+        k = 1  # ID counter
         for row in input_file:
-            id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            try:
+                id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            except KeyError:
+                id = k
+                k += 1
             name = row['name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             type = re.sub(
                 r"^\s+", "", row['type'].strip().encode("utf-8", 'ignore').decode("utf-8"), flags=re.UNICODE
@@ -43,19 +48,24 @@ class Command(BaseCommand):
                 types.add(type) 
 
         input_file = csv.DictReader(open(file_path))
+        k = 1  # ID counter
         for row in input_file:
-            id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            try:
+                id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            except KeyError:
+                id = k
+                k += 1
             name = row['name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             if name in types_hash.keys():
                 types = types_hash[name]
                 state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                phone = row['phone_public'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                email = row['email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                phone = row['Telephone Number'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                email = row['Email-Address'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(tuple([lat, lon])) 
-                enabled = row['Include'].lower() == 'yes'
+                enabled = row['check'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
                     if email:
@@ -110,8 +120,8 @@ class Command(BaseCommand):
             parts = street.split(" ") if street is not None else [" "]
             num = parts[0]
             route = parts[-1]
-            city = row['city'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
-            postal_code = row['zipcode'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            city = row['city1'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
+            postal_code = row['postal code'].strip().encode("utf-8", 'ignore').decode("utf-8")
             state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
             # Don't output an address if no street, city, postal code or state is provided
             if not (street and city and postal_code and state_id):
@@ -157,7 +167,7 @@ class Command(BaseCommand):
         input_file = csv.DictReader(open(file_path))
         upper = lambda k: lambda d: {**d, k: d[k].upper()}
         res = map(upper('st'), input_file)
-        cities = {tuple(d[i].strip().title() for i in ["city", "zipcode", "st"]) for d in res}
+        cities = {tuple(d[i].strip().title() for i in ["city1", "postal code", "st"]) for d in res}
         i=1
         cities_pks = dict()
         country = "United States"
