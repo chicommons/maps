@@ -117,7 +117,7 @@ class Command(BaseCommand):
         address_pks = dict()
         for row in input_file:
             street = load(Command.strip_invalid(row['address'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
-            parts = street.split(" ") if street is not None else [" "]
+            parts = street.split(" ") if street is not None else ["None"]
             num = parts[0]
             route = parts[-1]
             city = row['city1'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
@@ -174,13 +174,14 @@ class Command(BaseCommand):
         for city_set in cities:
             city = list(city_set)[0]
             zipcode = list(city_set)[1]
-            state_id = list(city_set)[2].upper() 
+            state_id = list(city_set)[2].upper() if list(city_set)[2] != '' else 'IL'
             print("- model: address.locality")
             print("  pk:",i)
             print("  fields:")
             print("    name: \"",city,"\"", sep='')
             print("    postal_code: \"",zipcode,"\"", sep='')
             print("    state: ['", state_id, "', '", country, "']", sep='')
+#            print("    state: 19313")
             cities_pks[tuple(city_set)] = i 
             i = i + 1
         return cities_pks
