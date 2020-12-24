@@ -40,15 +40,9 @@ const Search = (props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!searchTerm) {
-      setSearchResults([]);
-      return;
-    }
-
-    // Let the debounced function do it's thing
-    const results = doSearchDebounced(searchTerm, setSearchResults, setLoading);
+    const results = doSearchDebounced("", setSearchResults, setLoading);
     setSearchResults(results);
-  }, [searchTerm]);
+  }, []);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -79,13 +73,6 @@ const Search = (props) => {
   const debouncedHandleChange = _.debounce(handleChange, 100);
     return (
     <div className="searchForm">
-      <h2>Search cooperatives with no coordinates listed:</h2>
-      <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleChange}
-      />
       <div>
         {renderSearchResults()}
         {loading && (
