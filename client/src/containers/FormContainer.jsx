@@ -341,6 +341,10 @@ const FormContainer = (props) => {
             style={inputStyle}
           />{" "}
           {/* Web site of the cooperative */}
+          <div style={{width: '100%'}}>
+          <input type="checkbox" id="enabled" style={{margin: '.5rem'}} onClick={e=>{handleClick(e)}} checked={checked}/>
+          <label for="enabled">Show on Map</label>
+          </div>
           <Button
             action={handleFormSubmit}
             type={"primary"}
@@ -358,8 +362,6 @@ const FormContainer = (props) => {
           {/* Clear the form */}
            
         </FormGroup>
-        <input type="checkbox" id="enabled" onClick={e=>{handleClick(e)}} style={{margin: ".5rem"}} checked={checked}/>
-        <label for="enabled">Show on Map</label>
       </form>
     </div>
   );

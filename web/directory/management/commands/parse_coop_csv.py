@@ -123,6 +123,9 @@ class Command(BaseCommand):
             city = row['city1'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
             postal_code = row['postal code'].strip().encode("utf-8", 'ignore').decode("utf-8")
             state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            # Don't output an address if no street, city, postal code or state is provided
+            if not (street and city and postal_code and state_id):
+                continue 
             try:
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -137,10 +140,9 @@ class Command(BaseCommand):
                         state_id,
                         "USA"
                     )
-#                    if ret:
-#                        print("ret: %s" % ret)
-#                        lat = ret[0]
-#                        lon = ret[1]
+                    if ret:
+                        lat = ret[0]
+                        lon = ret[1]
 
                 if float(lat) != 0 and float(lon) != 0:
                     print("- model: address.address")

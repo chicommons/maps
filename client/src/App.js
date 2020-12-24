@@ -8,6 +8,7 @@ import NavBar from './components/NavBar';
 import Add from './components/Add';
 import Edit from './components/Edit';
 import Search from './components/Search';
+import NoCoordsSearch from './components/NoCoordsSearch';
 import AddPerson from './components/people/AddPerson';
 import EditPerson from './components/people/EditPerson';
 import ListPeople from './components/people/ListPeople';
@@ -35,6 +36,7 @@ function App() {
 								<Route path="/add" component={Add} />
 								<Route path="/edit/:id" component={Edit} />
 								<Route path="/search" component={Search} />
+								<Route path="/nocoords" component={NoCoordsSearch} />
 								<Route path="/:coop_id/people" component={AddPerson} />
 								<Route path="/person/:id/edit" component={EditPerson} />
 								<Route path="/:coop_id/listpeople" component={ListPeople} />
