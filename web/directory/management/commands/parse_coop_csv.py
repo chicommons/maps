@@ -134,11 +134,11 @@ class Command(BaseCommand):
                 if not lat or not lon:
                     svc = LocationService()
                     ret = svc.get_coords(
-                        street,
-                        city,
-                        postal_code,
-                        state_id,
-                        "USA"
+                        address=street,
+                        city=city,
+                        zip=postal_code,
+                        state_code=state_id,
+                        country_code="US"
                     )
                     if ret:
                         lat = ret[0]
