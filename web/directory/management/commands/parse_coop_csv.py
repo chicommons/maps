@@ -37,9 +37,9 @@ class Command(BaseCommand):
             except KeyError:
                 id = k
                 k += 1
-            name = row['name'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             type = re.sub(
-                r"^\s+", "", row['type'].strip().encode("utf-8", 'ignore').decode("utf-8"), flags=re.UNICODE
+                r"^\s+", "", row['ent-type'].strip().encode("utf-8", 'ignore').decode("utf-8"), flags=re.UNICODE
             )
             if type:
                 if not name in types_hash.keys():
@@ -55,17 +55,17 @@ class Command(BaseCommand):
             except KeyError:
                 id = k
                 k += 1
-            name = row['name'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             if name in types_hash.keys():
                 types = types_hash[name]
-                state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                phone = row['Telephone Number'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                email = row['Email-Address'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                email = row['cnct-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(tuple([lat, lon])) 
-                enabled = row['Include'].lower() == 'yes'
+                enabled = row['ent-include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
                     if email:
@@ -116,13 +116,13 @@ class Command(BaseCommand):
         i=1
         address_pks = dict()
         for row in input_file:
-            street = load(Command.strip_invalid(row['address'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
+            street = load(Command.strip_invalid(row['ent-adrs'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
             parts = street.split(" ") if street is not None else ["None"]
             num = parts[0]
             route = parts[-1]
-            city = row['city1'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
-            postal_code = row['postal code'].strip().encode("utf-8", 'ignore').decode("utf-8")
-            state_id = row['st'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            city = row['ent-city'].strip().title().encode("utf-8", 'ignore').decode("utf-8")
+            postal_code = row['ent-zip'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
             # Don't output an address if no street, city, postal code or state is provided
             if not (street and city and postal_code and state_id):
                 continue 
@@ -166,8 +166,8 @@ class Command(BaseCommand):
     def get_city_pks(file_path):
         input_file = csv.DictReader(open(file_path))
         upper = lambda k: lambda d: {**d, k: d[k].upper()}
-        res = map(upper('st'), input_file)
-        cities = {tuple(d[i].strip().title() for i in ["city1", "postal code", "st"]) for d in res}
+        res = map(upper('ent-st'), input_file)
+        cities = {tuple(d[i].strip().title() for i in ["ent-city", "ent-zip", "ent-st"]) for d in res}
         i=1
         cities_pks = dict()
         country = "United States"
