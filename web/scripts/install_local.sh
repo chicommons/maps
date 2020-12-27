@@ -46,6 +46,6 @@ python3 -m pip install -r requirements.txt
 
 # Run migrations and seed the database
 python3 manage.py migrate 
-python3 manage.py docker_init_db_data
+python3 manage.py insert_seed_data
  
  

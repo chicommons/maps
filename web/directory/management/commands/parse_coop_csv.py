@@ -65,7 +65,7 @@ class Command(BaseCommand):
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(tuple([lat, lon])) 
-                enabled = row['check'].lower() == 'yes'
+                enabled = row['Include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
                     if email:
@@ -134,11 +134,11 @@ class Command(BaseCommand):
                 if not lat or not lon:
                     svc = LocationService()
                     ret = svc.get_coords(
-                        street,
-                        city,
-                        postal_code,
-                        state_id,
-                        "USA"
+                        address=street,
+                        city=city,
+                        zip=postal_code,
+                        state_code=state_id,
+                        country_code="US"
                     )
                     if ret:
                         lat = ret[0]

@@ -11,11 +11,6 @@ class ModelTests(TestCase):
         #management.call_command('loaddata', 'test_data.yaml', verbosity=0)
         pass
 
-    def setUp(self):
-        print("setUp: Run once for every test method to setup clean data.")
-        #management.call_command('flush', verbosity=0, interactive=False)
-        pass
-
     @pytest.mark.django_db
     def test_phone_create(self):
         """ Test phone contact method """    # create phone instance
