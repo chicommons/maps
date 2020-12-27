@@ -17,7 +17,7 @@ Visit http://localhost:3001/ to see the application.
 If you want to get things running locally without using Docker, you must install
 
 - PostGres 10.0
-- Python 3.8
+- Python 3.9
 - Node 12 or above
 
 ### PostGres
