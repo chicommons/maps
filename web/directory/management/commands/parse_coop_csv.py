@@ -30,13 +30,8 @@ class Command(BaseCommand):
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
         types_hash = {}
-        k = 1  # ID counter
         for row in input_file:
-            try:
-                id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
-            except KeyError:
-                id = k
-                k += 1
+            id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             type = re.sub(
                 r"^\s+", "", row['ent-type'].strip().encode("utf-8", 'ignore').decode("utf-8"), flags=re.UNICODE
@@ -48,19 +43,26 @@ class Command(BaseCommand):
                 types.add(type) 
 
         input_file = csv.DictReader(open(file_path))
-        k = 1  # ID counter
         for row in input_file:
-            try:
-                id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
-            except KeyError:
-                id = k
-                k += 1
+            id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             if name in types_hash.keys():
                 types = types_hash[name]
                 state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                email = row['cnct-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                # Expecting 'end-phone-pub' to change name to 'ent-phone-pub'
+                try:
+                    phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                except KeyError:
+                    phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                if phone_pub.lower() != 'no':
+                    phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                # Expecting 'cnct-email-pub' to be included in the .csv file in later versions.
+                try:
+                    email_pub = row['cnct-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                except KeyError:
+                    email_pub =  'yes'
+                if email_pub.lower() != 'no':
+                    email = row['cnct-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -90,7 +92,8 @@ class Command(BaseCommand):
                     print("  fields:")
                     print("    name: \"",name,"\"", sep='')
                     print("    types:")
-                    print("    - ['", "','".join(types), "']", sep='') 
+                    for entry in types:
+                        print("    - ['", entry, "']", sep='') 
                     print("    addresses: [", address_pk, "]")
                     #print("    - [", address_pk, "]")                    
                     print("    enabled:",enabled)
