@@ -52,7 +52,7 @@ class NavBar extends Component {
 				</li>
 				<li className="nav-link">
 					<NavLink to="/nocoords" className="nav-link">
-						No Coords Search 
+						Bad Location
 					</NavLink>
 				</li>
 			</ul>
