@@ -56,13 +56,13 @@ class Command(BaseCommand):
                     phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 if phone_pub.lower() != 'no':
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                # Expecting 'cnct-email-pub' to be included in the .csv file in later versions.
+                # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
                 try:
-                    email_pub = row['cnct-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    email_pub = row['ent-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
                     email_pub =  'yes'
                 if email_pub.lower() != 'no':
-                    email = row['cnct-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
