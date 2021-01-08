@@ -50,6 +50,11 @@ class NavBar extends Component {
 						Search
 					</NavLink>
 				</li>
+				<li className="nav-link">
+					<NavLink to="/nocoords" className="nav-link">
+						Bad Location
+					</NavLink>
+				</li>
 			</ul>
 		);
 	};
@@ -63,6 +68,11 @@ class NavBar extends Component {
 				<li className="nav-link">
 					<NavLink to="/search" className="nav-link">
 						Search
+					</NavLink>
+				</li>
+				<li className="nav-link">
+					<NavLink to="/nocoords" className="nav-link">
+						No Coords Search 
 					</NavLink>
 				</li>
 			</ul>

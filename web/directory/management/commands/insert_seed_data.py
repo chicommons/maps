@@ -15,6 +15,7 @@ class Command(BaseCommand):
         setattr(Locality._meta, 'default_manager', LocalityCustomManager())
 
         seed_data_file = options.get('seed_file')
+        print("seed file %s" % seed_data_file)
         recreate_country_and_state_data = options.get('recreate_country_and_state_data').lower() == 'true' 
 
         if recreate_country_and_state_data:
