@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                address_pk = address_pks.get(tuple([lat, lon])) 
+                address_pk = address_pks.get(id) 
                 enabled = row['ent-include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
@@ -130,6 +130,7 @@ class Command(BaseCommand):
             if not (street and city and postal_code and state_id):
                 continue 
             try:
+                id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # If there are no lat or lon coords provided, attempt to figure
@@ -147,20 +148,20 @@ class Command(BaseCommand):
                         lat = ret[0]
                         lon = ret[1]
 
+                print("- model: address.address")
+                print("  pk:",i)
+                print("  fields:")
+                print("    street_number:",num)
+                print("    route:",route)
+                print("    raw: ",street, sep='')
+                print("    formatted: ",street, sep='')
+                city_pk = city_pks[tuple([city, postal_code, state_id.title()])]
+                print("    locality:", city_pk)
+                address_pks[id] = i 
+                i = i + 1
                 if float(lat) != 0 and float(lon) != 0:
-                    print("- model: address.address")
-                    print("  pk:",i)
-                    print("  fields:")
-                    print("    street_number:",num)
-                    print("    route:",route)
-                    print("    raw: ",street, sep='')
-                    print("    formatted: ",street, sep='')
-                    city_pk = city_pks[tuple([city, postal_code, state_id.title()])]
-                    print("    locality:", city_pk)
                     print("    latitude:",lat)
                     print("    longitude:",lon)
-                    address_pks[tuple([lat, lon])] = i 
-                    i = i + 1
             except ValueError:
                 pass
         return address_pks
