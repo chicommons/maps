@@ -28,14 +28,20 @@ PG_USER=${PG_USER:-postgres}
 read -s -p "What is the root Postgres (user=$PG_USER) password? "  ROOT_PASSWORD
 
 create_db_command="SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec"
+drop_owned_by_command="SELECT 'DROP OWNED BY $DB_USER;' WHERE EXISTS (SELECT rolname FROM pg_roles WHERE rolname = '$DB_USER')\gexec"
+drop_role_command="DROP ROLE IF EXISTS $DB_USER;"
 create_user_command="create user $DB_USER with encrypted password '$DB_PASS';"
 grant_privs_command="grant all privileges on database $DB_NAME to $DB_USER;"
 
 PGPASSWORD=$ROOT_PASSWORD 
 # This command creates the db if it doesn't already exist
-echo "SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec" | psql -U$PG_USER
-PGPASSWORD=$ROOT_PASSWORD psql -U$PG_USER -c "$create_user_command" 
-PGPASSWORD=$ROOT_PASSWORD psql -U$PG_USER -c "$grant_privs_command" 
+#echo "SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec" | psql -U$PG_USER
+echo $create_db_command | psql -U$PG_USER
+echo $drop_owned_by_command | psql -U$PG_USER $DB_NAME 
+#psql -U$PG_USER $DB_NAME -c "$drop_owned_by_command" 
+psql -U$PG_USER -c "$drop_role_command" 
+psql -U$PG_USER -c "$create_user_command" 
+psql -U$PG_USER -c "$grant_privs_command" 
 
 # Create Django environment, run migrations, and seed data
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"

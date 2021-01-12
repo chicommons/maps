@@ -7,8 +7,6 @@ bug.
 
 We prefer to use the forking workflow for PRs.  You will want to [fork this repo](https://guides.github.com/activities/forking/) and then create a PR that way.
 
-If the PR is for a feature please provide a link to that card in Odoo, if applicable.
-
 For PRs that address github issues please use one of the following keywords followed by the issue `id` so that those can auto close when the PR has been merged.
 
 - close
