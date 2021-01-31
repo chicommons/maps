@@ -147,6 +147,20 @@ class PersonDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class PredefinedTypeList(APIView):
+    """
+    List coop types that should appear in the form where 
+    potential coops submit themselves for consideration to be 
+    included in the directory 
+    """
+    def get(self, request, format=None):
+        return Response([
+            {"id": "Community Garden", "name": "Community Garden"},
+            {"id": "Social Workshop", "name": "Social Workshop"},
+            {"id": "Credit Union", "name": "Credit Union"}
+        ])
+
+
 class CoopTypeList(APIView):
     """
     List all coop types 
