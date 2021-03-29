@@ -6,6 +6,7 @@ import { Alert } from 'reactstrap';
 
 import NavBar from './components/NavBar';
 import Add from './components/Add';
+import AdvancedSearch from './components/AdvancedSearch';
 import Edit from './components/Edit';
 import Search from './components/Search';
 import NoCoordsSearch from './components/NoCoordsSearch';
@@ -34,6 +35,7 @@ function App() {
 							<Switch>
 								<Route exact path="/" component={Add} />
 								<Route path="/add" component={Add} />
+								<Route path="/advanced" component={AdvancedSearch} />
 								<Route path="/edit/:id" component={Edit} />
 								<Route path="/search" component={Search} />
 								<Route path="/nocoords" component={NoCoordsSearch} />
