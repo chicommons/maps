@@ -53,9 +53,18 @@ class CoopList(APIView):
     def get(self, request, format=None):
         contains = request.GET.get("contains", "")
         if contains:
-            coops = Coop.objects.find_by_name(contains)
+            coops = Coop.objects.find(
+                partial_name=contains,
+                enabled=True
+            )
         else:
-            coops = Coop.objects.all()
+            partial_name = request.GET.get("name", "")
+            enabled_req_param = request.GET.get("enabled", None)
+            enabled = enabled_req_param.lower() == "true" if enabled_req_param else None
+            coops = Coop.objects.find(
+                partial_name=partial_name,
+                enabled=enabled
+            )
         serializer = CoopSearchSerializer(coops, many=True)
         return Response(serializer.data)
 
