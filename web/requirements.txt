@@ -9,7 +9,7 @@ chardet==3.0.4
 click==7.1.1
 click-plugins==1.1.1
 cligj==0.5.0
-cryptography==2.9.2
+cryptography==3.3.2
 Django==3.0.12
 django-address==0.2.2
 django-cors-headers==3.4.0
