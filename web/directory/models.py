@@ -47,9 +47,16 @@ class CoopManager(models.Manager):
                                    enabled=True)
         return qset
 
-    # Look up coops by a partial name (case insensitive)
-    def find_by_name(self, partial_name):
-        queryset = Coop.objects.filter(name__icontains=partial_name, enabled=True)
+    def find(self, partial_name, enabled=None):
+        """
+        Lookup coops by varying criteria.
+        """
+        q = Q()
+        if partial_name:
+            q &= Q(name__icontains=partial_name)
+        if enabled != None:
+            q &= Q(enabled=enabled)
+        queryset = Coop.objects.filter(q)
         print(queryset.query)
         return queryset
 
