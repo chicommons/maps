@@ -50,17 +50,16 @@ const doSearch = (coopSearchSettings, setSearchResults, setLoading) => {
 
 	// assemble all search settings into a string of format
 	// /coops/?name=coopName&type=credit+union&enabled=true&street=Main&city=Chicago&zip=60605&state=IL
-	if (individualSearchSettings.length > 0) {
-		searchUrl = searchUrl+"?"
-	}
 	let i;
 	for (i = 0; i < individualSearchSettings.length; i++) {
 		if (i===0) {
-			searchUrl = searchUrl + individualSearchSettings[i];
+			searchUrl = searchUrl + "?" + individualSearchSettings[i];
 		} else {
 			searchUrl = searchUrl + "&" + individualSearchSettings[i];
 		}
 	}
+
+	console.log(searchUrl);
 
   fetch(searchUrl, {
     method: "GET",
