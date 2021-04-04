@@ -59,8 +59,6 @@ const doSearch = (coopSearchSettings, setSearchResults, setLoading) => {
 		}
 	}
 
-	console.log(searchUrl);
-
   fetch(searchUrl, {
     method: "GET",
     signal: abortController.signal,
