@@ -38,11 +38,28 @@ const doSearch = (coopSearchSettings, setSearchResults, setLoading) => {
 
 	// build search url
 	let searchUrl = REACT_APP_PROXY + '/coops/';
+
+	// compile individual search settings into a list
+	let individualSearchSettings = []
 	if (coopSearchSettings.name != '') {
-		searchUrl = searchUrl + "?name=" + encodeURIComponent(coopSearchSettings.name);
+		individualSearchSettings.push("name=" + encodeURIComponent(coopSearchSettings.name));
 	}
 	if (coopSearchSettings.enabled != 'none') {
-		searchUrl = searchUrl + "?enabled=" + encodeURIComponent(coopSearchSettings.enabled);
+		individualSearchSettings.push("enabled=" + encodeURIComponent(coopSearchSettings.enabled));
+	}
+
+	// assemble all search settings into a string of format
+	// /coops/?name=coopName&type=credit+union&enabled=true&street=Main&city=Chicago&zip=60605&state=IL
+	if (individualSearchSettings.length > 0) {
+		searchUrl = searchUrl+"?"
+	}
+	let i;
+	for (i = 0; i < individualSearchSettings.length; i++) {
+		if (i===0) {
+			searchUrl = searchUrl + individualSearchSettings[i];
+		} else {
+			searchUrl = searchUrl + "&" + individualSearchSettings[i];
+		}
 	}
 
   fetch(searchUrl, {
