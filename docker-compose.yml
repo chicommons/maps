@@ -23,6 +23,7 @@ services:
     env_file: .env
     environment:
       DEBUG: 'true'
+      SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
     command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 2 -b :8000
     volumes:
     - ./web/:/app

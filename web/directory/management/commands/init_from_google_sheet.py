@@ -8,11 +8,12 @@ import sys
 import os
 import csv
 import io
+from ...services.google_sheet_service import GoogleSheetService
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-
+        """
         scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
         # add credentials to the account
@@ -32,7 +33,9 @@ class Command(BaseCommand):
 
         ar = csv.reader(io.StringIO(res.text, newline=""))
         output = "\n".join([",".join(map(str, ['"' + c.replace('\n', '') + '"' for c in r])) for r in ar])
-        # or, output = "\n".join([",".join(map(str, ['"' + re.sub(r'[\n\r]', '', c) + '"' for c in r])) for r in ar])
+        """
+        svc = GoogleSheetService()
+        output = svc.download_sheet_as_csv('ChiCommons_Directory', 3)
         print(output)
 
 

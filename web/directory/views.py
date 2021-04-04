@@ -1,6 +1,7 @@
 from directory.models import Coop, CoopType
 from address.models import State, Country, Locality
 from directory.serializers import * 
+from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -71,7 +72,30 @@ class CoopList(APIView):
     def post(self, request, format=None):
         serializer = CoopSerializer(data=request.data)
         if serializer.is_valid():
-            print(" \n\n\n**** saving *****\n\n\n")
+            print("request data ...")
+            print(request.data)
+            values = [
+                'ID',
+                request.data['name'],
+                request.data['addresses'][0]['raw'],
+                '',
+                request.data['addresses'][0]['locality']['postal_code'],
+                request.data['addresses'][0]['locality']['name'],
+                request.data['addresses'][0]['locality']['state']['country']['name'],
+                request.data['web_site'],
+                '', # cnct
+                '', #cnct-pub
+                request.data['email']['email'],
+                '', # email pub
+                request.data['phone']['phone'],
+                '', # phone pub
+                request.data['types'][0]['name']
+            ]
+            svc = GoogleSheetService()
+            print("values:")
+            print(values)
+            svc.append_to_sheet('ChiCommons_Directory', 4, values)
+            #
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

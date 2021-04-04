@@ -8,11 +8,19 @@ read -d '' req << EOF
         ],
         "addresses": [
           {
+            "raw": "222 W. Merchandise Mart Plaza, Suite 1212",
             "formatted": "222 W. Merchandise Mart Plaza, Suite 1212",
             "locality": {
                 "name": "Chicago",
                 "postal_code": "60654",
-                "state": "19313" 
+                "state": {
+                      "id": "19313", 
+                      "name": "Illinois",
+                      "code": "IL",
+                      "country": {
+                        "name": "United States" 
+                      }
+                }
             }
           }
         ],

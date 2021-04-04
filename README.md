@@ -1,4 +1,14 @@
 # maps
+
+## Copy credentials.json file
+
+In order to interact with the Google spreadsheet, where some of the data gets stored and read from, you will need a file named "credentials.json," which you will need to copy to the following directory
+
+```
+web/
+```
+
+You can get this file from Dave Alvarado or one of the administrators of the ChiCommons group.  We will email or Slack it to you.
    
 ## Getting up and running via Docker 
  

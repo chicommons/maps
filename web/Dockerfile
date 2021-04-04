@@ -11,8 +11,10 @@ RUN python -m pip install --upgrade pip
 
 WORKDIR /my-app/
 
-COPY requirements.txt requirements.txt
-COPY entrypoint.sh entrypoint.sh
+#COPY requirements.txt requirements.txt
+#COPY credentials.json credentials.json
+#COPY entrypoint.sh entrypoint.sh
+COPY . /my-app
 RUN python -m pip install -r requirements.txt
 
 RUN dos2unix /my-app/entrypoint.sh
