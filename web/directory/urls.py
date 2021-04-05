@@ -11,6 +11,7 @@ urlpatterns = [
     path('people/<int:pk>/', views.PersonDetail.as_view()),
     path('predefined_types/', views.PredefinedTypeList.as_view()),
     path('coop_types/', views.CoopTypeList.as_view()),
+    path('/predefined_types', views.CoopTypeList.as_view()),    
     path('countries/', views.CountryList.as_view()),
     path('states/<country_code>/', views.StateList.as_view()),
 ]
