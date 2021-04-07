@@ -333,4 +333,25 @@ class CoopSearchSerializer(serializers.ModelSerializer):
         model = Coop
         fields = 'id', 'name'
 
+class ValidateNewCoopSerializer(serializers.Serializer):
+    coop_name=serializers.CharField()
+    street=serializers.CharField()
+    address_public=serializers.CharField()
+    city=serializers.CharField()
+    state=serializers.CharField()
+    zip=serializers.CharField()
+    county=serializers.CharField()
+    country=serializers.CharField()
+    websites=serializers.CharField()
+    contact_name=serializers.CharField()
+    contact_name_public=serializers.CharField()
+    organization_email=serializers.CharField()
+    organization_email_public=serializers.CharField()
+    organization_phone=serializers.CharField()
+    organization_phone_public=serializers.CharField()
+    scope=serializers.CharField()
+    tags=serializers.CharField()
+    desc_english=serializers.CharField()
+    desc_other=serializers.CharField()
+    req_reason=serializers.CharField()
 
