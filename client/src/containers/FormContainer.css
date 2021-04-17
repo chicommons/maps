@@ -2,6 +2,70 @@
 
 .form {
   font-family: "Alegreya Sans", sans-serif;
+  margin-top: 2rem;
+}
+
+.form__desc {
+  color: #124e54;
+  font-size: 1rem;
+}
+
+.form label {
+  color: #124e54;
+}
+
+/* Styles copied from Bootstrap */
+.form input,
+.form select,
+.form textarea {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgb(206, 212, 218);
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form textarea {
+  height: 6rem;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: #167bff;
+  box-shadow: none;
+  outline: 0;
+}
+
+.form input::placeholder,
+.form select::placeholder,
+.form textarea::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.form input:focus::placeholder,
+.form select:focus::placeholder,
+.form textarea:focus::placeholder {
+  color: #495057;
+}
+
+.form input[type="submit"] {
+  color: #f6fbfb;
+  background-color: #2295a2;
+}
+
+.form input[type="submit"]:focus {
+  border-color: #0062cc;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 
 .required:after {
