@@ -107,7 +107,7 @@ export default function DirectoryAddUpdate() {
         console.log("yes its json!")
         // return true;
         fetch(
-                    "http://localhost:8000/save_to_sheet_from_form/",
+                REACT_APP_PROXY + "/save_to_sheet_from_form/",
                     {
                         method: "post",
                         headers: { 
