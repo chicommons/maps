@@ -109,9 +109,16 @@ class CoopList(APIView):
             partial_name = request.GET.get("name", "")
             enabled_req_param = request.GET.get("enabled", None)
             enabled = enabled_req_param.lower() == "true" if enabled_req_param else None
+            city = request.GET.get("city", None)
+            zip = request.GET.get("zip", None)
+            street = request.GET.get("street", None)
+
             coops = Coop.objects.find(
                 partial_name=partial_name,
-                enabled=enabled
+                enabled=enabled,
+                street=street,
+                city=city,
+                zip=zip
             )
         serializer = CoopSearchSerializer(coops, many=True)
         return Response(serializer.data)

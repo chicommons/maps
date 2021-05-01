@@ -47,7 +47,15 @@ class CoopManager(models.Manager):
                                    enabled=True)
         return qset
 
-    def find(self, partial_name, enabled=None):
+    def find(
+        self, 
+        partial_name, 
+        coop_type=None, 
+        enabled=None, 
+        city=None, 
+        zip=None, 
+        street=None
+    ):
         """
         Lookup coops by varying criteria.
         """
@@ -56,6 +64,14 @@ class CoopManager(models.Manager):
             q &= Q(name__icontains=partial_name)
         if enabled != None:
             q &= Q(enabled=enabled)
+        if coop_type != None:
+            q &= Q(type__name=coop_type)
+        if street != None:
+            q &= Q(addresses__raw__icontains=street)
+        if city != None:
+            q &= Q(addresses__locality__name__iexact=city)
+        if zip != None:
+            q &= Q(addresses__locality__postal_code=zip)
         queryset = Coop.objects.filter(q)
         print(queryset.query)
         return queryset
