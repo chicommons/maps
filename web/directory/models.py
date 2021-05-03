@@ -43,7 +43,7 @@ class CoopType(models.Model):
 class CoopManager(models.Manager):
     # Look up by coop type
     def get_by_type(self, type):
-        qset = Coop.objects.filter(type__name=type,
+        qset = Coop.objects.filter(types__name=type,
                                    enabled=True)
         return qset
 
@@ -65,7 +65,7 @@ class CoopManager(models.Manager):
         if enabled != None:
             q &= Q(enabled=enabled)
         if coop_type != None:
-            q &= Q(type__name=coop_type)
+            q &= Q(types__name=coop_type)
         if street != None:
             q &= Q(addresses__raw__icontains=street)
         if city != None:
