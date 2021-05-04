@@ -53,6 +53,12 @@ html,
 	transition: all 0.3s;
 }
 
+@media only screen and (max-width: 600px) {
+	.auth-inner {
+	  width: 100vw;
+	}
+  }
+
 .auth-wrapper .form-control:focus {
 	border-color: #167bff;
 	box-shadow: none;
