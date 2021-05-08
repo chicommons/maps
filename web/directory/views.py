@@ -69,10 +69,10 @@ def save_to_sheet_from_form(request):
             post_data['websites'],
             post_data['contact_name'], # cnct
             post_data['contact_name_public'], #cnct-pub
-            post_data['organization_email'],
-            post_data['organization_email_public'], # email pub
-            post_data['organization_phone'],
-            post_data['organization_phone_public'],
+            post_data['contact_email'],
+            post_data['contact_email_public'], # email pub
+            post_data['contact_phone'],
+            post_data['contact_phone_public'],
             post_data['scope'],
             post_data['tags'],
             post_data['desc_english'],
