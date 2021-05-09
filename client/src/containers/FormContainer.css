@@ -17,6 +17,7 @@
 
 
 .directory-form {
+  color: #124e54;
   margin-left: calc(-85vw / 2 + 450px / 2);
   /* margin-right: calc(-50vw / 2 + 450px / 2); */
 	margin-top: -2.5em;

@@ -8,7 +8,7 @@ const DropDownInput = (props) => {
 
 	return (
 		<div className="form-group">
-				<FormLabel className={props.className} style={inputStyle}>{props.title}</FormLabel>
+				<FormLabel className={props.className}>{props.title}</FormLabel>
 
 				<FormControl
 					isInvalid={props.errors && errorsArr}
@@ -17,13 +17,16 @@ const DropDownInput = (props) => {
 					name={props.name}
 					value={props.value}
 					onChange={props.handleChange}
+					multiple={props.multiple && (
+						"multiple"
+					)}
 					>
                     <option value="" disabled>
                             Select
                     </option>
                     {
                         props.options.map((option) => {
-                            return (<option key={option} value={option}>{option}</option>)
+                            return (<option key={option.id} value={option.id}>{option.name}</option>)
                         })
                     }
 				</FormControl>
@@ -39,9 +42,6 @@ const DropDownInput = (props) => {
 			)}
 		</div>
 	);
-};
-const inputStyle = {
-	color: '#124E54'
 };
 
 export default DropDownInput;

@@ -4,7 +4,6 @@ import { FormGroup } from "react-bootstrap";
 
 import Input from "../components/Input";
 import DropDownInput from "../components/DropDownInput";
-import EntityTypes from "../components/EntityTypes";
 import TextAreaInput from "../components/TextAreaInput";
 
 
@@ -19,7 +18,7 @@ const { REACT_APP_PROXY } = process.env;
 export default function DirectoryAddUpdate() {
     const [coopName, setCoopName] = useState("");
     const [street, setStreet] = useState("");
-    const [addressPublic, setAddressPublic] = useState("No");
+    const [addressPublic, setAddressPublic] = useState("no");
     const [city, setCity] = useState("");
     // Make this drop down of actual states?
     const [state, setState] = useState("IL");
@@ -29,14 +28,14 @@ export default function DirectoryAddUpdate() {
     const [country, setCountry] = useState("US");
     const [websites, setWebsites] = useState([]);
     const [contactName, setContactName] = useState("");
-    const [contactNamePublic, setContactNamePublic] = useState("No");
+    const [contactNamePublic, setContactNamePublic] = useState("no");
     const [contactEmail, setContactEmail] = useState("");
-    const [contactEmailPublic, setContactEmailPublic] = useState("No");
+    const [contactEmailPublic, setContactEmailPublic] = useState("no");
     const [contactPhone, setContactPhone] = useState("");
-    const [contactPhonePublic, setContactPhonePublic] = useState("No");
+    const [contactPhonePublic, setContactPhonePublic] = useState("no");
     // Need to figure out this one as well. Start as array?
     const [entityTypes, setEntityTypes] = useState([]);
-    const [scope, setScope] = useState("Local");
+    const [scope, setScope] = useState("local");
     // Want separated by semicolons in form
     const [tags, setTags] = useState([]);
     const [descEng, setDescEng] = useState("");
@@ -99,7 +98,7 @@ export default function DirectoryAddUpdate() {
             "contact_phone":contactPhone,
             "contact_phone_public":contactPhonePublic,
             // Entity types will need to be an array with .join(", ") once we can select multiple
-            "entity_types":entityTypes,
+            // "entity_types":entityTypes,
             "scope":scope,
             "tags":tags.join(", "),
             "desc_english":descEng,
@@ -114,6 +113,11 @@ export default function DirectoryAddUpdate() {
             return false;
         }
         console.log("yes its json!")
+
+        // PUT FORM DATA IN A FETCH FIRST???
+        // async function formCheck() {
+        //     return formData;
+        // }
 
         fetch(
                 REACT_APP_PROXY + "/save_to_sheet_from_form/",
@@ -137,7 +141,7 @@ export default function DirectoryAddUpdate() {
             // Resets the initial form values to clear the form
             // setCoopName("");
             // setStreet("");
-            // setAddressPublic("No");
+            // setAddressPublic("no");
             // setCity("");
             // setState("IL");
             // setZip("");
@@ -145,13 +149,13 @@ export default function DirectoryAddUpdate() {
             // setCountry("US");
             // setWebsites([]);
             // setContactName("");
-            // setContactNamePublic("No");
+            // setContactNamePublic("no");
             // setContactEmail("");
-            // setContactEmailPublic("No");
+            // setContactEmailPublic("no");
             // setContactPhone("");
-            // setContactPhonePublic("No");
+            // setContactPhonePublic("no");
             // setEntityTypes([]);
-            // setScope("Local");
+            // setScope("local");
             // setTags([]);
             // setDescEng("");
             // setDescOther("");
@@ -165,12 +169,16 @@ export default function DirectoryAddUpdate() {
             err.text().then((errorMessage) => {
                 try {
                     JSON.parse(errorMessage)
-                } catch (e) {
+                } 
+                catch (e) {
                     console.log(e)
+                    console.log(errorMessage);
+                    return
                 }
-              setErrors(JSON.parse(errorMessage));
 
-              return
+                setErrors(JSON.parse(errorMessage));    
+              
+                return
             });
           })
     }
@@ -254,8 +262,9 @@ export default function DirectoryAddUpdate() {
                                 title={"Address Public?"}
                                 name={"address_public"}
                                 value={addressPublic}
+                                multiple={""}
                                 handleChange={(e) => setAddressPublic(e.target.value)}
-                                options={["Yes", "No"]}
+                                options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                             />
                         </div>
                     </div>
@@ -352,8 +361,9 @@ export default function DirectoryAddUpdate() {
                                 title={"Contact Name Public?"}
                                 name={"contact_name_public"}
                                 value={contactNamePublic}
+                                multiple={""}
                                 handleChange={(e) => setContactNamePublic(e.target.value)}
-                                options={["Yes", "No"]}
+                                options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                             />
                         </div>
                     </div>
@@ -377,9 +387,10 @@ export default function DirectoryAddUpdate() {
                                     as={"select"}
                                     title={"Email Public?"}
                                     name={"contact_email_public"}
+                                    multiple={""}
                                     value={contactEmailPublic}
                                     handleChange={(e) => setContactEmailPublic(e.target.value)}
-                                    options={["Yes", "No"]}
+                                    options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                                 />
                             </div>
                         )}
@@ -405,8 +416,9 @@ export default function DirectoryAddUpdate() {
                                     title={"Phone Public?"}
                                     name={"contact_phone_public"}
                                     value={contactPhonePublic}
+                                    multiple={""}
                                     handleChange={(e) => setContactPhonePublic(e.target.value)}
-                                    options={["Yes", "No"]}
+                                    options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                                 />
                             </div>
                         )}
@@ -414,10 +426,11 @@ export default function DirectoryAddUpdate() {
                     {/* Need to figure out design with larger list */}
                     <div className="form-row">
                         <div className="form-group col-md-12">
-                            <EntityTypes
+                            <DropDownInput
                                 type={"select"}
                                 as={"select"}
                                 title={"Entity types"}
+                                multiple={"multiple"}
                                 name={"entity_types"}
                                 value={entityTypes}
                                 handleChange={e => setEntityTypes([].slice.call(e.target.selectedOptions).map(item => item.value))}
@@ -433,8 +446,9 @@ export default function DirectoryAddUpdate() {
                                 title={"Scope of Service"}
                                 name={"scope"}
                                 value={scope}
+                                multiple={""}
                                 handleChange={(e) => setScope(e.target.value)}
-                                options={["Local", "Regional", "National", "International"]}
+                                options={[{"id":"local","name":"Local"}, {"id":"regional", "name":"Regional"},{"id":"national","name":"National"},{"id":"international", "name":"International"}]}                            
                             />
                         </div>
                     </div>

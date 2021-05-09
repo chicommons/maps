@@ -7,7 +7,7 @@ const TextAreaInput = (props) => {
 
 	return (
 		<div className="form-group">
-			<FormLabel className={props.className} style={inputStyle}>{props.title}</FormLabel>
+			<FormLabel className={props.className}>{props.title}</FormLabel>
 			<FormControl
 				isInvalid={props.errors && errorsArr}
 				type={props.type}
@@ -31,9 +31,6 @@ const TextAreaInput = (props) => {
 			)}
 		</div>
 	);
-};
-const inputStyle = {
-	color: '#124E54'
 };
 
 export default TextAreaInput;
