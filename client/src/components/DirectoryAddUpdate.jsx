@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 // import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
+import Input from "../components/Input";
+import DropDownInput from "../components/DropDownInput";
+import TextAreaInput from "../components/TextAreaInput";
+
+
 import Country from "./Country.jsx";
 import Province from "./Province.jsx";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants"
@@ -13,7 +18,7 @@ const { REACT_APP_PROXY } = process.env;
 export default function DirectoryAddUpdate() {
     const [coopName, setCoopName] = useState("");
     const [street, setStreet] = useState("");
-    const [addressPublic, setAddressPublic] = useState("yes");
+    const [addressPublic, setAddressPublic] = useState("no");
     const [city, setCity] = useState("");
     // Make this drop down of actual states?
     const [state, setState] = useState("IL");
@@ -23,11 +28,11 @@ export default function DirectoryAddUpdate() {
     const [country, setCountry] = useState("US");
     const [websites, setWebsites] = useState([]);
     const [contactName, setContactName] = useState("");
-    const [contactNamePublic, setContactNamePublic] = useState("yes");
-    const [orgEmail, setOrgEmail] = useState("");
-    const [orgEmailPublic, setOrgEmailPublic] = useState("yes");
-    const [orgPhone, setOrgPhone] = useState("");
-    const [orgPhonePublic, setOrgPhonePublic] = useState("yes");
+    const [contactNamePublic, setContactNamePublic] = useState("no");
+    const [contactEmail, setContactEmail] = useState("");
+    const [contactEmailPublic, setContactEmailPublic] = useState("no");
+    const [contactPhone, setContactPhone] = useState("");
+    const [contactPhonePublic, setContactPhonePublic] = useState("no");
     // Need to figure out this one as well. Start as array?
     const [entityTypes, setEntityTypes] = useState([]);
     const [scope, setScope] = useState("local");
@@ -42,6 +47,9 @@ export default function DirectoryAddUpdate() {
     const [countries, setCountries] = React.useState([]);
     const [provinces, setProvinces] = React.useState([]);
     const [entities, setEntityTypeList] = React.useState([]);
+
+    // Validation
+    const [errors, setErrors] = React.useState([]);
 
 
     // Code for EmailJS, not using as of 4-7-21
@@ -73,7 +81,7 @@ export default function DirectoryAddUpdate() {
         console.log("form submitted!");
         console.log(coopName);
 
-        let data = JSON.stringify({
+        let formData = JSON.stringify({
             "coop_name":coopName,
             "street":street,
             "address_public":addressPublic,
@@ -85,27 +93,32 @@ export default function DirectoryAddUpdate() {
             "websites":websites.join(", "),
             "contact_name":contactName,
             "contact_name_public":contactNamePublic,
-            "organization_email":orgEmail,
-            "organization_email_public":orgEmailPublic,
-            "organization_phone":orgPhone,
-            "organization_phone_public":orgPhonePublic,
+            "contact_email":contactEmail,
+            "contact_email_public":contactEmailPublic,
+            "contact_phone":contactPhone,
+            "contact_phone_public":contactPhonePublic,
             // Entity types will need to be an array with .join(", ") once we can select multiple
-            "entity_types":entityTypes,
+            // "entity_types":entityTypes,
             "scope":scope,
             "tags":tags.join(", "),
             "desc_english":descEng,
             "desc_other":descOther,
             "req_reason":reqReason
         })
-        console.log(data);
+        console.log(formData);
         try {
-            JSON.parse(data);
+            JSON.parse(formData);
         } catch (e) {
             console.log("not JSON!")
             return false;
         }
         console.log("yes its json!")
-        // return true;
+
+        // PUT FORM DATA IN A FETCH FIRST???
+        // async function formCheck() {
+        //     return formData;
+        // }
+
         fetch(
                 REACT_APP_PROXY + "/save_to_sheet_from_form/",
                     {
@@ -113,39 +126,61 @@ export default function DirectoryAddUpdate() {
                         headers: { 
                             'Content-Type': 'application/json',
                         },
-                        body: data
+                        body: formData
                     }
-         ).then(function(response) {
-            console.log('Response:', response)
-            return response.json();
+         ).then(response => {
+            if (response.ok) {
+                console.log('Response:', response);
+                return response.json();
+              } else {
+                throw response;
+              }
         }).then(function(data) {
             console.log("Data is ok", data);
-        }).catch(function(ex) {
-            console.log("parsing failed", ex);
-        })
 
-        // Resets the initial form values
-        setCoopName("");
-        setStreet("");
-        setAddressPublic("yes");
-        setCity("");
-        setState("IL");
-        setZip("");
-        setCounty("");
-        setCountry("US");
-        setWebsites([]);
-        setContactName("");
-        setContactNamePublic("yes");
-        setOrgEmail("");
-        setOrgEmailPublic("yes");
-        setOrgPhone("");
-        setOrgPhonePublic("yes");
-        setEntityTypes([]);
-        setScope("local");
-        setTags([]);
-        setDescEng("");
-        setDescOther("");
-        setReqReason("");
+            // Resets the initial form values to clear the form
+            // setCoopName("");
+            // setStreet("");
+            // setAddressPublic("no");
+            // setCity("");
+            // setState("IL");
+            // setZip("");
+            // setCounty("");
+            // setCountry("US");
+            // setWebsites([]);
+            // setContactName("");
+            // setContactNamePublic("no");
+            // setContactEmail("");
+            // setContactEmailPublic("no");
+            // setContactPhone("");
+            // setContactPhonePublic("no");
+            // setEntityTypes([]);
+            // setScope("local");
+            // setTags([]);
+            // setDescEng("");
+            // setDescOther("");
+            // setReqReason("");
+
+            // Instead maybe just refresh, so that the error messages go away too?
+            window.location.reload();
+        }).catch(err => {
+            console.log("Errors ...");
+            console.log(err);
+            err.text().then((errorMessage) => {
+                try {
+                    JSON.parse(errorMessage)
+                } 
+                catch (e) {
+                    console.log(e)
+                    console.log(errorMessage);
+                    return
+                }
+
+                setErrors(JSON.parse(errorMessage));    
+              
+                return
+            });
+          })
     }
 
     useEffect(() => {
@@ -187,285 +222,290 @@ export default function DirectoryAddUpdate() {
       }, []);
 
     return (
-    <>
+    <div className="directory-form">
         <h1 className="form__title">Directory Form</h1>
         <h2 className="form__desc">Use this form to add or request the update of a solidarity entity or cooperative. We'll contact you to confirm the information</h2>
         <h2 className="form__desc"><span style={{color: "red"}}>*</span> = required</h2>
         <div className="form">  
-            <form onSubmit={submitForm} className="container-fluid" id="directory-add-update">
-                <FormGroup controlId="formBasicText">
-                    <div className="form-group">
-                        <label htmlFor="coop-name" className="required">Cooperative/Entity Name</label>
-                        <input
-                            type="text"
-                            id="coop-name"
-                            name="coop_name"
-                            value={coopName}
-                            placeholder="Enter cooperative/entity name"
-                            onChange={(e) => setCoopName(e.target.value)}
-                        />
+            <form onSubmit={submitForm} className="container-fluid" id="directory-add-update" noValidate>
+                <FormGroup>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <Input 
+                                className={"required"}
+                                type={"text"}
+                                title={"Cooperative/Entity Name"}
+                                name={"coop_name"}
+                                value={coopName}
+                                placeholder={"Enter cooperative/entity name"}
+                                handleChange={(e) => setCoopName(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="street" className="required">Street Address</label>
-                        <input
-                            type="text"
-                            id="street"
-                            name="street"
-                            value={street}
-                            placeholder="Enter address street"
-                            onChange={(e) => setStreet(e.target.value)}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-8">
+                            <Input 
+                                type={"text"}
+                                title={"Street Address"}
+                                name={"street"}
+                                value={street}
+                                placeholder={"Enter address street"}
+                                handleChange={(e) => setStreet(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-4">
+                            <DropDownInput 
+                                type={"select"}
+                                as={"select"}
+                                title={"Address Public?"}
+                                name={"address_public"}
+                                value={addressPublic}
+                                multiple={""}
+                                handleChange={(e) => setAddressPublic(e.target.value)}
+                                options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
+                            />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="address-public">Address Public?</label>
-                        <select
-                            form="directory-add-update"
-                            id="address-public"
-                            name="address_public"
-                            value={addressPublic}
-                            onChange={(e) => setAddressPublic(e.target.value)}>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                    <div className="form-row">
+                        <div className="form-group col-md-4">
+                            <Input 
+                                type={"text"}
+                                title={"City"}
+                                name={"city"}
+                                value={city}
+                                placeholder={"Enter address city"}
+                                handleChange={(e) => setCity(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-4">
+                            <Province
+                                title={"State"}
+                                name={"state"}
+                                options={provinces}
+                                value={state}
+                                placeholder={"Select State"}
+                                handleChange={(e) => setState(e.target.value)}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-4">
+                            <Input 
+                                type={"text"}
+                                title={"Zip Code"}
+                                name={"zip"}
+                                value={zip}
+                                placeholder={"Enter zip code"}
+                                handleChange={(e) => setZip(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="city">City</label>
-                        <input
-                            type="text"
-                            id="city"
-                            name="city"
-                            value={city}
-                            placeholder="Enter address city"
-                            onChange={(e) => setCity(e.target.value)}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <Input 
+                                type={"text"}
+                                title={"County"}
+                                name={"county"}
+                                value={county}
+                                placeholder={"Enter county"}
+                                handleChange={(e) => setCounty(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-6">
+                            <Country
+                                title={"Country"}
+                                name={"country"}
+                                options={countries}
+                                value={country}
+                                countryCode={"US"}
+                                placeholder={"Select Country"}
+                                handleChange={(e) => setCountry(e.target.value)}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="state" className="required">State</label>
-                        <select
-                            form="directory-add-update"
-                            id="state"
-                            name="state"
-                            value={state}
-                            onChange={(e) => setState(e.target.value)}>
-                            <option value="" disabled>
-                                Select State
-                            </option>
-                             {
-                                provinces.map((province) => (
-                                    <option key={province.code} value={province.code}>
-                                      {province.name}
-                                    </option>
-                                )
-                             )}
-                        </select>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <Input 
+                                className={"required"}
+                                type={"text"}
+                                title={"Website or Social Media Page (separate multiple links with a comma)"}
+                                name={"websites"}
+                                value={websites}
+                                placeholder={"Enter website or social media pages"}
+                                handleChange={(e) => setWebsites(e.target.value.split(","))}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="zip">Zip Code</label>
-                        <input
-                            type="text"
-                            id="zip"
-                            name="zip"
-                            value={zip}
-                            placeholder="Enter zip code"
-                            onChange={(e) => {
-                                setZip(e.target.value);
-                            }}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-8">
+                            <Input 
+                                className={"required"}
+                                type={"text"}
+                                title={"Contact Name"}
+                                name={"contact_name"}
+                                value={contactName}
+                                placeholder={"Enter contact name"}
+                                handleChange={(e) => setContactName(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-4">
+                            <DropDownInput 
+                                className={"required"}
+                                type={"select"}
+                                as={"select"}
+                                title={"Contact Name Public?"}
+                                name={"contact_name_public"}
+                                value={contactNamePublic}
+                                multiple={""}
+                                handleChange={(e) => setContactNamePublic(e.target.value)}
+                                options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
+                            />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="county">County</label>
-                        <input
-                            type="text"
-                            id="county"
-                            name="county"
-                            value={county}
-                            placeholder="Enter county"
-                            onChange={(e) => {
-                                setCounty(e.target.value);
-                            }}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-8">
+                            <Input 
+                                type={"email"}
+                                title={"Contact Email Address"}
+                                name={"contact_email"}
+                                value={contactEmail}
+                                placeholder={"Enter contact email"}
+                                handleChange={(e) => setContactEmail(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        {contactEmail && (
+                            <div className="form-group col-md-4">
+                                <DropDownInput 
+                                    className={"required"}
+                                    type={"select"}
+                                    as={"select"}
+                                    title={"Email Public?"}
+                                    name={"contact_email_public"}
+                                    multiple={""}
+                                    value={contactEmailPublic}
+                                    handleChange={(e) => setContactEmailPublic(e.target.value)}
+                                    options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
+                                />
+                            </div>
+                        )}
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="country">Country</label>
-                        <select
-                            form="directory-add-update"
-                            id="country"
-                            name="country"
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}>
-                            <option value="" disabled>
-                                Select Country
-                            </option>
-                             {
-                                countries.map((country) => (
-                                    <option key={country.code} value={country.code}>
-                                      {country.name}
-                                    </option>
-                                )
-                             )}
-                        </select>
+                    <div className="form-row">
+                        <div className="form-group col-md-8">
+                            <Input 
+                                type={"tel"}
+                                title={"Contact Phone Number"}
+                                name={"contact_phone"}
+                                value={contactPhone}
+                                placeholder={"Enter contact phone"}
+                                handleChange={(e) => setContactPhone(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        {contactPhone && (
+                            <div className="form-group col-md-4">
+                                <DropDownInput 
+                                    className={"required"}
+                                    type={"select"}
+                                    as={"select"}
+                                    title={"Phone Public?"}
+                                    name={"contact_phone_public"}
+                                    value={contactPhonePublic}
+                                    multiple={""}
+                                    handleChange={(e) => setContactPhonePublic(e.target.value)}
+                                    options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
+                                />
+                            </div>
+                        )}
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="websites">Website or Social Media Page (separate multiple links with a comma)</label>
-                        <input
-                            type="text"
-                            id="websites"
-                            name="websites"
-                            value={websites}
-                            placeholder="Enter website or social media pages"
-                            onChange={(e) => {
-                                setWebsites(e.target.value.split(","));
-                            }
-                            }
-                        />
+                    {/* Need to figure out design with larger list */}
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <DropDownInput
+                                type={"select"}
+                                as={"select"}
+                                title={"Entity types"}
+                                multiple={"multiple"}
+                                name={"entity_types"}
+                                value={entityTypes}
+                                handleChange={e => setEntityTypes([].slice.call(e.target.selectedOptions).map(item => item.value))}
+                                options={entities}
+                            />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="contact-name">Contact Name</label>
-                        <input
-                            type="text"
-                            id="contact-name"
-                            name="contact_name"
-                            value={contactName}
-                            placeholder="Enter contact name"
-                            onChange={(e) => setContactName(e.target.value)}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <DropDownInput 
+                                type={"select"}
+                                as={"select"}
+                                title={"Scope of Service"}
+                                name={"scope"}
+                                value={scope}
+                                multiple={""}
+                                handleChange={(e) => setScope(e.target.value)}
+                                options={[{"id":"local","name":"Local"}, {"id":"regional", "name":"Regional"},{"id":"national","name":"National"},{"id":"international", "name":"International"}]}                            
+                            />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="contact-name-public">Contact Name Public?</label>
-                        <select
-                            form="directory-add-update"
-                            id="contact-name-public"
-                            name="contact_name_public"
-                            value={contactNamePublic}
-                            onChange={(e) => setContactNamePublic(e.target.value)}>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <Input 
+                                type={"text"}
+                                title={"Add description tags here, separated by commas"}
+                                name={"tags"}
+                                value={tags}
+                                placeholder={"Enter tags"}
+                                handleChange={(e) => setTags(e.target.value.split(","))}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="organization-email">Organization Email Address</label>
-                        <input
-                            type="email"
-                            id="organization-email"
-                            name="organization_email"
-                            value={orgEmail}
-                            placeholder="Enter organization email"
-                            onChange={(e) => setOrgEmail(e.target.value)}
-                        />
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <TextAreaInput 
+                                type={"textarea"}
+                                as={"textarea"}
+                                title={"Entity Description (English)"}
+                                name={"desc_english"}
+                                value={descEng}
+                                placeholder={"Enter entity description (English)"}
+                                handleChange={(e) => setDescEng(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="organization-email-public">Email Public?</label>
-                        <select
-                            form="directory-add-update"
-                            id="organization-email-public"
-                            name="organization_email_public"
-                            value={orgEmailPublic}
-                            onChange={(e) => setOrgEmailPublic(e.target.value)}>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <TextAreaInput 
+                                type={"textarea"}
+                                as={"textarea"}
+                                title={"Entity Description (Other Language)"}
+                                name={"desc_other"}
+                                value={descOther}
+                                placeholder={"Enter entity description (Other Language)"}
+                                handleChange={(e) => setDescOther(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="organization-phone">Organization Phone Number</label>
-                        <input
-                            type="tel"
-                            id="organization-phone"
-                            name="organization_phone"
-                            value={orgPhone}
-                            placeholder="Enter organization phone"
-                            onChange={(e) => setOrgPhone(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="organization-phone-public">Phone Public?</label>
-                        <select
-                            form="directory-add-update"
-                            id="organization-phone-public"
-                            name="organization_phone_public"
-                            value={orgPhonePublic}
-                            onChange={(e) => setOrgPhonePublic(e.target.value)}>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                    {/* Functionality needs */}
-                    <div className="form-group">
-                        <label htmlFor="poi-types">Entity type</label>
-                        <select
-                            form="directory-add-update"
-                            id="entity-types"
-                            name="entity_types"
-                            value={entityTypes}
-                            onChange={(e) => setEntityTypes(e.target.value)}>
-                            <option value="" disabled>
-                                Select entity type
-                            </option>
-                             {
-                                entities.map((entity) => (
-                                    <option key={entity.id} value={entity.id}>
-                                      {entity.name}
-                                    </option>
-                                )
-                             )}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="scope">Scope of Service</label>
-                        <select
-                            form="directory-add-update"
-                            id="scope"
-                            name="scope"
-                            value={scope}
-                            onChange={(e) => setScope(e.target.value)}>
-                            <option value="local">local</option>
-                            <option value="regional">regional</option>
-                            <option value="national">national</option>
-                            <option value="international">international</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="tags">Add description tags here, separated by commas</label>
-                        <input
-                            type="text"
-                            id="tags"
-                            name="tags"
-                            value={tags}
-                            placeholder="Enter tags"
-                            onChange={(e) => {
-                                setTags(e.target.value.split(","));
-                            }
-                            }
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="desc-english">Entity Description (English)</label>
-                        <textarea
-                            id="desc-english"
-                            name="desc_english"
-                            value={descEng}
-                            placeholder="Enter entity description (English)"
-                            onChange={(e) => setDescEng(e.target.value)}>
-                        </textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="desc-other">Entity Description (Other Language)</label>
-                        <textarea
-                            id="desc-other"
-                            name="desc_other"
-                            value={descOther}
-                            placeholder="Enter entity description (Other Language)"
-                            onChange={(e) => setDescOther(e.target.value)}>
-                        </textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="req-reason">Please list your reason for submitting this request? Is this an addition or an update?</label>
-                        <textarea
-                            id="req-reason"
-                            name="req_reason"
-                            value={reqReason}
-                            placeholder="Enter reason for request."
-                            onChange={(e) => setReqReason(e.target.value)}>
-                        </textarea>
+                    <div className="form-row">
+                        <div className="form-group col-md-12">
+                            <TextAreaInput 
+                                type={"textarea"}
+                                as={"textarea"}
+                                title={"Please list your reason for submitting this request? Is this an addition or an update?"}
+                                name={"req_reason"}
+                                value={reqReason}
+                                placeholder={"Enter reason for request."}
+                                handleChange={(e) => setReqReason(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
                     </div>
                     <div className="form-group">
                         <input className="submit" type="submit" value="SEND ADDITION/UPDATE" />
@@ -473,6 +513,6 @@ export default function DirectoryAddUpdate() {
                 </FormGroup>
             </form>
         </div>
-    </>
+    </div>
     )
 }

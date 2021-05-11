@@ -18,7 +18,7 @@ class Country extends React.Component {
         <select
           id={this.props.name}
           name={this.props.name}
-          value={country?.code}
+          value={this.props.value}
           onChange={this.props.handleChange}
           className="form-control"
         >
