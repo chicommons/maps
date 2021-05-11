@@ -52,6 +52,8 @@ export DB_PASS=password
 export DB_SERVICE=localhost
 # This should be the port where your PostGres DB is running
 export DB_PORT=5432
+# Change to appropriate path on your system where you placed this file.
+export SERVICE_CREDS_JSON_FILE=/path/to/credentials.json
 ```
 
 to the end of your file.  Adjust the above settings if you have different settings.  After exiting, run
