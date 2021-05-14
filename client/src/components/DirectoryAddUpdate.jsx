@@ -114,11 +114,6 @@ export default function DirectoryAddUpdate() {
         }
         console.log("yes its json!")
 
-        // PUT FORM DATA IN A FETCH FIRST???
-        // async function formCheck() {
-        //     return formData;
-        // }
-
         fetch(
                 REACT_APP_PROXY + "/save_to_sheet_from_form/",
                     {
@@ -244,7 +239,7 @@ export default function DirectoryAddUpdate() {
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-8">
+                        <div className="form-group col-md-6">
                             <Input 
                                 type={"text"}
                                 title={"Street Address"}
@@ -255,11 +250,11 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-4">
+                        <div className="form-group col-md-6">
                             <DropDownInput 
                                 type={"select"}
                                 as={"select"}
-                                title={"Address Public?"}
+                                title={"Is Address to be public on the map?"}
                                 name={"address_public"}
                                 value={addressPublic}
                                 multiple={""}
@@ -341,11 +336,11 @@ export default function DirectoryAddUpdate() {
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-8">
+                        <div className="form-group col-md-6">
                             <Input 
                                 className={"required"}
                                 type={"text"}
-                                title={"Contact Name"}
+                                title={"Cooperative/Entity Contact Person Name"}
                                 name={"contact_name"}
                                 value={contactName}
                                 placeholder={"Enter contact name"}
@@ -353,12 +348,12 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-4">
+                        <div className="form-group col-md-6">
                             <DropDownInput 
                                 className={"required"}
                                 type={"select"}
                                 as={"select"}
-                                title={"Contact Name Public?"}
+                                title={"Is Contact name to be public on the map?"}
                                 name={"contact_name_public"}
                                 value={contactNamePublic}
                                 multiple={""}
@@ -368,7 +363,7 @@ export default function DirectoryAddUpdate() {
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-8">
+                        <div className="form-group col-md-6">
                             <Input 
                                 type={"email"}
                                 title={"Contact Email Address"}
@@ -380,12 +375,12 @@ export default function DirectoryAddUpdate() {
                             />{" "}
                         </div>
                         {contactEmail && (
-                            <div className="form-group col-md-4">
+                            <div className="form-group col-md-6">
                                 <DropDownInput 
                                     className={"required"}
                                     type={"select"}
                                     as={"select"}
-                                    title={"Email Public?"}
+                                    title={"Is Email to be public on the map?"}
                                     name={"contact_email_public"}
                                     multiple={""}
                                     value={contactEmailPublic}
@@ -396,7 +391,7 @@ export default function DirectoryAddUpdate() {
                         )}
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-8">
+                        <div className="form-group col-md-6">
                             <Input 
                                 type={"tel"}
                                 title={"Contact Phone Number"}
@@ -408,12 +403,12 @@ export default function DirectoryAddUpdate() {
                             />{" "}
                         </div>
                         {contactPhone && (
-                            <div className="form-group col-md-4">
+                            <div className="form-group col-md-6">
                                 <DropDownInput 
                                     className={"required"}
                                     type={"select"}
                                     as={"select"}
-                                    title={"Phone Public?"}
+                                    title={"Is Phone number to be public on the map?"}
                                     name={"contact_phone_public"}
                                     value={contactPhonePublic}
                                     multiple={""}
