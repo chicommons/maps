@@ -33,7 +33,8 @@ def data(request):
             postal_code = address.locality.postal_code
             city = address.locality.name + ", " + address.locality.state.code + " " + postal_code 
             coop_types = ', '.join([type.name for type in coop.types.all()]) 
-            writer.writerow([coop.name, address.formatted, city, postal_code, coop_types, coop.web_site, address.longitude, address.latitude])
+            if address.longitude and address.latitude:
+                writer.writerow([coop.name, address.formatted, city, postal_code, coop_types, coop.web_site, address.longitude, address.latitude])
 
     return response
 
