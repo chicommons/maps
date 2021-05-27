@@ -41,7 +41,7 @@ export default function DirectoryAddUpdate() {
     const [descEng, setDescEng] = useState("");
     const [descOther, setDescOther] = useState("");
     // There's a request for a "Why are you submitting this?" textbox
-    const [reqReason, setReqReason] = useState("");
+    const [reqReason, setReqReason] = useState("add");
 
     // Holds country and state list
     const [countries, setCountries] = React.useState([]);
@@ -239,7 +239,7 @@ export default function DirectoryAddUpdate() {
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-6">
+                        <div className="form-group col-md-3">
                             <Input 
                                 type={"text"}
                                 title={"Street Address"}
@@ -248,6 +248,62 @@ export default function DirectoryAddUpdate() {
                                 placeholder={"Enter address street"}
                                 handleChange={(e) => setStreet(e.target.value)}
                                 errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-3">
+                            <Input 
+                                type={"text"}
+                                title={"City"}
+                                name={"city"}
+                                value={city}
+                                placeholder={"Enter address city"}
+                                handleChange={(e) => setCity(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-3">
+                            <Province
+                                title={"State"}
+                                name={"state"}
+                                options={provinces}
+                                value={state}
+                                placeholder={"Select State"}
+                                handleChange={(e) => setState(e.target.value)}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-3">
+                            <Input 
+                                type={"text"}
+                                title={"Zip Code"}
+                                name={"zip"}
+                                value={zip}
+                                placeholder={"Enter zip code"}
+                                handleChange={(e) => setZip(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-3">
+                            <Input 
+                                type={"text"}
+                                title={"County"}
+                                name={"county"}
+                                value={county}
+                                placeholder={"Enter county"}
+                                handleChange={(e) => setCounty(e.target.value)}
+                                errors={errors}
+                            />{" "}
+                        </div>
+                        <div className="form-group col-md-3">
+                            <Country
+                                title={"Country"}
+                                name={"country"}
+                                options={countries}
+                                value={country}
+                                countryCode={"US"}
+                                placeholder={"Select Country"}
+                                handleChange={(e) => setCountry(e.target.value)}
                             />{" "}
                         </div>
                         <div className="form-group col-md-6">
@@ -261,64 +317,6 @@ export default function DirectoryAddUpdate() {
                                 handleChange={(e) => setAddressPublic(e.target.value)}
                                 options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                             />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-4">
-                            <Input 
-                                type={"text"}
-                                title={"City"}
-                                name={"city"}
-                                value={city}
-                                placeholder={"Enter address city"}
-                                handleChange={(e) => setCity(e.target.value)}
-                                errors={errors}
-                            />{" "}
-                        </div>
-                        <div className="form-group col-md-4">
-                            <Province
-                                title={"State"}
-                                name={"state"}
-                                options={provinces}
-                                value={state}
-                                placeholder={"Select State"}
-                                handleChange={(e) => setState(e.target.value)}
-                            />{" "}
-                        </div>
-                        <div className="form-group col-md-4">
-                            <Input 
-                                type={"text"}
-                                title={"Zip Code"}
-                                name={"zip"}
-                                value={zip}
-                                placeholder={"Enter zip code"}
-                                handleChange={(e) => setZip(e.target.value)}
-                                errors={errors}
-                            />{" "}
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <Input 
-                                type={"text"}
-                                title={"County"}
-                                name={"county"}
-                                value={county}
-                                placeholder={"Enter county"}
-                                handleChange={(e) => setCounty(e.target.value)}
-                                errors={errors}
-                            />{" "}
-                        </div>
-                        <div className="form-group col-md-6">
-                            <Country
-                                title={"Country"}
-                                name={"country"}
-                                options={countries}
-                                value={country}
-                                countryCode={"US"}
-                                placeholder={"Select Country"}
-                                handleChange={(e) => setCountry(e.target.value)}
-                            />{" "}
                         </div>
                     </div>
                     <div className="form-row">
@@ -490,7 +488,7 @@ export default function DirectoryAddUpdate() {
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-12">
-                            <TextAreaInput 
+                            {/* <TextAreaInput 
                                 type={"textarea"}
                                 as={"textarea"}
                                 title={"Please list your reason for submitting this request? Is this an addition or an update?"}
@@ -499,7 +497,18 @@ export default function DirectoryAddUpdate() {
                                 placeholder={"Enter reason for request."}
                                 handleChange={(e) => setReqReason(e.target.value)}
                                 errors={errors}
-                            />{" "}
+                            />{" "} */}
+                            <DropDownInput 
+                                className={"required"}
+                                type={"select"}
+                                as={"select"}
+                                title={"Please list your reason for submitting this request"}
+                                name={"req_reason"}
+                                value={reqReason}
+                                multiple={""}
+                                handleChange={(e) => setReqReason(e.target.value)}
+                                options={[{"id":"add","name":"Add new record"}, {"id":"update", "name":"Update existing record"}]}
+                            />
                         </div>
                     </div>
                     <div className="form-group">
