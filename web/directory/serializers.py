@@ -350,8 +350,8 @@ class ValidateNewCoopSerializer(serializers.Serializer):
     contact_phone=serializers.CharField()
     contact_phone_public=serializers.CharField()
     scope=serializers.CharField()
-    tags=serializers.CharField()
-    desc_english=serializers.CharField()
-    desc_other=serializers.CharField()
+    tags=serializers.CharField(required=False, allow_blank=True)
+    desc_english=serializers.CharField(required=False, allow_blank=True)
+    desc_other=serializers.CharField(required=False, allow_blank=True)
     req_reason=serializers.CharField()
 
