@@ -174,7 +174,7 @@ const Search = (props) => {
     <FormGroup controlId="formBasicText">
 		{/* FormLabel and FormControl logic from Input.jsx */}
     <div className="form-group">
-      <FormLabel style={inputStyle}>Name</FormLabel>
+      <FormLabel class='formInputStyle'>Name</FormLabel>
       <FormControl
         class="form-control"
         id={"name"}
@@ -186,7 +186,7 @@ const Search = (props) => {
     </div>
     <div className="form-group">
       <label
-      style={inputStyle}>Coop Type</label>
+      class='formInputStyle'>Coop Type</label>
       <select
         id={"type"}
         name={"type"}
@@ -206,7 +206,7 @@ const Search = (props) => {
       </select>
     </div>
     <div className="form-group">
-      <FormLabel style={inputStyle}>Street</FormLabel>
+      <FormLabel class='formInputStyle'>Street</FormLabel>
       <FormControl
         class="form-control"
         id={"street"}
@@ -217,7 +217,7 @@ const Search = (props) => {
       />{" "}
     </div>
     <div className="form-group">
-      <FormLabel style={inputStyle}>City</FormLabel>
+      <FormLabel class='formInputStyle'>City</FormLabel>
       <FormControl
         class="form-control"
         id={"city"}
@@ -228,7 +228,7 @@ const Search = (props) => {
       />{" "}
     </div>
     <div className="form-group">
-      <FormLabel style={inputStyle}>Postal Code</FormLabel>
+      <FormLabel class='formInputStyle'>Postal Code</FormLabel>
       <FormControl
         class="form-control"
         id={"zip"}
@@ -239,7 +239,7 @@ const Search = (props) => {
       />{" "}
     </div>
     <div className="form-group">
-      <label class="form-label" style={inputStyle}>Enabled</label>
+      <label class="form-label" class='formInputStyle'>Enabled</label>
       <select
         name={"enabled"}
         value={coopSearchSettings.enabled}
@@ -255,7 +255,6 @@ const Search = (props) => {
         action={handleFormSubmit}
         type={"primary"}
         title={"Submit"}
-        style={buttonStyle}
       />{" "}
       <div>
         {renderSearchResults()}
@@ -271,14 +270,5 @@ const Search = (props) => {
     </div>
   );
 };
-
-const buttonStyle = {
-  margin: "10px 10px 10px 10px",
-  color: "#F6FBFB",
-  backgroundColor: "#2295A2"
-};
-const inputStyle = {
-  color: "#124E54"
-  }
 
 export default Search;
