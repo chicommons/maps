@@ -1,5 +1,7 @@
 import React from "react";
 
+import '../App.css'
+
 const Button = (props) => {
   return (
     <button
@@ -8,6 +10,7 @@ const Button = (props) => {
       className={
         props.type === "primary" ? "btn btn-primary" : "btn btn-secondary"
       }
+      class = 'buttonStyle'
       onClick={props.action}
     >
       {props.title}

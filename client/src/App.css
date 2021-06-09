@@ -41,3 +41,13 @@
 		transform: rotate(360deg);
 	}
 }
+
+.buttonStyle {
+   margin: "10px 10px 10px 10px";
+   color: #F6FBFB;
+   background-color: #2295A2
+}
+
+.formInputStyle {
+  color: #124E54
+}
