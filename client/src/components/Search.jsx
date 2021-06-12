@@ -10,10 +10,14 @@ import _ from "lodash";
 /* Import Components */
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Province from "./Province.jsx";
 
 import '../containers/FormContainer.css'
 
+import { DEFAULT_COUNTRY_CODE } from "../utils/constants"
+
 const { REACT_APP_PROXY } = process.env;
+
 
 let abortController = new window.AbortController();
 
@@ -42,6 +46,12 @@ const buildSearchUrl = (coopSearchSettings, setSearchUrl) => {
   if ("zip" in coopSearchSettings && coopSearchSettings.zip != '') {
 			individualSearchSettings.push("zip=" + encodeURIComponent(coopSearchSettings.zip));
 	}
+  if ("county" in coopSearchSettings && coopSearchSettings.county != '') {
+      individualSearchSettings.push("county=" + encodeURIComponent(coopSearchSettings.county));
+  }
+  if ("state" in coopSearchSettings && coopSearchSettings.state != '') {
+      individualSearchSettings.push("state=" + encodeURIComponent(coopSearchSettings.state));
+  }
 	if ("enabled" in coopSearchSettings && coopSearchSettings.enabled != "none") {
 			individualSearchSettings.push("enabled=" + encodeURIComponent(coopSearchSettings.enabled));
 	}
@@ -85,12 +95,13 @@ const doSearchDebounced = _.debounce(doSearch, 100);
 const Search = (props) => {
 
 	//store evolving search settings before search form is submitted
-	const [coopSearchSettings, setCoopSearchSettings] = useState({});
+	const [coopSearchSettings, setCoopSearchSettings] = useState({'state': 'IL'});
 
 	// store finalized search url
 	const [searchUrl, setSearchUrl] = useState('');
 
   const [coopTypes, setCoopTypes] = React.useState([]);
+  const [provinces, setProvinces] = React.useState([]);
 	const [searchResults, setSearchResults] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -105,6 +116,21 @@ const Search = (props) => {
           return coopType;
         });
         setCoopTypes(coopTypes.sort((a, b) => (a.name > b.name) ? 1 : -1));
+      });
+  }
+  , []);
+
+  useEffect(() => {
+    // Get initial provinces (states)
+    fetch(REACT_APP_PROXY + "/states/" + DEFAULT_COUNTRY_CODE)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const initialProvinces = data.map((province) => {
+          return province;
+        });
+        setProvinces(initialProvinces);
       });
   }
   , []);
@@ -237,6 +263,28 @@ const Search = (props) => {
         placeholder="Enter postal code"
         onChange={handleInputChange}
       />{" "}
+    </div>
+    <div className="form-group">
+      <FormLabel class='formInputStyle'>County</FormLabel>
+      <FormControl
+        class="form-control"
+        id={"county"}
+        name={"county"}
+        value={coopSearchSettings.county}
+        placeholder="Enter county"
+        onChange={handleInputChange}
+      />{" "}
+    </div>
+    <div>
+        <Province
+            title={"State"}
+            name={"state"}
+            options={provinces}
+            value={coopSearchSettings.state}
+            placseholder={"Select state"}
+            handleChange={(e) => setCoopSearchSettings({ ...coopSearchSettings,
+              [e.target.name]: e.target.value })}
+        />{" "}
     </div>
     <div className="form-group">
       <label class="form-label" class='formInputStyle'>Enabled</label>
