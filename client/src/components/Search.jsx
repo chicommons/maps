@@ -278,6 +278,7 @@ const Search = (props) => {
     <div>
         <Province
             title={"State"}
+            className = 'formInputStyle'
             name={"state"}
             options={provinces}
             value={coopSearchSettings.state}
