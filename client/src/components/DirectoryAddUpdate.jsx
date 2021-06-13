@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'
 // import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
@@ -51,29 +52,50 @@ export default function DirectoryAddUpdate() {
     // Validation
     const [errors, setErrors] = React.useState([]);
 
+    // Gets id from URL
+    const { id } = useParams();
 
-    // Code for EmailJS, not using as of 4-7-21
-    // const sendEmail = (e) => {
-    //     e.preventDefault();
+    const fetchCoopForUpdate = async () => {
+        console.log (id);
 
-    //     emailjs
-    //         .sendForm(
-    //             "service_dpyos8k",
-    //             "template_tysvot3",
-    //             e.target,
-    //             "user_KwHJEsdCYTvaCsb6JlxXk"
-    //         )
-    //         .then(
-    //             (result) => {
-    //                 console.log("It worked!");
-    //                 console.log(result.text);
-    //             },
-    //             (error) => {
-    //                 console.error("It didn't work");
-    //                 console.error(error.text);
-    //             }
-    //         );
-    // }
+        try {
+            const res = await fetch(REACT_APP_PROXY + `/coops/${id}/`);
+            if(!res.ok) {
+                throw Error("Cannot access requested entity.")
+            }
+            const coopResults = await res.json();
+            console.log(coopResults);
+
+            setCoopName(coopResults.name ?coopResults.name : "");
+            setStreet(coopResults.addresses[0].formatted ? coopResults.addresses[0].formatted : "");
+            setCity(coopResults.addresses[0].locality.name ? coopResults.addresses[0].locality.name : "");
+            setState(coopResults.addresses[0].locality.state.code ? coopResults.addresses[0].locality.state.code : "");
+            setZip(coopResults.addresses[0].locality.postal_code ? coopResults.addresses[0].locality.postal_code : "");
+            // setCounty();
+            setCountry(coopResults.addresses[0].locality.state.country.code ? coopResults.addresses[0].locality.state.country.code : "");
+            // setAddressPublic();
+            setWebsites(coopResults.web_site ? coopResults.web_site : "");
+            // setContactName();
+            // setContactNamePublic();
+            setContactEmail(coopResults.email ? coopResults.email : "");
+            // setContactEmailPublic();
+            setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
+            // setContactPhonePublic();
+            // Need to figure out how entity types look in data if there are multiple
+            setEntityTypes([coopResults.types[0]] ? [coopResults.types[0].name] : []);
+            // setScope();
+            // setTags([]);
+            // setDescEng("");
+            // setDescOther("");
+            setReqReason("update");
+
+
+        } catch (error) {
+            console.log(error);
+            setErrors(`Error: ${error.message}`)
+        }
+    };
+
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -214,6 +236,10 @@ export default function DirectoryAddUpdate() {
           });
           setEntityTypeList(initialEntityTypes);
         });
+
+        if (id) {
+            fetchCoopForUpdate();
+        }
       }, []);
 
     return (
@@ -221,6 +247,7 @@ export default function DirectoryAddUpdate() {
         <h1 className="form__title">Directory Form</h1>
         <h2 className="form__desc">Use this form to add or request the update of a solidarity entity or cooperative. We'll contact you to confirm the information</h2>
         <h2 className="form__desc"><span style={{color: "red"}}>*</span> = required</h2>
+        { errors && <strong className="form__error-message">{errors}</strong>}
         <div className="form">  
             <form onSubmit={submitForm} className="container-fluid" id="directory-add-update" noValidate>
                 <FormGroup>
@@ -488,16 +515,6 @@ export default function DirectoryAddUpdate() {
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-12">
-                            {/* <TextAreaInput 
-                                type={"textarea"}
-                                as={"textarea"}
-                                title={"Please list your reason for submitting this request? Is this an addition or an update?"}
-                                name={"req_reason"}
-                                value={reqReason}
-                                placeholder={"Enter reason for request."}
-                                handleChange={(e) => setReqReason(e.target.value)}
-                                errors={errors}
-                            />{" "} */}
                             <DropDownInput 
                                 className={"required"}
                                 type={"select"}
