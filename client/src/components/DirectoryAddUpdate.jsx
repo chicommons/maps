@@ -87,12 +87,11 @@ export default function DirectoryAddUpdate() {
             // setDescEng("");
             // setDescOther("");
             setReqReason("update");
-
-            setLoadingCoopData(false);
         } catch (error) {
             console.log(error);
             setErrors(`Error: ${error.message}`)
         }
+        setLoadingCoopData(false);
     };
 
 
