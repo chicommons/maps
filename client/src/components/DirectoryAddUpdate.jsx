@@ -72,7 +72,7 @@ export default function DirectoryAddUpdate() {
             setWebsites(coopResults.web_site ? coopResults.web_site : "");
             setContactEmail(coopResults.email ? coopResults.email : "");
             setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
-            setEntityTypes([coopResults.types[0]] ? [coopResults.types[0].map(type => type.name)] : []);
+            setEntityTypes([coopResults.types[0]] ? [coopResults.types.map(type => type.name)] : []);
             setReqReason("update");
         } catch (error) {
             console.error(error);
