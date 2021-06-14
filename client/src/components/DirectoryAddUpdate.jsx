@@ -54,7 +54,6 @@ export default function DirectoryAddUpdate() {
     const { id } = useParams();
 
     const fetchCoopForUpdate = async () => {
-        console.log(id);
         setLoadingCoopData(true);
 
         try {
@@ -63,35 +62,24 @@ export default function DirectoryAddUpdate() {
                 throw Error("Cannot access requested entity.")
             }
             const coopResults = await res.json();
-            console.log(coopResults);
 
             setCoopName(coopResults.name ?coopResults.name : "");
             setStreet(coopResults.addresses[0].formatted ? coopResults.addresses[0].formatted : "");
             setCity(coopResults.addresses[0].locality.name ? coopResults.addresses[0].locality.name : "");
             setState(coopResults.addresses[0].locality.state.code ? coopResults.addresses[0].locality.state.code : "");
             setZip(coopResults.addresses[0].locality.postal_code ? coopResults.addresses[0].locality.postal_code : "");
-            // setCounty();
             setCountry(coopResults.addresses[0].locality.state.country.code ? coopResults.addresses[0].locality.state.country.code : "");
-            // setAddressPublic();
             setWebsites(coopResults.web_site ? coopResults.web_site : "");
-            // setContactName();
-            // setContactNamePublic();
             setContactEmail(coopResults.email ? coopResults.email : "");
-            // setContactEmailPublic();
             setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
-            // setContactPhonePublic();
-            // Need to figure out how entity types look in data if there are multiple
-            setEntityTypes([coopResults.types[0]] ? [coopResults.types[0].name] : []);
-            // setScope();
-            // setTags([]);
-            // setDescEng("");
-            // setDescOther("");
+            setEntityTypes([coopResults.types[0]] ? [coopResults.types[0].map(type => type.name)] : []);
             setReqReason("update");
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setErrors(`Error: ${error.message}`)
+        } finally {
+            setLoadingCoopData(false);
         }
-        setLoadingCoopData(false);
     };
 
 
