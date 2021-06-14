@@ -54,7 +54,8 @@ class CoopManager(models.Manager):
         enabled=None, 
         city=None, 
         zip=None, 
-        street=None
+        street=None,
+        state_abbrev=None
     ):
         """
         Lookup coops by varying criteria.
@@ -72,6 +73,10 @@ class CoopManager(models.Manager):
             q &= Q(addresses__locality__name__iexact=city)
         if zip != None:
             q &= Q(addresses__locality__postal_code=zip)
+        if state_abbrev != None:
+            q &= Q(addresses__locality__state__code=state_abbrev)
+            q &= Q(addresses__locality__state__country__code="US")
+               
         queryset = Coop.objects.filter(q)
         print(queryset.query)
         return queryset

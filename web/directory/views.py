@@ -113,6 +113,7 @@ class CoopList(APIView):
             city = request.GET.get("city", None)
             zip = request.GET.get("zip", None)
             street = request.GET.get("street", None)
+            state = request.GET.get("state", None)
             coop_type = request.GET.get("coop_type", None)
 
             coops = Coop.objects.find(
@@ -121,6 +122,7 @@ class CoopList(APIView):
                 street=street,
                 city=city,
                 zip=zip,
+                state_abbrev=state,
                 coop_type=coop_type
             )
         serializer = CoopSearchSerializer(coops, many=True)
