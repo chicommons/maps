@@ -225,7 +225,7 @@ export default function DirectoryAddUpdate() {
             <form onSubmit={submitForm} className="container-fluid" id="directory-add-update" noValidate>
                 <FormGroup>
                     <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-6 col-lg-4 col-xl-3">
                             <Input 
                                 className={"required"}
                                 type={"text"}
@@ -237,9 +237,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-6 col-lg-3 col-xl-3">
                             <Input 
                                 type={"text"}
                                 title={"Street Address"}
@@ -250,7 +248,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-4 col-lg-3 col-xl-2">
                             <Input 
                                 type={"text"}
                                 title={"City"}
@@ -261,7 +259,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-3 col-lg-2 col-xl-2">
                             <Province
                                 title={"State"}
                                 name={"state"}
@@ -271,7 +269,7 @@ export default function DirectoryAddUpdate() {
                                 handleChange={(e) => setState(e.target.value)}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-2 col-lg-2 col-xl-2">
                             <Input 
                                 type={"text"}
                                 title={"Zip Code"}
@@ -282,9 +280,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-3 col-lg-2 col-xl-3">
                             <Input 
                                 type={"text"}
                                 title={"County"}
@@ -295,7 +291,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-3">
+                        <div className="form-group col-md-4 col-lg-2 col-xl-3">
                             <Country
                                 title={"Country"}
                                 name={"country"}
@@ -306,7 +302,7 @@ export default function DirectoryAddUpdate() {
                                 handleChange={(e) => setCountry(e.target.value)}
                             />{" "}
                         </div>
-                        <div className="form-group col-md-6">
+                        <div className="form-group col-md-8 col-lg-6 col-xl-5">
                             <DropDownInput 
                                 type={"select"}
                                 as={"select"}
@@ -318,8 +314,6 @@ export default function DirectoryAddUpdate() {
                                 options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                             />
                         </div>
-                    </div>
-                    <div className="form-row">
                         <div className="form-group col-md-12">
                             <Input 
                                 className={"required"}
@@ -332,8 +326,6 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
                         <div className="form-group col-md-6">
                             <Input 
                                 className={"required"}
@@ -359,9 +351,7 @@ export default function DirectoryAddUpdate() {
                                 options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                             />
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
+                        <div className="form-group col-md-4 col-lg-4">
                             <Input 
                                 type={"email"}
                                 title={"Contact Email Address"}
@@ -372,8 +362,8 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        {contactEmail && (
-                            <div className="form-group col-md-6">
+                        {contactEmail ? (
+                            <div className="form-group col-md-6 col-lg-6">
                                 <DropDownInput 
                                     className={"required"}
                                     type={"select"}
@@ -386,10 +376,8 @@ export default function DirectoryAddUpdate() {
                                     options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                                 />
                             </div>
-                        )}
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
+                        ) : <div className="form-group col-md-6 col-lg-6"></div>}
+                        <div className="form-group col-md-4 col-lg-4">
                             <Input 
                                 type={"tel"}
                                 title={"Contact Phone Number"}
@@ -400,8 +388,8 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                        {contactPhone && (
-                            <div className="form-group col-md-6">
+                        {contactPhone ? (
+                            <div className="form-group col-md-8 col-lg-6">
                                 <DropDownInput 
                                     className={"required"}
                                     type={"select"}
@@ -414,11 +402,8 @@ export default function DirectoryAddUpdate() {
                                     options={[{"id":"yes","name":"Yes"}, {"id":"no", "name":"No"}]}
                                 />
                             </div>
-                        )}
-                    </div>
-                    {/* Need to figure out design with larger list */}
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
+                        ) : <div className="form-group col-md-8 col-lg-6"></div>}
+                        <div className="form-group col-md-6 col-lg-6">
                             <DropDownInput
                                 type={"select"}
                                 as={"select"}
@@ -430,9 +415,7 @@ export default function DirectoryAddUpdate() {
                                 options={entities}
                             />
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-6 col-lg-4">
                             <DropDownInput 
                                 type={"select"}
                                 as={"select"}
@@ -444,9 +427,7 @@ export default function DirectoryAddUpdate() {
                                 options={[{"id":"local","name":"Local"}, {"id":"regional", "name":"Regional"},{"id":"national","name":"National"},{"id":"international", "name":"International"}]}                            
                             />
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-12 col-lg-12 col-xl-10">
                             <Input 
                                 type={"text"}
                                 title={"Add description tags here, separated by commas"}
@@ -457,9 +438,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-12 col-lg-6 col-xl-4">
                             <TextAreaInput 
                                 type={"textarea"}
                                 as={"textarea"}
@@ -471,9 +450,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
+                        <div className="form-group col-md-12 col-lg-6 col-xl-4">
                             <TextAreaInput 
                                 type={"textarea"}
                                 as={"textarea"}
@@ -485,19 +462,7 @@ export default function DirectoryAddUpdate() {
                                 errors={errors}
                             />{" "}
                         </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-12">
-                            {/* <TextAreaInput 
-                                type={"textarea"}
-                                as={"textarea"}
-                                title={"Please list your reason for submitting this request? Is this an addition or an update?"}
-                                name={"req_reason"}
-                                value={reqReason}
-                                placeholder={"Enter reason for request."}
-                                handleChange={(e) => setReqReason(e.target.value)}
-                                errors={errors}
-                            />{" "} */}
+                        <div className="form-group col-md-8 col-lg-8 col-xl-4">
                             <DropDownInput 
                                 className={"required"}
                                 type={"select"}
@@ -511,8 +476,8 @@ export default function DirectoryAddUpdate() {
                             />
                         </div>
                     </div>
-                    <div className="form-group">
-                        <input className="submit" type="submit" value="SEND ADDITION/UPDATE" />
+                    <div className="form-group form-row justify-content-center">
+                        <input className="submit col-sm-10 col-md-8 col-lg-6" type="submit" value="SEND ADDITION/UPDATE" />
                     </div>
                 </FormGroup>
             </form>
