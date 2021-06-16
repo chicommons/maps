@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'
 // import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
@@ -20,9 +21,7 @@ export default function DirectoryAddUpdate() {
     const [street, setStreet] = useState("");
     const [addressPublic, setAddressPublic] = useState("no");
     const [city, setCity] = useState("");
-    // Make this drop down of actual states?
     const [state, setState] = useState("IL");
-    // Should this be number?
     const [zip, setZip] = useState("");
     const [county, setCounty] = useState("");
     const [country, setCountry] = useState("US");
@@ -33,14 +32,11 @@ export default function DirectoryAddUpdate() {
     const [contactEmailPublic, setContactEmailPublic] = useState("no");
     const [contactPhone, setContactPhone] = useState("");
     const [contactPhonePublic, setContactPhonePublic] = useState("no");
-    // Need to figure out this one as well. Start as array?
     const [entityTypes, setEntityTypes] = useState([]);
     const [scope, setScope] = useState("local");
-    // Want separated by semicolons in form
     const [tags, setTags] = useState([]);
     const [descEng, setDescEng] = useState("");
     const [descOther, setDescOther] = useState("");
-    // There's a request for a "Why are you submitting this?" textbox
     const [reqReason, setReqReason] = useState("add");
 
     // Holds country and state list
@@ -51,29 +47,41 @@ export default function DirectoryAddUpdate() {
     // Validation
     const [errors, setErrors] = React.useState([]);
 
+    // While loading coop data from ID
+    const [loadingCoopData, setLoadingCoopData] = React.useState(false);
 
-    // Code for EmailJS, not using as of 4-7-21
-    // const sendEmail = (e) => {
-    //     e.preventDefault();
+    // Gets id from URL
+    const { id } = useParams();
 
-    //     emailjs
-    //         .sendForm(
-    //             "service_dpyos8k",
-    //             "template_tysvot3",
-    //             e.target,
-    //             "user_KwHJEsdCYTvaCsb6JlxXk"
-    //         )
-    //         .then(
-    //             (result) => {
-    //                 console.log("It worked!");
-    //                 console.log(result.text);
-    //             },
-    //             (error) => {
-    //                 console.error("It didn't work");
-    //                 console.error(error.text);
-    //             }
-    //         );
-    // }
+    const fetchCoopForUpdate = async () => {
+        setLoadingCoopData(true);
+
+        try {
+            const res = await fetch(REACT_APP_PROXY + `/coops/${id}/`);
+            if(!res.ok) {
+                throw Error("Cannot access requested entity.")
+            }
+            const coopResults = await res.json();
+
+            setCoopName(coopResults.name ?coopResults.name : "");
+            setStreet(coopResults.addresses[0].formatted ? coopResults.addresses[0].formatted : "");
+            setCity(coopResults.addresses[0].locality.name ? coopResults.addresses[0].locality.name : "");
+            setState(coopResults.addresses[0].locality.state.code ? coopResults.addresses[0].locality.state.code : "");
+            setZip(coopResults.addresses[0].locality.postal_code ? coopResults.addresses[0].locality.postal_code : "");
+            setCountry(coopResults.addresses[0].locality.state.country.code ? coopResults.addresses[0].locality.state.country.code : "");
+            setWebsites(coopResults.web_site ? coopResults.web_site : "");
+            setContactEmail(coopResults.email ? coopResults.email : "");
+            setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
+            setEntityTypes([coopResults.types[0]] ? [coopResults.types.map(type => type.name)] : []);
+            setReqReason("update");
+        } catch (error) {
+            console.error(error);
+            setErrors(`Error: ${error.message}`)
+        } finally {
+            setLoadingCoopData(false);
+        }
+    };
+
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -214,6 +222,10 @@ export default function DirectoryAddUpdate() {
           });
           setEntityTypeList(initialEntityTypes);
         });
+
+        if (id) {
+            fetchCoopForUpdate();
+        }
       }, []);
 
     return (
@@ -221,6 +233,8 @@ export default function DirectoryAddUpdate() {
         <h1 className="form__title">Directory Form</h1>
         <h2 className="form__desc">Use this form to add or request the update of a solidarity entity or cooperative. We'll contact you to confirm the information</h2>
         <h2 className="form__desc"><span style={{color: "red"}}>*</span> = required</h2>
+        { errors && <strong className="form__error-message">{errors}</strong>}
+        { loadingCoopData && <strong>Loading entity data...</strong>}
         <div className="form">  
             <form onSubmit={submitForm} className="container-fluid" id="directory-add-update" noValidate>
                 <FormGroup>

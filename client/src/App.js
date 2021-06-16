@@ -42,7 +42,11 @@ function App() {
                 <Route path="/search" component={Search} />
                 <Route path="/nocoords" component={NoCoordsSearch} />
                 <Route
-                  path="/directory-additions-updates"
+                  path="/directory-additions-updates/:id"
+                  component={DirectoryAddUpdate}
+                />
+                <Route
+                  path="/directory-additions-updates/"
                   component={DirectoryAddUpdate}
                 />
                 <Route path="/:coop_id/people" component={AddPerson} />
