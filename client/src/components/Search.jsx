@@ -170,6 +170,15 @@ const Search = (props) => {
     buildSearchUrl(coopSearchSettings, setSearchUrl);
   };
 
+  const formatAddress = obj => {
+    const streetAdd = obj.formatted;
+    const cityName = obj.locality.name;
+    const stateCode = obj.locality.state.code;
+    const zip = obj.locality.postal_code;
+
+    return (streetAdd + ', ' + cityName + ', ' + stateCode + ' ' + zip);
+  }
+
 	// same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
@@ -179,7 +188,11 @@ const Search = (props) => {
           <ListGroup variant="flush">
             {searchResults.map((item) => (
               <ListGroupItem key={item.id} value={item.name}>
-                {item.name}
+                <div className="float-left">
+                  {item.name}
+                  <br />
+                  {formatAddress(item.addresses[0])}
+                </div>
                 <span className="float-right">
                   <Link to={"/edit/" + item.id + "/home"}>
                     <PencilSquare color="royalblue" size={26} />
