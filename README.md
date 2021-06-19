@@ -80,7 +80,7 @@ cd web
 . venv/bin/activate
 python manage.py runserver
 ```
-
+ 
 This starts the Python app on port 8000 (http://localhost:8000).  
 
 ### React app
