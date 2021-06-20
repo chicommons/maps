@@ -194,7 +194,7 @@ const Search = (props) => {
                   {formatAddress(item.addresses[0])}
                 </div>
                 <span className="float-right">
-                  <Link to={"/edit/" + item.id + "/home"}>
+                  <Link to={"/directory-additions-updates/" + item.id }>
                     <PencilSquare color="royalblue" size={26} />
                   </Link>
                 </span>
