@@ -41,7 +41,7 @@ class NavBar extends Component {
 		return (
 			<ul className="nav">
 				<li className="nav-link">
-					<NavLink className="nav-link" to="/add">
+					<NavLink className="nav-link" to="/directory-additions-updates">
 						Add
 					</NavLink>
 				</li>
@@ -63,7 +63,7 @@ class NavBar extends Component {
 		return (
 			<ul className="hamburgerDropDown" onClick={this.handleSelect}>
 				<li className="nav-link">
-					<NavLink to="/add">Add</NavLink>
+					<NavLink to="/directory-additions-updates">Add</NavLink>
 				</li>
 				<li className="nav-link">
 					<NavLink to="/search" className="nav-link">
