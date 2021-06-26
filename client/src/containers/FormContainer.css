@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@300&display=swap");
 
 .form {
-  font-family: "Alegreya Sans", sans-serif;
+  font-family: "Alegreya Sans", Arial, sans-serif;
   margin-top: 2rem;
 }
 
@@ -25,7 +25,7 @@
   /* margin-right: calc(-50vw / 2 + 450px / 2); */
 	margin-top: -2.5em;
   margin-bottom: -2.5em;
-	background: #ffffff;
+	background: #FFFCF5;
 	box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 	padding: 40px 55px 45px 55px;
 	border-radius: 15px;
@@ -61,10 +61,10 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #124E54;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid rgb(206, 212, 218);
+  border: 1px solid #C7E4E7;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -76,7 +76,7 @@
 .form input:focus,
 .form select:focus,
 .form textarea:focus {
-  border-color: #167bff;
+  border-color: #2295A2;
   box-shadow: none;
   outline: 0;
 }
