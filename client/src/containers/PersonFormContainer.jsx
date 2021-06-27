@@ -147,8 +147,8 @@ const PersonFormContainer = (props) => {
   /* This life cycle hook gets executed when the component mounts */
 
   return (
-    <div>
-      <div>{person.coops[0]?.name}</div>
+    <div className="form">
+      <h5>{person.coops[0]?.name}</h5>
       <form className="container-fluid" onSubmit={handleFormSubmit}>
         <FormGroup controlId="formBasicText">
           <Input
