@@ -85,15 +85,6 @@ def save_to_sheet_from_form(request):
         return Response(post_data, status=status.HTTP_201_CREATED)
     else:
         return Response(valid_ser.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-
-    print("request data ...")
-    print(request.data)
-    
-
-    coops = Coop.objects.find_wo_coords()
-    serializer = CoopSearchSerializer(coops, many=True)
-    return Response(serializer.data)
 
 class CoopList(APIView):
     """
@@ -235,21 +226,6 @@ class PersonDetail(APIView):
         person = self.get_object(pk)
         person.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class PredefinedTypeList(APIView):
-    """
-    List coop types that should appear in the form where 
-    potential coops submit themselves for consideration to be 
-    included in the directory 
-    """
-    def get(self, request, format=None):
-        return Response([
-            {"id": "Community Garden", "name": "Community Garden"},
-            {"id": "Social Workshop", "name": "Social Workshop"},
-            {"id": "Credit Union", "name": "Credit Union"}
-        ])
-
 
 class CoopTypeList(APIView):
     """
