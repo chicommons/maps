@@ -9,11 +9,10 @@
 }
 
 .nav {
-	background-color: #fffcf5;
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Ubuntu', Arial, sans-serif;
 }
 .hamburgerDropDown {
-	background-color: black;
+	background-color: #124E54;
 	border: 1px solid bisque;
 	position: absolute;
 	top: 50px;

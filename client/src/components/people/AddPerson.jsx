@@ -63,7 +63,7 @@ const AddPerson = (props) => {
 
   return (
     <>
-      <h5>Add Person Info</h5>
+      <h2>Add Person Info</h2>
       <PersonFormContainer person={person} />
     </>
   );
