@@ -232,7 +232,7 @@ class CoopTypeList(APIView):
     List all coop types 
     """
     def get(self, request, format=None):
-        coop_types = CoopType.objects.all()
+        coop_types = CoopType.objects.all().order_by(Lower('name'))
         serializer = CoopTypeSerializer(coop_types, many=True)
         return Response(serializer.data)
 
