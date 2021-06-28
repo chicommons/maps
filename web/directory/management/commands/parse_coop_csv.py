@@ -11,7 +11,6 @@ from commons.util.case_insensitive_set import CaseInsensitiveSet
 from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
-
   
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -94,8 +93,7 @@ class Command(BaseCommand):
                     print("    types:")
                     for entry in types:
                         print("    - ['", entry, "']", sep='') 
-                    print("    addresses: [", address_pk, "]")
-                    #print("    - [", address_pk, "]")                    
+                    print("    addresses: [", address_pk, "]")                   
                     print("    enabled:",enabled)
                     if phone:
                         print("    phone:",contact_phone_pk)
