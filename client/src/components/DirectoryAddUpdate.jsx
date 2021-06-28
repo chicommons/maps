@@ -111,7 +111,8 @@ export default function DirectoryAddUpdate() {
             "tags":tags.join(", "),
             "desc_english":descEng,
             "desc_other":descOther,
-            "req_reason":reqReason
+            "req_reason":reqReason,
+            "id":id
         })
         console.log(formData);
         try {
