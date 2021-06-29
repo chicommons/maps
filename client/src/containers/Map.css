@@ -10,22 +10,14 @@
     position: absolute;
     transition: all 0.3s;
     width: 85vw;
-  }
+}
   
-  /* @media only screen and (max-width: 900px) {
-    .map-container {
-      margin-left: calc(-100vw / 2 + 450px / 2);
-      margin-right: 0;
-      width: 75vw;
-    }
-  } */
-  
-  @media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
       .map-container {
         margin: -2.5em -3.5em;
         width: 100vw;
       }
-    }
+}
 
 .map-link {
     background-color: #2295a2;
