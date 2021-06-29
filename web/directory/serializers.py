@@ -347,7 +347,7 @@ class ValidateNewCoopSerializer(serializers.Serializer):
     zip=serializers.CharField()
     county=serializers.CharField(required=False, allow_blank=True)
     country=serializers.CharField()
-    websites=serializers.CharField()
+    websites=serializers.CharField(required=False, allow_blank=True)
     contact_name=serializers.CharField()
     contact_name_public=serializers.CharField()
     contact_email=serializers.CharField()
