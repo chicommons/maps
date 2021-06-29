@@ -58,7 +58,7 @@ def save_to_sheet_from_form(request):
     if valid_ser.is_valid():
         post_data = valid_ser.validated_data
         values = [
-            'ID',
+            post_data['id'] if 'id' in post_data else '',
             post_data['coop_name'],
             post_data['street'],
             post_data['address_public'],
