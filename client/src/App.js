@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Alert } from "reactstrap";
 
+import Map from "./components/Map";
 import NavBar from "./components/NavBar";
 import Add from "./components/Add";
 import Edit from "./components/Edit";
@@ -34,7 +35,7 @@ function App() {
           <div className="auth-wrapper">
             <div className="auth-inner">
               <Switch>
-                <Route exact path="/" component={Add} />
+                <Route exact path="/" component={Map} />
                 <Route path="/add" component={Add} />
                 <Route path="/edit/:id" component={Edit} />
                 <Route path="/search" component={Search} />

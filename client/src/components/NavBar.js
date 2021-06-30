@@ -41,6 +41,11 @@ class NavBar extends Component {
 		return (
 			<ul className="nav">
 				<li className="nav-link">
+					<NavLink className="nav-link" to="/">
+						Home
+					</NavLink>
+				</li>
+				<li className="nav-link">
 					<NavLink className="nav-link" to="/directory-additions-updates">
 						Add
 					</NavLink>
@@ -62,6 +67,11 @@ class NavBar extends Component {
 	displayMobileMenu = () => {
 		return (
 			<ul className="hamburgerDropDown" onClick={this.handleSelect}>
+				<li className="nav-link">
+					<NavLink className="nav-link" to="/">
+						Home
+					</NavLink>
+				</li>
 				<li className="nav-link">
 					<NavLink to="/directory-additions-updates">Add</NavLink>
 				</li>
