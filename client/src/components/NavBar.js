@@ -60,6 +60,11 @@ class NavBar extends Component {
 						Bad Location
 					</NavLink>
 				</li>
+				<li className="nav-link">
+					<a href="https://www.chicommons.coop/cooperative-map/" className="nav-link">
+						Return
+					</a>
+				</li>
 			</ul>
 		);
 	};
@@ -84,6 +89,11 @@ class NavBar extends Component {
 					<NavLink to="/nocoords" className="nav-link">
 						No Coords Search
 					</NavLink>
+				</li>
+				<li className="nav-link">
+					<a href="https://www.chicommons.coop/cooperative-map/" className="nav-link">
+						Return
+					</a>
 				</li>
 			</ul>
 		);
