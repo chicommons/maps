@@ -105,8 +105,7 @@ export default function DirectoryAddUpdate() {
             "contact_email_public":contactEmailPublic,
             "contact_phone":contactPhone,
             "contact_phone_public":contactPhonePublic,
-            // Entity types will need to be an array with .join(", ") once we can select multiple
-            // "entity_types":entityTypes,
+            "entity_types":entityTypes.join(", "),
             "scope":scope,
             "tags":tags.join(", "),
             "desc_english":descEng,
@@ -141,31 +140,6 @@ export default function DirectoryAddUpdate() {
               }
         }).then(function(data) {
             console.log("Data is ok", data);
-
-            // Resets the initial form values to clear the form
-            // setCoopName("");
-            // setStreet("");
-            // setAddressPublic("no");
-            // setCity("");
-            // setState("IL");
-            // setZip("");
-            // setCounty("");
-            // setCountry("US");
-            // setWebsites([]);
-            // setContactName("");
-            // setContactNamePublic("no");
-            // setContactEmail("");
-            // setContactEmailPublic("no");
-            // setContactPhone("");
-            // setContactPhonePublic("no");
-            // setEntityTypes([]);
-            // setScope("local");
-            // setTags([]);
-            // setDescEng("");
-            // setDescOther("");
-            // setReqReason("");
-
-            // Instead maybe just refresh, so that the error messages go away too?
             window.location.reload();
         }).catch(err => {
             console.log("Errors ...");
