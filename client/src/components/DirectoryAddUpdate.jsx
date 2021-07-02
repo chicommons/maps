@@ -221,7 +221,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Cooperative/Entity Name"}
                                 name={"coop_name"}
                                 value={coopName}
-                                placeholder={"Enter cooperative/entity name"}
+                                placeholder={"Cooperative/entity name"}
                                 handleChange={(e) => setCoopName(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -232,7 +232,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Street Address"}
                                 name={"street"}
                                 value={street}
-                                placeholder={"Enter address street"}
+                                placeholder={"Address street"}
                                 handleChange={(e) => setStreet(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -243,7 +243,7 @@ export default function DirectoryAddUpdate() {
                                 title={"City"}
                                 name={"city"}
                                 value={city}
-                                placeholder={"Enter address city"}
+                                placeholder={"Address city"}
                                 handleChange={(e) => setCity(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -264,7 +264,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Zip Code"}
                                 name={"zip"}
                                 value={zip}
-                                placeholder={"Enter zip code"}
+                                placeholder={"Zip code"}
                                 handleChange={(e) => setZip(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -275,7 +275,7 @@ export default function DirectoryAddUpdate() {
                                 title={"County"}
                                 name={"county"}
                                 value={county}
-                                placeholder={"Enter county"}
+                                placeholder={"County"}
                                 handleChange={(e) => setCounty(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -310,7 +310,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Website or Social Media Page (separate multiple links with a comma)"}
                                 name={"websites"}
                                 value={websites}
-                                placeholder={"Enter website or social media pages"}
+                                placeholder={"Website or social media pages"}
                                 handleChange={(e) => setWebsites(e.target.value.split(","))}
                                 errors={errors}
                             />{" "}
@@ -322,7 +322,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Cooperative/Entity Contact Person Name"}
                                 name={"contact_name"}
                                 value={contactName}
-                                placeholder={"Enter contact name"}
+                                placeholder={"Contact name"}
                                 handleChange={(e) => setContactName(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -346,7 +346,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Contact Email Address"}
                                 name={"contact_email"}
                                 value={contactEmail}
-                                placeholder={"Enter contact email"}
+                                placeholder={"Contact email"}
                                 handleChange={(e) => setContactEmail(e.target.value)}
                                 errors={errors}
                             />{" "}
@@ -372,7 +372,7 @@ export default function DirectoryAddUpdate() {
                                 title={"Contact Phone Number"}
                                 name={"contact_phone"}
                                 value={contactPhone}
-                                placeholder={"Enter contact phone"}
+                                placeholder={"Contact phone"}
                                 handleChange={(e) => setContactPhone(e.target.value)}
                                 errors={errors}
                             />{" "}
