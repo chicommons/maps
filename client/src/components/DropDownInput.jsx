@@ -21,9 +21,11 @@ const DropDownInput = (props) => {
 						"multiple"
 					)}
 					>
-                    <option value="" disabled>
-                            Select
-                    </option>
+					{!props.multiple && (
+						<option value="" disabled>
+							Select
+						</option>
+					)}
                     {
                         props.options.map((option) => {
                             return (<option key={option.id} value={option.id}>{option.name}</option>)
