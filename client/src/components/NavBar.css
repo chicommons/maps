@@ -1,33 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
 
 .fixed-bottom,
 .fixed-top {
-	position: initial;
-	right: 0;
-	left: 0;
-	z-index: 1030;
+  position: initial;
+  right: 0;
+  left: 0;
+  z-index: 1030;
 }
 
 .nav {
-	font-family: 'Ubuntu', Arial, sans-serif;
+  font-family: "Ubuntu", Arial, sans-serif;
 }
 .hamburgerDropDown {
-	background-color: #124E54;
-	border: 1px solid bisque;
-	position: absolute;
-	top: 50px;
-	right: -1rem;
-	z-index: 1000;
+  background-color: #124e54;
+  border: 1px solid bisque;
+  position: absolute;
+  top: 50px;
+  right: -1rem;
+  z-index: 1000;
 }
 
 ul.hamburgerDropDown {
-	padding: 10px;
+  padding: 10px;
 }
 
 .navbar div {
-	display: inline-block;
+  display: inline-block;
 }
 
 .nav-link {
-	color: #2295a2;
+  color: #2295a2;
 }

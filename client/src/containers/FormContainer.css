@@ -18,19 +18,18 @@
   color: red;
 }
 
-
 .directory-form {
   color: #124e54;
   margin-left: calc(-85vw / 2 + 450px / 2);
   /* margin-right: calc(-50vw / 2 + 450px / 2); */
-	margin-top: -2.5em;
+  margin-top: -2.5em;
   margin-bottom: -2.5em;
-	background: #FFFCF5;
-	box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-	padding: 40px 55px 45px 55px;
-	border-radius: 15px;
+  background: #fffcf5;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
   position: absolute;
-	transition: all 0.3s;
+  transition: all 0.3s;
   width: 75vw;
   max-width: 2000px;
 }
@@ -44,11 +43,11 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .directory-form {
-      margin: -2.5em -3.5em;
-      width: 100vw;
-    }
+  .directory-form {
+    margin: -2.5em -3.5em;
+    width: 100vw;
   }
+}
 
 /* Styles copied from Bootstrap */
 .form input,
@@ -61,10 +60,10 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #124E54;
+  color: #124e54;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #C7E4E7;
+  border: 1px solid #c7e4e7;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -76,7 +75,7 @@
 .form input:focus,
 .form select:focus,
 .form textarea:focus {
-  border-color: #2295A2;
+  border-color: #2295a2;
   box-shadow: none;
   outline: 0;
 }

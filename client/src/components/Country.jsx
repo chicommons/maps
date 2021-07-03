@@ -14,7 +14,14 @@ class Country extends React.Component {
 
     return (
       <div className="form-group">
-        <label className={this.props.className} htmlFor={this.props.name} style={inputStyle}> {this.props.title} </label>
+        <label
+          className={this.props.className}
+          htmlFor={this.props.name}
+          style={inputStyle}
+        >
+          {" "}
+          {this.props.title}{" "}
+        </label>
         <select
           id={this.props.name}
           name={this.props.name}
@@ -32,7 +39,7 @@ class Country extends React.Component {
   }
 }
 const inputStyle = {
-  color: "#124E54"
-  }
+  color: "#124E54",
+};
 
 export default Country;

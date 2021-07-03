@@ -71,7 +71,7 @@ const Search = (props) => {
   };
 
   const debouncedHandleChange = _.debounce(handleChange, 100);
-    return (
+  return (
     <div className="searchForm">
       <div>
         {renderSearchResults()}

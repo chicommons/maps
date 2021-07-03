@@ -13,7 +13,7 @@ import Button from "../components/Button";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 import { useAlert } from "../components/AlertProvider";
 
-import './FormContainer.css'
+import "./FormContainer.css";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -126,14 +126,13 @@ const FormContainer = (props) => {
     return coopCopy;
   };
 
-  const[checked, setChecked]=useState(true)
+  const [checked, setChecked] = useState(true);
 
   const handleClick = (e) => {
-    props.coop.enabled=!props.coop.enabled
+    props.coop.enabled = !props.coop.enabled;
 
-    setChecked(!checked)
-
-  }
+    setChecked(!checked);
+  };
 
   /**
    * Verify phone field conforms to US phone (10 digits)
@@ -213,7 +212,7 @@ const FormContainer = (props) => {
   if (coopTypes && !coopTypes.length) {
     return null;
   }
-  console.log(props.coop.enabled)
+  console.log(props.coop.enabled);
   return (
     <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>
@@ -341,9 +340,17 @@ const FormContainer = (props) => {
             style={inputStyle}
           />{" "}
           {/* Web site of the cooperative */}
-          <div style={{width: '100%'}}>
-          <input type="checkbox" id="enabled" style={{margin: '.5rem'}} onClick={e=>{handleClick(e)}} checked={checked}/>
-          <label for="enabled">Show on Map</label>
+          <div style={{ width: "100%" }}>
+            <input
+              type="checkbox"
+              id="enabled"
+              style={{ margin: ".5rem" }}
+              onClick={(e) => {
+                handleClick(e);
+              }}
+              checked={checked}
+            />
+            <label for="enabled">Show on Map</label>
           </div>
           <Button
             action={handleFormSubmit}
@@ -360,7 +367,6 @@ const FormContainer = (props) => {
             style={buttonStyle}
           />{" "}
           {/* Clear the form */}
-           
         </FormGroup>
       </form>
     </div>
@@ -369,11 +375,11 @@ const FormContainer = (props) => {
 
 const buttonStyle = {
   margin: "10px 10px 10px 10px",
-  color: "#F6FBFB", 
-  backgroundColor: "#2295A2"
+  color: "#F6FBFB",
+  backgroundColor: "#2295A2",
 };
 const inputStyle = {
-  color: "#124E54"
-  }
+  color: "#124E54",
+};
 
 export default FormContainer;
