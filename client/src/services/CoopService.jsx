@@ -56,6 +56,37 @@ class CoopService {
         });
       });
   }
+
+  saveToGoogleSheet(body, setErrors, callback) {
+    // Make a copy of the object in order to remove unneeded properties
+    const url = body.id
+      ? REACT_APP_PROXY + "/save_to_sheet_from_form/" + body.id + "/"
+      : REACT_APP_PROXY + "/save_to_sheet_from_form/";
+    const method = body.id ? "PUT" : "POST";
+    fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      })
+      .then((data) => {
+        callback(data);
+      })
+      .catch((err) => {
+        err.text().then((errorMessage) => {
+          setErrors(JSON.parse(errorMessage));
+        });
+      });
+  }
 }
 
 export default new CoopService();

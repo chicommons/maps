@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 // import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
+import CoopService from "../services/CoopService";
 import Input from "../components/Input";
 import DropDownInput from "../components/DropDownInput";
 import TextAreaInput from "../components/TextAreaInput";
@@ -111,7 +112,7 @@ export default function DirectoryAddUpdate() {
     console.log("form submitted!");
     console.log(coopName);
 
-    let formData = JSON.stringify({
+    let formData = {
       coop_name: coopName,
       street: street,
       address_public: addressPublic,
@@ -134,51 +135,19 @@ export default function DirectoryAddUpdate() {
       desc_other: descOther,
       req_reason: reqReason,
       id: id,
-    });
-    console.log(formData);
-    try {
-      JSON.parse(formData);
-    } catch (e) {
-      console.log("not JSON!");
-      return false;
-    }
-    console.log("yes its json!");
+    };
 
-    fetch(REACT_APP_PROXY + "/save_to_sheet_from_form/", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
+    CoopService.saveToGoogleSheet(
+      formData,
+      (errors) => {
+        //setButtonDisabled(false);
+        setErrors(errors);
       },
-      body: formData,
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Response:", response);
-          return response.json();
-        } else {
-          console.log("throwing response ...");
-          console.log("****");
-          throw response;
-        }
-      })
-      .then(function (data) {
-        console.log("Data is ok", data);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log("Errors ...");
-        console.log("------------");
-        err.json().then((errorMessage) => {
-          try {
-            JSON.parse(errorMessage);
-            setErrors(JSON.parse(errorMessage));
-          } catch (e) {
-            console.log(e);
-            console.log(errorMessage);
-            return;
-          }
-        });
-      });
+      function (data) {
+        const result = data;
+        window.scrollTo(0, 0);
+      }
+    );
   };
 
   useEffect(() => {
@@ -233,7 +202,11 @@ export default function DirectoryAddUpdate() {
       <h2 className="form__desc">
         <span style={{ color: "red" }}>*</span> = required
       </h2>
-      {errors && <strong className="form__error-message">{errors}</strong>}
+      {errors && (
+        <strong className="form__error-message">
+          {JSON.stringify(errors)}
+        </strong>
+      )}
       {loadingCoopData && <strong>Loading entity data...</strong>}
       <div className="form">
         <form
