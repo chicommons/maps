@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+.navbar-light {
+  font-family: "Alegreya Sans", Arial, sans-serif;
+  font-weight: 400;
+  border-bottom: 1px solid #eaeaea;
+}
 
 .fixed-bottom,
 .fixed-top {
@@ -8,9 +12,6 @@
   z-index: 1030;
 }
 
-.nav {
-  font-family: "Ubuntu", Arial, sans-serif;
-}
 .hamburgerDropDown {
   background-color: #124e54;
   border: 1px solid bisque;
@@ -30,4 +31,14 @@ ul.hamburgerDropDown {
 
 .nav-link {
   color: #2295a2;
+  padding: 0;
+}
+
+.navbar ul {
+  justify-content: space-between;
+}
+
+.navbar img {
+  max-width: 100%;
+  height: auto;
 }

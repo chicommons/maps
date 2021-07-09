@@ -1,7 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@300&display=swap");
-
 .form {
-  font-family: "Alegreya Sans", Arial, sans-serif;
   margin-top: 2rem;
 }
 
@@ -20,17 +17,8 @@
 
 .directory-form {
   color: #124e54;
-  margin-left: calc(-85vw / 2 + 450px / 2);
-  /* margin-right: calc(-50vw / 2 + 450px / 2); */
-  margin-top: -2.5em;
-  margin-bottom: -2.5em;
   background: #fffcf5;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  position: absolute;
   transition: all 0.3s;
-  width: 75vw;
   max-width: 2000px;
 }
 
@@ -61,7 +49,7 @@
   font-weight: 400;
   line-height: 1.5;
   color: #124e54;
-  background-color: #fff;
+  background-color: #f6fbfb;
   background-clip: padding-box;
   border: 1px solid #c7e4e7;
   border-radius: 0.25rem;
