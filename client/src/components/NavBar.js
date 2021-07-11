@@ -56,11 +56,6 @@ class NavBar extends Component {
           </NavLink>
         </li>
         <li className="nav-link">
-          <NavLink to="/nocoords" className="nav-link">
-            Bad Location
-          </NavLink>
-        </li>
-        <li className="nav-link">
           <a
             href="https://www.chicommons.coop/cooperative-map/"
             className="nav-link"
