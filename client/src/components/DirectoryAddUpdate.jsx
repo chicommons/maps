@@ -45,7 +45,10 @@ export default function DirectoryAddUpdate() {
   const [entities, setEntityTypeList] = React.useState([]);
 
   // Validation
-  const [errors, setErrors] = React.useState([]);
+  const [errors, setErrors] = React.useState();
+
+  // Errors when loading already existing entity
+  const [loadErrors, setLoadErrors] = React.useState("");
 
   // While loading coop data from ID
   const [loadingCoopData, setLoadingCoopData] = React.useState(false);
@@ -100,7 +103,7 @@ export default function DirectoryAddUpdate() {
       setReqReason("update");
     } catch (error) {
       console.error(error);
-      setErrors(`Error: ${error.message}`);
+      setLoadErrors(`Error: ${error.message}`);
     } finally {
       setLoadingCoopData(false);
     }
@@ -202,9 +205,9 @@ export default function DirectoryAddUpdate() {
       <h2 className="form__desc">
         <span style={{ color: "red" }}>*</span> = required
       </h2>
-      {errors && (
+      {loadErrors && (
         <strong className="form__error-message">
-          {JSON.stringify(errors)}
+          {JSON.stringify(loadErrors)}
         </strong>
       )}
       {loadingCoopData && <strong>Loading entity data...</strong>}
@@ -507,6 +510,11 @@ export default function DirectoryAddUpdate() {
                 value="SEND ADDITION/UPDATE"
               />
             </div>
+            {errors && (
+              <strong className="form__error-message">
+                Please correct the errors above and then resubmit.
+              </strong>
+            )}
           </FormGroup>
         </form>
       </div>
