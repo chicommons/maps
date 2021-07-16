@@ -1,5 +1,5 @@
 import React from "react";
-import "../containers/Map.css";
+import "../containers/MapContainer.css";
 
 export default function Home() {
   return (

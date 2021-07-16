@@ -1,50 +1,7 @@
 .map-container {
-  color: #124e54;
-  margin-left: calc(-95vw / 2 + 450px / 2);
-  margin-top: -2.5em;
-  margin-bottom: -2.5em;
-  background: #fffcf5;
-  /* box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2); */
-  padding: 40px 55px 45px 55px;
-  /* border-radius: 15px; */
-  position: absolute;
+  height: calc(100vh - 10.5rem);
+  margin-bottom: 5em; 
+  position: relative;
   transition: all 0.3s;
-  width: 85vw;
-}
-
-/* @media only screen and (max-width: 900px) {
-    .map-container {
-      margin-left: calc(-100vw / 2 + 450px / 2);
-      margin-right: 0;
-      width: 75vw;
-    }
-  } */
-
-@media only screen and (max-width: 600px) {
-  .map-container {
-    margin: -2.5em -3.5em;
-    width: 100vw;
-  }
-}
-
-.map-link {
-  background-color: #2295a2;
-  border-radius: 0.25rem;
-  color: #f6fbfb;
-  display: block;
-  margin-top: 1rem;
-  padding: 0.375rem 0.75rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  text-align: center;
   width: 100%;
-}
-
-.map-link:hover,
-.map-link:active {
-  color: #f6fbfb;
-}
-
-.map-link:focus {
-  border-color: #0062cc;
-  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
