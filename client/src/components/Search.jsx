@@ -229,110 +229,116 @@ const Search = (props) => {
       {/* FormGroup logic from FormContainer.jsx */}
       <FormGroup controlId="formBasicText">
         {/* FormLabel and FormControl logic from Input.jsx */}
-        <div className="form-group">
-          <FormLabel class="formInputStyle">Name</FormLabel>
-          <FormControl
-            class="form-control"
-            id={"name"}
-            name={"name"}
-            value={coopSearchSettings.name}
-            placeholder="Enter cooperative name"
-            onChange={handleInputChange}
-          />{" "}
+        <div className="form-row">
+          <div className="form-group col-md-6 col-lg-6 col-xl-6">
+            <FormLabel class="formInputStyle">Name</FormLabel>
+            <FormControl
+              class="form-control"
+              id={"name"}
+              name={"name"}
+              value={coopSearchSettings.name}
+              placeholder="Enter cooperative name"
+              onChange={handleInputChange}
+            />{" "}
+          </div>
+          <div className="form-group col-md-6 col-lg-6 col-xl-6">
+            <label class="formInputStyle">Coop Type</label>
+            <select
+              id={"type"}
+              name={"type"}
+              value={coopSearchSettings.type}
+              onChange={handleInputChange}
+              className="form-control"
+            >
+              <option value="" placeholder="Select Coop Type" selected></option>
+              {coopTypes.map((coopType) => (
+                <option key={coopType.id} value={coopType.name}>
+                  {coopType.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="form-group">
-          <label class="formInputStyle">Coop Type</label>
-          <select
-            id={"type"}
-            name={"type"}
-            value={coopSearchSettings.type}
-            onChange={handleInputChange}
-            className="form-control"
-          >
-            <option value="" placeholder="Select Coop Type" selected></option>
-            {coopTypes.map((coopType) => (
-              <option key={coopType.id} value={coopType.name}>
-                {coopType.name}
+        <div className="form-row">
+          <div className="form-group col-md-6 col-lg-6 col-xl-6">
+            <FormLabel class="formInputStyle">Street</FormLabel>
+            <FormControl
+              class="form-control"
+              id={"street"}
+              name={"street"}
+              value={coopSearchSettings.street}
+              placeholder="Enter address street"
+              onChange={handleInputChange}
+            />{" "}
+          </div>
+          <div className="form-group col-md-3 col-lg-3 col-xl-3">
+            <FormLabel class="formInputStyle">City</FormLabel>
+            <FormControl
+              class="form-control"
+              id={"city"}
+              name={"city"}
+              value={coopSearchSettings.city}
+              placeholder="Enter address city"
+              onChange={handleInputChange}
+            />{" "}
+            </div>
+          <div className="form-group col-md-3 col-lg-3 col-xl-3">
+            <FormLabel class="formInputStyle">Postal Code</FormLabel>
+            <FormControl
+              class="form-control"
+              id={"zip"}
+              name={"zip"}
+              value={coopSearchSettings.zip}
+              placeholder="Enter postal code"
+              onChange={handleInputChange}
+            />{" "}
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-3 col-lg-6 col-xl-6">
+            <FormLabel class="formInputStyle">County</FormLabel>
+            <FormControl
+              class="form-control"
+              id={"county"}
+              name={"county"}
+              value={coopSearchSettings.county}
+              placeholder="Enter county"
+              onChange={handleInputChange}
+            />{" "}
+          </div>
+          <div className="form-group col-md-3 col-lg-3 col-xl-3">
+            <Province
+              title={"State"}
+              className="formInputStyle"
+              name={"state"}
+              options={provinces}
+              value={coopSearchSettings.state}
+              placseholder={"Select state"}
+              handleChange={(e) =>
+                setCoopSearchSettings({
+                  ...coopSearchSettings,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />{" "}
+          </div>
+          <div className="form-group col-md-3 col-lg-3 col-xl-3">
+            <label class="form-label" class="formInputStyle">
+              Enabled
+            </label>
+            <select
+              name={"enabled"}
+              value={coopSearchSettings.enabled}
+              onChange={handleInputChange}
+              className="form-control"
+            >
+              <option selected value="none">
+                None Selected
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <FormLabel class="formInputStyle">Street</FormLabel>
-          <FormControl
-            class="form-control"
-            id={"street"}
-            name={"street"}
-            value={coopSearchSettings.street}
-            placeholder="Enter address street"
-            onChange={handleInputChange}
-          />{" "}
-        </div>
-        <div className="form-group">
-          <FormLabel class="formInputStyle">City</FormLabel>
-          <FormControl
-            class="form-control"
-            id={"city"}
-            name={"city"}
-            value={coopSearchSettings.city}
-            placeholder="Enter address city"
-            onChange={handleInputChange}
-          />{" "}
-        </div>
-        <div className="form-group">
-          <FormLabel class="formInputStyle">Postal Code</FormLabel>
-          <FormControl
-            class="form-control"
-            id={"zip"}
-            name={"zip"}
-            value={coopSearchSettings.zip}
-            placeholder="Enter postal code"
-            onChange={handleInputChange}
-          />{" "}
-        </div>
-        <div className="form-group">
-          <FormLabel class="formInputStyle">County</FormLabel>
-          <FormControl
-            class="form-control"
-            id={"county"}
-            name={"county"}
-            value={coopSearchSettings.county}
-            placeholder="Enter county"
-            onChange={handleInputChange}
-          />{" "}
-        </div>
-        <div>
-          <Province
-            title={"State"}
-            className="formInputStyle"
-            name={"state"}
-            options={provinces}
-            value={coopSearchSettings.state}
-            placseholder={"Select state"}
-            handleChange={(e) =>
-              setCoopSearchSettings({
-                ...coopSearchSettings,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />{" "}
-        </div>
-        <div className="form-group">
-          <label class="form-label" class="formInputStyle">
-            Enabled
-          </label>
-          <select
-            name={"enabled"}
-            value={coopSearchSettings.enabled}
-            onChange={handleInputChange}
-            className="form-control"
-          >
-            <option selected value="none">
-              None Selected
-            </option>
-            <option value="true">True</option>
-            <option value="False">False</option>
-          </select>
+              <option value="true">True</option>
+              <option value="False">False</option>
+            </select>
+          </div>
         </div>
         <Button action={handleFormSubmit} type={"primary"} title={"Submit"} />{" "}
         <div>
