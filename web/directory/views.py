@@ -74,7 +74,7 @@ def save_to_sheet_from_form(request):
             post_data['contact_email_public'], # email pub
             post_data['contact_phone'],
             post_data['contact_phone_public'],
-            post_data['ent_types'],
+            post_data['entity_types'],
             '', # ent-include
             '', # disp-addr-zip
             '', # disp-output

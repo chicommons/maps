@@ -354,6 +354,7 @@ class ValidateNewCoopSerializer(serializers.Serializer):
     contact_email_public=serializers.CharField()
     contact_phone=serializers.CharField()
     contact_phone_public=serializers.CharField()
+    entity_types=serializers.CharField()
     scope=serializers.CharField()
     tags=serializers.CharField(required=False, allow_blank=True)
     desc_english=serializers.CharField(required=False, allow_blank=True)
