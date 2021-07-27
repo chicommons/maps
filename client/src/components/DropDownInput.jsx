@@ -25,7 +25,7 @@ const DropDownInput = (props) => {
         )}
         {props.options.map((option) => {
           return (
-            <option key={option.id} value={option.id}>
+            <option key={option.id} value={option.name}>
               {option.name}
             </option>
           );

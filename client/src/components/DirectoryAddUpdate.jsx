@@ -25,7 +25,7 @@ export default function DirectoryAddUpdate() {
   const [zip, setZip] = useState("");
   const [county, setCounty] = useState("");
   const [country, setCountry] = useState("US");
-  const [websites, setWebsites] = useState([]);
+  const [websites, setWebsites] = useState("");
   const [contactName, setContactName] = useState("");
   const [contactNamePublic, setContactNamePublic] = useState("no");
   const [contactEmail, setContactEmail] = useState("");
@@ -34,7 +34,7 @@ export default function DirectoryAddUpdate() {
   const [contactPhonePublic, setContactPhonePublic] = useState("no");
   const [entityTypes, setEntityTypes] = useState([]);
   const [scope, setScope] = useState("local");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState("");
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
   const [reqReason, setReqReason] = useState("add");
@@ -124,7 +124,7 @@ export default function DirectoryAddUpdate() {
       zip: zip,
       county: county,
       country: country,
-      websites: websites.join(", "),
+      websites: websites,
       contact_name: contactName,
       contact_name_public: contactNamePublic,
       contact_email: contactEmail,
@@ -133,7 +133,7 @@ export default function DirectoryAddUpdate() {
       contact_phone_public: contactPhonePublic,
       entity_types: entityTypes.join(", "),
       scope: scope,
-      tags: tags.join(", "),
+      tags: tags,
       desc_english: descEng,
       desc_other: descOther,
       req_reason: reqReason,
@@ -322,7 +322,7 @@ export default function DirectoryAddUpdate() {
                   name={"websites"}
                   value={websites}
                   placeholder={"Website or social media pages"}
-                  handleChange={(e) => setWebsites(e.target.value.split(","))}
+                  handleChange={(e) => setWebsites(e.target.value)}
                   errors={errors}
                 />{" "}
               </div>
@@ -458,7 +458,7 @@ export default function DirectoryAddUpdate() {
                   name={"tags"}
                   value={tags}
                   placeholder={"Enter tags"}
-                  handleChange={(e) => setTags(e.target.value.split(","))}
+                  handleChange={(e) => setTags(e.target.value)}
                   errors={errors}
                 />{" "}
               </div>
