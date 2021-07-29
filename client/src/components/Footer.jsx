@@ -13,7 +13,7 @@ const Footer = (props) => {
         Thanks to:
         <a className="credit-link" href="https://github.com/laredotornado">Dave Alvarado</a>
         |
-        <a className="credit-link" href="https://github.com/DaveyDevs">Davey Devs</a>
+        <a className="credit-link" href="https://github.com/DaveyDevs">Davey Anians</a>
         |
         <a className="credit-link" href="https://github.com/ozzysChiefDataScientist">Elena Smith</a>
         |
