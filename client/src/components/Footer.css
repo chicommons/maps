@@ -1,0 +1,16 @@
+.footer {
+  font-family: "Alegreya Sans", Arial, sans-serif;
+  font-weight: 400;
+  border-top: 2px solid #124E54;
+  padding: 10px 50px;
+  text-align: center;
+}
+
+.credit-link {
+  color: #2295a2;
+  margin: 0 10px;
+}
+
+.footer-row {
+  margin: 0
+}
