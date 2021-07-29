@@ -13,6 +13,7 @@ import DirectoryAddUpdate from "./components/DirectoryAddUpdate";
 import AddPerson from "./components/people/AddPerson";
 import EditPerson from "./components/people/EditPerson";
 import ListPeople from "./components/people/ListPeople";
+import Footer from "./components/Footer";
 import { AlertProvider } from "./components/AlertProvider";
 import Logo from "./logo.png";
 
@@ -53,6 +54,7 @@ function App() {
             </div>
           </div>
         </AlertProvider>
+        <Footer />
       </div>
     </Router>
   );

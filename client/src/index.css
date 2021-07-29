@@ -100,3 +100,7 @@ html,
 .forgot-password a {
   color: #2295a2;
 }
+
+.footer {
+  border-top: 2px solid #124E54;
+}
