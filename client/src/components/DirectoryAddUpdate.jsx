@@ -37,7 +37,7 @@ export default function DirectoryAddUpdate() {
   const [tags, setTags] = useState("");
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
-  const [reqReason, setReqReason] = useState("add");
+  const [reqReason, setReqReason] = useState("Add new record");
 
   // Holds country and state list
   const [countries, setCountries] = React.useState([]);
@@ -55,6 +55,33 @@ export default function DirectoryAddUpdate() {
 
   // Gets id from URL
   const { id } = useParams();
+
+  const clearForm = (e) => {
+    e.preventDefault();
+
+    // Resets the initial form values to clear the form
+    setCoopName("");
+    setStreet("");
+    setAddressPublic("no");
+    setCity("");
+    setState("IL");
+    setZip("");
+    setCounty("");
+    setCountry("US");
+    setWebsites("");
+    setContactName("");
+    setContactNamePublic("no");
+    setContactEmail("");
+    setContactEmailPublic("no");
+    setContactPhone("");
+    setContactPhonePublic("no");
+    setEntityTypes([]);
+    setScope("local");
+    setTags("");
+    setDescEng("");
+    setDescOther("");
+  }
+
 
   const fetchCoopForUpdate = async () => {
     setLoadingCoopData(true);
@@ -100,7 +127,7 @@ export default function DirectoryAddUpdate() {
           ? [coopResults.types.map((type) => type.name)]
           : []
       );
-      setReqReason("update");
+      setReqReason("Update existing record");
     } catch (error) {
       console.error(error);
       setLoadErrors(`Error: ${error.message}`);
@@ -148,6 +175,7 @@ export default function DirectoryAddUpdate() {
       },
       function (data) {
         const result = data;
+        clearForm();
         window.scrollTo(0, 0);
       }
     );
@@ -508,6 +536,14 @@ export default function DirectoryAddUpdate() {
                 className="submit col-sm-10 col-md-8 col-lg-6"
                 type="submit"
                 value="SEND ADDITION/UPDATE"
+              />
+            </div>
+            <div className="form-group form-row justify-content-center">
+              <input
+                className="reset col-sm-10 col-md-8 col-lg-6"
+                value="CLEAR FORM"
+                type="reset"
+                onClick={clearForm}
               />
             </div>
             {errors && (
