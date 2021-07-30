@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+
 // import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
@@ -55,6 +56,9 @@ export default function DirectoryAddUpdate() {
 
   // Gets id from URL
   const { id } = useParams();
+
+  // Router history for bringing user to search page on submit
+  const history = useHistory();
 
   const fetchCoopForUpdate = async () => {
     setLoadingCoopData(true);
@@ -149,6 +153,11 @@ export default function DirectoryAddUpdate() {
       function (data) {
         const result = data;
         window.scrollTo(0, 0);
+
+        // If update request, redirects user to search page on form submit.
+        if (id) {
+          history.push('/search');
+        }
       }
     );
   };
