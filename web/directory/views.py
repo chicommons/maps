@@ -129,7 +129,6 @@ class CoopList(APIView):
             print("request data ...")
             print(request.data)
             values = [
-                'ID',
                 request.data['name'],
                 request.data['addresses'][0]['raw'],
                 '',

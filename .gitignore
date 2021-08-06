@@ -1,6 +1,8 @@
 web/venv
 web/maps/__pycache__
 client/build
+client/yarn.lock
+client/package-lock.json
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python

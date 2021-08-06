@@ -339,6 +339,7 @@ class CoopSearchSerializer(serializers.ModelSerializer):
         return rep
 
 class ValidateNewCoopSerializer(serializers.Serializer):
+    id=serializers.CharField()
     coop_name=serializers.CharField()
     street=serializers.CharField()
     address_public=serializers.CharField()
