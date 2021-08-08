@@ -339,13 +339,13 @@ class CoopSearchSerializer(serializers.ModelSerializer):
         return rep
 
 class ValidateNewCoopSerializer(serializers.Serializer):
-    id=serializers.CharField()
+    id=serializers.CharField(required=False, allow_blank=True)
     coop_name=serializers.CharField()
-    street=serializers.CharField(required=False)
+    street=serializers.CharField(required=False, allow_blank=True)
     address_public=serializers.CharField()
-    city=serializers.CharField(required=False)
+    city=serializers.CharField(required=False, allow_blank=True)
     state=serializers.CharField()
-    zip=serializers.CharField(required=False)
+    zip=serializers.CharField(required=False, allow_blank=True)
     county=serializers.CharField(required=False, allow_blank=True)
     country=serializers.CharField()
     websites=serializers.CharField(required=False, allow_blank=True)
