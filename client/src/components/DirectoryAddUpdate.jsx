@@ -38,7 +38,7 @@ export default function DirectoryAddUpdate() {
   const [tags, setTags] = useState("");
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
-  const [reqReason, setReqReason] = useState("add");
+  const [reqReason, setReqReason] = useState("Add new record");
 
   // Holds country and state list
   const [countries, setCountries] = React.useState([]);
@@ -56,6 +56,32 @@ export default function DirectoryAddUpdate() {
 
   // Gets id from URL
   const { id } = useParams();
+
+  const clearForm = (e) => {
+    e.preventDefault();
+
+    // Resets the initial form values to clear the form
+    setCoopName("");
+    setStreet("");
+    setAddressPublic("no");
+    setCity("");
+    setState("IL");
+    setZip("");
+    setCounty("");
+    setCountry("US");
+    setWebsites("");
+    setContactName("");
+    setContactNamePublic("no");
+    setContactEmail("");
+    setContactEmailPublic("no");
+    setContactPhone("");
+    setContactPhonePublic("no");
+    setEntityTypes([]);
+    setScope("local");
+    setTags("");
+    setDescEng("");
+    setDescOther("");
+  }
 
   // Router history for bringing user to search page on submit
   const history = useHistory();
@@ -104,7 +130,7 @@ export default function DirectoryAddUpdate() {
           ? [coopResults.types.map((type) => type.name)]
           : []
       );
-      setReqReason("update");
+      setReqReason("Update existing record");
     } catch (error) {
       console.error(error);
       setLoadErrors(`Error: ${error.message}`);
@@ -152,6 +178,7 @@ export default function DirectoryAddUpdate() {
       },
       function (data) {
         const result = data;
+        clearForm();
         window.scrollTo(0, 0);
 
         // If update request, redirects user to search page on form submit.
