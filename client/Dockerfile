@@ -12,7 +12,7 @@ WORKDIR /my-app/
 COPY install_and_run.sh ./
 
 # Installs all node packages
-RUN npm install --force -g yarn
+#RUN npm install --force -g yarn
 
 RUN dos2unix /my-app/install_and_run.sh
 

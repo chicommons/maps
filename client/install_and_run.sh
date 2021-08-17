@@ -2,8 +2,8 @@
 
 cd /app
 
-# install everythiing
-yarn
+#$ install everything
+npm install
 
 # Run it
 REACT_APP_PROXY=http://localhost:9090 npm start
