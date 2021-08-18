@@ -463,6 +463,7 @@ export default function DirectoryAddUpdate() {
               )}
               <div className="form-group col-md-6 col-lg-6">
                 <DropDownInput
+                  className={"required"}
                   type={"select"}
                   as={"select"}
                   title={"Entity types"}
@@ -477,6 +478,7 @@ export default function DirectoryAddUpdate() {
                     )
                   }
                   options={entities}
+                  errors={errors}
                 />
               </div>
               <div className="form-group col-md-6 col-lg-4">
