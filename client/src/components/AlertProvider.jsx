@@ -17,7 +17,7 @@ export function AlertProvider(props) {
       setOpen(true);
       window.setTimeout(() => {
         setOpen(false);
-      }, 2000);
+      }, 10000);
     },
     [setMessage, setOpen]
   );

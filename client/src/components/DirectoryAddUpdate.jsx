@@ -13,6 +13,8 @@ import Country from "./Country.jsx";
 import Province from "./Province.jsx";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 
+import { useAlert } from "../components/AlertProvider";
+
 import "../containers/FormContainer.css";
 
 const { REACT_APP_PROXY } = process.env;
@@ -53,6 +55,9 @@ export default function DirectoryAddUpdate() {
 
   // While loading coop data from ID
   const [loadingCoopData, setLoadingCoopData] = React.useState(false);
+
+  // Alert provider state
+  const [open, close] = useAlert();
 
   // Gets id from URL
   const { id } = useParams();
@@ -180,6 +185,10 @@ export default function DirectoryAddUpdate() {
         const result = data;
         clearForm();
         window.scrollTo(0, 0);
+
+        // Alert message
+        const message = `Form Submission for ${coopName} successful`
+        if (message) open(message);
 
         // If update request, redirects user to search page on form submit.
         if (id) {
