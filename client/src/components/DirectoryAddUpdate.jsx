@@ -11,7 +11,9 @@ import TextAreaInput from "../components/TextAreaInput";
 
 import Country from "./Country.jsx";
 import Province from "./Province.jsx";
-import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
+import { DEFAULT_COUNTRY_CODE, DEFAULT_FORM_YES_NO } from "../utils/constants";
+
+import { useAlert } from "../components/AlertProvider";
 
 import "../containers/FormContainer.css";
 
@@ -20,21 +22,21 @@ const { REACT_APP_PROXY } = process.env;
 export default function DirectoryAddUpdate() {
   const [coopName, setCoopName] = useState("");
   const [street, setStreet] = useState("");
-  const [addressPublic, setAddressPublic] = useState("no");
+  const [addressPublic, setAddressPublic] = useState(DEFAULT_FORM_YES_NO);
   const [city, setCity] = useState("");
   const [state, setState] = useState("IL");
   const [zip, setZip] = useState("");
   const [county, setCounty] = useState("");
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState(DEFAULT_COUNTRY_CODE);
   const [websites, setWebsites] = useState("");
   const [contactName, setContactName] = useState("");
-  const [contactNamePublic, setContactNamePublic] = useState("no");
+  const [contactNamePublic, setContactNamePublic] = useState(DEFAULT_FORM_YES_NO);
   const [contactEmail, setContactEmail] = useState("");
-  const [contactEmailPublic, setContactEmailPublic] = useState("no");
+  const [contactEmailPublic, setContactEmailPublic] = useState(DEFAULT_FORM_YES_NO);
   const [contactPhone, setContactPhone] = useState("");
-  const [contactPhonePublic, setContactPhonePublic] = useState("no");
+  const [contactPhonePublic, setContactPhonePublic] = useState(DEFAULT_FORM_YES_NO);
   const [entityTypes, setEntityTypes] = useState([]);
-  const [scope, setScope] = useState("local");
+  const [scope, setScope] = useState("Local");
   const [tags, setTags] = useState("");
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
@@ -54,6 +56,9 @@ export default function DirectoryAddUpdate() {
   // While loading coop data from ID
   const [loadingCoopData, setLoadingCoopData] = React.useState(false);
 
+  // Alert provider state
+  const [ open ] = useAlert();
+
   // Gets id from URL
   const { id } = useParams();
 
@@ -63,21 +68,21 @@ export default function DirectoryAddUpdate() {
     // Resets the initial form values to clear the form
     setCoopName("");
     setStreet("");
-    setAddressPublic("no");
+    setAddressPublic(DEFAULT_FORM_YES_NO);
     setCity("");
     setState("IL");
     setZip("");
     setCounty("");
-    setCountry("US");
+    setCountry(DEFAULT_COUNTRY_CODE);
     setWebsites("");
     setContactName("");
-    setContactNamePublic("no");
+    setContactNamePublic(DEFAULT_FORM_YES_NO);
     setContactEmail("");
-    setContactEmailPublic("no");
+    setContactEmailPublic(DEFAULT_FORM_YES_NO);
     setContactPhone("");
-    setContactPhonePublic("no");
+    setContactPhonePublic(DEFAULT_FORM_YES_NO);
     setEntityTypes([]);
-    setScope("local");
+    setScope("Local");
     setTags("");
     setDescEng("");
     setDescOther("");
@@ -180,6 +185,10 @@ export default function DirectoryAddUpdate() {
         const result = data;
         clearForm();
         window.scrollTo(0, 0);
+
+        // Alert message
+        const message = `Form Submission for ${coopName} successful`
+        if (message) open(message);
 
         // If update request, redirects user to search page on form submit.
         if (id) {
@@ -454,6 +463,7 @@ export default function DirectoryAddUpdate() {
               )}
               <div className="form-group col-md-6 col-lg-6">
                 <DropDownInput
+                  className={"required"}
                   type={"select"}
                   as={"select"}
                   title={"Entity types"}
@@ -468,6 +478,7 @@ export default function DirectoryAddUpdate() {
                     )
                   }
                   options={entities}
+                  errors={errors}
                 />
               </div>
               <div className="form-group col-md-6 col-lg-4">
