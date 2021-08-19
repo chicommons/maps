@@ -18,6 +18,7 @@ const Input = (props) => {
         value={props.value}
         placeholder={props.placeholder}
         onChange={props.handleChange}
+        required={props.required}
       />
 
       {errorsArr && (

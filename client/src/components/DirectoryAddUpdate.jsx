@@ -252,7 +252,6 @@ export default function DirectoryAddUpdate() {
           onSubmit={submitForm}
           className="container-fluid"
           id="directory-add-update"
-          noValidate
         >
           <FormGroup>
             <div className="form-row">
@@ -266,6 +265,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Cooperative/entity name"}
                   handleChange={(e) => setCoopName(e.target.value)}
                   errors={errors}
+                  required={1}
                 />{" "}
               </div>
               <div className="form-group col-md-6 col-lg-3 col-xl-3">
@@ -277,6 +277,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Address street"}
                   handleChange={(e) => setStreet(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-4 col-lg-3 col-xl-2">
@@ -288,6 +289,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Address city"}
                   handleChange={(e) => setCity(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-3 col-lg-2 col-xl-2">
@@ -309,6 +311,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Zip code"}
                   handleChange={(e) => setZip(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-3 col-lg-2 col-xl-3">
@@ -320,6 +323,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"County"}
                   handleChange={(e) => setCounty(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-4 col-lg-2 col-xl-3">
@@ -331,6 +335,7 @@ export default function DirectoryAddUpdate() {
                   countryCode={"US"}
                   placeholder={"Select Country"}
                   handleChange={(e) => setCountry(e.target.value)}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-8 col-lg-6 col-xl-5">
@@ -346,6 +351,7 @@ export default function DirectoryAddUpdate() {
                     { id: "yes", name: "Yes" },
                     { id: "no", name: "No" },
                   ]}
+                  required={0}
                 />
               </div>
               <div className="form-group col-md-12">
@@ -360,6 +366,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Website or social media pages"}
                   handleChange={(e) => setWebsites(e.target.value)}
                   errors={errors}
+                  required={1}
                 />{" "}
               </div>
               <div className="form-group col-md-6">
@@ -372,6 +379,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Contact name"}
                   handleChange={(e) => setContactName(e.target.value)}
                   errors={errors}
+                  required={1}
                 />{" "}
               </div>
               <div className="form-group col-md-6">
@@ -388,7 +396,11 @@ export default function DirectoryAddUpdate() {
                     { id: "yes", name: "Yes" },
                     { id: "no", name: "No" },
                   ]}
+                  required={1}
                 />
+              </div>
+              <div className="form-group col-12">
+                You must include at least either a phone number or an e-mail address.
               </div>
               <div className="form-group col-md-4 col-lg-4">
                 <Input
@@ -399,6 +411,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Contact email"}
                   handleChange={(e) => setContactEmail(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               {contactEmail ? (
@@ -416,6 +429,7 @@ export default function DirectoryAddUpdate() {
                       { id: "yes", name: "Yes" },
                       { id: "no", name: "No" },
                     ]}
+                    required={1}
                   />
                 </div>
               ) : (
@@ -430,6 +444,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Contact phone"}
                   handleChange={(e) => setContactPhone(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               {contactPhone ? (
@@ -447,11 +462,19 @@ export default function DirectoryAddUpdate() {
                       { id: "yes", name: "Yes" },
                       { id: "no", name: "No" },
                     ]}
+                    required={1}
                   />
                 </div>
               ) : (
                 <div className="form-group col-md-8 col-lg-6"></div>
               )}
+              {/* only for client-side validation */}
+              <input
+                type="hidden"
+                name="contactMethod"
+                value={contactEmail + contactPhone}
+                required={1}
+              />
               <div className="form-group col-md-6 col-lg-6">
                 <DropDownInput
                   type={"select"}
@@ -468,6 +491,7 @@ export default function DirectoryAddUpdate() {
                     )
                   }
                   options={entities}
+                  required={0}
                 />
               </div>
               <div className="form-group col-md-6 col-lg-4">
@@ -485,6 +509,7 @@ export default function DirectoryAddUpdate() {
                     { id: "national", name: "National" },
                     { id: "international", name: "International" },
                   ]}
+                  required={0}
                 />
               </div>
               <div className="form-group col-md-12 col-lg-12 col-xl-10">
@@ -496,6 +521,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Enter tags"}
                   handleChange={(e) => setTags(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-12 col-lg-6 col-xl-4">
@@ -508,6 +534,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Enter entity description (English)"}
                   handleChange={(e) => setDescEng(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-12 col-lg-6 col-xl-4">
@@ -520,6 +547,7 @@ export default function DirectoryAddUpdate() {
                   placeholder={"Enter entity description (Other Language)"}
                   handleChange={(e) => setDescOther(e.target.value)}
                   errors={errors}
+                  required={0}
                 />{" "}
               </div>
               <div className="form-group col-md-8 col-lg-8 col-xl-4">
@@ -536,6 +564,7 @@ export default function DirectoryAddUpdate() {
                     { id: "add", name: "Add new record" },
                     { id: "update", name: "Update existing record" },
                   ]}
+                  required={1}
                 />
               </div>
             </div>
