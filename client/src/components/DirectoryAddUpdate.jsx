@@ -11,7 +11,7 @@ import TextAreaInput from "../components/TextAreaInput";
 
 import Country from "./Country.jsx";
 import Province from "./Province.jsx";
-import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
+import { DEFAULT_COUNTRY_CODE, DEFAULT_FORM_YES_NO } from "../utils/constants";
 
 import { useAlert } from "../components/AlertProvider";
 
@@ -22,19 +22,19 @@ const { REACT_APP_PROXY } = process.env;
 export default function DirectoryAddUpdate() {
   const [coopName, setCoopName] = useState("");
   const [street, setStreet] = useState("");
-  const [addressPublic, setAddressPublic] = useState("No");
+  const [addressPublic, setAddressPublic] = useState(DEFAULT_FORM_YES_NO);
   const [city, setCity] = useState("");
   const [state, setState] = useState("IL");
   const [zip, setZip] = useState("");
   const [county, setCounty] = useState("");
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState(DEFAULT_COUNTRY_CODE);
   const [websites, setWebsites] = useState("");
   const [contactName, setContactName] = useState("");
-  const [contactNamePublic, setContactNamePublic] = useState("No");
+  const [contactNamePublic, setContactNamePublic] = useState(DEFAULT_FORM_YES_NO);
   const [contactEmail, setContactEmail] = useState("");
-  const [contactEmailPublic, setContactEmailPublic] = useState("No");
+  const [contactEmailPublic, setContactEmailPublic] = useState(DEFAULT_FORM_YES_NO);
   const [contactPhone, setContactPhone] = useState("");
-  const [contactPhonePublic, setContactPhonePublic] = useState("No");
+  const [contactPhonePublic, setContactPhonePublic] = useState(DEFAULT_FORM_YES_NO);
   const [entityTypes, setEntityTypes] = useState([]);
   const [scope, setScope] = useState("Local");
   const [tags, setTags] = useState("");
@@ -57,7 +57,7 @@ export default function DirectoryAddUpdate() {
   const [loadingCoopData, setLoadingCoopData] = React.useState(false);
 
   // Alert provider state
-  const [open, close] = useAlert();
+  const [ open ] = useAlert();
 
   // Gets id from URL
   const { id } = useParams();
@@ -68,19 +68,19 @@ export default function DirectoryAddUpdate() {
     // Resets the initial form values to clear the form
     setCoopName("");
     setStreet("");
-    setAddressPublic("No");
+    setAddressPublic(DEFAULT_FORM_YES_NO);
     setCity("");
     setState("IL");
     setZip("");
     setCounty("");
-    setCountry("US");
+    setCountry(DEFAULT_COUNTRY_CODE);
     setWebsites("");
     setContactName("");
-    setContactNamePublic("No");
+    setContactNamePublic(DEFAULT_FORM_YES_NO);
     setContactEmail("");
-    setContactEmailPublic("No");
+    setContactEmailPublic(DEFAULT_FORM_YES_NO);
     setContactPhone("");
-    setContactPhonePublic("No");
+    setContactPhonePublic(DEFAULT_FORM_YES_NO);
     setEntityTypes([]);
     setScope("Local");
     setTags("");
