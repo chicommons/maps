@@ -22,7 +22,7 @@ const { REACT_APP_PROXY } = process.env;
 export default function DirectoryAddUpdate() {
   const [coopName, setCoopName] = useState("");
   const [street, setStreet] = useState("");
-  const [addressPublic, setAddressPublic] = useState("no");
+  const [addressPublic, setAddressPublic] = useState("No");
   const [city, setCity] = useState("");
   const [state, setState] = useState("IL");
   const [zip, setZip] = useState("");
@@ -30,13 +30,13 @@ export default function DirectoryAddUpdate() {
   const [country, setCountry] = useState("US");
   const [websites, setWebsites] = useState("");
   const [contactName, setContactName] = useState("");
-  const [contactNamePublic, setContactNamePublic] = useState("no");
+  const [contactNamePublic, setContactNamePublic] = useState("No");
   const [contactEmail, setContactEmail] = useState("");
-  const [contactEmailPublic, setContactEmailPublic] = useState("no");
+  const [contactEmailPublic, setContactEmailPublic] = useState("No");
   const [contactPhone, setContactPhone] = useState("");
-  const [contactPhonePublic, setContactPhonePublic] = useState("no");
+  const [contactPhonePublic, setContactPhonePublic] = useState("No");
   const [entityTypes, setEntityTypes] = useState([]);
-  const [scope, setScope] = useState("local");
+  const [scope, setScope] = useState("Local");
   const [tags, setTags] = useState("");
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
@@ -68,7 +68,7 @@ export default function DirectoryAddUpdate() {
     // Resets the initial form values to clear the form
     setCoopName("");
     setStreet("");
-    setAddressPublic("no");
+    setAddressPublic("No");
     setCity("");
     setState("IL");
     setZip("");
@@ -76,13 +76,13 @@ export default function DirectoryAddUpdate() {
     setCountry("US");
     setWebsites("");
     setContactName("");
-    setContactNamePublic("no");
+    setContactNamePublic("No");
     setContactEmail("");
-    setContactEmailPublic("no");
+    setContactEmailPublic("No");
     setContactPhone("");
-    setContactPhonePublic("no");
+    setContactPhonePublic("No");
     setEntityTypes([]);
-    setScope("local");
+    setScope("Local");
     setTags("");
     setDescEng("");
     setDescOther("");
