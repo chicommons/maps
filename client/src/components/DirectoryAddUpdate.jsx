@@ -62,9 +62,7 @@ export default function DirectoryAddUpdate() {
   // Gets id from URL
   const { id } = useParams();
 
-  const clearForm = (e) => {
-    e.preventDefault();
-
+  const clearForm = () => {
     // Resets the initial form values to clear the form
     setCoopName("");
     setStreet("");
