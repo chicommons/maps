@@ -23,9 +23,7 @@ read -d '' req << EOF
     "desc_other": "req",
     "id":"457",
     "req_reason": "reason",
-    "contact_email": "chicommons@dev.com",
     "contact_email_public": "yes",
-    "contact_phone": "312-473-2043",
     "contact_phone_public": "no",
     "entity_types": "Garden"
 }

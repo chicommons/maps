@@ -351,9 +351,9 @@ class ValidateNewCoopSerializer(serializers.Serializer):
     websites=serializers.CharField(required=False, allow_blank=True)
     contact_name=serializers.CharField()
     contact_name_public=serializers.CharField()
-    contact_email=serializers.CharField()
+    contact_email=serializers.CharField(required=False, allow_blank=True)
     contact_email_public=serializers.CharField()
-    contact_phone=serializers.CharField()
+    contact_phone=serializers.CharField(required=False, allow_blank=True)
     contact_phone_public=serializers.CharField()
     entity_types=serializers.CharField()
     scope=serializers.CharField()
@@ -361,4 +361,18 @@ class ValidateNewCoopSerializer(serializers.Serializer):
     desc_english=serializers.CharField(required=False, allow_blank=True)
     desc_other=serializers.CharField(required=False, allow_blank=True)
     req_reason=serializers.CharField()
+
+    def validate(self, data):
+        """
+        Validation of start and end date.
+        """
+        contact_email = data['contact_email'] if 'contact_email' in data else None
+        contact_phone = data['contact_phone'] if 'contact_phone' in data else None
+        if not contact_email and not contact_phone:
+            raise serializers.ValidationError(
+                {
+                    'contact': 'Either contact phone or contact email is required.'
+                }
+            )
+        return data
 
