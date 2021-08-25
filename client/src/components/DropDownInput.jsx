@@ -17,7 +17,6 @@ const DropDownInput = (props) => {
         value={props.value}
         onChange={props.handleChange}
         multiple={props.multiple && "multiple"}
-        required={props.required}
       >
         {!props.multiple && (
           <option value="" disabled>
