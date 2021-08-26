@@ -399,6 +399,9 @@ export default function DirectoryAddUpdate() {
                   ]}
                 />
               </div>
+              <div className="form-group col-12 form__desc">
+                You must include at least either a phone number or an e-mail address.
+              </div>
               <div className="form-group col-md-4 col-lg-4">
                 <Input
                   type={"email"}
@@ -461,6 +464,17 @@ export default function DirectoryAddUpdate() {
               ) : (
                 <div className="form-group col-md-8 col-lg-6"></div>
               )}
+              <div className="col-12">
+                <Input
+                  type={"hidden"}
+                  title={""}
+                  name={"contact"}
+                  value={''}
+                  placeholder={"Contact info"}
+                  errors={errors}
+                  required={0}
+                />{" "}
+              </div>
               <div className="form-group col-md-6 col-lg-6">
                 <DropDownInput
                   className={"required"}
