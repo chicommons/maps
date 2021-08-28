@@ -84,6 +84,7 @@ export default function DirectoryAddUpdate() {
     setTags("");
     setDescEng("");
     setDescOther("");
+    setErrors();
   }
 
   // Router history for bringing user to search page on submit
