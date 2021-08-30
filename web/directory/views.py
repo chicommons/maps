@@ -1,6 +1,6 @@
 from directory.models import Coop, CoopType
 from address.models import State, Country, Locality
-from directory.serializers import * 
+from directory.serializers import *
 from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
@@ -31,8 +31,8 @@ def data(request):
     for coop in coops.order_by(Lower('name')):
         for address in coop.addresses.all():
             postal_code = address.locality.postal_code
-            city = address.locality.name + ", " + address.locality.state.code + " " + postal_code 
-            coop_types = ', '.join([type.name for type in coop.types.all()]) 
+            city = address.locality.name + ", " + address.locality.state.code + " " + postal_code
+            coop_types = ', '.join([type.name for type in coop.types.all()])
             if address.longitude and address.latitude:
                 writer.writerow([coop.name, address.formatted, city, postal_code, coop_types, coop.web_site, address.longitude, address.latitude])
 
@@ -232,7 +232,7 @@ class PersonDetail(APIView):
 
 class CoopTypeList(APIView):
     """
-    List all coop types 
+    List all coop types
     """
     def get(self, request, format=None):
         coop_types = CoopType.objects.all().order_by(Lower('name'))
@@ -252,11 +252,11 @@ class CountryList(APIView):
 
 class StateList(APIView):
     """
-    List all states based on country 
+    List all states based on country
     """
     def get_object(self, country_code):
         try:
-            return State.objects.first(country__code=country_code) 
+            return State.objects.first(country__code=country_code)
             #return State.objects.filter(country=pk)
         except Coop.DoesNotExist:
             raise Http404
@@ -265,5 +265,3 @@ class StateList(APIView):
         states = State.objects.filter(country__code=country_code)
         serializer = StateSerializer(states, many=True)
         return Response(serializer.data)
-
-
