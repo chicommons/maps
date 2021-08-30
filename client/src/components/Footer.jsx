@@ -9,7 +9,7 @@ const Footer = (props) => {
         <a href="https://www.chicommons.coop/privacy-policy/" className="credit-link">Privacy Policy</a>
         <span>©  2021	Logo Copyright: ChiCommons LWCA</span>
       </div>
-      <span className="row justify-content-between footer-row">
+      <span className="row justify-content-center footer-row">
         Thanks to:
         <a className="credit-link" href="https://github.com/laredotornado">Dave Alvarado</a>
         |
