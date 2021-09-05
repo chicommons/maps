@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from directory.models import Coop, CoopType, ContactMethod, Person
-from address.models import Address, AddressField, Locality, State, Country 
+from address.models import Address, AddressField, Locality, State, Country
 from .services.location_service import LocationService
 import re
 
@@ -12,7 +12,7 @@ class AddressTypeField(serializers.PrimaryKeyRelatedField):
     def to_internal_value(self, data):
         if type(data) == dict:
             locality = data['locality']
-            state = None if not re.match(r"[0-9]+", str(locality['state'])) else State.objects.get(pk=locality['state']) 
+            state = None if not re.match(r"[0-9]+", str(locality['state'])) else State.objects.get(pk=locality['state'])
             if not state:
                 raise serializers.ValidationError({'state': 'This field is required.'})
             locality['state'] = state
@@ -149,7 +149,7 @@ class StateSerializer(serializers.ModelSerializer):
 class LocalitySerializer(serializers.ModelSerializer):
     state = StateSerializer()
     class Meta:
-        model = Locality 
+        model = Locality
         fields = ['id', 'name', 'postal_code', 'state']
 
     def to_representation(self, instance):
@@ -171,11 +171,11 @@ class LocalitySerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Locality` instance, given the validated data.
         """
-        print("\n\n\n\nupdating address entity \n\n\n\n") 
+        print("\n\n\n\nupdating address entity \n\n\n\n")
         instance.name = validated_data.get('name', instance.name)
         instance.postal_code = validated_data.get('postal_code', instance.name)
         state = validated_data.get('state', instance.name)
-        instance.state_id = state.id 
+        instance.state_id = state.id
         instance.save()
         return instance
 
@@ -221,7 +221,7 @@ class AddressSerializer(serializers.ModelSerializer):
         locality_data['state'] = state
 
         locality = Locality.objects.get_or_create(**locality_data)
-        validated_data['locality'] = Locality.objects.get(name=locality_data['name'], state=state, postal_code=locality_data['postal_code']) 
+        validated_data['locality'] = Locality.objects.get(name=locality_data['name'], state=state, postal_code=locality_data['postal_code'])
         address = Address.objects.create(**validated_data)
         return address
 
@@ -262,21 +262,21 @@ class CoopSerializer(serializers.ModelSerializer):
         if not instance:
             instance = super().create(validated_data)
         for item in coop_types:
-            coop_type, _ = CoopType.objects.get_or_create(name=item['name']) 
+            coop_type, _ = CoopType.objects.get_or_create(name=item['name'])
             instance.types.add(coop_type)
         instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
         instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
         for address in addresses:
             serializer = AddressSerializer()
             addr = serializer.create_obj(validated_data=address)
-            instance.addresses.add(addr) 
+            instance.addresses.add(addr)
             self.update_coords(addr)
         instance.name = validated_data.pop('name', None)
         instance.web_site = validated_data.pop('web_site', None)
         instance.save()
         return instance
 
-    # Set address coordinate data 
+    # Set address coordinate data
     @staticmethod
     def update_coords(address):
         svc = LocationService()
@@ -311,7 +311,7 @@ class PersonSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         coops = validated_data.pop('coops', {})
         for coop in coops:
-            #coop_obj = Coop.objects.get(pk=coop) 
+            #coop_obj = Coop.objects.get(pk=coop)
             instance.coops.add(coop)
         contact_methods = validated_data.pop('contact_methods', {})
         instance.contact_methods.clear()
@@ -320,7 +320,7 @@ class PersonSerializer(serializers.ModelSerializer):
             print("email:",contact_method.email)
             #contact_method_obj = ContactMethod.objects.create(**contact_method)
             instance.contact_methods.add(contact_method)
-        instance.save() 
+        instance.save()
         return instance
 
 class CoopSearchSerializer(serializers.ModelSerializer):
@@ -339,40 +339,49 @@ class CoopSearchSerializer(serializers.ModelSerializer):
         return rep
 
 class ValidateNewCoopSerializer(serializers.Serializer):
+    # Set all fields as not required and allow_blank=true, so we can combine all validation into one step
     id=serializers.CharField(required=False, allow_blank=True)
-    coop_name=serializers.CharField()
+    coop_name=serializers.CharField(required=False, allow_blank=True)
     street=serializers.CharField(required=False, allow_blank=True)
-    address_public=serializers.CharField()
+    address_public=serializers.CharField(required=False, allow_blank=True)
     city=serializers.CharField(required=False, allow_blank=True)
-    state=serializers.CharField()
+    state=serializers.CharField(required=False, allow_blank=True)
     zip=serializers.CharField(required=False, allow_blank=True)
     county=serializers.CharField(required=False, allow_blank=True)
-    country=serializers.CharField()
+    country=serializers.CharField(required=False, allow_blank=True)
     websites=serializers.CharField(required=False, allow_blank=True)
-    contact_name=serializers.CharField()
-    contact_name_public=serializers.CharField()
+    contact_name=serializers.CharField(required=False, allow_blank=True)
+    contact_name_public=serializers.CharField(required=False, allow_blank=True)
     contact_email=serializers.CharField(required=False, allow_blank=True)
-    contact_email_public=serializers.CharField()
+    contact_email_public=serializers.CharField(required=False, allow_blank=True)
     contact_phone=serializers.CharField(required=False, allow_blank=True)
-    contact_phone_public=serializers.CharField()
-    entity_types=serializers.CharField()
-    scope=serializers.CharField()
+    contact_phone_public=serializers.CharField(required=False, allow_blank=True)
+    entity_types=serializers.CharField(required=False, allow_blank=True)
+    scope=serializers.CharField(required=False, allow_blank=True)
     tags=serializers.CharField(required=False, allow_blank=True)
     desc_english=serializers.CharField(required=False, allow_blank=True)
     desc_other=serializers.CharField(required=False, allow_blank=True)
-    req_reason=serializers.CharField()
+    req_reason=serializers.CharField(required=False, allow_blank=True)
 
     def validate(self, data):
         """
         Validation of start and end date.
         """
+        errors = {}
+
+        # required fields
+        required_fields = ['coop_name', 'websites', 'contact_name', 'contact_name_public', 'entity_types', 'req_reason']
+        for field in required_fields:
+            if not data[field]:
+                errors[field] = 'This field is required.'
+
+        # contact info
         contact_email = data['contact_email'] if 'contact_email' in data else None
         contact_phone = data['contact_phone'] if 'contact_phone' in data else None
         if not contact_email and not contact_phone:
-            raise serializers.ValidationError(
-                {
-                    'contact': 'Either contact phone or contact email is required.'
-                }
-            )
-        return data
+            errors['contact'] = 'Either contact phone or contact email is required.'
 
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
