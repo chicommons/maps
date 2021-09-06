@@ -239,6 +239,7 @@ const Search = (props) => {
               value={coopSearchSettings.name}
               placeholder="Enter cooperative name"
               onChange={handleInputChange}
+              aria-label="Name"
             />{" "}
           </div>
           <div className="form-group col-md-6 col-lg-6 col-xl-6">
