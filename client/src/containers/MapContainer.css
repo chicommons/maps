@@ -5,3 +5,9 @@
   transition: all 0.3s;
   width: 100%;
 }
+
+@media only screen and (min-width: 1200px) {
+  .map-container {
+    height: calc(100vh - 20rem);
+  }
+}
