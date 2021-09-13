@@ -48,7 +48,7 @@ export default function DirectoryAddUpdate() {
   const [entities, setEntityTypeList] = React.useState([]);
 
   // Validation
-  const [errors, setErrors] = React.useState();
+  const [errors, setErrors, getErrors] = React.useState();
 
   // Errors when loading already existing entity
   const [loadErrors, setLoadErrors] = React.useState("");
@@ -85,6 +85,52 @@ export default function DirectoryAddUpdate() {
     setDescEng("");
     setDescOther("");
     setErrors();
+  }
+
+  // Check required fields to see if they're still blank 
+  const requiredFields = [coopName, websites, contactName, contactEmail, contactPhone, entityTypes];
+
+  const updateRequired = (field) => {
+    const asArray = Object.entries(errors);
+
+    let filteredItem = "";
+
+    switch(field) {
+      case coopName:
+        filteredItem = "coop_name";
+        break;
+      case websites:
+        filteredItem = "websites";
+        break;
+      case contactName:
+        filteredItem = "contact_name";
+        break;
+      case contactEmail:
+        filteredItem = "contact";
+        break;
+      case contactPhone:
+        filteredItem = "contact";
+        break;
+      case entityTypes:
+        filteredItem = "entity_types";
+        break;
+    }
+
+    if (errors.hasOwnProperty(filteredItem)) {
+      setErrors(Object.fromEntries(asArray.filter(([key, value]) => key !== filteredItem)));
+    };
+  }
+
+  const checkRequired = () => {
+    if (errors == undefined) {
+      return
+    } else {
+      requiredFields.forEach(field => {
+        if (field.length !== 0) {
+          updateRequired(field);
+        }
+      })
+    }
   }
 
   // Router history for bringing user to search page on submit
@@ -238,6 +284,12 @@ export default function DirectoryAddUpdate() {
       fetchCoopForUpdate();
     }
   }, []);
+
+  // Checking required field changes with useEffect.
+  useEffect(() => {
+      checkRequired();
+    },
+    requiredFields);
 
   return (
     <div className="directory-form">
@@ -398,7 +450,7 @@ export default function DirectoryAddUpdate() {
                   ]}
                 />
               </div>
-              <div className="form-group col-12 form__desc">
+              <div className="form-group col-12 form__desc required">
                 You must include at least either a phone number or an e-mail address.
               </div>
               <div className="form-group col-md-4 col-lg-4">
