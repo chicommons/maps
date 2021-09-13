@@ -58,7 +58,7 @@ const Search = (props) => {
               <ListGroupItem key={item.id} value={item.name}>
                 {item.name}
                 <span className="float-right">
-                  <Link to={"/edit/" + item.id + "/home"}>
+                  <Link to={"/directory-additions-updates/" + item.id}>
                     <PencilSquare color="RoyalBlue" size={26} />
                   </Link>
                 </span>
