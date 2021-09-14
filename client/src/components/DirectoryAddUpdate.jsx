@@ -122,7 +122,7 @@ export default function DirectoryAddUpdate() {
   }
 
   const checkRequired = () => {
-    if (errors == undefined) {
+    if (!errors) {
       return
     } else {
       requiredFields.forEach(field => {
