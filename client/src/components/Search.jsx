@@ -10,6 +10,7 @@ import _ from "lodash";
 /* Import Components */
 import Input from "../components/Input";
 import Button from "../components/Button";
+import DropDownInput from "../components/DropDownInput";
 import Province from "./Province.jsx";
 
 import "../containers/FormContainer.css";
@@ -243,21 +244,24 @@ const Search = (props) => {
             />{" "}
           </div>
           <div className="form-group col-md-6 col-lg-6 col-xl-6">
-            <label class="formInputStyle">Coop Type</label>
-            <select
-              id={"type"}
+            <DropDownInput
+              className={"formInputStyle"}
+              type={"select"}
+              as={"select"}
+              title={"CoOp Type"}
+              multiple={"multiple"}
               name={"type"}
               value={coopSearchSettings.type}
-              onChange={handleInputChange}
-              className="form-control"
-            >
-              <option value="" placeholder="Select Coop Type" selected></option>
-              {coopTypes.map((coopType) => (
-                <option key={coopType.id} value={coopType.name}>
-                  {coopType.name}
-                </option>
-              ))}
-            </select>
+              handleChange={(e) =>
+                setCoopSearchSettings(
+                  { ...coopSearchSettings,
+                    [ e.target.name ]: [].slice
+                      .call(e.target.selectedOptions)
+                      .map((item) => item.value)
+                  }
+                )}
+              options={coopTypes}
+            />
           </div>
         </div>
         <div className="form-row">
