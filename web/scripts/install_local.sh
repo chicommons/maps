@@ -52,6 +52,11 @@ if [ ! -d "venv" ]; then
 fi
 # Activate virtual environment
 source ./venv/bin/activate
+
+# Make sure pip is installed
+python3 -m ensurepip
+python3 -m pip install --upgrade pip
+
 python3 -m pip install -r requirements.txt
 
 # Run migrations and seed the database
