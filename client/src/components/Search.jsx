@@ -35,9 +35,9 @@ const buildSearchUrl = (coopSearchSettings, setSearchUrl) => {
       "name=" + encodeURIComponent(coopSearchSettings.name)
     );
   }
-  if ("type" in coopSearchSettings && coopSearchSettings.type != "") {
+  if ("type" in coopSearchSettings && coopSearchSettings.type != []) {
     individualSearchSettings.push(
-      "coop_type=" + encodeURIComponent(coopSearchSettings.type)
+      "coop_type=" + encodeURIComponent(JSON.stringify(coopSearchSettings.type))
     );
   }
   if ("street" in coopSearchSettings && coopSearchSettings.street != "") {
@@ -113,7 +113,7 @@ const doSearchDebounced = _.debounce(doSearch, 100);
 
 const Search = (props) => {
   //store evolving search settings before search form is submitted
-  const [coopSearchSettings, setCoopSearchSettings] = useState({ state: "IL" });
+  const [coopSearchSettings, setCoopSearchSettings] = useState({ state: "IL", type: [] });
 
   // store finalized search url
   const [searchUrl, setSearchUrl] = useState("");
@@ -198,6 +198,19 @@ const Search = (props) => {
     return streetAdd + ", " + cityName + ", " + stateCode + " " + zip;
   };
 
+  const handleMultiSelect = (e) => {
+    const { name, value } = e.target;
+    const selected = coopSearchSettings[name]
+    const index = selected.indexOf(value)
+
+    if (index > -1) {
+      selected.splice(index, 1)
+    } else {
+      selected.push(value)
+    }
+    setCoopSearchSettings({...coopSearchSettings, [name]: selected})
+  }
+
   // same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
@@ -252,14 +265,7 @@ const Search = (props) => {
               multiple={"multiple"}
               name={"type"}
               value={coopSearchSettings.type}
-              handleChange={(e) =>
-                setCoopSearchSettings(
-                  { ...coopSearchSettings,
-                    [ e.target.name ]: [].slice
-                      .call(e.target.selectedOptions)
-                      .map((item) => item.value)
-                  }
-                )}
+              handleChange={handleMultiSelect}
               options={coopTypes}
             />
           </div>
