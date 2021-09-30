@@ -37,7 +37,7 @@ const buildSearchUrl = (coopSearchSettings, setSearchUrl) => {
   }
   if ("type" in coopSearchSettings && coopSearchSettings.type != []) {
     individualSearchSettings.push(
-      "coop_type=" + encodeURIComponent(JSON.stringify(coopSearchSettings.type))
+      "coop_type=" + encodeURIComponent(coopSearchSettings.type.join(","))
     );
   }
   if ("street" in coopSearchSettings && coopSearchSettings.street != "") {
@@ -91,6 +91,7 @@ const doSearch = (
   searchUrl
 ) => {
   // abort and fetch logic is very similar to doSearch in Search components
+  console.log(searchUrl);
   abortController.abort();
   abortController = new window.AbortController();
   setLoading(true);
