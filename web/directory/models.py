@@ -50,7 +50,7 @@ class CoopManager(models.Manager):
     def find(
         self, 
         partial_name, 
-        coop_type=None, 
+        types_arr=None, 
         enabled=None, 
         city=None, 
         zip=None, 
@@ -65,8 +65,12 @@ class CoopManager(models.Manager):
             q &= Q(name__icontains=partial_name)
         if enabled != None:
             q &= Q(enabled=enabled)
-        if coop_type != None:
-            q &= Q(types__name=coop_type)
+        if types_arr != None:
+            filter = Q(
+                *[('types__name', type) for type in types_arr],
+                _connector=Q.OR
+            )
+            q &= filter
         if street != None:
             q &= Q(addresses__raw__icontains=street)
         if city != None:
