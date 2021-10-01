@@ -10,6 +10,7 @@ import _ from "lodash";
 /* Import Components */
 import Input from "../components/Input";
 import Button from "../components/Button";
+import DropDownInput from "../components/DropDownInput";
 import Province from "./Province.jsx";
 
 import "../containers/FormContainer.css";
@@ -34,9 +35,9 @@ const buildSearchUrl = (coopSearchSettings, setSearchUrl) => {
       "name=" + encodeURIComponent(coopSearchSettings.name)
     );
   }
-  if ("type" in coopSearchSettings && coopSearchSettings.type != "") {
+  if ("type" in coopSearchSettings && coopSearchSettings.type != []) {
     individualSearchSettings.push(
-      "coop_type=" + encodeURIComponent(coopSearchSettings.type)
+      "coop_type=" + encodeURIComponent(coopSearchSettings.type.join(","))
     );
   }
   if ("street" in coopSearchSettings && coopSearchSettings.street != "") {
@@ -90,6 +91,7 @@ const doSearch = (
   searchUrl
 ) => {
   // abort and fetch logic is very similar to doSearch in Search components
+  console.log(searchUrl);
   abortController.abort();
   abortController = new window.AbortController();
   setLoading(true);
@@ -112,7 +114,7 @@ const doSearchDebounced = _.debounce(doSearch, 100);
 
 const Search = (props) => {
   //store evolving search settings before search form is submitted
-  const [coopSearchSettings, setCoopSearchSettings] = useState({ state: "IL" });
+  const [coopSearchSettings, setCoopSearchSettings] = useState({ state: "IL", type: [] });
 
   // store finalized search url
   const [searchUrl, setSearchUrl] = useState("");
@@ -197,6 +199,19 @@ const Search = (props) => {
     return streetAdd + ", " + cityName + ", " + stateCode + " " + zip;
   };
 
+  const handleMultiSelect = (e) => {
+    const { name, value } = e.target;
+    const selected = coopSearchSettings[name]
+    const index = selected.indexOf(value)
+
+    if (index > -1) {
+      selected.splice(index, 1)
+    } else {
+      selected.push(value)
+    }
+    setCoopSearchSettings({...coopSearchSettings, [name]: selected})
+  }
+
   // same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
@@ -243,21 +258,17 @@ const Search = (props) => {
             />{" "}
           </div>
           <div className="form-group col-md-6 col-lg-6 col-xl-6">
-            <label class="formInputStyle">Coop Type</label>
-            <select
-              id={"type"}
+            <DropDownInput
+              className={"formInputStyle"}
+              type={"select"}
+              as={"select"}
+              title={"CoOp Type"}
+              multiple={"multiple"}
               name={"type"}
               value={coopSearchSettings.type}
-              onChange={handleInputChange}
-              className="form-control"
-            >
-              <option value="" placeholder="Select Coop Type" selected></option>
-              {coopTypes.map((coopType) => (
-                <option key={coopType.id} value={coopType.name}>
-                  {coopType.name}
-                </option>
-              ))}
-            </select>
+              handleChange={handleMultiSelect}
+              options={coopTypes}
+            />
           </div>
         </div>
         <div className="form-row">
