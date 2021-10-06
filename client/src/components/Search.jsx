@@ -217,8 +217,16 @@ const Search = (props) => {
     if (searchResults && searchResults.length) {
       return (
         <>
-          <div>Results</div>
+          <br/>
           <ListGroup variant="flush">
+            <ListGroupItem key="header">
+              <h3 className="float-left font-weight-bold">
+                Matching Entities
+              </h3>
+              <h3 className="float-right font-weight-bold">
+                Edit
+              </h3>
+            </ListGroupItem>
             {searchResults.map((item) => (
               <ListGroupItem key={item.id} value={item.name}>
                 <div className="float-left">
