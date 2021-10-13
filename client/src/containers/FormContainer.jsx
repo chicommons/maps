@@ -354,7 +354,7 @@ const FormContainer = (props) => {
           </div>
           <Button
             action={handleFormSubmit}
-            type={"primary"}
+            buttonType={"primary"}
             title={"Submit"}
             style={buttonStyle}
           />{" "}
@@ -362,7 +362,7 @@ const FormContainer = (props) => {
           <Button
             disabled={buttonDisabled}
             action={handleClearForm}
-            type={"secondary"}
+            buttonType={"secondary"}
             title={"Clear"}
             style={buttonStyle}
           />{" "}
