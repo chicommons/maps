@@ -1,6 +1,7 @@
 from directory.models import Coop, CoopType
 from address.models import State, Country, Locality
 from directory.serializers import *
+from directory.settings import SECRET_KEY
 from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
@@ -11,7 +12,68 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
+from rest_framework import status
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import get_authorization_header
+import jwt
+from django.contrib.auth.models import User
 
+class UserLoginView(RetrieveAPIView):
+
+    permission_classes = (AllowAny,)
+    serializer_class = UserLoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'message': 'User logged in successfully',
+            'token' : serializer.data['token'],
+            }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
+
+# Was 
+class UserProfileView(RetrieveAPIView):
+
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+
+    def get(self, request):
+        try:
+            token = get_authorization_header(request).decode('utf-8').replace("JWT ", "")
+            if token is None or token == "null" or token.strip() == "":
+                raise exceptions.AuthenticationFailed('Authorization Header or Token is missing on Request Headers')
+            print("token: %s" % token)
+            decoded = jwt.decode(token, SECRET_KEY)
+            username = decoded['username']
+            user = User.objects.get(username=username)
+            status_code = status.HTTP_200_OK
+            response = {
+                'success': 'true',
+                'status code': status_code,
+                'message': 'User profile fetched successfully',
+                'data': {
+                        'email': user.email
+                    }
+                }
+
+        except Exception as e:
+            status_code = status.HTTP_400_BAD_REQUEST
+            response = {
+                'success': 'false',
+                'status code': status.HTTP_400_BAD_REQUEST,
+                'message': 'User does not exists',
+                'error': str(e)
+                }
+        return Response(response, status=status_code)
 
 def data(request):
     # Create the HttpResponse object with the appropriate CSV header.
