@@ -67,16 +67,6 @@
   color: #495057;
 }
 
-.form input[type="submit"] {
-  color: #f6fbfb;
-  background-color: #2295a2;
-}
-
-.form input[type="submit"]:focus {
-  border-color: #0062cc;
-  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
-}
-
 .required:after {
   color: red;
   content: " *";

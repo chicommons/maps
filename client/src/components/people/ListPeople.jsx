@@ -53,7 +53,7 @@ const ListPeople = (props) => {
       </ListGroup>
       <Button
         action={addPeople}
-        type={"primary"}
+        buttonType={"primary"}
         title={"Add People"}
         style={buttonStyle}
       />

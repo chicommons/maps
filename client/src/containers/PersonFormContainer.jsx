@@ -194,14 +194,14 @@ const PersonFormContainer = (props) => {
           <Button
             disabled={buttonDisabled}
             action={handleFormSubmit}
-            type={"primary"}
+            buttonType={"primary"}
             title={"Submit"}
             style={buttonStyle}
           />{" "}
           {/*Submit */}
           <Button
             action={handleClearForm}
-            type={"secondary"}
+            buttonType={"secondary"}
             title={"Clear"}
             style={buttonStyle}
           />{" "}
