@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken', 
     'directory',
     'phonenumber_field',
     'address',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'directory.middleware.extend_jwt_response.ExtendJWTResponse'
 ]
 
 #CORS_ORIGIN_ALLOW_ALL = True
@@ -145,15 +147,23 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 #AUTH_USER_MODEL = 'user.User'
 REST_FRAMEWORK = {
+    #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.AllowAny'
+         #'rest_framework.permissions.AllowAny'
+         'rest_framework.permissions.IsAuthenticated',
          #'rest_framework.permissions.IsAuthenticated',
          #'rest_framework.permissions.IsAdminUser',
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'directory.authentication.ExpiringTokenAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
     )
+    
 }
+
+TOKEN_EXPIRED_AFTER_SECONDS = 86400
 
 SECRET_KEY = 'This is a very long and secure secret key'
 

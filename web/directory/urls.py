@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from directory import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('data', views.data, name='data'),
@@ -14,8 +15,8 @@ urlpatterns = [
     path('countries/', views.CountryList.as_view()),
     path('states/<country_code>/', views.StateList.as_view()),
     path('save_to_sheet_from_form/', views.save_to_sheet_from_form, name="save_to_sheet_from_form"),
-    path('login/', views.UserLoginView.as_view()),
-    path(r'profile/', views.UserProfileView.as_view()),
+    path('login', views.signin),
+    path('user_info', views.user_info),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -7,8 +7,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.decorators import api_view, permission_classes
 import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
@@ -16,64 +15,57 @@ from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import get_authorization_header
-import jwt
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+    HTTP_200_OK,
+)
 from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
 
-class UserLoginView(RetrieveAPIView):
+from .serializers import UserSigninSerializer
+from .authentication import token_expire_handler, expires_in, ExpiringTokenAuthentication
 
-    permission_classes = (AllowAny,)
-    serializer_class = UserLoginSerializer
+@api_view(["POST"])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def signin(request):
+    signin_serializer = UserSigninSerializer(data = request.data)
+    if not signin_serializer.is_valid():
+        return Response(signin_serializer.errors, status = HTTP_400_BAD_REQUEST)
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        response = {
-            'success' : 'True',
-            'status code' : status.HTTP_200_OK,
-            'message': 'User logged in successfully',
-            'token' : serializer.data['token'],
-            }
-        status_code = status.HTTP_200_OK
 
-        return Response(response, status=status_code)
+    user = authenticate(
+            username = signin_serializer.data['username'],
+            password = signin_serializer.data['password'] 
+        )
+    if not user:
+        return Response({'detail': 'Invalid Credentials or activate account'}, status=HTTP_404_NOT_FOUND)
+        
+    #TOKEN STUFF
+    token, _ = Token.objects.get_or_create(user = user)
+    
+    #token_expire_handler will check, if the token is expired it will generate new one
+    is_expired, token = token_expire_handler(token)     # The implementation will be described further
+    user_serialized = UserSerializer(user)
 
-# Was 
-class UserProfileView(RetrieveAPIView):
+    return Response({
+        'user': user_serialized.data, 
+        'expires_in': expires_in(token),
+        'token': token.key
+    }, status=HTTP_200_OK)
 
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
 
-    def get(self, request):
-        try:
-            token = get_authorization_header(request).decode('utf-8').replace("JWT ", "")
-            if token is None or token == "null" or token.strip() == "":
-                raise exceptions.AuthenticationFailed('Authorization Header or Token is missing on Request Headers')
-            print("token: %s" % token)
-            decoded = jwt.decode(token, SECRET_KEY)
-            username = decoded['username']
-            user = User.objects.get(username=username)
-            status_code = status.HTTP_200_OK
-            response = {
-                'success': 'true',
-                'status code': status_code,
-                'message': 'User profile fetched successfully',
-                'data': {
-                        'email': user.email
-                    }
-                }
+@api_view(["GET"])
+#@permission_classes((IsAuthenticated,))
+def user_info(request):
+    return Response({
+        'user': request.user.username,
+        'expires_in': expires_in(request.auth)
+    }, status=HTTP_200_OK)
 
-        except Exception as e:
-            status_code = status.HTTP_400_BAD_REQUEST
-            response = {
-                'success': 'false',
-                'status code': status.HTTP_400_BAD_REQUEST,
-                'message': 'User does not exists',
-                'error': str(e)
-                }
-        return Response(response, status=status_code)
 
 def data(request):
     # Create the HttpResponse object with the appropriate CSV header.
