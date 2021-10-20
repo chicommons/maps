@@ -623,10 +623,6 @@ export default function DirectoryAddUpdate() {
                 <CancelButton id={id} />
               </div>
             </div>
-            {/* <div className="form-group form-row">
-              
-              
-            </div> */}
             {errors && (
               <strong className="form__error-message">
                 Please correct the errors above and then resubmit.
