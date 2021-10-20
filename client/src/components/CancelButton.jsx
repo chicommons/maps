@@ -5,7 +5,11 @@ import { useHistory } from "react-router-dom";
 
 const CancelButton = (props) => {
     const goBack = () => {
-        history.goBack();
+        if (props.id) {
+            history.goBack();
+        } else {
+            history.push('/');
+        }
     };
 
     const history = useHistory();
