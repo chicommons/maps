@@ -364,11 +364,13 @@ const Search = (props) => {
               </select>
             </div>
           </div>
-          <div className="form-group form-row justify-content-center">
-            <Button buttonType={"primary"} title={"Submit"} type={"submit"} />{" "}
-          </div>
-          <div className="form-group form-row justify-content-center">
-            <CancelButton />
+          <div className="form-group form-row">
+            <div className="form-group col-md-6" align="center">
+              <Button buttonType={"primary"} title={"Submit"} type={"submit"} />{" "}
+            </div>
+            <div className="form-group col-md-6" align="center">
+              <CancelButton />
+            </div>
           </div>
           <div>
             {renderSearchResults()}

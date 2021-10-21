@@ -616,12 +616,12 @@ export default function DirectoryAddUpdate() {
                   ]}
                 />
               </div>
-            </div>
-            <div className="form-group form-row justify-content-center">
-              <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
-            </div>
-            <div className="form-group form-row justify-content-center">
-              <CancelButton />
+              <div className="form-group col-md-6" align="center">
+                <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+              </div>
+              <div className="form-group col-md-6" align="center">
+                <CancelButton id={id} />
+              </div>
             </div>
             {errors && (
               <strong className="form__error-message">
