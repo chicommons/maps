@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'directory.middleware.extend_jwt_response.ExtendJWTResponse'
+    'directory.middleware.extend_token_response.ExtendTokenResponse'
 ]
 
 #CORS_ORIGIN_ALLOW_ALL = True
