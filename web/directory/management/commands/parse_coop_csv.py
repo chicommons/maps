@@ -184,7 +184,6 @@ class Command(BaseCommand):
                 print("    name: \"",city,"\"", sep='')
                 print("    postal_code: \"",zipcode,"\"", sep='')
                 print("    state: ['", state_id, "', '", country, "']", sep='')
-#                print("    state: 19313")
                 cities_pks[tuple(city_set)] = i 
                 i = i + 1
         return cities_pks
