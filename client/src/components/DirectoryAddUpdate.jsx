@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 
 import { FormGroup } from "react-bootstrap";
 
@@ -63,6 +63,9 @@ export default function DirectoryAddUpdate() {
 
   // Gets id from URL
   const { id } = useParams();
+
+  // FAKE STATE FOR TESTING APPROVAL PAGE
+  const [FAKEAPPROVALSTATE, setFAKEAPPROVALSTATE] = React.useState(false);
 
   const clearForm = () => {
     // Resets the initial form values to clear the form
@@ -191,8 +194,46 @@ export default function DirectoryAddUpdate() {
     }
   };
 
+  // APPROVAL TEST
+  const location = useLocation();
+
+  const fetchApprovalInfo = () => {
+    console.log("the fetch approval function if needed");
+    console.log(FAKEAPPROVALSTATE);
+
+    setCoopName("Fake name");
+    setStreet("1234324");
+    setAddressPublic("YES");
+    setCity("Chicago");
+    setState("IL");
+    setZip("70000");
+    setCounty("Cook");
+    setCountry(DEFAULT_COUNTRY_CODE);
+    setWebsites("Site.net");
+    setContactName("test name");
+    setContactNamePublic("YES");
+    setContactEmail("email@email.com");
+    setContactEmailPublic("YES");
+    setContactPhone("123-123-2321");
+    setContactPhonePublic("YES");
+    setEntityTypes([]);
+    setScope("Local");
+    setTags("test");
+    setDescEng("test");
+    setDescOther("test");
+  };
+
+  const submitFAKEFORM = () => {
+    console.log("submitting the fake form");
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
+
+    if (FAKEAPPROVALSTATE) {
+      submitFAKEFORM();
+      return;
+    }
 
     console.log("form submitted!");
     console.log(coopName);
@@ -282,8 +323,22 @@ export default function DirectoryAddUpdate() {
         setEntityTypeList(initialEntityTypes);
       });
 
+    // TESTING WITH APPROVAL FUNCTIONALITY
+    console.log(location.pathname);
+
     if (id) {
-      fetchCoopForUpdate();
+      console.log("there is an id");
+      console.log(location.pathname.includes("approve"));
+
+      if (location.pathname.includes("approve")) {
+        setFAKEAPPROVALSTATE(true);
+        console.log("it contains it!");
+        fetchApprovalInfo();
+      } else {
+        console.log("it doesnt contain it");
+        console.log(FAKEAPPROVALSTATE);
+        fetchCoopForUpdate();
+      }
     }
   }, []);
 
@@ -295,10 +350,22 @@ export default function DirectoryAddUpdate() {
 
   return (
     <div className="directory-form">
-      <h1 className="form__title">Directory Form</h1>
+      <h1 className="form__title">
+        {FAKEAPPROVALSTATE ? 
+          <>Approval Form</> 
+        : 
+          <>Directory Form</>
+        }
+      </h1>
+
       <h2 className="form__desc">
-        Use this form to add or request the update of a solidarity entity or
-        cooperative. We'll contact you to confirm the information
+        {FAKEAPPROVALSTATE ? 
+          <>This is the approval form.</>
+        : 
+          <>Use this form to add or request the update of a solidarity entity or
+          cooperative. We'll contact you to confirm the information</>
+        }
+
       </h2>
       <h2 className="form__desc">
         <span style={{ color: "red" }}>*</span> = required
@@ -311,11 +378,10 @@ export default function DirectoryAddUpdate() {
       {loadingCoopData && <strong>Loading entity data...</strong>}
       <div className="form">
         <form
-          onSubmit={submitForm}
-          className="container-fluid"
-          id="directory-add-update"
-          noValidate
-        >
+        onSubmit={submitForm}
+        className="container-fluid"
+        id="directory-add-update"
+        noValidate>
           <FormGroup>
             <div className="form-row">
               <div className="form-group col-md-6 col-lg-4 col-xl-3">
@@ -617,7 +683,11 @@ export default function DirectoryAddUpdate() {
                 />
               </div>
               <div className="form-group col-md-6" align="center">
-                <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+                {FAKEAPPROVALSTATE ? 
+                    <Button buttonType={"primary"} title={"Approve"} type={"submit"} />
+                  :
+                    <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+                }
               </div>
               <div className="form-group col-md-6" align="center">
                 <CancelButton id={id} />
