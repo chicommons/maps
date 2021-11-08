@@ -4,7 +4,9 @@ import Button from "../components/Button";
 import { useHistory } from "react-router-dom";
 
 const CancelButton = (props) => {
-    const goBack = () => {
+    const goBack = (e) => {
+        e.preventDefault();
+
         if (props.id) {
             history.goBack();
         } else {
