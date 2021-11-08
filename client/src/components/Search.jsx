@@ -10,6 +10,7 @@ import _ from "lodash";
 /* Import Components */
 import Input from "../components/Input";
 import Button from "../components/Button";
+import CancelButton from "../components/CancelButton";
 import DropDownInput from "../components/DropDownInput";
 import Province from "./Province.jsx";
 
@@ -249,129 +250,140 @@ const Search = (props) => {
 
   return (
     <div className="form container-fluid">
-      {/* FormGroup logic from FormContainer.jsx */}
-      <FormGroup controlId="formBasicText">
-        {/* FormLabel and FormControl logic from Input.jsx */}
-        <div className="form-row">
-          <div className="form-group col-md-6 col-lg-6 col-xl-6">
-            <FormLabel class="formInputStyle">Name</FormLabel>
-            <FormControl
-              class="form-control"
-              id={"name"}
-              name={"name"}
-              value={coopSearchSettings.name}
-              placeholder="Enter cooperative name"
-              onChange={handleInputChange}
-              aria-label="Name"
-            />{" "}
-          </div>
-          <div className="form-group col-md-6 col-lg-6 col-xl-6">
-            <DropDownInput
-              className={"formInputStyle"}
-              type={"select"}
-              as={"select"}
-              title={"CoOp Type"}
-              multiple={"multiple"}
-              name={"type"}
-              value={coopSearchSettings.type}
-              handleChange={handleMultiSelect}
-              options={coopTypes}
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group col-md-6 col-lg-6 col-xl-6">
-            <FormLabel class="formInputStyle">Street</FormLabel>
-            <FormControl
-              class="form-control"
-              id={"street"}
-              name={"street"}
-              value={coopSearchSettings.street}
-              placeholder="Enter address street"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="form-group col-md-3 col-lg-3 col-xl-3">
-            <FormLabel class="formInputStyle">City</FormLabel>
-            <FormControl
-              class="form-control"
-              id={"city"}
-              name={"city"}
-              value={coopSearchSettings.city}
-              placeholder="Enter address city"
-              onChange={handleInputChange}
-            />{" "}
+      <form
+          onSubmit={handleFormSubmit}
+        >
+        {/* FormGroup logic from FormContainer.jsx */}
+        <FormGroup controlId="formBasicText">
+          {/* FormLabel and FormControl logic from Input.jsx */}
+          <div className="form-row">
+            <div className="form-group col-md-6 col-lg-6 col-xl-6">
+              <FormLabel class="formInputStyle">Name</FormLabel>
+              <FormControl
+                class="form-control"
+                id={"name"}
+                name={"name"}
+                value={coopSearchSettings.name}
+                placeholder="Enter cooperative name"
+                onChange={handleInputChange}
+                aria-label="Name"
+              />{" "}
             </div>
-          <div className="form-group col-md-3 col-lg-3 col-xl-3">
-            <FormLabel class="formInputStyle">Postal Code</FormLabel>
-            <FormControl
-              class="form-control"
-              id={"zip"}
-              name={"zip"}
-              value={coopSearchSettings.zip}
-              placeholder="Enter postal code"
-              onChange={handleInputChange}
-            />{" "}
+            <div className="form-group col-md-6 col-lg-6 col-xl-6">
+              <DropDownInput
+                className={"formInputStyle"}
+                type={"select"}
+                as={"select"}
+                title={"CoOp Type"}
+                multiple={"multiple"}
+                name={"type"}
+                value={coopSearchSettings.type}
+                handleChange={handleMultiSelect}
+                options={coopTypes}
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group col-md-3 col-lg-6 col-xl-6">
-            <FormLabel class="formInputStyle">County</FormLabel>
-            <FormControl
-              class="form-control"
-              id={"county"}
-              name={"county"}
-              value={coopSearchSettings.county}
-              placeholder="Enter county"
-              onChange={handleInputChange}
-            />{" "}
-          </div>
-          <div className="form-group col-md-3 col-lg-3 col-xl-3">
-            <Province
-              title={"State"}
-              className="formInputStyle"
-              name={"state"}
-              options={provinces}
-              value={coopSearchSettings.state}
-              placseholder={"Select state"}
-              handleChange={(e) =>
-                setCoopSearchSettings({
-                  ...coopSearchSettings,
-                  [e.target.name]: e.target.value,
-                })
-              }
-            />{" "}
-          </div>
-          <div className="form-group col-md-3 col-lg-3 col-xl-3">
-            <label class="form-label" class="formInputStyle">
-              Enabled
-            </label>
-            <select
-              name={"enabled"}
-              value={coopSearchSettings.enabled}
-              onChange={handleInputChange}
-              className="form-control"
-            >
-              <option selected value="none">
-                None Selected
-              </option>
-              <option value="true">True</option>
-              <option value="False">False</option>
-            </select>
-          </div>
-        </div>
-        <Button action={handleFormSubmit} type={"primary"} title={"Submit"} />{" "}
-        <div>
-          {renderSearchResults()}
-          {loading && (
-            <div class="loading">
-              <div className="spinner-border" role="status">
-                <span className="sr-only">Loading...</span>
+          <div className="form-row">
+            <div className="form-group col-md-6 col-lg-6 col-xl-6">
+              <FormLabel class="formInputStyle">Street</FormLabel>
+              <FormControl
+                class="form-control"
+                id={"street"}
+                name={"street"}
+                value={coopSearchSettings.street}
+                placeholder="Enter address street"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="form-group col-md-3 col-lg-3 col-xl-3">
+              <FormLabel class="formInputStyle">City</FormLabel>
+              <FormControl
+                class="form-control"
+                id={"city"}
+                name={"city"}
+                value={coopSearchSettings.city}
+                placeholder="Enter address city"
+                onChange={handleInputChange}
+              />{" "}
               </div>
+            <div className="form-group col-md-3 col-lg-3 col-xl-3">
+              <FormLabel class="formInputStyle">Postal Code</FormLabel>
+              <FormControl
+                class="form-control"
+                id={"zip"}
+                name={"zip"}
+                value={coopSearchSettings.zip}
+                placeholder="Enter postal code"
+                onChange={handleInputChange}
+              />{" "}
             </div>
-          )}
-        </div>
-      </FormGroup>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-3 col-lg-6 col-xl-6">
+              <FormLabel class="formInputStyle">County</FormLabel>
+              <FormControl
+                class="form-control"
+                id={"county"}
+                name={"county"}
+                value={coopSearchSettings.county}
+                placeholder="Enter county"
+                onChange={handleInputChange}
+              />{" "}
+            </div>
+            <div className="form-group col-md-3 col-lg-3 col-xl-3">
+              <Province
+                title={"State"}
+                className="formInputStyle"
+                name={"state"}
+                options={provinces}
+                value={coopSearchSettings.state}
+                placseholder={"Select state"}
+                handleChange={(e) =>
+                  setCoopSearchSettings({
+                    ...coopSearchSettings,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />{" "}
+            </div>
+            <div className="form-group col-md-3 col-lg-3 col-xl-3">
+              <label class="form-label" class="formInputStyle">
+                Enabled
+              </label>
+              <select
+                name={"enabled"}
+                value={coopSearchSettings.enabled}
+                onChange={handleInputChange}
+                className="form-control"
+              >
+                <option selected value="none">
+                  None Selected
+                </option>
+                <option value="true">True</option>
+                <option value="False">False</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-group form-row">
+            <div className="form-group col-md-6" align="center">
+              <Button buttonType={"primary"} title={"Submit"} type={"submit"} />{" "}
+            </div>
+            <div className="form-group col-md-6" align="center">
+              <CancelButton />
+            </div>
+          </div>
+          <div>
+            {renderSearchResults()}
+            {loading && (
+              <div class="loading">
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </FormGroup>
+      </form>
     </div>
   );
 };

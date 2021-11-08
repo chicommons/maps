@@ -177,14 +177,14 @@ class Command(BaseCommand):
             city = list(city_set)[0]
             zipcode = list(city_set)[1]
             state_id = list(city_set)[2].upper() if list(city_set)[2] != '' else 'IL'
-            print("- model: address.locality")
-            print("  pk:",i)
-            print("  fields:")
-            print("    name: \"",city,"\"", sep='')
-            print("    postal_code: \"",zipcode,"\"", sep='')
-            print("    state: ['", state_id, "', '", country, "']", sep='')
-#            print("    state: 19313")
-            cities_pks[tuple(city_set)] = i 
-            i = i + 1
+            if zipcode != '':
+                print("- model: address.locality")
+                print("  pk:",i)
+                print("  fields:")
+                print("    name: \"",city,"\"", sep='')
+                print("    postal_code: \"",zipcode,"\"", sep='')
+                print("    state: ['", state_id, "', '", country, "']", sep='')
+                cities_pks[tuple(city_set)] = i 
+                i = i + 1
         return cities_pks
  

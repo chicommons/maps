@@ -8,10 +8,10 @@ const Button = (props) => {
       disabled={props.disabled}
       style={props.style}
       className={
-        props.type === "primary" ? "btn btn-primary" : "btn btn-secondary"
+        props.buttonType === "primary" ? "btn btn-primary btn-block buttonStyle" : "btn btn-secondary btn-block buttonStyle"
       }
-      class="buttonStyle"
       onClick={props.action}
+      type={props.type}
     >
       {props.title}
     </button>

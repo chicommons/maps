@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-// import emailjs from "emailjs-com";
 import { FormGroup } from "react-bootstrap";
 
 import CoopService from "../services/CoopService";
@@ -15,7 +14,10 @@ import { DEFAULT_COUNTRY_CODE, DEFAULT_FORM_YES_NO } from "../utils/constants";
 
 import { useAlert } from "../components/AlertProvider";
 
+import Button from "../components/Button";
+
 import "../containers/FormContainer.css";
+import CancelButton from "./CancelButton";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -614,13 +616,12 @@ export default function DirectoryAddUpdate() {
                   ]}
                 />
               </div>
-            </div>
-            <div className="form-group form-row justify-content-center">
-              <input
-                className="submit col-sm-10 col-md-8 col-lg-6"
-                type="submit"
-                value="SEND ADDITION/UPDATE"
-              />
+              <div className="form-group col-md-6" align="center">
+                <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+              </div>
+              <div className="form-group col-md-6" align="center">
+                <CancelButton id={id} />
+              </div>
             </div>
             {errors && (
               <strong className="form__error-message">
