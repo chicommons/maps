@@ -148,13 +148,13 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 REST_FRAMEWORK = {
     #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PERMISSION_CLASSES': [
-         #'rest_framework.permissions.AllowAny'
-         'rest_framework.permissions.IsAuthenticated',
+         'rest_framework.permissions.AllowAny',
+         #'rest_framework.permissions.IsAuthenticated',
          #'rest_framework.permissions.IsAuthenticated',
          #'rest_framework.permissions.IsAdminUser',
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'directory.authentication.ExpiringTokenAuthentication',
+        #'directory.authentication.ExpiringTokenAuthentication',
         #'rest_framework.authentication.TokenAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
         #'rest_framework.authentication.BasicAuthentication',
@@ -166,18 +166,6 @@ TOKEN_EXPIRED_AFTER_SECONDS = 86400
 
 SECRET_KEY = 'This is a very long and secure secret key'
 
-JWT_AUTH = {
-    'JWT_SECRET_KEY': SECRET_KEY,
-    'JWT_GET_USER_SECRET_KEY': None,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_VERIFY': True,
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
-    'JWT_ISSUER': None,
-
-    #'JWT_ALLOW_REFRESH': True,
-    #'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(minutes=20),
-}
 
 APPEND_SLASH=False
  

@@ -102,6 +102,15 @@ def coops_wo_coordinates(request):
     serializer = CoopSearchSerializer(coops, many=True)
     return Response(serializer.data)
 
+@api_view(('GET',))
+def unapproved_coops(request):
+    """
+    Returns those coops that are unapproved
+    """
+    coops = Coop.objects.find_unapproved()
+    serializer = CoopSearchSerializer(coops, many=True)
+    return Response(serializer.data)
+
 @api_view(('POST',))
 def save_to_sheet_from_form(request):
     """
