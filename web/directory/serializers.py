@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from directory.models import Coop, CoopType, ContactMethod, Person
-from address.models import Address, AddressField, Locality, State, Country
+from address.models import Address, Locality, State, Country
 from .services.location_service import LocationService
 import re
 
@@ -385,3 +386,15 @@ class ValidateNewCoopSerializer(serializers.Serializer):
             raise serializers.ValidationError(errors)
 
         return data
+
+#JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
+#JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'id')
+
+class UserSigninSerializer(serializers.Serializer):
+    username = serializers.CharField(required = True)
+    password = serializers.CharField(required = True)

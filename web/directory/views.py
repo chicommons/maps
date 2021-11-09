@@ -1,16 +1,70 @@
 from directory.models import Coop, CoopType
 from address.models import State, Country, Locality
 from directory.serializers import *
+from directory.settings import SECRET_KEY
 from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.decorators import api_view, permission_classes
 import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
+from rest_framework import status
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+    HTTP_200_OK,
+)
+from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
+
+from .serializers import UserSigninSerializer
+from .authentication import token_expire_handler, expires_in, ExpiringTokenAuthentication
+
+@api_view(["POST"])
+@permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
+def signin(request):
+    signin_serializer = UserSigninSerializer(data = request.data)
+    if not signin_serializer.is_valid():
+        return Response(signin_serializer.errors, status = HTTP_400_BAD_REQUEST)
+
+
+    user = authenticate(
+            username = signin_serializer.data['username'],
+            password = signin_serializer.data['password'] 
+        )
+    if not user:
+        return Response({'detail': 'Invalid Credentials or activate account'}, status=HTTP_404_NOT_FOUND)
+        
+    #TOKEN STUFF
+    token, _ = Token.objects.get_or_create(user = user)
+    
+    #token_expire_handler will check, if the token is expired it will generate new one
+    is_expired, token = token_expire_handler(token)     # The implementation will be described further
+    user_serialized = UserSerializer(user)
+
+    return Response({
+        'user': user_serialized.data, 
+        'expires_in': expires_in(token),
+        'token': token.key
+    }, status=HTTP_200_OK)
+
+
+@api_view(["GET"])
+#@permission_classes((IsAuthenticated,))
+def user_info(request):
+    return Response({
+        'user': request.user.username,
+        'expires_in': expires_in(request.auth)
+    }, status=HTTP_200_OK)
 
 
 def data(request):
@@ -45,6 +99,15 @@ def coops_wo_coordinates(request):
     are missing either latitude or longitude)
     """
     coops = Coop.objects.find_wo_coords()
+    serializer = CoopSearchSerializer(coops, many=True)
+    return Response(serializer.data)
+
+@api_view(('GET',))
+def unapproved_coops(request):
+    """
+    Returns those coops that are unapproved
+    """
+    coops = Coop.objects.find_unapproved()
     serializer = CoopSearchSerializer(coops, many=True)
     return Response(serializer.data)
 

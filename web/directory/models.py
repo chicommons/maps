@@ -106,6 +106,15 @@ class CoopManager(models.Manager):
         )
         return queryset
 
+    def find_unapproved(self):
+        """
+        Return all coops whose approved fields are set to False
+        """
+        queryset = Coop.objects.filter(
+            approved=False
+        )
+        return queryset
+
 
 class Coop(models.Model):
     objects = CoopManager()
@@ -116,6 +125,7 @@ class Coop(models.Model):
     phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
     email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
+    approved = models.BooleanField(default=True, null=True)
 
 
 class Person(models.Model):

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken', 
     'directory',
     'phonenumber_field',
     'address',
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'directory.middleware.extend_token_response.ExtendTokenResponse'
 ]
 
 #CORS_ORIGIN_ALLOW_ALL = True
@@ -88,7 +91,6 @@ WSGI_APPLICATION = 'directory.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'mysql.connector.django',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ['DB_NAME'],
         'USER': os.environ['DB_USER'],
@@ -141,4 +143,29 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Configuration for phone numbers.
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
+
+#AUTH_USER_MODEL = 'user.User'
+REST_FRAMEWORK = {
+    #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+         'rest_framework.permissions.AllowAny',
+         #'rest_framework.permissions.IsAuthenticated',
+         #'rest_framework.permissions.IsAuthenticated',
+         #'rest_framework.permissions.IsAdminUser',
+         ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'directory.authentication.ExpiringTokenAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+    )
+    
+}
+
+TOKEN_EXPIRED_AFTER_SECONDS = 86400
+
+SECRET_KEY = 'This is a very long and secure secret key'
+
+
+APPEND_SLASH=False
  
