@@ -168,4 +168,7 @@ SECRET_KEY = 'This is a very long and secure secret key'
 
 
 APPEND_SLASH=False
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
  
