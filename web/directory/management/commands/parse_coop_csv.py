@@ -62,7 +62,7 @@ class Command(BaseCommand):
                 except KeyError:
                     # 'email_pub' changed to 'email' 11/18/21
                     email =  'yes'
-                    # 'no' changed to 'yes' 11/18/21
+                    # '!= no' changed to '== yes' 11/18/21
                 if email.lower() == 'yes':
                     email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
