@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import Add from "./components/Add";
 import Edit from "./components/Edit";
 import Search from "./components/Search";
+import Login from "./components/Login";
 import NoCoordsSearch from "./components/NoCoordsSearch";
 import DirectoryAddUpdate from "./components/DirectoryAddUpdate";
 import AddPerson from "./components/people/AddPerson";
@@ -35,6 +36,7 @@ function App() {
             <div className="auth-inner">
               <Switch>
                 <Route exact path="/" component={Map} />
+                <Route path="/login" component={Login} />
                 <Route path="/add" component={Add} />
                 <Route path="/edit/:id" component={Edit} />
                 <Route path="/search" component={Search} />
