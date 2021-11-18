@@ -18,7 +18,6 @@ const Login = () => {
       body: JSON.stringify({username, password})
     }).then(resp => resp.json())
     .then(jsob => sessionStorage.setItem('token', jsob.token))
-    console.log(sessionStorage.getItem('token'));
   }
 
   return(
