@@ -321,7 +321,6 @@ class StateList(APIView):
     def get_object(self, country_code):
         try:
             return State.objects.first(country__code=country_code)
-            #return State.objects.filter(country=pk)
         except Coop.DoesNotExist:
             raise Http404
 

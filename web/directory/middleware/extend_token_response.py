@@ -11,8 +11,12 @@ class ExtendTokenResponse:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
         response = self.get_response(request)
-        token = request.auth
-        is_expired = is_token_expired(token) if token else True
+        is_expired = True
+        try:
+            token = request.auth
+            is_expired = is_token_expired(token) if token else True
+        except Exception as err:
+            print(err)
         if not is_expired:
             token.delete()
             new_token = Token.objects.create(user = token.user)
