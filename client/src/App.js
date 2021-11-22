@@ -16,6 +16,7 @@ import ListPeople from "./components/people/ListPeople";
 import Footer from "./components/Footer";
 import { AlertProvider } from "./components/AlertProvider";
 import Logo from "./logo.png";
+import UnapprovedList from "./components/UnapprovedList";
 
 function App() {
   return (
@@ -52,6 +53,12 @@ function App() {
                   path="/approve-coop/:id"
                   component={DirectoryAddUpdate}
                 />
+
+                <Route 
+                  path="/unapproved-list/"
+                  component={UnapprovedList}
+                />
+
                 <Route path="/:coop_id/people" component={AddPerson} />
                 <Route path="/person/:id/edit" component={EditPerson} />
                 <Route path="/:coop_id/listpeople" component={ListPeople} />
