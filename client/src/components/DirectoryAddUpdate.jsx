@@ -235,11 +235,36 @@ export default function DirectoryAddUpdate() {
       return;
     }
 
-    console.log("form submitted!");
-    console.log(coopName);
-
+    let result = entityTypes.map(type => ({name: type}));
     let formData = {
-      coop_name: coopName,
+      name: coopName,
+      types: result,
+      addresses: [
+        {
+          raw: street,
+          formatted: street,
+          locality: {
+            name: city,
+            postal_code: zip,
+            state: {
+              name: state,
+              code: state,
+              country: {
+                name: 'United States'
+              }
+            },
+          },
+        }
+      ],
+      phone: {
+        phone: contactPhone
+      },
+      email: {
+        email : contactEmail
+      },
+      web_site: websites
+    };
+/*  
       street: street,
       address_public: addressPublic,
       city: city,
@@ -261,9 +286,8 @@ export default function DirectoryAddUpdate() {
       desc_other: descOther,
       req_reason: reqReason,
       id: id,
-    };
-
-    CoopService.saveToGoogleSheet(
+*/
+    CoopService.save(
       formData,
       (errors) => {
         //setButtonDisabled(false);
