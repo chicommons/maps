@@ -100,6 +100,7 @@ class Command(BaseCommand):
                     if email:
                         print("    email:",contact_email_pk)
                     print("    web_site: \"",web_site,"\"", sep='')
+                    print("    approved: True", sep='')
 
     @staticmethod
     def strip_invalid(s):
