@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-<<<<<<< HEAD
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Alert } from "reactstrap";
 
@@ -70,16 +69,6 @@ function App() {
         <Footer />
       </div>
     </Router>
-=======
-import { AuthenticationProvider } from "./context/AuthenticationProvider";
-import DirectoryApp from "./components/DirectoryApp";
-
-function App() {
-  return (
-    <AuthenticationProvider>
-      <DirectoryApp />
-    </AuthenticationProvider>
->>>>>>> authentication
   );
 }
 
