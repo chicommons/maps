@@ -47,6 +47,11 @@ const DirectoryApp = () => {
                     path="/directory-additions-updates/:id"
                     component={DirectoryAddUpdate}
                   />
+                  {/* New path for approval page. Will :id work? Doing 827 to test */}
+                  <Route
+                    path="/approve-coop/:id"
+                    component={DirectoryAddUpdate}
+                  />
                   <Route
                     path="/directory-additions-updates/"
                     component={DirectoryAddUpdate}
