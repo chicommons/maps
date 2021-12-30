@@ -1,6 +1,6 @@
 import factory
 from django.db import models
-from directory.models import CoopType, Coop, ContactMethod, Person
+from directory.models import CoopType, Coop, ContactMethod, Person, CoopAddressTags
 from address.models import AddressField, Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
@@ -15,7 +15,7 @@ class CountryFactory(factory.DjangoModelFactory):
     class Meta:
         model = Country
 
-    name = myFactory.name() 
+    name = myFactory.name()
     code = "NN"
 
 
@@ -24,11 +24,11 @@ class StateFactory(factory.DjangoModelFactory):
         Define State Factory
     """
     class Meta:
-        model = State 
+        model = State
 
     name = "Narnia"
     code = "NN"
-    country = factory.SubFactory(CountryFactory) 
+    country = factory.SubFactory(CountryFactory)
 
 
 class LocalityFactory(factory.DjangoModelFactory):
@@ -36,11 +36,11 @@ class LocalityFactory(factory.DjangoModelFactory):
         Define Locality Factory
     """
     class Meta:
-        model = Locality 
+        model = Locality
 
     name = "Narnia"
     postal_code = "60605"
-    state = factory.SubFactory(StateFactory) 
+    state = factory.SubFactory(StateFactory)
 
 
 class AddressFactory(factory.DjangoModelFactory):
@@ -53,8 +53,8 @@ class AddressFactory(factory.DjangoModelFactory):
 
     street_number = "123"
     route = "Rd"
-    raw = "123 Fake Rd" 
-    formatted = "123 Fake Rd." 
+    raw = "123 Fake Rd"
+    formatted = "123 Fake Rd."
     latitude = 87.1234
     longitude = -100.12342
     locality = factory.SubFactory(LocalityFactory)
@@ -62,22 +62,24 @@ class AddressFactory(factory.DjangoModelFactory):
 
 class PhoneContactMethodFactory(factory.DjangoModelFactory):
     """
-        Define Contact Method Factory for a phone number 
+        Define Contact Method Factory for a phone number
     """
     class Meta:
         model = ContactMethod
 
+    is_public = True
     type = ContactMethod.ContactTypes.EMAIL
     phone = "8005551234"
 
 
 class EmailContactMethodFactory(factory.DjangoModelFactory):
     """
-        Define Contact Method Factory for emails 
+        Define Contact Method Factory for emails
     """
     class Meta:
         model = ContactMethod
 
+    is_public = True
     type = ContactMethod.ContactTypes.EMAIL
     email = "test@example.com"
 
@@ -102,7 +104,7 @@ class CoopFactory(factory.DjangoModelFactory):
     name = "test model"
     enabled = True
     phone = factory.SubFactory(PhoneContactMethodFactory)
-    email = factory.SubFactory(EmailContactMethodFactory) 
+    email = factory.SubFactory(EmailContactMethodFactory)
     web_site = "http://www.hello.com"
 
     @factory.post_generation
@@ -114,10 +116,10 @@ class CoopFactory(factory.DjangoModelFactory):
         if extracted:
             # A list of types were passed in, use them
             for address in extracted:
-                self.addresses.add(address)
+                CoopAddressTags.objects.create(coop=self, address=address, address_is_public=True)
         else:
             address = AddressFactory()
-            self.addresses.add( address )
+            CoopAddressTags.objects.create(coop=self, address=address, address_is_public=True)
 
     @factory.post_generation
     def types(self, create, extracted, **kwargs):
@@ -177,4 +179,3 @@ class PersonFactory(factory.DjangoModelFactory):
         else:
             coop = CoopFactory()
             self.coops.add( coop )
-
