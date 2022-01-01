@@ -25,7 +25,11 @@ function authenticationReducer(state, action) {
 function AuthenticationProvider({ children }) {
   const [authenticationState, setAuthenticationState] = useReducer(
     authenticationReducer,
-    initialState
+    initialState,
+    (arg) => {
+      const auth_token = sessionStorage.getItem('token');
+      return { ...arg, isAuthenticated: !!auth_token };
+    } 
   );
 
   return (

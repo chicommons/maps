@@ -20,7 +20,9 @@ import UnapprovedList from "./UnapprovedList";
 import PrivateRoute from "./PrivateRoute";
 
 const DirectoryApp = () => {
+  console.log("starting get hook value ...");
   const { isAuthenticated } = useAuthentication();
+  console.log("is auth:" + isAuthenticated);
 
   return (
       <Router>
@@ -58,7 +60,7 @@ const DirectoryApp = () => {
                     component={DirectoryAddUpdate}
                   />
                   <PrivateRoute 
-                  path="/unapproved-list/"
+                  authed={isAuthenticated} path="/unapproved-list/"
                   component={UnapprovedList}
                   />
                   <PrivateRoute authed={isAuthenticated} path="/:coop_id/people" component={AddPerson} />

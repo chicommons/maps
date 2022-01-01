@@ -2,12 +2,13 @@ import React, { Component }  from 'react';
 import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
 
-function PrivateRoute ({component, authed, ...rest}) {
+const PrivateRoute = ({component: WrappedComponent, authed, ...rest}) => {
+  console.log("in private route, authed: " + authed);
   return (
     <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} />
+        ? <WrappedComponent {...props} />
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
