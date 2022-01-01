@@ -16,10 +16,13 @@ import ListPeople from "./people/ListPeople";
 import Footer from "./Footer";
 import { AlertProvider } from "./AlertProvider";
 import Logo from "../logo.png";
+import UnapprovedList from "./UnapprovedList";
 import PrivateRoute from "./PrivateRoute";
 
 const DirectoryApp = () => {
+  console.log("starting get hook value ...");
   const { isAuthenticated } = useAuthentication();
+  console.log("is auth:" + isAuthenticated);
 
   return (
       <Router>
@@ -47,9 +50,18 @@ const DirectoryApp = () => {
                     path="/directory-additions-updates/:id"
                     component={DirectoryAddUpdate}
                   />
+                  {/* New path for approval page. Will :id work? Doing 827 to test */}
+                  <Route
+                    path="/approve-coop/:id"
+                    component={DirectoryAddUpdate}
+                  />
                   <Route
                     path="/directory-additions-updates/"
                     component={DirectoryAddUpdate}
+                  />
+                  <PrivateRoute 
+                  authed={isAuthenticated} path="/unapproved-list/"
+                  component={UnapprovedList}
                   />
                   <PrivateRoute authed={isAuthenticated} path="/:coop_id/people" component={AddPerson} />
                   <Route path="/person/:id/edit" component={EditPerson} />

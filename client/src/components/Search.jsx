@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import "../Search.css";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
-import { PencilSquare } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+
+import RenderCoopList from "./RenderCoopList";
+
 import _ from "lodash";
 
 /* Import Components */
@@ -191,15 +190,6 @@ const Search = (props) => {
     buildSearchUrl(coopSearchSettings, setSearchUrl);
   };
 
-  const formatAddress = (obj) => {
-    const streetAdd = obj.formatted;
-    const cityName = obj.locality.name;
-    const stateCode = obj.locality.state.code;
-    const zip = obj.locality.postal_code;
-
-    return streetAdd + ", " + cityName + ", " + stateCode + " " + zip;
-  };
-
   const handleMultiSelect = (e) => {
     const { name, value } = e.target;
     const selected = coopSearchSettings[name]
@@ -216,36 +206,13 @@ const Search = (props) => {
   // same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
-      return (
-        <>
-          <br/>
-          <ListGroup variant="flush">
-            <ListGroupItem key="header">
-              <h3 className="float-left font-weight-bold">
-                Matching Entities
-              </h3>
-              <h3 className="float-right font-weight-bold">
-                Edit
-              </h3>
-            </ListGroupItem>
-            {searchResults.map((item) => (
-              <ListGroupItem key={item.id} value={item.name}>
-                <div className="float-left">
-                  {item.name}
-                  <br />
-                  {formatAddress(item.addresses[0])}
-                </div>
-                <span className="float-right">
-                  <Link to={"/directory-additions-updates/" + item.id}>
-                    <PencilSquare color="royalblue" size={26} />
-                  </Link>
-                </span>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
-        </>
-      );
-    }
+
+         console.log(searchResults);
+         
+         return (
+           <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
+         )
+    };
   };
 
   return (

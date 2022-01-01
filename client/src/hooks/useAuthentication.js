@@ -7,6 +7,7 @@ const useAuthentication = () => {
 
   useEffect(() => {
     const auth_token = sessionStorage.getItem('token');
+    console.log("auth token: " + auth_token);
     updateAuthenticationState({
       type: 'field',
       fieldName: 'isAuthenticated',
