@@ -106,6 +106,7 @@ class CoopFactory(factory.DjangoModelFactory):
     phone = factory.SubFactory(PhoneContactMethodFactory)
     email = factory.SubFactory(EmailContactMethodFactory)
     web_site = "http://www.hello.com"
+    description = "a test coop"
 
     @factory.post_generation
     def addresses(self, create, extracted, **kwargs):
