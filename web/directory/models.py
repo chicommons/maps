@@ -126,7 +126,7 @@ class Coop(models.Model):
     phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
     email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
-    description = models.TextField()
+    description = models.TextField(null=True)
     approved = models.BooleanField(default=True, null=True)
 
 class CoopAddressTags(models.Model):
