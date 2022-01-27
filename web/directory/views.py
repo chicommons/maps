@@ -192,25 +192,6 @@ class CoopList(APIView):
         if serializer.is_valid():
             print("request data ...")
             print(request.data)
-            values = [
-                request.data['name'],
-                request.data['addresses'][0]['raw'],
-                '',
-                request.data['addresses'][0]['locality']['postal_code'],
-                request.data['addresses'][0]['locality']['name'],
-                request.data['addresses'][0]['locality']['state']['country']['name'],
-                request.data['web_site'],
-                '', # cnct
-                '', #cnct-pub
-                request.data['email']['email'],
-                '', # email pub
-                request.data['phone']['phone'],
-                '', # phone pub
-                request.data['types'][0]['name']
-            ]
-            svc = GoogleSheetService()
-            svc.append_to_sheet('ChiCommons_Directory', 4, values)
-            #
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -127,7 +127,7 @@ class Coop(models.Model):
     email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
     description = models.TextField(null=True)
-    approved = models.BooleanField(default=True, null=True)
+    approved = models.BooleanField(default=False, null=True)
 
 class CoopAddressTags(models.Model):
     # Retain referencing coop & address, but set "is_public" relation to NULL

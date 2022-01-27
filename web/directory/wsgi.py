@@ -10,7 +10,7 @@ import os
 sys.path.append(pathlib.Path(__file__).parent.parent.parent.absolute())
 
 # add the virtualenv site-packages path to the sys.path
-sys.path.append('/var/www/html/web/venv/lib/python3.6/site-packages')
+#sys.path.append('/var/www/html/web/venv/lib/python3.6/site-packages')
 
 # poiting to the project settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "directory.settings")
@@ -23,7 +23,10 @@ from django.core.wsgi import get_wsgi_application
 
 try:
     application = get_wsgi_application()
-except Exception:
+    print("loaded application! %s" % application) 
+except Exception as e:
+    print(e)
+    print("\n\n\nERROR !!!!!\n\n\n")
     # Error loading applications
     if 'mod_wsgi' in sys.modules:
         traceback.print_exc()
