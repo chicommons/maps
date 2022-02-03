@@ -15,7 +15,6 @@ urlpatterns = [
     path('coop_types/', views.CoopTypeList.as_view()),
     path('countries/', views.CountryList.as_view()),
     path('states/<country_code>', views.StateList.as_view()),
-    path('save_to_sheet_from_form/', views.save_to_sheet_from_form, name="save_to_sheet_from_form"),
     path('login', views.signin),
     path('user_info', views.user_info),
 ]
