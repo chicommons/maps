@@ -185,6 +185,7 @@ export default function DirectoryAddUpdate() {
           ? [coopResults.types.map((type) => type.name)]
           : []
       );
+      setDescEng(coopResults.description ? coopResults.description : "");
       setReqReason("Update existing record");
     } catch (error) {
       console.error(error);
@@ -236,7 +237,8 @@ export default function DirectoryAddUpdate() {
       email: {
         email : contactEmail
       },
-      web_site: websites
+      web_site: websites,
+      description: descEng
     };
 /*  
       street: street,
@@ -641,7 +643,7 @@ export default function DirectoryAddUpdate() {
                   type={"textarea"}
                   as={"textarea"}
                   title={"Entity Description (English)"}
-                  name={"desc_english"}
+                  name={"description"}
                   value={descEng}
                   placeholder={"Enter entity description (English)"}
                   handleChange={(e) => setDescEng(e.target.value)}
