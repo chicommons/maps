@@ -5,6 +5,7 @@ from directory.settings import SECRET_KEY
 from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -12,7 +13,6 @@ import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
 from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
@@ -36,11 +36,11 @@ def signin(request):
     if not signin_serializer.is_valid():
         return Response(signin_serializer.errors, status = HTTP_400_BAD_REQUEST)
 
-
     user = authenticate(
             username = signin_serializer.data['username'],
             password = signin_serializer.data['password'] 
         )
+    
     if not user:
         return Response({'detail': 'Invalid Credentials or activate account'}, status=HTTP_404_NOT_FOUND)
         
@@ -59,7 +59,7 @@ def signin(request):
 
 
 @api_view(["GET"])
-#@permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def user_info(request):
     return Response({
         'user': request.user.username,
@@ -79,7 +79,6 @@ def data(request):
     if type:
         coops = Coop.objects.get_by_type(type)
     elif contains:
-        print("containns:",contains)
         coops = Coop.objects.contains_type(contains.split(","))
 
     for coop in coops.order_by(Lower('name')):
@@ -111,6 +110,14 @@ def unapproved_coops(request):
     serializer = CoopSearchSerializer(coops, many=True)
     return Response(serializer.data)
 
+
+class CreateUserView(CreateAPIView):
+
+    model = User
+    permission_classes = [
+        IsAuthenticated
+    ]
+    serializer_class = UserSerializer
 
 class CoopList(APIView):
     """
@@ -149,8 +156,6 @@ class CoopList(APIView):
     def post(self, request, format=None):
         serializer = CoopSerializer(data=request.data)
         if serializer.is_valid():
-            print("request data ...")
-            print(request.data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
