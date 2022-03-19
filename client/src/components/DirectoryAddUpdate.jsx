@@ -267,7 +267,29 @@ export default function DirectoryAddUpdate() {
       formData,
       (errors) => {
         //setButtonDisabled(false);
-        setErrors(errors);
+
+        let newErrorObject = {};
+
+        // Required fields
+        if (errors.name) newErrorObject.coop_name = [errors.name]; 
+        if (errors.web_site) newErrorObject.websites = [errors.web_site];
+        if (errors.types) newErrorObject.entity_types = [errors.types.non_field_errors];
+        if (errors.description) newErrorObject.description = [errors.description]
+        
+        if (errors.email) {
+          newErrorObject.contact_email = [errors.email.email];
+          if (errors.phone && errors.email) {
+            newErrorObject.contact = ['Either contact phone or contact email is required.'];
+          }
+        }
+        if (errors.phone) {
+          newErrorObject.contact_phone = [errors.phone.phone];
+          if (errors.phone && errors.email) {
+            newErrorObject.contact = ['Either contact phone or contact email is required.'];
+          }
+        }
+
+        setErrors(newErrorObject);       
       },
       function (data) {
         const result = data;
