@@ -29,8 +29,8 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "NODE_ENV=development react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "NODE_ENV=development react-scripts --openssl-legacy-provider build",
     "build:test": "env-cmd -f .env.test react-scripts build",
     "build:prod": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",

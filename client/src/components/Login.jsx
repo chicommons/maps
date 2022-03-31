@@ -18,6 +18,9 @@ const Login = () => {
       body: JSON.stringify({username, password})
     }).then(resp => resp.json())
     .then(jsob => sessionStorage.setItem('token', jsob.token))
+    //TODO:: Only set Session token if login is successful
+    //TODO:: Add redirect after login
+    //TODO:: Error Handling
   }
 
   return(
@@ -54,6 +57,9 @@ const Login = () => {
         </div>
         <Button action={handleFormSubmit} type={"primary"} title={"Login"} />
       </FormGroup>
+      {
+        // <span className="center" >No account? <a href="/signup">Sign up</a> now.</span>
+      }
     </div>
   )
 }
