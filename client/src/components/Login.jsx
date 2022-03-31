@@ -17,7 +17,11 @@ const Login = () => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({username, password})
     }).then(resp => resp.json())
-    .then(jsob => sessionStorage.setItem('token', jsob.token))
+    .then(jsob => {
+      if(jsob.token){
+        sessionStorage.setItem('token', jsob.token)
+      }
+    })
     //TODO:: Only set Session token if login is successful
     //TODO:: Add redirect after login
     //TODO:: Error Handling
