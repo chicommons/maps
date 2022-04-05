@@ -392,18 +392,32 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'email', 'id', 'first_name', 'last_name')
+    
+    def validate(self, data):
+        errors = {}
+
+        # required fields
+        required_fields = ['username', 'password', 'email']
+        for field in required_fields:
+            if not data.get(field):
+                errors[field] = 'This field is required.'
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
 
     def create(self, validated_data):
-        print("validaed data: %s" % validated_data)
         user = User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            email=validated_data['email']
+            username=validated_data.get('username'),
+            password=validated_data.get('password'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
+            email=validated_data.get('email')
         )
 
         return user
+
 
 class UserSigninSerializer(serializers.Serializer):
     username = serializers.CharField(required = True)
