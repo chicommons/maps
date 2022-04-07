@@ -65,6 +65,8 @@ class Command(BaseCommand):
                     # '!= no' changed to '== yes' 11/18/21
                 if email.lower() == 'yes':
                     email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                if email.lower() == 'no':
+                    email=''
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
