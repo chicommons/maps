@@ -153,28 +153,28 @@ export default function DirectoryAddUpdate() {
 
       setCoopName(coopResults.name ? coopResults.name : "");
       setStreet(
-        coopResults.addresses[0].formatted
-          ? coopResults.addresses[0].formatted
+        coopResults.coopaddresstags_set[0].address.formatted
+          ? coopResults.coopaddresstags_set[0].address.formatted
           : ""
       );
       setCity(
-        coopResults.addresses[0].locality.name
-          ? coopResults.addresses[0].locality.name
+        coopResults.coopaddresstags_set[0].address.locality.name
+          ? coopResults.coopaddresstags_set[0].address.locality.name
           : ""
       );
       setState(
-        coopResults.addresses[0].locality.state.code
-          ? coopResults.addresses[0].locality.state.code
+        coopResults.coopaddresstags_set[0].address.locality.state.code
+          ? coopResults.coopaddresstags_set[0].address.locality.state.code
           : ""
       );
       setZip(
-        coopResults.addresses[0].locality.postal_code
-          ? coopResults.addresses[0].locality.postal_code
+        coopResults.coopaddresstags_set[0].address.locality.postal_code
+          ? coopResults.coopaddresstags_set[0].address.locality.postal_code
           : ""
       );
       setCountry(
-        coopResults.addresses[0].locality.state.country.code
-          ? coopResults.addresses[0].locality.state.country.code
+        coopResults.coopaddresstags_set[0].address.locality.state.country.code
+          ? coopResults.coopaddresstags_set[0].address.locality.state.country.code
           : ""
       );
       setWebsites(coopResults.web_site ? coopResults.web_site : "");
@@ -214,21 +214,24 @@ export default function DirectoryAddUpdate() {
     let formData = {
       name: coopName,
       types: result,
-      addresses: [
+      coopaddresstags_set: [
         {
-          raw: street,
-          formatted: street,
-          locality: {
-            name: city,
-            postal_code: zip,
-            state: {
-              name: state,
-              code: state,
-              country: {
-                name: 'United States'
-              }
+          is_public: true,
+          address: {
+            raw: street,
+            formatted: street,
+            locality: {
+              name: city,
+              postal_code: zip,
+              state: {
+                name: state,
+                code: state,
+                country: {
+                  name: 'United States'
+                }
+              },
             },
-          },
+          }
         }
       ],
       phone: {

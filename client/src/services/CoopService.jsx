@@ -8,8 +8,8 @@ class CoopService {
       })
       .then((data) => {
         const coop = data;
-        coop.addresses.map((address) => {
-          address.country = { code: address.locality.state.country.code };
+        coop.coopaddresstags_set.map((coopaddresstags) => {
+          coopaddresstags.address.country = { code: coopaddresstags.address.locality.state.country.code };
         });
         // Chop off first two characters of phone if
         // country code is included.
@@ -22,9 +22,9 @@ class CoopService {
 
   save(coop, setErrors, callback) {
     // Make a copy of the object in order to remove unneeded properties
-    coop.addresses[0].raw = coop.addresses[0].formatted;
+    coop.coopaddresstags_set[0].address.raw = coop.coopaddresstags_set[0].address.formatted;
     const NC = JSON.parse(JSON.stringify(coop));
-    delete NC.addresses[0].country;
+    delete NC.coopaddresstags_set[0].address.country;
     const body = JSON.stringify(NC);
     const url = coop.id
       ? REACT_APP_PROXY + "/coops/" + coop.id + "/"
