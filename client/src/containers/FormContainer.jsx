@@ -212,7 +212,6 @@ const FormContainer = (props) => {
   if (coopTypes && !coopTypes.length) {
     return null;
   }
-  console.log(props.coop.enabled);
   return (
     <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>

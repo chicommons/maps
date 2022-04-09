@@ -240,29 +240,9 @@ export default function DirectoryAddUpdate() {
       web_site: websites,
       description: descEng
     };
-/*  
-      street: street,
-      address_public: addressPublic,
-      city: city,
-      state: state,
-      zip: zip,
-      county: county,
-      country: country,
-      websites: websites,
-      contact_name: contactName,
-      contact_name_public: contactNamePublic,
-      contact_email: contactEmail,
-      contact_email_public: contactEmailPublic,
-      contact_phone: contactPhone,
-      contact_phone_public: contactPhonePublic,
-      entity_types: entityTypes.join(", "),
-      scope: scope,
-      tags: tags,
-      desc_english: descEng,
-      desc_other: descOther,
-      req_reason: reqReason,
-      id: id,
-*/
+
+    console.log("saving with id " + id);
+    
     CoopService.save(
       formData,
       (errors) => {
