@@ -467,6 +467,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class UserSigninSerializer(serializers.Serializer):
     username = serializers.CharField(required = True)
     password = serializers.CharField(required = True)

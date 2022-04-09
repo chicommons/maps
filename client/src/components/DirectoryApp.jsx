@@ -8,6 +8,7 @@ import Add from "./Add";
 import Edit from "./Edit";
 import Search from "./Search";
 import Login from "./Login";
+import NewUser from "./NewUser";
 import NoCoordsSearch from "./NoCoordsSearch";
 import DirectoryAddUpdate from "./DirectoryAddUpdate";
 import AddPerson from "./people/AddPerson";
@@ -32,7 +33,7 @@ const DirectoryApp = () => {
               <Link className="navbar-brand" to={"/add"}>
                 <img src={Logo} alt="Chicommons" />
               </Link>
-              <NavBar />
+              <NavBar authed={isAuthenticated}/>
             </div>
           </nav>
 
@@ -42,6 +43,7 @@ const DirectoryApp = () => {
                 <Switch>
                   <Route exact path="/" component={Map} />
                   <Route path="/login" component={Login} />
+                  <PrivateRoute authed={isAuthenticated} path="/signup" component={NewUser} />
                   <Route path="/add" component={Add} />
                   <Route path="/edit/:id" component={Edit} />
                   <Route path="/search" component={Search} />
@@ -59,7 +61,7 @@ const DirectoryApp = () => {
                     path="/directory-additions-updates/"
                     component={DirectoryAddUpdate}
                   />
-                  <PrivateRoute 
+                  <PrivateRoute
                   authed={isAuthenticated} path="/unapproved-list/"
                   component={UnapprovedList}
                   />
