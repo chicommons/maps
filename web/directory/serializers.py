@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework import serializers
-from directory.models import Coop, CoopType, ContactMethod, Person
+from directory.models import Coop, CoopType, ContactMethod, Person, CoopAddressTags
 from address.models import Address, Locality, State, Country
 from .services.location_service import LocationService
 import re
@@ -198,7 +198,6 @@ class AddressSerializer(serializers.ModelSerializer):
         """
         Create and return a new `Address` instance, given the validated data.
         """
-        print("arg type:",type(validated_data))
         return self.create_obj(validated_data)
 
     def update(self, instance, validated_data):
@@ -228,20 +227,52 @@ class AddressSerializer(serializers.ModelSerializer):
         return address
 
 
+class CoopAddressTagsSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
+
+    class Meta:
+        model = CoopAddressTags
+        fields = ['id', 'address', 'is_public']
+
+    def to_representation(self, instance):
+        print("type of instance: %s" % type(instance))
+        rep = super().to_representation(instance)
+        rep['address'] = AddressSerializer(instance.address).data
+        return rep
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `AddresssField` instance, given the validated data.
+        """
+        instance.is_public = validated_data.get('is_public', instance.is_public)
+        address = validated_data.get('address')
+        instance.address = serializer.create_obj(validated_data=address)
+        instance.save()
+        return instance
+
+    def create_obj(self, validated_data):
+        address_data = validated_data.pop('address', {})
+        serializer = AddressSerializer()
+        addr = serializer.create_obj(validated_data=address_data)
+        validated_data['address'] = addr
+        coop_object = Coop.objects.get(id=validated_data['coop_id'])
+        return CoopAddressTags.objects.create(coop=coop_object, **validated_data)
+
+
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
-    addresses = AddressSerializer(many=True)
+    coopaddresstags_set = CoopAddressTagsSerializer(many=True)
     phone = ContactMethodPhoneSerializer()
     email = ContactMethodEmailSerializer()
 
     class Meta:
         model = Coop
-        fields = '__all__'
+        fields = ['name', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['types'] = CoopTypeSerializer(instance.types.all(), many=True).data
-        rep['addresses'] = AddressSerializer(instance.addresses.all(), many=True).data
+        rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
         return rep
 
     def create(self, validated_data):
@@ -258,7 +289,7 @@ class CoopSerializer(serializers.ModelSerializer):
 
     def save_obj(self, validated_data, instance=None):
         coop_types = validated_data.pop('types', {})
-        addresses = validated_data.pop('addresses', {})
+        addresses = validated_data.pop('coopaddresstags_set', {})
         phone = validated_data.pop('phone', {})
         email = validated_data.pop('email', {})
         if not instance:
@@ -268,14 +299,16 @@ class CoopSerializer(serializers.ModelSerializer):
             instance.types.add(coop_type)
         instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
         instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
-        for address in addresses:
-            serializer = AddressSerializer()
-            addr = serializer.create_obj(validated_data=address)
-            instance.addresses.add(addr)
-            self.update_coords(addr)
+        
         instance.name = validated_data.pop('name', None)
         instance.web_site = validated_data.pop('web_site', None)
         instance.save()
+        for address in addresses:
+            serializer = CoopAddressTagsSerializer()
+            address['coop_id'] = instance.id
+            addr_tag = serializer.create_obj(validated_data=address)
+            result = addr_tag.save()
+            instance.coopaddresstags_set.add(addr_tag)
         return instance
 
     # Set address coordinate data
@@ -283,6 +316,22 @@ class CoopSerializer(serializers.ModelSerializer):
     def update_coords(address):
         svc = LocationService()
         svc.save_coords(address)
+
+
+class CoopProposedChangeSerializer(serializers.ModelSerializer):
+    """
+    This Coop serializer handles proposed changes to a coop.
+    """
+
+    class Meta:
+        model = Coop
+        fields = 'id', 'proposed_change'
+
+    #def to_representation(self, instance):
+    #    rep = super().to_representation(instance)
+    #    rep['addresses'] = AddressSerializer(instance.addresses.all(), many=True).data
+    #    return rep
+
 
 class PersonSerializer(serializers.ModelSerializer):
     #coops = CoopSerializer(many=True)
@@ -333,11 +382,11 @@ class CoopSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = 'id', 'name', 'addresses'
+        fields = 'id', 'name', 'coopaddresstags_set'
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['addresses'] = AddressSerializer(instance.addresses.all(), many=True).data
+        rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
         return rep
 
 class ValidateNewCoopSerializer(serializers.Serializer):
@@ -392,15 +441,28 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'email', 'id', 'first_name', 'last_name')
+    
+    def validate(self, data):
+        errors = {}
+
+        # required fields
+        required_fields = ['username', 'password', 'email']
+        for field in required_fields:
+            if not data.get(field):
+                errors[field] = 'This field is required.'
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
 
     def create(self, validated_data):
-        print("validaed data: %s" % validated_data)
         user = User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            email=validated_data['email']
+            username=validated_data.get('username'),
+            password=validated_data.get('password'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
+            email=validated_data.get('email')
         )
 
         return user

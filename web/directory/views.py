@@ -178,7 +178,7 @@ class CoopDetail(APIView):
 
     def put(self, request, pk, format=None):
         coop = self.get_object(pk)
-        serializer = CoopSerializer(coop, data=request.data)
+        serializer = CoopProposedChangeSerializer(coop, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

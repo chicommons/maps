@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from address.models import Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
+from datetime import datetime
 
 
 class ContactMethod(models.Model):
@@ -128,12 +129,22 @@ class Coop(models.Model):
     web_site = models.TextField()
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
+    proposed = models.JSONField("Proposed Changes", null=True)
+
+    def apply_proposed_changes(self):
+       proposed = self.proposed
+       self.name = proposed.get('name')
+       for type in proposed.get('types'):
+           self.types.add(CoopType.objects.get(name=type))
+       #for address in proposed.get('addresses'):
+       #    self.addresses.add(CoopType.objects.get(name=address))
+       self.save()  
 
 class CoopAddressTags(models.Model):
     # Retain referencing coop & address, but set "is_public" relation to NULL
     coop = models.ForeignKey(Coop, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    address_is_public = models.BooleanField(default=True, null=False)
+    is_public = models.BooleanField(default=True, null=False)
 
 class Person(models.Model):
     first_name = models.CharField(max_length=250, null=False)
