@@ -32,7 +32,7 @@ const RenderCoopList = (props) => {
                 <div className="float-left">
                   {item.name}
                   <br />
-                  {formatAddress(item.addresses[0])}
+                  {formatAddress(item.coopaddresstags_set[0].address)}
                 </div>
                 <span className="float-right">
                   <Link to={props.link + item.id}>

@@ -18,9 +18,6 @@ const Edit = (props) => {
   useEffect(() => {
     if (coop == null) {
       CoopService.getById(id, function (data) {
-        //data.addresses.map((address) => {
-        //  address.locality.state = address.locality.state.id;
-        //});
         setCoop(data);
       });
     }

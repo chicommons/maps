@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from address.models import Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
+from datetime import datetime
 
 
 class ContactMethod(models.Model):
@@ -12,6 +13,7 @@ class ContactMethod(models.Model):
         EMAIL = 'EMAIL', _('Email')
         PHONE = 'PHONE', _('Phone')
 
+    is_public = models.BooleanField(default=True, null=False)
     type = models.CharField(
         null=False,
         max_length=5,
@@ -48,12 +50,12 @@ class CoopManager(models.Manager):
         return qset
 
     def find(
-        self, 
-        partial_name, 
-        types_arr=None, 
-        enabled=None, 
-        city=None, 
-        zip=None, 
+        self,
+        partial_name,
+        types_arr=None,
+        enabled=None,
+        city=None,
+        zip=None,
         street=None,
         state_abbrev=None
     ):
@@ -80,7 +82,7 @@ class CoopManager(models.Manager):
         if state_abbrev != None:
             q &= Q(addresses__locality__state__code=state_abbrev)
             q &= Q(addresses__locality__state__country__code="US")
-               
+
         queryset = Coop.objects.filter(q)
         print(queryset.query)
         return queryset
@@ -94,7 +96,7 @@ class CoopManager(models.Manager):
         queryset = Coop.objects.filter(filter,
                                        enabled=True)
         return queryset
- 
+
     def find_wo_coords(self):
         """
         Look up coops with addresses that don't have either a latitude
@@ -120,13 +122,30 @@ class Coop(models.Model):
     objects = CoopManager()
     name = models.CharField(max_length=250, null=False)
     types = models.ManyToManyField(CoopType, blank=False)
-    addresses = models.ManyToManyField(Address)
+    addresses = models.ManyToManyField(Address, through='CoopAddressTags')
     enabled = models.BooleanField(default=True, null=False)
     phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
     email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
+    description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
+    proposed_changes = models.JSONField("Proposed Changes", null=True)
 
+    def apply_proposed_changes(self):
+       proposed = self.proposed_changes
+       self.name = proposed.get('name')
+       self.web_site = proposed.get('web_site')
+       for type in proposed.get('types'):
+           self.types.add(CoopType.objects.get(name=type))
+       #for address in proposed.get('coopaddresstags_set'):
+       #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
+       self.save()  
+
+class CoopAddressTags(models.Model):
+    # Retain referencing coop & address, but set "is_public" relation to NULL
+    coop = models.ForeignKey(Coop, on_delete=models.SET_NULL, null=True)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+    is_public = models.BooleanField(default=True, null=False)
 
 class Person(models.Model):
     first_name = models.CharField(max_length=250, null=False)
@@ -156,5 +175,3 @@ class LocalityCustomManager(models.Manager):
         return Locality.objects.get_or_create(name=city, postal_code=postal_code, state=state)[0]
 
 #setattr(Locality._meta, 'default_manager', LocalityCustomManager())
-
-

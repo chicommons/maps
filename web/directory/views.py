@@ -5,6 +5,7 @@ from directory.settings import SECRET_KEY
 from directory.services.google_sheet_service import GoogleSheetService
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -12,7 +13,6 @@ import csv
 from django.http import HttpResponse
 from django.db.models.functions import Lower
 from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
@@ -36,11 +36,11 @@ def signin(request):
     if not signin_serializer.is_valid():
         return Response(signin_serializer.errors, status = HTTP_400_BAD_REQUEST)
 
-
     user = authenticate(
             username = signin_serializer.data['username'],
             password = signin_serializer.data['password'] 
         )
+    
     if not user:
         return Response({'detail': 'Invalid Credentials or activate account'}, status=HTTP_404_NOT_FOUND)
         
@@ -59,7 +59,7 @@ def signin(request):
 
 
 @api_view(["GET"])
-#@permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 def user_info(request):
     return Response({
         'user': request.user.username,
@@ -79,7 +79,6 @@ def data(request):
     if type:
         coops = Coop.objects.get_by_type(type)
     elif contains:
-        print("containns:",contains)
         coops = Coop.objects.contains_type(contains.split(","))
 
     for coop in coops.order_by(Lower('name')):
@@ -111,47 +110,14 @@ def unapproved_coops(request):
     serializer = CoopSearchSerializer(coops, many=True)
     return Response(serializer.data)
 
-@api_view(('POST',))
-def save_to_sheet_from_form(request):
-    """
-    This is supposed to write to a Google sheet given a form coming from
-    the client.
-    """
-    valid_ser = ValidateNewCoopSerializer(data=request.data)
-    if valid_ser.is_valid():
-        post_data = valid_ser.validated_data
-        values = [
-            post_data['id'] if 'id' in post_data else '',
-            post_data['coop_name'],
-            post_data['street'],
-            post_data['address_public'],
-            post_data['zip'],
-            post_data['city'],
-            post_data['county'],
-            post_data['state'],
-            post_data['country'],
-            post_data['websites'],
-            post_data['contact_name'], # cnct
-            post_data['contact_name_public'], #cnct-pub
-            post_data['contact_email'],
-            post_data['contact_email_public'], # email pub
-            post_data['contact_phone'],
-            post_data['contact_phone_public'],
-            post_data['entity_types'],
-            '', # ent-include
-            '', # disp-addr-zip
-            '', # disp-output
-            post_data['scope'],
-            post_data['tags'],
-            post_data['desc_english'],
-            post_data['desc_other'],
-            post_data['req_reason'],
-        ]
-        svc = GoogleSheetService()
-        svc.append_to_sheet('ChiCommons_Directory', 4, values)
-        return Response(post_data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(valid_ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CreateUserView(CreateAPIView):
+
+    model = User
+    permission_classes = [
+        IsAuthenticated
+    ]
+    serializer_class = UserSerializer
 
 class CoopList(APIView):
     """
@@ -190,8 +156,6 @@ class CoopList(APIView):
     def post(self, request, format=None):
         serializer = CoopSerializer(data=request.data)
         if serializer.is_valid():
-            print("request data ...")
-            print(request.data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -215,6 +179,14 @@ class CoopDetail(APIView):
     def put(self, request, pk, format=None):
         coop = self.get_object(pk)
         serializer = CoopSerializer(coop, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk, format=None):
+        coop = self.get_object(pk)
+        serializer = CoopProposedChangeSerializer(coop, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

@@ -1,5 +1,5 @@
 # maps
-
+     
 ## Copy credentials.json file
 
 In order to interact with the Google spreadsheet, where some of the data gets stored and read from, you will need a file named "credentials.json," which you will need to copy to the following directory
@@ -70,6 +70,15 @@ cd web/scripts
 ```
 
 to create a virtual enviroonment, install the application, and create and seed the database.  The script will prompt you for your root Postgres password so that it can create the database.
+
+### Create a super user with which to login
+
+If you ran the "install_local.sh" script above, you can skip this step as the script did it for you.  Otherwise, to create a sample user with whom you can login, run these commands from within the "web" directory:
+
+```
+. venv/bin/activate
+DJANGO_SUPERUSER_PASSWORD=password python manage.py createsuperuser --no-input --username=chicommons --email=chicommons@chicommons.com
+```
 
 ### Run the Python app
 

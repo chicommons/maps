@@ -63,4 +63,6 @@ python3 -m pip install -r requirements.txt
 python3 manage.py migrate 
 python3 manage.py insert_seed_data
  
+# Create a chicommons super user
+DJANGO_SUPERUSER_PASSWORD=password python manage.py createsuperuser --no-input --username=chicommons --email=chicommons@chicommons.com
  

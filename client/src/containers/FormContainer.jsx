@@ -212,7 +212,6 @@ const FormContainer = (props) => {
   if (coopTypes && !coopTypes.length) {
     return null;
   }
-  console.log(props.coop.enabled);
   return (
     <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>
@@ -245,8 +244,8 @@ const FormContainer = (props) => {
             className={"required"}
             inputType={"text"}
             title={"Street"}
-            name={"addresses[0].formatted"}
-            value={coop.addresses[0].formatted}
+            name={"coopaddresstags_set[0].address.formatted"}
+            value={coop.coopaddresstags_set[0].address.formatted}
             placeholder={"Enter address street"}
             handleChange={handleInput}
             errors={errors}
@@ -257,8 +256,8 @@ const FormContainer = (props) => {
             className={"required"}
             inputType={"text"}
             title={"City"}
-            name={"addresses[0].locality.name"}
-            value={coop.addresses[0].locality.name}
+            name={"coopaddresstags_set[0].address.locality.name"}
+            value={coop.coopaddresstags_set[0].address.REACT_APP_PROXYlocality.name}
             placeholder={"Enter address city"}
             handleChange={handleInput}
             errors={errors}
@@ -268,9 +267,9 @@ const FormContainer = (props) => {
           <Country
             className={"required"}
             title={"Country"}
-            name={"addresses[0].locality.state.country.code"}
+            name={"coopaddresstags_set[0].address.locality.state.country.code"}
             options={countries}
-            countryCode={coop.addresses[0].locality.state.country.code}
+            countryCode={coop.coopaddresstags_set[0].address.locality.state.country.code}
             placeholder={"Select Country"}
             handleChange={handleInput}
             style={inputStyle}
@@ -279,9 +278,9 @@ const FormContainer = (props) => {
           <Province
             className={"required"}
             title={"State"}
-            name={"addresses[0].locality.state.name"}
+            name={"coopaddresstags_set[0].address.locality.state.name"}
             options={provinces}
-            value={coop.addresses[0].locality.state.code}
+            value={coop.coopaddresstags_set[0].address.locality.state.code}
             placeholder={"Select State"}
             handleChange={handleProvinceChange}
             style={inputStyle}
@@ -291,18 +290,18 @@ const FormContainer = (props) => {
             className={"required"}
             inputType={"text"}
             title={"Postal Code"}
-            name={"addresses[0].locality.postal_code"}
-            value={coop.addresses[0].locality.postal_code}
+            name={"coopaddresstags_set[0].address.locality.postal_code"}
+            value={coop.coopaddresstags_set[0].address.locality.postal_code}
             placeholder={"Enter postal code"}
             handleChange={handleInput}
             errors={errors}
             style={inputStyle}
           />{" "}
           {/* Address postal code of the cooperative */}
-          {coop.addresses[0]?.latitude && coop.addresses[0]?.longitude && (
+          {coop.coopaddresstags_set[0].address?.latitude && coop.coopaddresstags_set[0].address?.longitude && (
             <div>
-              Lat: {coop.addresses[0]?.latitude.toFixed(3)} Lon:{" "}
-              {coop.addresses[0]?.longitude.toFixed(3)}
+              Lat: {coop.coopaddresstags_set[0].address?.latitude.toFixed(3)} Lon:{" "}
+              {coop.coopaddresstags_set[0].address?.longitude.toFixed(3)}
             </div>
           )}
           <Input

@@ -183,28 +183,28 @@ export default function DirectoryAddUpdate() {
 
       setCoopName(coopResults.name ? coopResults.name : "");
       setStreet(
-        coopResults.addresses[0].formatted
-          ? coopResults.addresses[0].formatted
+        coopResults.coopaddresstags_set[0].address.formatted
+          ? coopResults.coopaddresstags_set[0].address.formatted
           : ""
       );
       setCity(
-        coopResults.addresses[0].locality.name
-          ? coopResults.addresses[0].locality.name
+        coopResults.coopaddresstags_set[0].address.locality.name
+          ? coopResults.coopaddresstags_set[0].address.locality.name
           : ""
       );
       setState(
-        coopResults.addresses[0].locality.state.code
-          ? coopResults.addresses[0].locality.state.code
+        coopResults.coopaddresstags_set[0].address.locality.state.code
+          ? coopResults.coopaddresstags_set[0].address.locality.state.code
           : ""
       );
       setZip(
-        coopResults.addresses[0].locality.postal_code
-          ? coopResults.addresses[0].locality.postal_code
+        coopResults.coopaddresstags_set[0].address.locality.postal_code
+          ? coopResults.coopaddresstags_set[0].address.locality.postal_code
           : ""
       );
       setCountry(
-        coopResults.addresses[0].locality.state.country.code
-          ? coopResults.addresses[0].locality.state.country.code
+        coopResults.coopaddresstags_set[0].address.locality.state.country.code
+          ? coopResults.coopaddresstags_set[0].address.locality.state.country.code
           : ""
       );
       setWebsites(coopResults.web_site ? coopResults.web_site : "");
@@ -215,6 +215,7 @@ export default function DirectoryAddUpdate() {
           ? [coopResults.types.map((type) => type.name)]
           : []
       );
+      setDescEng(coopResults.description ? coopResults.description : "");
       setReqReason("Update existing record");
     } catch (error) {
       console.error(error);
@@ -246,23 +247,27 @@ export default function DirectoryAddUpdate() {
 
     let result = entityTypes.map(type => ({name: type}));
     let formData = {
+      id: id,
       name: coopName,
       types: result,
-      addresses: [
+      coopaddresstags_set: [
         {
-          raw: street,
-          formatted: street,
-          locality: {
-            name: city,
-            postal_code: zip,
-            state: {
-              name: state,
-              code: state,
-              country: {
-                name: 'United States'
-              }
+          is_public: true,
+          address: {
+            raw: street,
+            formatted: street,
+            locality: {
+              name: city,
+              postal_code: zip,
+              state: {
+                name: state,
+                code: state,
+                country: {
+                  name: 'United States'
+                }
+              },
             },
-          },
+          }
         }
       ],
       phone: {
@@ -271,32 +276,13 @@ export default function DirectoryAddUpdate() {
       email: {
         email : contactEmail
       },
-      web_site: websites
+      web_site: websites,
+      description: descEng
     };
-/*  
-      street: street,
-      address_public: addressPublic,
-      city: city,
-      state: state,
-      zip: zip,
-      county: county,
-      country: country,
-      websites: websites,
-      contact_name: contactName,
-      contact_name_public: contactNamePublic,
-      contact_email: contactEmail,
-      contact_email_public: contactEmailPublic,
-      contact_phone: contactPhone,
-      contact_phone_public: contactPhonePublic,
-      entity_types: entityTypes.join(", "),
-      scope: scope,
-      tags: tags,
-      desc_english: descEng,
-      desc_other: descOther,
-      req_reason: reqReason,
-      id: id,
-*/
-    CoopService.save(
+
+    console.log("saving with id " + id);
+    
+    CoopService.saveAsConsumer(
       formData,
       (errors) => {
         //setButtonDisabled(false);
@@ -677,7 +663,7 @@ export default function DirectoryAddUpdate() {
                   type={"textarea"}
                   as={"textarea"}
                   title={"Entity Description (English)"}
-                  name={"desc_english"}
+                  name={"description"}
                   value={descEng}
                   placeholder={"Enter entity description (English)"}
                   handleChange={(e) => setDescEng(e.target.value)}

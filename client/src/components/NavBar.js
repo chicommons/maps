@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import HamburgerMenu from "react-hamburger-menu";
 import { isMobile } from "react-device-detect";
+import { useAuthentication } from "../hooks"
 import "./NavBar.css";
 
 class NavBar extends Component {
@@ -63,11 +64,18 @@ class NavBar extends Component {
             Return
           </a>
         </li>
+        {!this.props.authed ?
         <li className="nav-link">
           <NavLink to="/login" className="nav-link">
               Login
           </NavLink>
         </li>
+        :
+        <li className="nav-link">
+          <NavLink to="/signup" className="nav-link">
+              New User
+          </NavLink>
+        </li>}
       </ul>
     );
   };
