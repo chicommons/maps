@@ -92,6 +92,36 @@ export default function DirectoryAddUpdate() {
     setErrors();
   }
 
+  // TEST OBJECT
+  const testObject = {
+    coop_name: "Almond Gallery",
+    street: "1000 N California Ave",
+    city: "Aurora"
+  }
+
+  const checkExistingEntity = () => {
+    console.log('test check existing entity!');
+    console.log(testObject.coop_name);
+
+    let formElements = document.querySelectorAll('.form-control');
+
+    formElements.forEach(input => {
+ 
+      if (testObject.hasOwnProperty(input.name)  && (testObject[input.name] !== input.value)) {
+
+        input.style.borderColor = 'red';
+
+        var text = document.createTextNode("This is my caption.");
+        let newText = document.createElement('span');
+        newText.classList.add('old-data');
+        newText.innerHTML = `Previously: <em>${testObject[input.name]}</em>`;
+        input.parentNode.insertBefore(newText, input.nextSibling);
+      
+        
+      }; 
+    })
+  }
+
   // Check required fields to see if they're still blank 
   const requiredFields = [coopName, websites, contactName, contactEmail, contactPhone, entityTypes];
 
@@ -191,6 +221,11 @@ export default function DirectoryAddUpdate() {
       setLoadErrors(`Error: ${error.message}`);
     } finally {
       setLoadingCoopData(false);
+
+      if (location.pathname.includes("approve")) {
+        setApprovalForm(true);
+        checkExistingEntity();
+      }
     }
   };
 
@@ -326,6 +361,7 @@ export default function DirectoryAddUpdate() {
 
     if (id) {
       console.log("there is an id");
+
       console.log(location.pathname.includes("approve"));
 
       if (location.pathname.includes("approve")) {
@@ -354,7 +390,7 @@ export default function DirectoryAddUpdate() {
 
       <h2 className="form__desc">
         {approvalForm ? 
-          <>This is the approval form.</>
+          <>For approving new or existing coops. If existing coop, updated data will be shown in red.</>
         : 
           <>Use this form to add or request the update of a solidarity entity or
           cooperative. We'll contact you to confirm the information</>
