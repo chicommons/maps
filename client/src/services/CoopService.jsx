@@ -57,6 +57,44 @@ class CoopService {
       });
   }
 
+  update(coop, setErrors, callback) {
+    // Make a copy of the object in order to remove unneeded properties
+    coop.coopaddresstags_set[0].address.raw = coop.coopaddresstags_set[0].address.formatted;
+    const NC = JSON.parse(JSON.stringify(coop));
+    delete NC.coopaddresstags_set[0].address.country;
+    const body = JSON.stringify({
+      id: coop.id,
+      proposed_changes: JSON.stringify(NC)
+    });
+    const url = REACT_APP_PROXY + "/coops/" + coop.id + "/";
+    const method = "PATCH";
+    fetch(url, {
+      method: method,
+      body: body,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      })
+      .then((data) => {
+        callback(data);
+      })
+      .catch((err) => {
+        console.log("errors ...");
+        err.text().then((errorMessage) => {
+          console.log(JSON.parse(errorMessage));
+          setErrors(JSON.parse(errorMessage));
+        });
+      });
+  }
+
   saveToGoogleSheet(body, setErrors, callback) {
     // Make a copy of the object in order to remove unneeded properties
     const url = REACT_APP_PROXY + "/save_to_sheet_from_form/";
