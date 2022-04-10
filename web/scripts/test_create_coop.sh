@@ -36,6 +36,7 @@ read -d '' req << EOF
         "email": {
           "email" : "myemail@example.com"
         },
+        "description": "My Coop Description",
         "web_site": "http://www.1871.com/"
 }
 EOF
