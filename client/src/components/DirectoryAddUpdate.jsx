@@ -212,6 +212,7 @@ export default function DirectoryAddUpdate() {
 
     let result = entityTypes.map(type => ({name: type}));
     let formData = {
+      id: id,
       name: coopName,
       types: result,
       coopaddresstags_set: [
@@ -246,7 +247,7 @@ export default function DirectoryAddUpdate() {
 
     console.log("saving with id " + id);
     
-    CoopService.save(
+    CoopService.saveAsConsumer(
       formData,
       (errors) => {
         //setButtonDisabled(false);

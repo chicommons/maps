@@ -129,15 +129,16 @@ class Coop(models.Model):
     web_site = models.TextField()
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
-    proposed = models.JSONField("Proposed Changes", null=True)
+    proposed_changes = models.JSONField("Proposed Changes", null=True)
 
     def apply_proposed_changes(self):
-       proposed = self.proposed
+       proposed = self.proposed_changes
        self.name = proposed.get('name')
+       self.web_site = proposed.get('web_site')
        for type in proposed.get('types'):
            self.types.add(CoopType.objects.get(name=type))
-       #for address in proposed.get('addresses'):
-       #    self.addresses.add(CoopType.objects.get(name=address))
+       #for address in proposed.get('coopaddresstags_set'):
+       #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
        self.save()  
 
 class CoopAddressTags(models.Model):

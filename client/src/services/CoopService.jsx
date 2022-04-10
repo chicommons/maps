@@ -20,6 +20,14 @@ class CoopService {
       });
   }
 
+  saveAsConsumer(coop, setErrors, callback) {
+    if (coop.id) {
+      this.update(coop, setErrors, callback)
+    } else {
+      this.save(coop, setErrors, callback);
+    }
+  }
+
   save(coop, setErrors, callback) {
     // Make a copy of the object in order to remove unneeded properties
     coop.coopaddresstags_set[0].address.raw = coop.coopaddresstags_set[0].address.formatted;
@@ -64,7 +72,7 @@ class CoopService {
     delete NC.coopaddresstags_set[0].address.country;
     const body = JSON.stringify({
       id: coop.id,
-      proposed_changes: JSON.stringify(NC)
+      proposed_changes: NC
     });
     const url = REACT_APP_PROXY + "/coops/" + coop.id + "/";
     const method = "PATCH";

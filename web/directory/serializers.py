@@ -267,7 +267,7 @@ class CoopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = ['name', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set']
+        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -322,10 +322,15 @@ class CoopProposedChangeSerializer(serializers.ModelSerializer):
     """
     This Coop serializer handles proposed changes to a coop.
     """
-
     class Meta:
         model = Coop
-        fields = 'id', 'proposed_change'
+        fields = ['id', 'proposed_changes']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        #rep['types'] = CoopTypeSerializer(instance.types.all(), many=True).data
+        #rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
+        return rep
 
     #def to_representation(self, instance):
     #    rep = super().to_representation(instance)
