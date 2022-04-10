@@ -57,11 +57,16 @@ class Command(BaseCommand):
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
                 try:
-                    email_pub = row['ent-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    # 'email_pub' changed to 'email' 11/18/21
+                    email = row['ent-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
-                    email_pub =  'yes'
-                if email_pub.lower() != 'no':
+                    # 'email_pub' changed to 'email' 11/18/21
+                    email =  'yes'
+                    # '!= no' changed to '== yes' 11/18/21
+                if email.lower() == 'yes':
                     email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                if email.lower() == 'no':
+                    email=''
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
