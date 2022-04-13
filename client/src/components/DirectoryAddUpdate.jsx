@@ -178,11 +178,11 @@ export default function DirectoryAddUpdate() {
           : ""
       );
       setWebsites(coopResults.web_site ? coopResults.web_site : "");
-      setContactEmail(coopResults.email ? coopResults.email : "");
+      setContactEmail(coopResults.email ? coopResults.email.email : "");
       setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
       setEntityTypes(
         [coopResults.types[0]]
-          ? [coopResults.types.map((type) => type.name)]
+          ? coopResults.types.map((type) => type.name)
           : []
       );
       setDescEng(coopResults.description ? coopResults.description : "");
