@@ -150,7 +150,7 @@ export default function DirectoryAddUpdate() {
         throw Error("Cannot access requested entity.");
       }
       const coopResults = await res.json();
-
+      
       setCoopName(coopResults.name ? coopResults.name : "");
       setStreet(
         coopResults.coopaddresstags_set[0].address.formatted
@@ -178,7 +178,7 @@ export default function DirectoryAddUpdate() {
           : ""
       );
       setWebsites(coopResults.web_site ? coopResults.web_site : "");
-      setContactEmail(coopResults.email ? coopResults.email : "");
+      setContactEmail(coopResults.email ? coopResults.email.email : "");
       setContactPhone(coopResults.phone ? coopResults.phone.phone : "");
       setEntityTypes(
         [coopResults.types[0]]
