@@ -22,6 +22,7 @@ import CancelButton from "./CancelButton";
 const { REACT_APP_PROXY } = process.env;
 
 export default function DirectoryAddUpdate() {
+  const [coopObj, setCoopObj] = useState({});
   const [coopName, setCoopName] = useState("");
   const [street, setStreet] = useState("");
   const [addressPublic, setAddressPublic] = useState(DEFAULT_FORM_YES_NO);
@@ -43,6 +44,8 @@ export default function DirectoryAddUpdate() {
   const [descEng, setDescEng] = useState("");
   const [descOther, setDescOther] = useState("");
   const [reqReason, setReqReason] = useState("Add new record");
+
+
 
   // Holds country and state list
   const [countries, setCountries] = React.useState([]);
@@ -92,32 +95,72 @@ export default function DirectoryAddUpdate() {
     setErrors();
   }
 
-  // TEST OBJECT
-  const testObject = {
-    coop_name: "Almond Gallery",
-    street: "1000 N California Ave",
-    city: "Aurora"
+  const oldValues = {};
+
+  function convertProposedChanges() {
+    if (coopObj.proposed_changes.name) {
+      oldValues.coop_name = coopName;
+      setCoopName(coopObj.proposed_changes.name);
+    }
+    if (coopObj.proposed_changes.email.email) {
+      oldValues.contact_email = contactEmail;
+      setContactEmail(coopObj.proposed_changes.email.email);
+    }
+    if (coopObj.proposed_changes.phone.phone) {
+      oldValues.contact_phone = contactPhone;
+      setContactPhone(coopObj.proposed_changes.phone.phone);
+    }
+    if (coopObj.proposed_changes.types) {
+      oldValues.entity_types = entityTypes;
+      setEntityTypes(coopObj.proposed_changes.types.map(item => item.name));
+    }
+
+    // Should this be set up for multiple sites?
+    if (coopObj.proposed_changes.web_site) {
+      oldValues.websites = websites;
+      setWebsites(coopObj.proposed_changes.web_site);
+    }
+
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.formatted) {
+      oldValues.street = street;
+      setStreet(coopObj.proposed_changes.coopaddresstags_set[0].address.formatted);
+    }
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.name) {
+      oldValues.city = city;
+      setCity(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.name);
+    }
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.state.code) {
+      oldValues.state = state;
+      setState(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.state.code);
+    }
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.postal_code) {
+      oldValues.zip = zip;
+      setZip(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.postal_code);
+    }
+    if (coopObj.proposed_changes.coopaddresstags_set[0].is_public) {
+      oldValues.address_public = addressPublic;
+      setAddressPublic(coopObj.proposed_changes.coopaddresstags_set[0].is_public);
+    }
+    if (coopObj.proposed_changes.description) {
+      oldValues.description = descEng;
+      setDescEng(coopObj.proposed_changes.description);
+    }
   }
 
-  const checkExistingEntity = () => {
-    console.log('test check existing entity!');
-    console.log(testObject.coop_name);
+  function checkExistingEntity() {
+    if (coopObj.proposed_changes) {
+      convertProposedChanges();
+    }
 
     let formElements = document.querySelectorAll('.form-control');
 
     formElements.forEach(input => {
- 
-      if (testObject.hasOwnProperty(input.name)  && (testObject[input.name] !== input.value)) {
-
+      if (oldValues.hasOwnProperty(input.name)) {
         input.style.borderColor = 'red';
-
-        var text = document.createTextNode("This is my caption.");
         let newText = document.createElement('span');
         newText.classList.add('old-data');
-        newText.innerHTML = `Previously: <em>${testObject[input.name]}</em>`;
+        newText.innerHTML = `Previously: <em>${oldValues[input.name] ? oldValues[input.name] : "Not filled"}</em>`;
         input.parentNode.insertBefore(newText, input.nextSibling);
-      
-        
       }; 
     })
   }
@@ -217,6 +260,7 @@ export default function DirectoryAddUpdate() {
       );
       setDescEng(coopResults.description ? coopResults.description : "");
       setReqReason("Update existing record");
+      setCoopObj(coopResults);
     } catch (error) {
       console.error(error);
       setLoadErrors(`Error: ${error.message}`);
@@ -225,7 +269,6 @@ export default function DirectoryAddUpdate() {
 
       if (location.pathname.includes("approve")) {
         setApprovalForm(true);
-        checkExistingEntity();
       }
     }
   };
@@ -357,6 +400,12 @@ export default function DirectoryAddUpdate() {
       fetchCoopForUpdate();
     }
   }, []);
+
+  useEffect(() => {
+    if (location.pathname.includes("approve")) {
+      checkExistingEntity();
+    }
+  }, [coopObj]);
 
   // Checking required field changes with useEffect.
   useEffect(() => {
