@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 try:
                     phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
-                    phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 if phone_pub.lower() != 'no':
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
@@ -71,6 +71,7 @@ class Command(BaseCommand):
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(id) 
+                # need to use flag: ent-adrs-pub to decide whether to publish
                 enabled = row['ent-include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
