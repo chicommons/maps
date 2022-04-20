@@ -72,7 +72,9 @@
   content: " *";
 }
 
-.form input.new-data {
+.form input.new-data,
+.form select.new-data, 
+.form textarea.new-data {
   border-color: red;
 }
 

@@ -98,50 +98,50 @@ export default function DirectoryAddUpdate() {
   const oldValues = {};
 
   function convertProposedChanges() {
-    if (coopObj.proposed_changes.name) {
+    if (coopObj.proposed_changes.name !== coopName) {
       oldValues.coop_name = coopName;
       setCoopName(coopObj.proposed_changes.name);
     }
-    if (coopObj.proposed_changes.email.email) {
+    if (coopObj.proposed_changes.email.email !== contactEmail) {
       oldValues.contact_email = contactEmail;
       setContactEmail(coopObj.proposed_changes.email.email);
     }
-    if (coopObj.proposed_changes.phone.phone) {
+    if (coopObj.proposed_changes.phone.phone !== contactPhone) {
       oldValues.contact_phone = contactPhone;
       setContactPhone(coopObj.proposed_changes.phone.phone);
     }
-    if (coopObj.proposed_changes.types) {
+    if (coopObj.proposed_changes.types !== entityTypes) {
       oldValues.entity_types = entityTypes;
       setEntityTypes(coopObj.proposed_changes.types.map(item => item.name));
     }
 
     // Should this be set up for multiple sites?
-    if (coopObj.proposed_changes.web_site) {
+    if (coopObj.proposed_changes.web_site !== websites) {
       oldValues.websites = websites;
       setWebsites(coopObj.proposed_changes.web_site);
     }
 
-    if (coopObj.proposed_changes.coopaddresstags_set[0].address.formatted) {
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.formatted !== street) {
       oldValues.street = street;
       setStreet(coopObj.proposed_changes.coopaddresstags_set[0].address.formatted);
     }
-    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.name) {
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.name !== city) {
       oldValues.city = city;
       setCity(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.name);
     }
-    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.state.code) {
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.state.code !== state) {
       oldValues.state = state;
       setState(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.state.code);
     }
-    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.postal_code) {
+    if (coopObj.proposed_changes.coopaddresstags_set[0].address.locality.postal_code !== zip) {
       oldValues.zip = zip;
       setZip(coopObj.proposed_changes.coopaddresstags_set[0].address.locality.postal_code);
     }
-    if (coopObj.proposed_changes.coopaddresstags_set[0].is_public) {
+    if (coopObj.proposed_changes.coopaddresstags_set[0].is_public !== addressPublic) {
       oldValues.address_public = addressPublic;
       setAddressPublic(coopObj.proposed_changes.coopaddresstags_set[0].is_public);
     }
-    if (coopObj.proposed_changes.description) {
+    if (coopObj.proposed_changes.description !== descEng) {
       oldValues.description = descEng;
       setDescEng(coopObj.proposed_changes.description);
     }
