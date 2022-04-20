@@ -156,10 +156,9 @@ export default function DirectoryAddUpdate() {
 
     formElements.forEach(input => {
       if (oldValues.hasOwnProperty(input.name)) {
-        input.style.borderColor = 'red';
         let newText = document.createElement('span');
         newText.classList.add('old-data');
-        newText.innerHTML = `Previously: <em>${oldValues[input.name] ? oldValues[input.name] : "Not filled"}</em>`;
+        newText.innerHTML = `${oldValues[input.name] ? oldValues[input.name] : "Not filled"}`;
         input.parentNode.insertBefore(newText, input.nextSibling);
       }; 
     })
