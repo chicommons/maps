@@ -156,6 +156,7 @@ export default function DirectoryAddUpdate() {
 
     formElements.forEach(input => {
       if (oldValues.hasOwnProperty(input.name)) {
+        input.classList.add('new-data');
         let newText = document.createElement('span');
         newText.classList.add('old-data');
         newText.innerHTML = `${oldValues[input.name] ? oldValues[input.name] : "Not filled"}`;
