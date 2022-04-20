@@ -72,7 +72,7 @@
   content: " *";
 }
 
-.new-data {
+.form input.new-data {
   border-color: red;
 }
 
