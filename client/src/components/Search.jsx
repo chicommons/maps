@@ -314,7 +314,7 @@ const Search = (props) => {
               />{" "}
             </div>
             <div className="form-group col-md-3 col-lg-3 col-xl-3">
-              <label class="form-label" class="formInputStyle">
+              <label class="form-label formInputStyle">
                 Enabled
               </label>
               <select

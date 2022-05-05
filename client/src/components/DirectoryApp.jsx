@@ -20,6 +20,7 @@ import Logo from "../logo.png";
 import UnapprovedList from "./UnapprovedList";
 import PrivateRoute from "./PrivateRoute";
 import ReactGridSheet from './ReactGridSheet';
+import AGGrid from './AGGrid';
 
 const DirectoryApp = () => {
   console.log("starting get hook value ...");
@@ -70,6 +71,7 @@ const DirectoryApp = () => {
                   <Route path="/person/:id/edit" component={EditPerson} />
                   <Route path="/:coop_id/listpeople" component={ListPeople} />
                   <Route path="/spreadsheet" component={ReactGridSheet} />
+                  <Route path="/aggrid" component={AGGrid} />
                 </Switch>
               </div>
             </div>
