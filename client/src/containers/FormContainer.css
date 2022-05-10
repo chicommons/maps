@@ -71,3 +71,21 @@
   color: red;
   content: " *";
 }
+
+.form input.new-data,
+.form select.new-data, 
+.form textarea.new-data {
+  border-color: red;
+}
+
+.old-data {
+  color: red;
+  font-style: italic;
+  word-break: break-word;
+}
+
+.old-data::before {
+  content: "Previously:";
+  font-style: normal;
+  margin-right: .4rem;
+}
