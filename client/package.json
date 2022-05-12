@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@handsontable/react": "^12.0.0",
     "@silevis/reactgrid": "^4.0.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.0.0",
@@ -13,6 +14,7 @@
     "ag-grid-react": "^27.2.1",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",
+    "handsontable": "^12.0.0",
     "jquery": "^1.9.1",
     "lodash": "^4.17.19",
     "prop-types": "^15.7.2",

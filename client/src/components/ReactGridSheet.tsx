@@ -1,7 +1,5 @@
 import React, { useState, useEffect }  from "react";
-// import { useParams, useHistory, useLocation } from "react-router-dom";
 import { ReactGrid, Column, Row, NumberCellTemplate } from "@silevis/reactgrid";
-// import Spreadsheet from "./SpreadSheet";
 import "@silevis/reactgrid/styles.css";
 const { REACT_APP_PROXY } = process.env;
 
@@ -120,30 +118,6 @@ const dummyData =  [{
     ]
   }
 ]
-
-// const mapped = coopData.map(({ 
-//   id, 
-//   name, 
-//   coopaddresstags_set: [{ 
-//     address: {
-//       formatted:formatted_address, 
-//       locality: {
-//         name:city, 
-//         postal_code, 
-//         state: { name:state }
-//       }
-//     }
-//   }]
-// }) => ({ id, name, formatted_address, city, postal_code, state }));
-
-// const getCoops = (): Coop[] => [
-//   // { name: "Thomas", surname: "Goldman" },
-//   // { name: "Susie", surname: "Quattro" },
-//   // { name: "", surname: "" }
-
-//   // use typescript destructuring to access keyes
-// ...mapped
-// ]
 
 const getColumns = (): Column[] => [
   { columnId: "id", width: 150 },

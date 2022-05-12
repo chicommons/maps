@@ -19,8 +19,9 @@ import { AlertProvider } from "./AlertProvider";
 import Logo from "../logo.png";
 import UnapprovedList from "./UnapprovedList";
 import PrivateRoute from "./PrivateRoute";
-import ReactGridSheet from './ReactGridSheet';
-import AGGrid from './AGGrid';
+import SpreadsheetAGGrid from './SpreadsheetAGGrid';
+import ReactGridSheet from './ReactGridSheet'
+import SpreadsheetHandsontable from './SpreadsheetHandsontable';
 
 const DirectoryApp = () => {
   console.log("starting get hook value ...");
@@ -71,7 +72,8 @@ const DirectoryApp = () => {
                   <Route path="/person/:id/edit" component={EditPerson} />
                   <Route path="/:coop_id/listpeople" component={ListPeople} />
                   <Route path="/spreadsheet" component={ReactGridSheet} />
-                  <Route path="/aggrid" component={AGGrid} />
+                  <Route path="/aggrid" component={SpreadsheetAGGrid} />
+                  <Route path="/handsontable" component={SpreadsheetHandsontable} />
                 </Switch>
               </div>
             </div>
