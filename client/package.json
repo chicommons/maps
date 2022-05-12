@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/react-transition-group": "^4.4.0",
     "ag-grid-community": "^27.2.1",
+    "ag-grid-enterprise": "^27.2.1",
     "ag-grid-react": "^27.2.1",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",
