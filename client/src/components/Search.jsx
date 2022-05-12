@@ -191,16 +191,12 @@ const Search = (props) => {
   };
 
   const handleMultiSelect = (e) => {
-    const { name, value } = e.target;
-    const selected = coopSearchSettings[name]
-    const index = selected.indexOf(value)
+    const { name } = e.target;
+    const selections = [].slice
+    .call(e.target.selectedOptions)
+    .map((item) => item.value);
 
-    if (index > -1) {
-      selected.splice(index, 1)
-    } else {
-      selected.push(value)
-    }
-    setCoopSearchSettings({...coopSearchSettings, [name]: selected})
+    setCoopSearchSettings({...coopSearchSettings, [name]: selections})
   }
 
   // same logic from Search.jsx
