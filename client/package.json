@@ -16,6 +16,7 @@
     "env-cmd": "^10.1.0",
     "handsontable": "^12.0.0",
     "jquery": "^1.9.1",
+    "ka-table": "^7.3.0",
     "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
