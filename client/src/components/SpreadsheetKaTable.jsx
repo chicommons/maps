@@ -1,6 +1,6 @@
 import "ka-table/style.css";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ModalUpdate from "./ModalUpdate";
 import {Modal,FormGroup } from 'react-bootstrap'
 import Button from './Button'
@@ -122,6 +122,13 @@ export default function SpreadsheetKaTable(){
   const [show, setShow] = useState(false);
   const [option, changeOptions] = useState(tablePropsInit);
   const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const [selectedCoop, setSelectedCoop] = useState([])
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    // setSelectedCoop(selectedData)
+    setShow(true)
+  }
 
   const getData = async () => {
     await fetch(REACT_APP_PROXY + "/coops/all/")
@@ -150,8 +157,6 @@ export default function SpreadsheetKaTable(){
           proposed_changes
         }]
       }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code, proposed_changes}));
-
-      console.log(mapped)
       setDataArray(mapped)
     })
   }
@@ -161,11 +166,8 @@ export default function SpreadsheetKaTable(){
     if (action.type === ActionType.LoadData) {
       const response = await fetch(REACT_APP_PROXY + "/coops/all/")
       .then((result) => {
-        console.log('response')
-        console.log(result)
         return result.json()})
       .then(data => {
-        console.log(data)
         data.forEach((obj)=>Object.keys(obj).forEach(
           (key) => (obj[key] === null) ? obj[key] = '' : obj[key]
         ))
@@ -188,27 +190,29 @@ export default function SpreadsheetKaTable(){
             proposed_changes
           }]
         }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code, proposed_changes}));
-        console.log(mapped)
         dispatch(option.loading?.enabled ? hideLoading() : showLoading())
         return mapped
       })
-    
-      
       const data = response;
-      console.log(data)
       dispatch(updateData(data));
       
     }
   }
+  
   const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
+  // const cellClickedListener= (event) => {
+  //   handleShow()
+  //   console.log('cellClicked', selectedData);
+  //   setSelectedCoop(selectedData)
+  // }, []);
   return (
     <div>
-     {/* <Modal show={show} dialogClassName="modal-90w modal-dialog-scrollable" onHide={handleClose}>
+      {selectedData && (<Modal show={show} dialogClassName="modal-90w modal-dialog-scrollable" onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update Record</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ModalUpdate id={selectedCoop.id} />
+          <ModalUpdate id={selectedData.id} />
           
           </Modal.Body>
         <Modal.Footer>
@@ -219,7 +223,7 @@ export default function SpreadsheetKaTable(){
             
           </Button>
         </Modal.Footer>
-      </Modal> */}
+      </Modal>)}
       {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
 
         <Table
@@ -229,9 +233,15 @@ export default function SpreadsheetKaTable(){
             dataRow: {
               elementAttributes: () => ({
                 onClick: (event, extendedEvent) => {
+                  handleShow()
+                  
+                  // setSelectedCoop(selectedData)
+                  
                   extendedEvent.dispatch(
                     selectSingleRow(extendedEvent.childProps.rowKeyValue)
                   );
+                  
+                  
                 }
               })
             }
