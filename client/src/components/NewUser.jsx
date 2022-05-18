@@ -45,6 +45,7 @@ const NewUser = () => {
 
   return(
     <div className="login-form">
+      {redirect && <Redirect to="/" />}
       <h1 className="form__title">Sign Up</h1>
       <h2 className="form__desc">
         Please choose a username and password.
@@ -129,7 +130,6 @@ const NewUser = () => {
           </div>
         </FormGroup>
     </form>
-    {redirect ? <Redirect to="/" /> : null}
     </div>
   )
 }

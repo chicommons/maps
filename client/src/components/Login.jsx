@@ -36,6 +36,7 @@ const Login = () => {
 
   return(
     <div className="login-form">
+      {redirect && <Redirect to="/" />}
       <h1 className="form__title">Login</h1>
       <h2 className="form__desc">
         Please login with your username and password.
@@ -73,7 +74,7 @@ const Login = () => {
               errors={errors}
             />
           </div>
-          {errors && errors.detail && (
+          {errors?.detail && (
             <div className="form__error-message">
               {errors.detail}
             </div>
@@ -83,7 +84,6 @@ const Login = () => {
           </div>
         </FormGroup>
       </form>
-      {redirect ? <Redirect to="/" /> : null}
     </div>
   )
 }
