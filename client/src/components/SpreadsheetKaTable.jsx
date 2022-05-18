@@ -1,13 +1,11 @@
 import "ka-table/style.css";
 
-
 import React, { useState, useEffect } from 'react';
 import ModalUpdate from "./ModalUpdate";
 import {Modal,FormGroup } from 'react-bootstrap'
 import Button from './Button'
 import { kaReducer, Table } from 'ka-table';
-import { Column } from 'ka-table/models';
-import { loadData, updateData, hideLoading, showLoading } from "ka-table/actionCreators";
+import { loadData, updateData, hideLoading, showLoading, deselectAllRows, selectSingleRow } from "ka-table/actionCreators";
 import {
   ActionType,
   DataType,
@@ -16,74 +14,80 @@ import {
   SortDirection,
   SortingMode,
 } from 'ka-table/enums';
-
+import { kaPropsUtils } from "ka-table/utils";
 const { REACT_APP_PROXY } = process.env;
 const tablePropsInit = {
   columns: [
     {
-      key: 'id',
-      title: 'ID',
-      dataType: DataType.String,
-      sortDirection: SortDirection.Descend,
-    },
-    {
       key: 'name',
       title: 'Name',
       dataType: DataType.String,
-      // sortDirection: SortDirection.Descend,
-    },
-    {
-      key: 'approved',
-      title: 'Approoved',
-      dataType: DataType.Boolean,
+      sortDirection: SortDirection.Ascend,
+      style: { width: 250 }
     },
     {
       key: 'phone',
       title: 'Phone',
       dataType: DataType.String,
+      style: { width: 150 }
     },
     {
       key: 'email',
       dataType: DataType.String,
       title: 'Email',
+      style: { width: 250 }
     },
     {
       key: 'web_site',
       title: 'Web Site',
       dataType: DataType.String,
+      style: { width: 400 }
     },
     {
       key: 'address',
       title: 'Address',
       dataType: DataType.String,
+      style: { width: 250 }
     },
     {
       key: 'city',
       title: 'City',
       dataType: DataType.String,
+      style: {width:100}
     },
     {
       key: 'state',
       title: 'State',
       dataType: DataType.String,
+      style: {width:100}
     },
     {
       key: 'postal_code',
       title: 'Postal Code',
       dataType: DataType.String,
+      style: {width:100}
     },
     {
       key: 'country_code',
       title: 'Country',
       dataType: DataType.String,
+      style: {width:100}
     },
+    {
+      key: 'approved',
+      title: 'Approved',
+      dataType: DataType.Boolean,
+      style: {width:100}
+    },
+
     {
       key: 'proposed_change',
       title: 'Proposed Changes',
       dataType: DataType.String,
+      style: {width:100}
     },
   ],
-  colGroup: { style: { minWidth: 100 } },
+  colGroup: { width:400 } ,
   columnResizing: true,
   singleAction: loadData(),
   loading: {
@@ -108,6 +112,7 @@ const tablePropsInit = {
     enabled: true
   },
   editingMode: EditingMode.Cell,
+  height: 700,
   rowKeyField: 'id',
 };
 
@@ -195,7 +200,7 @@ export default function SpreadsheetKaTable(){
       
     }
   }
-
+  const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
   return (
     <div>
      {/* <Modal show={show} dialogClassName="modal-90w modal-dialog-scrollable" onHide={handleClose}>
@@ -219,10 +224,33 @@ export default function SpreadsheetKaTable(){
 
         <Table
           {...tableProps}
-            // data={dataArray}
-            dispatch={dispatch}
+          dispatch={dispatch}
+          childComponents={{
+            dataRow: {
+              elementAttributes: () => ({
+                onClick: (event, extendedEvent) => {
+                  extendedEvent.dispatch(
+                    selectSingleRow(extendedEvent.childProps.rowKeyValue)
+                  );
+                }
+              })
+            }
+          }}
         />
-
+        {selectedData && (
+          <div className="info">
+            <div>
+              Selected: {selectedData.name} ({selectedData.id})
+              <button
+                onClick={() => {
+                  dispatch(deselectAllRows());
+                }}
+              >
+                Deselect
+              </button>
+            </div>
+          </div>
+        )}
     </div>
   );
 }
