@@ -22,6 +22,7 @@ import PrivateRoute from "./PrivateRoute";
 import SpreadsheetAGGrid from './SpreadsheetAGGrid';
 import ReactGridSheet from './ReactGridSheet'
 import SpreadsheetKaTable from './SpreadsheetKaTable';
+import SpreadsheetToastGrid from './SpreadsheetToastGrid'
 
 const DirectoryApp = () => {
   console.log("starting get hook value ...");
@@ -74,6 +75,7 @@ const DirectoryApp = () => {
                   <Route path="/spreadsheet" component={ReactGridSheet} />
                   <Route path="/aggrid" component={SpreadsheetAGGrid} />
                   <Route path="/katable" component={SpreadsheetKaTable} />
+                  <Route path="/toastgrid" component={SpreadsheetToastGrid} />
                 </Switch>
               </div>
             </div>
