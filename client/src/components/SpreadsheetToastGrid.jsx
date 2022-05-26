@@ -1,15 +1,13 @@
 import 'tui-grid/dist/tui-grid.css';
 import Grid from '@toast-ui/react-grid';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import {Modal,FormGroup } from 'react-bootstrap'
+import Button from './Button'
+import Input from "../components/Input";
+import CancelButton from "./CancelButton";
+import ModalUpdate from './ModalUpdate';
 const { REACT_APP_PROXY } = process.env;
-
-
-// const data = [
-//   {id: 1, name: 'Editor'},
-//   {id: 2, name: 'Grid'},
-//   {id: 3, name: 'Chart'}
-// ];
-
+/*
 const olddata =[
   {
     "id": 1,
@@ -48,6 +46,7 @@ const olddata =[
   }
   
 ]
+*/
 const columns = [
   {name: 'id', header: 'ID'},
   {name: 'name', header: 'Name'}
@@ -57,21 +56,27 @@ const columns = [
 
 export default function SpreadsheetToastGrid(){
   const [dataArray, setDataArray] = useState([])
+  const [show, setShow] = useState(false);
+  const [selectedCoop, setSelectedCoop] = useState([])
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const columnDefs= [
     // {name: 'id', header: 'ID'},
     // {name: 'approved', header: 'Approved', filter: 'select'},
-    {name: 'name', header: 'Name', filter: 'select', sortable: true },
-    {name: 'phone', header: 'Phone', filter: 'select',sortable: true},
-    {name: 'email', header: 'Email', filter: 'select',sortable: true},
-    {name: 'web_site', header: 'Website', filter: 'select',sortable: true},
-    {name: 'address', header: 'Address' , filter: 'select',sortable: true},
-    {name: 'city', header: 'City' , filter: 'select',sortable: true},
-    {name: 'state', header: 'State', filter: 'select',sortable: true },
-    {name: 'postal_code', header: 'Postal Code' , filter: 'select',sortable: true},
-    {name: 'country_code',header: 'Country' , filter: 'select',sortable: true},
-    {name: 'proposed_changes', header: 'Proposed Changes', filter: 'select'}
+    {name: 'name', header: 'Name', filter: 'select', sortable: true, resizable:true},
+    {name: 'phone', header: 'Phone', filter: 'select', sortable: true, resizable:true},
+    {name: 'email', header: 'Email', filter: 'select', sortable: true, resizable:true},
+    {name: 'web_site', header: 'Website', filter: 'select', sortable: true, resizable:true},
+    {name: 'address', header: 'Address', filter: 'select', sortable: true, resizable:true},
+    {name: 'city', header: 'City', filter: 'select', sortable: true, resizable:true},
+    {name: 'state', header: 'State', filter: 'select', sortable: true, resizable:true},
+    {name: 'postal_code', header: 'Zip Code', filter: 'select', sortable: true, resizable:true},
+    {name: 'country_code',header: 'Country', filter: 'select', sortable: true, resizable:true},
+    {name: 'proposed_changes', header: 'Proposed Changes', filter: 'select', resizable:true},
   ];
   
+  const gridRef = useRef(null)
   
   const getData = async () => {
     await fetch(REACT_APP_PROXY + "/coops/all/")
@@ -104,20 +109,53 @@ export default function SpreadsheetToastGrid(){
       setDataArray(mapped)
     })
   }
+
+  const cellClickedListener = useCallback( event => {
+    handleShow()
+    console.log('cellClicked', gridRef.current.getInstance().getRow(event.rowKey))
+  
+    setSelectedCoop(gridRef.current.getInstance().getRow(event.rowKey))
+    console.log(event);
+    // setSelectedCoop(event.data)
+  }, []);
+
   useEffect(() => {
     getData()
   }, []);
 
   return(
-    <Grid
-    data={dataArray}
-    columns={columnDefs}
-    rowHeight={25}
-    bodyHeight={100}
-    heightResizable={true}
-    rowHeaders={['rowNum']}
+    <div>
+      <Modal show={show} dialogClassName="modal-90w modal-dialog-scrollable" onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Record</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ModalUpdate id={selectedCoop.id} />
+          
+          </Modal.Body>
+        <Modal.Footer>
+          <Button buttonType={"primary"} title={"Cancel"} type={"cancel"}  action={handleClose}>
+          
+          </Button>
+          <Button buttonType={"secondary"} title={"Submit Update"} type={"submit"}  onClick={handleClose}>
+            
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Grid
+      ref={gridRef}
+      data={dataArray}
+      columns={columnDefs}
+      rowHeight={25}
+      bodyHeight={500}
+      heightResizable={true}
+      rowHeaders={['checkbox']}
+      scrollX={true}
+      scrollY={true}
+      usageStatistics={false}
+      onDblclick={cellClickedListener}
+    />
+    </div>
 
-  />
   )
 }
-
