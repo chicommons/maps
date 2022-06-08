@@ -39,7 +39,6 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
         try:
             token = Token.objects.get(key = key)
-            print("token %s" % token)
         except Token.DoesNotExist:
             raise AuthenticationFailed("Invalid Token")
         
