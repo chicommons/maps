@@ -20,7 +20,7 @@ django-cors-headers==3.4.0
 django-extensions==2.2.8
 django-phonenumber-field==4.0.0
 djangorestframework==3.12.2
-djangorestframework-jwt==1.11.0
+djangorestframework-jwt==1.0.1
 djangorestframework-simplejwt==5.0.0
 factory-boy==2.12.0
 Faker==4.0.3
