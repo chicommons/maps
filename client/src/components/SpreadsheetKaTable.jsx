@@ -18,6 +18,12 @@ import { kaPropsUtils } from "ka-table/utils";
 const { REACT_APP_PROXY } = process.env;
 const tablePropsInit = {
   columns: [
+    // {
+    //   key: 'id',
+    //   title: 'id',
+    //   dataType: DataType.String,
+    //   style: { width: 100 }
+    // },
     {
       key: 'name',
       title: 'Name',
@@ -200,11 +206,7 @@ export default function SpreadsheetKaTable(){
   }
   
   const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
-  // const cellClickedListener= (event) => {
-  //   handleShow()
-  //   console.log('cellClicked', selectedData);
-  //   setSelectedCoop(selectedData)
-  // }, []);
+
   return (
     <div>
       {selectedData && (<Modal show={show} dialogClassName="modal-90w modal-dialog-scrollable" onHide={handleClose}>

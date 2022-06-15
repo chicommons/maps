@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 import { FormGroup } from "react-bootstrap";
 
@@ -211,8 +211,6 @@ export default function ModalUpdate(props) {
     }
   }
 
-  // Router history for bringing user to search page on submit
-  const history = useHistory();
 
   const fetchCoopForUpdate = async () => {
     setLoadingCoopData(true);
@@ -325,7 +323,8 @@ export default function ModalUpdate(props) {
 
     console.log("saving with id " + id);
     
-    CoopService.saveAsConsumer(
+    // CoopService.saveAsConsumer(
+    CoopService.save(
       formData,
       (errors) => {
         //setButtonDisabled(false);
@@ -340,9 +339,9 @@ export default function ModalUpdate(props) {
         const message = `Form Submission for ${coopName} successful`
         if (message) open(message);
 
-        // If update request, redirects user to search page on form submit.
+        // If update request, closes modal window
         if (id) {
-          history.push('/search');
+          props.handleClose()
         }
       }
     );
@@ -741,7 +740,7 @@ export default function ModalUpdate(props) {
                   ]}
                 />
               </div>
-              {/* <div className="form-group col-md-6" align="center">
+              <div className="form-group col-md-6" align="center">
                 {approvalForm ? 
                     <Button buttonType={"primary"} title={"Approve"} type={"submit"} />
                   :
@@ -749,8 +748,9 @@ export default function ModalUpdate(props) {
                 }
               </div>
               <div className="form-group col-md-6" align="center">
-                <CancelButton id={id} />
-              </div> */}
+                {/* <CancelButton id={id} /> */}
+                <Button buttonType={"primary"} title={"Cancel"} type={"cancel"}  action={props.handleClose}></Button>
+              </div>
             </div>
             {errors && (
               <strong className="form__error-message">
