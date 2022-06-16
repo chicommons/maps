@@ -8,13 +8,6 @@ import CancelButton from "./CancelButton";
 import ModalUpdate from './ModalUpdate';
 const { REACT_APP_PROXY } = process.env;
 
-const columns = [
-  {name: 'id', header: 'ID'},
-  {name: 'name', header: 'Name'}
-];
-
-
-
 export default function SpreadsheetToastGrid(){
   const [dataArray, setDataArray] = useState([])
   const [show, setShow] = useState(false);
@@ -26,7 +19,7 @@ export default function SpreadsheetToastGrid(){
   const handleShow = () => setShow(true);
 
   const columnDefs= [
-    // {name: 'id', header: 'ID'},
+    {name: 'id', header: 'ID', filter: 'select', sortable: true, resizable:true,},
     // {name: 'approved', header: 'Approved', filter: 'select'},
     {name: 'name', header: 'Name', filter: 'select', sortable: true, resizable:true, editor: {
       type: 'text'}},
@@ -71,8 +64,9 @@ export default function SpreadsheetToastGrid(){
               state: { name:state, country:{code:country_code} }
             }
           },
-          proposed_changes
-        }]
+          
+        }],
+        proposed_changes
       }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code, proposed_changes}));
       setDataArray(mapped)
     })
@@ -82,11 +76,6 @@ export default function SpreadsheetToastGrid(){
     handleShow()
     setSelectedCoop(gridRef.current.getInstance().getRow(event.rowKey))
   }, []);
-
-  const cellEditListener = useCallback( event =>{
-    console.log('value', event.value)
-    console.log(event.instance)
-  })
 
   useEffect(() => {
     getData()
@@ -100,16 +89,7 @@ export default function SpreadsheetToastGrid(){
         </Modal.Header>
         <Modal.Body>
           <ModalUpdate id={selectedCoop.id} handleClose={handleClose}/>
-          
           </Modal.Body>
-        {/* <Modal.Footer>
-          <Button buttonType={"primary"} title={"Cancel"} type={"cancel"}  action={handleClose}>
-          
-          </Button>
-          <Button buttonType={"secondary"} title={"Submit Update"} type={"submit"}  onClick={handleClose}>
-            
-          </Button>
-        </Modal.Footer> */}
       </Modal>
       <Grid
       ref={gridRef}
@@ -118,13 +98,10 @@ export default function SpreadsheetToastGrid(){
       rowHeight={25}
       bodyHeight={500}
       heightResizable={true}
-      // rowHeaders={['checkbox']}
       scrollX={true}
       scrollY={true}
       usageStatistics={false}
-      // editingEvent={'click'}
       onDblclick={cellClickedListener}
-      // editingFinish={cellEditListener}
     />
     </div>
 
