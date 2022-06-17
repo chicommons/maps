@@ -267,7 +267,7 @@ class CoopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = ['id', 'name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved']
+        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -476,3 +476,62 @@ class UserSerializer(serializers.ModelSerializer):
 class UserSigninSerializer(serializers.Serializer):
     username = serializers.CharField(required = True)
     password = serializers.CharField(required = True)
+
+
+class CoopSpreadsheetSerializer(serializers.ModelSerializer):
+    types = CoopTypeSerializer(many=True, allow_empty=False)
+    coopaddresstags_set = CoopAddressTagsSerializer(many=True)
+    phone = ContactMethodPhoneSerializer()
+    email = ContactMethodEmailSerializer()
+
+    class Meta:
+        model = Coop
+        fields = ['id', 'name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'approved']
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['types'] = CoopTypeSerializer(instance.types.all(), many=True).data
+        rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
+        return rep
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return self.save_obj(validated_data=validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Coop` instance, given the validated data.
+        """
+        return self.save_obj(instance=instance, validated_data=validated_data)
+
+    def save_obj(self, validated_data, instance=None):
+        coop_types = validated_data.pop('types', {})
+        addresses = validated_data.pop('coopaddresstags_set', {})
+        phone = validated_data.pop('phone', {})
+        email = validated_data.pop('email', {})
+        if not instance:
+            instance = super().create(validated_data)
+        for item in coop_types:
+            coop_type, _ = CoopType.objects.get_or_create(name=item['name'])
+            instance.types.add(coop_type)
+        instance.phone = ContactMethod.objects.create(type=ContactMethod.ContactTypes.PHONE, **phone)
+        instance.email = ContactMethod.objects.create(type=ContactMethod.ContactTypes.EMAIL, **email)
+        
+        instance.name = validated_data.pop('name', None)
+        instance.web_site = validated_data.pop('web_site', None)
+        instance.save()
+        for address in addresses:
+            serializer = CoopAddressTagsSerializer()
+            address['coop_id'] = instance.id
+            addr_tag = serializer.create_obj(validated_data=address)
+            result = addr_tag.save()
+            instance.coopaddresstags_set.add(addr_tag)
+        return instance
+
+    # Set address coordinate data
+    @staticmethod
+    def update_coords(address):
+        svc = LocationService()
+        svc.save_coords(address)

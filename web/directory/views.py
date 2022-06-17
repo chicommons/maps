@@ -191,11 +191,11 @@ class CoopListAll(APIView):
                 state_abbrev=state,
                 types_arr=types_arr
             )
-        serializer = CoopSerializer(coops, many=True)
+        serializer = CoopSpreadsheetSerializer(coops, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = CoopSerializer(data=request.data)
+        serializer = CoopSpreadsheetSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

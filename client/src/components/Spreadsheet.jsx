@@ -20,7 +20,6 @@ export default function SpreadsheetToastGrid(){
 
   const columnDefs= [
     {name: 'id', header: 'ID', filter: 'select', sortable: true, resizable:true,},
-    // {name: 'approved', header: 'Approved', filter: 'select'},
     {name: 'name', header: 'Name', filter: 'select', sortable: true, resizable:true, editor: {
       type: 'text'}},
     {name: 'phone', header: 'Phone', filter: 'select', sortable: true, resizable:true, editor: {
@@ -35,7 +34,6 @@ export default function SpreadsheetToastGrid(){
     {name: 'state', header: 'State', filter: 'select', sortable: true, resizable:true},
     {name: 'postal_code', header: 'Zip Code', filter: 'select', sortable: true, resizable:true},
     {name: 'country_code',header: 'Country', filter: 'select', sortable: true, resizable:true},
-    {name: 'proposed_changes', header: 'Proposed Changes', filter: 'select', resizable:true},
   ];
   
   const gridRef = useRef(null)
@@ -65,9 +63,8 @@ export default function SpreadsheetToastGrid(){
             }
           },
           
-        }],
-        proposed_changes
-      }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code, proposed_changes}));
+        }]
+      }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code}));
       setDataArray(mapped)
     })
   }
