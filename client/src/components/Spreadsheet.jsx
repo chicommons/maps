@@ -1,35 +1,27 @@
 import 'tui-grid/dist/tui-grid.css';
 import Grid from '@toast-ui/react-grid';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import {Modal,FormGroup } from 'react-bootstrap'
-import Button from './Button'
-import Input from "../components/Input";
-import CancelButton from "./CancelButton";
+import { Modal } from 'react-bootstrap';
 import ModalUpdate from './ModalUpdate';
 const { REACT_APP_PROXY } = process.env;
 
 export default function SpreadsheetToastGrid(){
-  const [dataArray, setDataArray] = useState([])
+  const [dataArray, setDataArray] = useState([]);
   const [show, setShow] = useState(false);
-  const [selectedCoop, setSelectedCoop] = useState([])
+  const [selectedCoop, setSelectedCoop] = useState([]);
   const handleClose = () => {
     setShow(false);
-    setSelectedCoop([])
+    setSelectedCoop([]);
   }
   const handleShow = () => setShow(true);
 
   const columnDefs= [
     {name: 'id', header: 'ID', filter: 'select', sortable: true, resizable:true,},
-    {name: 'name', header: 'Name', filter: 'select', sortable: true, resizable:true, editor: {
-      type: 'text'}},
-    {name: 'phone', header: 'Phone', filter: 'select', sortable: true, resizable:true, editor: {
-      type: 'text'}},
-    {name: 'email', header: 'Email', filter: 'select', sortable: true, resizable:true, editor: {
-      type: 'text'}},
-    {name: 'web_site', header: 'Website', filter: 'select', sortable: true, resizable:true, editor: {
-      type: 'text'}},
-    {name: 'address', header: 'Address', filter: 'select', sortable: true, resizable:true, editor: {
-      type: 'text'}},
+    {name: 'name', header: 'Name', filter: 'select', sortable: true, resizable:true},
+    {name: 'phone', header: 'Phone', filter: 'select', sortable: true, resizable:true},
+    {name: 'email', header: 'Email', filter: 'select', sortable: true, resizable:true},
+    {name: 'web_site', header: 'Website', filter: 'select', sortable: true, resizable:true},
+    {name: 'address', header: 'Address', filter: 'select', sortable: true, resizable:true},
     {name: 'city', header: 'City', filter: 'select', sortable: true, resizable:true},
     {name: 'state', header: 'State', filter: 'select', sortable: true, resizable:true},
     {name: 'postal_code', header: 'Zip Code', filter: 'select', sortable: true, resizable:true},
@@ -65,17 +57,17 @@ export default function SpreadsheetToastGrid(){
           
         }]
       }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code}));
-      setDataArray(mapped)
+      setDataArray(mapped);
     })
   }
 
   const cellClickedListener = useCallback( event => {
-    handleShow()
-    setSelectedCoop(gridRef.current.getInstance().getRow(event.rowKey))
+    handleShow();
+    setSelectedCoop(gridRef.current.getInstance().getRow(event.rowKey));
   }, []);
 
   useEffect(() => {
-    getData()
+    getData();
   }, []);
 
   return(
@@ -89,17 +81,17 @@ export default function SpreadsheetToastGrid(){
           </Modal.Body>
       </Modal>
       <Grid
-      ref={gridRef}
-      data={dataArray}
-      columns={columnDefs}
-      rowHeight={25}
-      bodyHeight={500}
-      heightResizable={true}
-      scrollX={true}
-      scrollY={true}
-      usageStatistics={false}
-      onDblclick={cellClickedListener}
-    />
+        ref={gridRef}
+        data={dataArray}
+        columns={columnDefs}
+        rowHeight={25}
+        bodyHeight={500}
+        heightResizable={true}
+        scrollX={true}
+        scrollY={true}
+        usageStatistics={false}
+        onDblclick={cellClickedListener}
+      />
     </div>
 
   )
