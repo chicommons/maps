@@ -169,6 +169,46 @@ class CoopList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class CoopListAll(APIView):
+    """
+    List all coops, or create a new coop. Includes details omitted in CoopList
+    """
+    def get(self, request, format=None):
+        contains = request.GET.get("contains", "")
+        if contains:
+            coops = Coop.objects.find(
+                partial_name=contains,
+                enabled=True
+            )
+        else:
+            partial_name = request.GET.get("name", "")
+            enabled_req_param = request.GET.get("enabled", None)
+            enabled = enabled_req_param.lower() == "true" if enabled_req_param else None
+            city = request.GET.get("city", None)
+            zip = request.GET.get("zip", None)
+            street = request.GET.get("street", None)
+            state = request.GET.get("state", None)
+            coop_types = request.GET.get("coop_type", None)
+            types_arr = coop_types.split(",") if coop_types else None
+
+            coops = Coop.objects.find(
+                partial_name=partial_name,
+                enabled=enabled,
+                street=street,
+                city=city,
+                zip=zip,
+                state_abbrev=state,
+                types_arr=types_arr
+            )
+        serializer = CoopSpreadsheetSerializer(coops, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = CoopSpreadsheetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CoopDetail(APIView):
     """

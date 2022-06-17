@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.0.0",
     "@testing-library/user-event": "^7.2.1",
+    "@toast-ui/react-grid": "^4.21.1",
     "@types/react-transition-group": "^4.4.0",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",

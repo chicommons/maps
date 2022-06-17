@@ -41,3 +41,9 @@
     width: 100vw;
   }
 }
+
+
+.modal-90w {
+  width: 90%;
+  max-width: 90%;
+}

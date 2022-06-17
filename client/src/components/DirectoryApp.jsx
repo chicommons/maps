@@ -19,6 +19,7 @@ import { AlertProvider } from "./AlertProvider";
 import Logo from "../logo.png";
 import UnapprovedList from "./UnapprovedList";
 import PrivateRoute from "./PrivateRoute";
+import Spreadsheet from './Spreadsheet'
 
 const DirectoryApp = () => {
   console.log("starting get hook value ...");
@@ -68,6 +69,7 @@ const DirectoryApp = () => {
                   <PrivateRoute authed={isAuthenticated} path="/:coop_id/people" component={AddPerson} />
                   <Route path="/person/:id/edit" component={EditPerson} />
                   <Route path="/:coop_id/listpeople" component={ListPeople} />
+                  <Route path="/spreadsheet" component={Spreadsheet} />
                 </Switch>
               </div>
             </div>
