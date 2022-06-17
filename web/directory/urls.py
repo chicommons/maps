@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from directory import views
+from directory import settings
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path('countries/', views.CountryList.as_view()),
     path('states/<country_code>', views.StateList.as_view()),
     path('login', views.signin),
+    path(settings.LOGOUT_PATH, views.signout),
     path('user_info', views.user_info),
 ]
 

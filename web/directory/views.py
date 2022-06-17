@@ -57,6 +57,15 @@ def signin(request):
         'token': token.key
     }, status=HTTP_200_OK)
 
+@api_view(["GET"])
+@permission_classes((IsAuthenticated,))
+def signout(request):
+    user = request.user
+    print("user: %s" % user)
+    Token.objects.filter(user=user).delete() 
+    # Remove header
+    return Response({}, status=HTTP_200_OK)
+
 
 @api_view(["GET"])
 @permission_classes((IsAuthenticated,))

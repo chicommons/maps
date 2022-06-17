@@ -144,6 +144,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
 
+LOGOUT_PATH = 'logout'
+
 #AUTH_USER_MODEL = 'user.User'
 REST_FRAMEWORK = {
     #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',

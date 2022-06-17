@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { FormGroup } from 'react-bootstrap';
 
 import Input from './Input'
 import Button from './Button'
+import { createModuleResolutionCache } from 'typescript';
 
 const { REACT_APP_PROXY } = process.env;
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [redirect, setRedirect] = useState(false)
+
+  const [errors, setErrors] = useState()
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
@@ -18,17 +23,20 @@ const Login = () => {
       body: JSON.stringify({username, password})
     }).then(resp => resp.json())
     .then(jsob => {
+      if(!jsob.ok){
+        console.log(jsob)
+        setErrors(jsob)
+      }
       if(jsob.token){
         sessionStorage.setItem('token', jsob.token)
+        setRedirect(true)
       }
     })
-    //TODO:: Only set Session token if login is successful
-    //TODO:: Add redirect after login
-    //TODO:: Error Handling
   }
 
   return(
     <div className="login-form">
+      {redirect && <Redirect to="/" />}
       <h1 className="form__title">Login</h1>
       <h2 className="form__desc">
         Please login with your username and password.
@@ -36,34 +44,46 @@ const Login = () => {
       <h2 className="form__desc">
         <span style={{ color: "red" }}>*</span> = required
       </h2>
-      <FormGroup>
-        <div className="form-group col-md-8">
-          <Input
-            className={"required"}
-            type={"text"}
-            title={"Username"}
-            name={"username"}
-            value={username}
-            placeholder={"Username"}
-            handleChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="form-group col-md-8">
-          <Input
-            className={"required"}
-            type={"password"}
-            title={"Password"}
-            name={"password"}
-            value={password}
-            placeholder={"Password"}
-            handleChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <Button action={handleFormSubmit} type={"primary"} title={"Login"} />
-      </FormGroup>
-      {
-        // <span className="center" >No account? <a href="/signup">Sign up</a> now.</span>
-      }
+      <form
+      onSubmit={handleFormSubmit}
+      className="container-fluid"
+      id="login-form"
+      noValidate>
+        <FormGroup>
+          <div className="form-group col-md-8">
+            <Input
+              className={"required"}
+              type={"text"}
+              title={"Username"}
+              name={"username"}
+              value={username}
+              placeholder={"Username"}
+              handleChange={(e) => setUsername(e.target.value)}
+              errors={errors}
+            />
+          </div>
+          <div className="form-group col-md-8">
+            <Input
+              className={"required"}
+              type={"password"}
+              title={"Password"}
+              name={"password"}
+              value={password}
+              placeholder={"Password"}
+              handleChange={(e) => setPassword(e.target.value)}
+              errors={errors}
+            />
+          </div>
+          {errors?.detail && (
+            <div className="form__error-message">
+              {errors.detail}
+            </div>
+          )}
+          <div className="form-group col-md-6" align="center">
+            <Button buttonType={"primary"} type={"submit"} title={"Login"} />
+          </div>
+        </FormGroup>
+      </form>
     </div>
   )
 }

@@ -4,7 +4,7 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from datetime import timedelta
 from django.utils import timezone
-from django.conf import settings
+from directory import settings
 
 
 
@@ -39,7 +39,6 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, key):
         try:
             token = Token.objects.get(key = key)
-            print("token %s" % token)
         except Token.DoesNotExist:
             raise AuthenticationFailed("Invalid Token")
         
