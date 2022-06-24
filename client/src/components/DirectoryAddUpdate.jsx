@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Link } from "react-router-dom";
 
 import { FormGroup } from "react-bootstrap";
 
@@ -18,7 +18,7 @@ import Button from "../components/Button";
 
 import "../containers/FormContainer.css";
 import CancelButton from "./CancelButton";
-import RejectButton from "./RejectButton";
+import RejectForm from "./RejectForm";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -72,6 +72,8 @@ export default function DirectoryAddUpdate() {
   const [approvalForm, setApprovalForm] = React.useState(false);
 
   const [coopApproved, setCoopApproved] = React.useState(false);
+
+  const [coopRejectComplete, setCoopRejectComplete] = React.useState(false);
 
   const clearForm = () => {
     // Resets the initial form values to clear the form
@@ -756,21 +758,32 @@ export default function DirectoryAddUpdate() {
                   ]}
                 />
               </div>
-              <div className="form-group col-md-6" align="center">
+
+              {coopRejectComplete ?
+              <>
+                <h2>The coop rejection has been submitted.</h2>
+                <Link to={"/unapproved-list/"}>Return to unapproved coops list</Link>
+              </>
+              :
+              <>
+                <div className="form-group col-md-6" align="center">
+                  {approvalForm ? 
+                      <Button buttonType={"primary"} title={"Approve"} type={"submit"} />
+                    :
+                      <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+                  }
+                </div>
+                <div className="form-group col-md-6" align="center">
                 {approvalForm ? 
-                    <Button buttonType={"primary"} title={"Approve"} type={"submit"} />
+                    <RejectForm id={id} setCoopRejectComplete={setCoopRejectComplete} />
                   :
-                    <Button buttonType={"primary"} title={"Send Addition/Update"} type={"submit"} />
+                    <CancelButton id={id} />
                 }
-              </div>
-              <div className="form-group col-md-6" align="center">
-              {approvalForm ? 
-                  <RejectButton id={id} />
-                :
-                  <CancelButton id={id} />
+                </div>
+              </>
               }
-              </div>
             </div>
+
             {errors && (
               <strong className="form__error-message">
                 Please correct the errors above and then resubmit.
