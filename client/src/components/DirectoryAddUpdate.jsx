@@ -18,6 +18,7 @@ import Button from "../components/Button";
 
 import "../containers/FormContainer.css";
 import CancelButton from "./CancelButton";
+import RejectButton from "./RejectButton";
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -69,6 +70,8 @@ export default function DirectoryAddUpdate() {
 
   // State for Coop Approve page
   const [approvalForm, setApprovalForm] = React.useState(false);
+
+  const [coopApproved, setCoopApproved] = React.useState(false);
 
   const clearForm = () => {
     // Resets the initial form values to clear the form
@@ -278,6 +281,12 @@ export default function DirectoryAddUpdate() {
 
   const submitApprovalForm = () => {
     console.log("submitting the approval form");
+    setCoopApproved(true);
+    // HTTP Request
+  }
+
+  const rejectCoopForm = () => {
+    console.log("Rejecting the coop");
   }
 
   const submitForm = (e) => {
@@ -755,7 +764,11 @@ export default function DirectoryAddUpdate() {
                 }
               </div>
               <div className="form-group col-md-6" align="center">
-                <CancelButton id={id} />
+              {approvalForm ? 
+                  <RejectButton id={id} />
+                :
+                  <CancelButton id={id} />
+              }
               </div>
             </div>
             {errors && (
