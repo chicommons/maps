@@ -130,6 +130,7 @@ class Coop(models.Model):
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
     proposed_changes = models.JSONField("Proposed Changes", null=True)
+    reject_reason = models.TextField(null=True)
 
     def apply_proposed_changes(self):
        proposed = self.proposed_changes

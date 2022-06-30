@@ -267,7 +267,7 @@ class CoopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved']
+        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved', 'reject_reason']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -302,6 +302,8 @@ class CoopSerializer(serializers.ModelSerializer):
         
         instance.name = validated_data.pop('name', None)
         instance.web_site = validated_data.pop('web_site', None)
+        instance.approved = validated_data.pop('approved', None)
+        instance.reject_reason = validated_data.pop('reject_reason', None)
         instance.save()
         for address in addresses:
             serializer = CoopAddressTagsSerializer()

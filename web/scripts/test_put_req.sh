@@ -8,15 +8,19 @@ read -d '' req << EOF
         "types": [
             {"name": "Library"}
         ],
-        "addresses": [
+        "coopaddresstags_set": [
           {
-            "raw": "222 W. Merchandise Mart Plaza, Suite 1212",
-            "formatted": "222 W. Merchandise Mart Plaza, Suite 1212",
-            "locality": {
-                "name": "Chicago",
-                "postal_code": "60654",
-                "state": {"id":19313,"code":"IL","name":"Illinois","country":{"id":484,"name":"United States","code":"US"}}
-            }
+            "is_public": true,
+            "address": 
+              {
+                "raw": "222 W. Merchandise Mart Plaza, Suite 1212",
+                "formatted": "222 W. Merchandise Mart Plaza, Suite 1212",
+                "locality": {
+                  "name": "Chicago",
+                  "postal_code": "60654",
+                  "state": {"id":19313,"code":"IL","name":"Illinois","country":{"id":484,"name":"United States","code":"US"}}
+                }
+              }
           }
         ],
         "enabled": "true",
@@ -26,11 +30,12 @@ read -d '' req << EOF
         "email": {
           "email" : "myemail@example.com"
         },
-        "web_site": "http://www.1871.com/"
+        "web_site": "http://www.1871.com/",
+        "reject_reason": "unverifiable data"
 }
 EOF
 
 echo $req
 
-curl --header "Content-type: application/json" --data "$req" --request PUT "http://localhost:9090/coops/$id/"  
+curl --header "Content-type: application/json" --data "$req" --request PUT "http://localhost:8000/coops/$id/"  
  
