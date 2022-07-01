@@ -6,4 +6,4 @@ cd /app
 npm install
 
 # Run it
-REACT_APP_PROXY=http://localhost:9090 npm start
+REACT_APP_PROXY=http://localhost:9090/api npm start

@@ -16,10 +16,15 @@ services:
     build: ./web
     ports:           # to access the container from outside
       - "8000:8000"
-    env_file: .env
+    #env_file: .env
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
+      DB_SERVICE: host.docker.internal
+      DB_NAME: directory_data
+      DB_USER: chicommons
+      DB_PASS: password
+      DB_PORT: 5432
     command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 2 -b :8000
     volumes:
     - ./web/:/app
