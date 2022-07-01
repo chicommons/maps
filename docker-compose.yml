@@ -16,7 +16,6 @@ services:
     build: ./web
     ports:           # to access the container from outside
       - "8000:8000"
-    #env_file: .env
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
