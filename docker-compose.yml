@@ -8,7 +8,7 @@ services:
       - 5105:5432
     environment:
       POSTGRES_DB: directory_data
-      POSTGRES_USER: chicommons
+      POSTGRES_USER: chicommons #${DB_USER}
       POSTGRES_PASSWORD: password
 
   web:
@@ -19,7 +19,7 @@ services:
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
-      DB_SERVICE: host.docker.internal
+      DB_SERVICE: postgres # host.docker.internal
       DB_NAME: directory_data
       DB_USER: chicommons
       DB_PASS: password

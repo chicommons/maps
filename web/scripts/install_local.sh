@@ -35,10 +35,8 @@ grant_privs_command="grant all privileges on database $DB_NAME to $DB_USER;"
 
 PGPASSWORD=$ROOT_PASSWORD 
 # This command creates the db if it doesn't already exist
-#echo "SELECT 'CREATE DATABASE $DB_NAME' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$DB_NAME')\gexec" | psql -U$PG_USER
 echo $create_db_command | psql -U$PG_USER
 echo $drop_owned_by_command | psql -U$PG_USER $DB_NAME 
-#psql -U$PG_USER $DB_NAME -c "$drop_owned_by_command" 
 psql -U$PG_USER -c "$drop_role_command" 
 psql -U$PG_USER -c "$create_user_command" 
 psql -U$PG_USER -c "$grant_privs_command" 
