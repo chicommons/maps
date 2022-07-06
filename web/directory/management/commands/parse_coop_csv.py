@@ -127,7 +127,7 @@ class Command(BaseCommand):
 
             # New code for testing whether the address can be public
             try:
-                adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                adrs_pub = row.get('ent-adrs-pub',"00").strip().encode("utf-8", 'ignore').decode("utf-8")
             except KeyError:
                 adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
             
