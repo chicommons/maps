@@ -1,0 +1,25 @@
+name: "Chicommons Maps Dev: Build & Release"
+on:
+  push:
+    paths:
+      - "**"
+      - ".github/workflows/directory-dev.yml"
+    branches:
+      - authentication 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_url: dev.chicommons.coop:/home/dalvarado/maps.git
+        github_token: ${{ secrets.DEPLOY }}
+        branch: ${{ github.ref }}
+
+

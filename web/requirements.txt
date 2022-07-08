@@ -12,9 +12,7 @@ click==7.1.1
 click-plugins==1.1.1
 cligj==0.5.0
 cryptography==3.3.2
-curtsies==0.3.10
-cwcwidth==0.1.6
-Django==3.2
+Django==3.1.14
 django-address==0.2.5
 django-cors-headers==3.4.0
 django-extensions==2.2.8
@@ -45,7 +43,7 @@ lazy-object-proxy==1.4.3
 mccabe==0.6.1
 more-itertools==8.2.0
 munch==2.5.0
-numpy==1.19.4
+numpy==1.22.0
 oauth2client==4.1.3
 oauthlib==3.1.0
 packaging==20.3
@@ -53,7 +51,7 @@ pandas==1.2.0
 pathlib==1.0.1
 phonenumbers==8.11.2
 pluggy==0.13.1
-protobuf==3.14.0
+protobuf==3.15.0
 psycopg2-binary==2.8.6
 py==1.10.0
 pyasn1==0.4.8
