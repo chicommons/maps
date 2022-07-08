@@ -1,3 +1,12 @@
+name: "Chicommons Maps Dev: Build & Release"
+on:
+  push:
+    paths:
+      - "**"
+      - ".github/workflows/directory-dev.yml"
+    branches:
+      - authentication 
+
 jobs:
   build:
     runs-on: ubuntu-latest
