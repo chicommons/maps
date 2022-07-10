@@ -34,7 +34,6 @@ const NewUser = () => {
       body: JSON.stringify({first_name, last_name, username, password, email})
     }).then((response) => {
       if (response.ok) {
-        sessionStorage.setItem('token', response['Refresh-Token'])
         setRedirect(true)
       } else {
         setErrors(response)

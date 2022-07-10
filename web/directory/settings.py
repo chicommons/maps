@@ -26,9 +26,6 @@ SECRET_KEY = '!7$l@$thnj@q-txtptk557nvgsc&17srn=7b7yh8)@*_p^ub8s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dev.chicommons.coop', 'map.chicommons.coop']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,8 +58,14 @@ MIDDLEWARE = [
 
 #CORS_ORIGIN_ALLOW_ALL = True
 
+ALLOWED_HOSTS = ['localhost', 'dev.chicommons.coop', 'map.chicommons.coop']
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000', 'http://localhost:3001'
+]
+
+CORS_EXPOSE_HEADERS = [
+    'Refresh-Token', 'Content-Type', 'Authorization'
 ]
 
 ROOT_URLCONF = 'directory.urls'
