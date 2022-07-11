@@ -8,10 +8,23 @@ from operator import itemgetter
 from yaml import load, dump
 from yaml import Loader, Dumper
 from commons.util.case_insensitive_set import CaseInsensitiveSet
-from ...services.location_service import LocationService
+# removed 7/11/22 replaced with osGeoLoc
+#from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
-  
+
+# get geo loc from Open Street Maps 7/11/22
+# fmi see https://www.natasshaselvaraj.com/a-step-by-step-guide-on-geocoding-in-python/
+def osGeoLoc(zAddress):
+    import requests
+    url = 'https://nominatim.openstreetmap.org/search/' + zAddress +'?format=json'
+    resp0 = requests.get(url).json()
+    try:
+        resp=[float(resp0[0]['lat']),float(resp0[0]['lon'])]
+    except:
+        resp=[0,0]
+    return(resp)
+
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file')
@@ -125,11 +138,12 @@ class Command(BaseCommand):
         address_pks = dict()
         for row in input_file:
 
+            # code simplified June and July 2022s
             # New code for testing whether the address can be public
-            try:
-                adrs_pub = row.get('ent-adrs-pub',"00").strip().encode("utf-8", 'ignore').decode("utf-8")
-            except KeyError:
-                adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            #try:
+            adrs_pub = row.get('ent-adrs-pub',"00").strip().encode("utf-8", 'ignore').decode("utf-8")
+            #except KeyError:
+            #    adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
             
             # if address is not public, don't print
             if adrs_pub.lower() != 'yes':
@@ -152,14 +166,15 @@ class Command(BaseCommand):
                 # If there are no lat or lon coords provided, attempt to figure
                 # them out
                 if not lat or not lon:
-                    svc = LocationService()
-                    ret = svc.get_coords(
-                        address=street,
-                        city=city,
-                        zip=postal_code,
-                        state_code=state_id,
-                        country_code="US"
-                    )
+                    #svc = LocationService()
+                    #ret = svc.get_coords(
+                    #    address=street,
+                    #    city=city,
+                    #    zip=postal_code,
+                    #    state_code=state_id,
+                    #    country_code="US"
+                    #)
+                    ret=osGeoLoc(street+", "+city+", "+state_id+" "+postal_code)
                     if ret:
                         lat = ret[0]
                         lon = ret[1]
