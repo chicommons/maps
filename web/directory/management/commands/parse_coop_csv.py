@@ -15,6 +15,7 @@ from yaml import load
 
 # get geo loc from Open Street Maps 7/11/22
 # fmi see https://www.natasshaselvaraj.com/a-step-by-step-guide-on-geocoding-in-python/
+#         https://nominatim.org/release-docs/latest/api/Overview/
 def osGeoLoc(zAddress):
     import requests
     url = 'https://nominatim.openstreetmap.org/search/' + zAddress +'?format=json'
