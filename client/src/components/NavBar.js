@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import HamburgerMenu from "react-hamburger-menu";
-import { isMobile } from "react-device-detect";
-import { useAuthentication } from "../hooks"
-import "./NavBar.css";
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import HamburgerMenu from 'react-hamburger-menu';
+import { isMobile } from 'react-device-detect';
+import { useAuthentication } from '../hooks';
+import './NavBar.css';
 
 class NavBar extends Component {
   constructor() {
     super();
     this.state = {
       open: false,
-      hideOrShowHambugerDropDown: "nav",
+      hideOrShowHambugerDropDown: 'nav'
     };
   }
 
@@ -56,6 +56,13 @@ class NavBar extends Component {
             Search
           </NavLink>
         </li>
+        {this.props.authed && (
+          <li className="nav-link">
+            <NavLink to="/spreadsheet" className="nav-link">
+              Spreadsheet
+            </NavLink>
+          </li>
+        )}
         <li className="nav-link">
           <a
             href="https://www.chicommons.coop/cooperative-map/"
@@ -64,18 +71,19 @@ class NavBar extends Component {
             Return
           </a>
         </li>
-        {!this.props.authed ?
-        <li className="nav-link">
-          <NavLink to="/login" className="nav-link">
+        {!this.props.authed ? (
+          <li className="nav-link">
+            <NavLink to="/login" className="nav-link">
               Login
-          </NavLink>
-        </li>
-        :
-        <li className="nav-link">
-          <NavLink to="/signup" className="nav-link">
+            </NavLink>
+          </li>
+        ) : (
+          <li className="nav-link">
+            <NavLink to="/signup" className="nav-link">
               New User
-          </NavLink>
-        </li>}
+            </NavLink>
+          </li>
+        )}
       </ul>
     );
   };
@@ -124,7 +132,7 @@ class NavBar extends Component {
 }
 
 const navLinkStyle = {
-  backgroundColor: "#2295a2",
+  backgroundColor: '#2295a2'
 };
 
 export default NavBar;
