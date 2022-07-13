@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useAuthentication } from '../hooks';
 import { FormControl, FormGroup, FormLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import "../Search.css";
 
@@ -125,6 +126,7 @@ const Search = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [listView, setListView] = useState(true)
+  const { isAuthenticated } = useAuthentication();
 
   useEffect(() => {
     // Get all possible coop types to populate search form
@@ -204,9 +206,8 @@ const Search = (props) => {
   const handleToggle = (bool) => setListView(bool)
   // same logic from Search.jsx
   const renderSearchResults = () => {
+    console.log("is auth: " + isAuthenticated);
     if (searchResults && searchResults.length) {
-
-        console.log(searchResults);
         if(listView){
           return (
 
@@ -344,19 +345,24 @@ const Search = (props) => {
               <CancelButton />
             </div>
           </div>
-          <div className="form-group col-md-6" >Return search results as</div>
-          <div className="form-group form-row">
-          <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={handleToggle}>
-          
-            <ToggleButton className="buttonStyle btn-toggle" value={true}>
-              List
-            </ToggleButton>
-            <ToggleButton className="buttonStyle btn-toggle" value={false}>
-              Spreadsheet
-            </ToggleButton>
-          </ToggleButtonGroup>
-          </div>
-          <div>
+          {isAuthenticated===true ? 
+            <div>
+              <div className="form-group col-md-6">Return search results as:</div>
+              <div className="form-group col-md-6">
+              <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={handleToggle}>
+                <ToggleButton className="buttonStyle btn-toggle" value={true}>
+                  List
+                </ToggleButton>
+                <ToggleButton className="buttonStyle btn-toggle" value={false}>
+                  Spreadsheet
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            </div>
+            :
+            <div></div>
+            }
+            <div>
             {renderSearchResults()}
             {loading && (
               <div class="loading">
