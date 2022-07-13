@@ -69,7 +69,7 @@ const DirectoryApp = () => {
                   <PrivateRoute authed={isAuthenticated} path="/:coop_id/people" component={AddPerson} />
                   <Route path="/person/:id/edit" component={EditPerson} />
                   <Route path="/:coop_id/listpeople" component={ListPeople} />
-                  <Route path="/spreadsheet" component={Spreadsheet} />
+                  <PrivateRoute authed={isAuthenticated} path="/spreadsheet" component={Spreadsheet} />
                 </Switch>
               </div>
             </div>
