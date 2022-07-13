@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { FormControl, FormGroup, FormLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import "../Search.css";
 
 import RenderCoopList from "./RenderCoopList";
+import Spreadsheet from "./Spreadsheet";
 
 import _ from "lodash";
 
@@ -123,6 +124,7 @@ const Search = (props) => {
   const [provinces, setProvinces] = React.useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [listView, setListView] = useState(true)
 
   useEffect(() => {
     // Get all possible coop types to populate search form
@@ -199,15 +201,22 @@ const Search = (props) => {
     setCoopSearchSettings({...coopSearchSettings, [name]: selections})
   }
 
+  const handleToggle = (bool) => setListView(bool)
   // same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
 
-         console.log(searchResults);
-         
-         return (
-           <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
-         )
+        console.log(searchResults);
+        if(listView){
+          return (
+
+            <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
+          )
+        }else{
+          return (
+            <Spreadsheet searchResults={searchResults}/>
+          ) 
+        }
     };
   };
 
@@ -334,6 +343,18 @@ const Search = (props) => {
             <div className="form-group col-md-6" align="center">
               <CancelButton />
             </div>
+          </div>
+          <div className="form-group col-md-6" >Return search results as</div>
+          <div className="form-group form-row">
+          <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={handleToggle}>
+          
+            <ToggleButton className="buttonStyle btn-toggle" value={true}>
+              List
+            </ToggleButton>
+            <ToggleButton className="buttonStyle btn-toggle" value={false}>
+              Spreadsheet
+            </ToggleButton>
+          </ToggleButtonGroup>
           </div>
           <div>
             {renderSearchResults()}

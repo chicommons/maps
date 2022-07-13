@@ -389,7 +389,7 @@ class CoopSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coop
-        fields = 'id', 'name', 'approved', 'coopaddresstags_set'
+        fields = 'id', 'name', 'approved', 'coopaddresstags_set', 'phone', 'email', 'web_site'
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

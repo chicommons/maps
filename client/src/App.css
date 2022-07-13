@@ -12,12 +12,18 @@
   border-color: #2295a2;
 }
 
-.buttonStyle:hover, .buttonStyle:focus {
+.btn-group-toggle > .buttonStyle {
+  color: #f6fbfb;
+}
+
+.buttonStyle:hover, .buttonStyle:focus, 
+.btn-toggle:not(.active):hover, .btn-toggle:not(:disabled):not(.disabled).active  {
   background-color: #124e54;
   border-color: #7ABFC7;
 }
 
-.btn-secondary {
+.btn-secondary, 
+.btn-toggle:not(.active) {
   background-color: #2295a2;
   border-color: #2295a2;
 }
