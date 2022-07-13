@@ -56,13 +56,6 @@ class NavBar extends Component {
             Search
           </NavLink>
         </li>
-        {this.props.authed && (
-          <li className="nav-link">
-            <NavLink to="/spreadsheet" className="nav-link">
-              Spreadsheet
-            </NavLink>
-          </li>
-        )}
         <li className="nav-link">
           <a
             href="https://www.chicommons.coop/cooperative-map/"
@@ -71,6 +64,13 @@ class NavBar extends Component {
             Return
           </a>
         </li>
+        {this.props.authed && (
+          <li className="nav-link">
+            <NavLink to="/spreadsheet" className="nav-link">
+              Update Coops
+            </NavLink>
+          </li>
+        )}
         {!this.props.authed ? (
           <li className="nav-link">
             <NavLink to="/login" className="nav-link">
