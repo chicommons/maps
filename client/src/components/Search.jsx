@@ -346,9 +346,9 @@ const Search = (props) => {
             </div>
           </div>
           {isAuthenticated===true ? 
-            <div>
-              <div className="form-group col-md-6">Return search results as:</div>
-              <div className="form-group col-md-6">
+            <div className="form-group form-row">
+              <div className="form-group col-md-12">Return search results as:</div>
+              <div className="form-group col-md-12">
               <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={handleToggle}>
                 <ToggleButton className="buttonStyle btn-toggle" value={true}>
                   List
