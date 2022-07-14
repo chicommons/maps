@@ -206,7 +206,6 @@ const Search = (props) => {
   const handleToggle = (bool) => setListView(bool)
   // same logic from Search.jsx
   const renderSearchResults = () => {
-    console.log("is auth: " + isAuthenticated);
     if (searchResults && searchResults.length) {
         if(listView){
           return (
@@ -345,7 +344,7 @@ const Search = (props) => {
               <CancelButton />
             </div>
           </div>
-          {isAuthenticated===true ? 
+          {isAuthenticated ? 
             <div className="form-group form-row">
               <div className="form-group col-md-12">Return search results as:</div>
               <div className="form-group col-md-12">

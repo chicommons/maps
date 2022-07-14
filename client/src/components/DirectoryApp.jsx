@@ -47,7 +47,7 @@ const DirectoryApp = () => {
                   <PrivateRoute authed={isAuthenticated} path="/signup" component={NewUser} />
                   <Route path="/add" component={Add} />
                   <Route path="/edit/:id" component={Edit} />
-                  <Route authed={isAuthenticated} path="/search" component={Search} />
+                  <Route path="/search" component={Search} />
                   <Route path="/nocoords" component={NoCoordsSearch} />
                   <Route
                     path="/directory-additions-updates/:id"
