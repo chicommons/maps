@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 import ModalUpdate from './ModalUpdate';
 const { REACT_APP_PROXY } = process.env;
 
-export default function SpreadsheetToastGrid(){
+export default function Spreadsheet(props){
   const [dataArray, setDataArray] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedCoop, setSelectedCoop] = useState([]);
@@ -61,13 +61,43 @@ export default function SpreadsheetToastGrid(){
     })
   }
 
+  const renderSearchData = (data) => {
+    data.forEach((obj)=>Object.keys(obj).forEach(
+      (key) => (obj[key] === null) ? obj[key] = '' : obj[key]
+    ))
+    const mapped = data.map(({
+      id, 
+      approved,
+      name, 
+      phone, 
+      email,
+      web_site,
+      coopaddresstags_set: [{ 
+        address: {
+          formatted:formatted_address, 
+          locality: {
+            name:city, 
+            postal_code, 
+            state: { name:state, country:{code:country_code} }
+          }
+        },
+        
+      }]
+    }) => ({ id,approved, name,address:formatted_address,phone:phone.phone, email:email.email, web_site, city, state, postal_code, country_code}));
+    setDataArray(mapped);
+  }
+
   const cellClickedListener = useCallback( event => {
     handleShow();
     setSelectedCoop(gridRef.current.getInstance().getRow(event.rowKey));
   }, []);
 
   useEffect(() => {
-    getData();
+    if(props.searchResults){
+      renderSearchData(props.searchResults)
+    } else {
+      getData();
+    }
   }, []);
 
   return(

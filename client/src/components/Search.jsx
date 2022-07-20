@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { useAuthentication } from '../hooks';
+import { FormControl, FormGroup, FormLabel, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import "../Search.css";
 
 import RenderCoopList from "./RenderCoopList";
+import Spreadsheet from "./Spreadsheet";
 
 import _ from "lodash";
 
@@ -123,6 +125,8 @@ const Search = (props) => {
   const [provinces, setProvinces] = React.useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [listView, setListView] = useState(true)
+  const { isAuthenticated } = useAuthentication();
 
   useEffect(() => {
     // Get all possible coop types to populate search form
@@ -199,15 +203,20 @@ const Search = (props) => {
     setCoopSearchSettings({...coopSearchSettings, [name]: selections})
   }
 
+  const handleToggle = (bool) => setListView(bool)
   // same logic from Search.jsx
   const renderSearchResults = () => {
     if (searchResults && searchResults.length) {
+        if(listView){
+          return (
 
-         console.log(searchResults);
-         
-         return (
-           <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
-         )
+            <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
+          )
+        }else{
+          return (
+            <Spreadsheet searchResults={searchResults}/>
+          ) 
+        }
     };
   };
 
@@ -335,7 +344,24 @@ const Search = (props) => {
               <CancelButton />
             </div>
           </div>
-          <div>
+          {isAuthenticated ? 
+            <div className="form-group form-row">
+              <div className="form-group col-md-12">Return search results as:</div>
+              <div className="form-group col-md-12">
+              <ToggleButtonGroup type="radio" name="options" defaultValue={true} onChange={handleToggle}>
+                <ToggleButton className="buttonStyle btn-toggle" value={true}>
+                  List
+                </ToggleButton>
+                <ToggleButton className="buttonStyle btn-toggle" value={false}>
+                  Spreadsheet
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            </div>
+            :
+            <div></div>
+            }
+            <div>
             {renderSearchResults()}
             {loading && (
               <div class="loading">
