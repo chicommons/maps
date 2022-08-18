@@ -1,5 +1,5 @@
 # maps
-     
+    
 ## Copy credentials.json file
 
 In order to interact with the Google spreadsheet, where some of the data gets stored and read from, you will need a file named "credentials.json," which you will need to copy to the following directory
