@@ -8,24 +8,28 @@ from operator import itemgetter
 from yaml import load, dump
 from yaml import Loader, Dumper
 from commons.util.case_insensitive_set import CaseInsensitiveSet
-# removed 7/11/22 replaced with osGeoLoc
-#from ...services.location_service import LocationService
+# removed 8/22/22 replaced with getGeoLoc
+# from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
 
-# get geo loc from Open Street Maps 7/11/22
+# replace LocationService with getGeoLoc
+# getGeoLoc gets data from Open Street Maps 8/22/22
 # fmi see https://www.natasshaselvaraj.com/a-step-by-step-guide-on-geocoding-in-python/
 #         https://nominatim.org/release-docs/latest/api/Overview/
-def osGeoLoc(zAddress):
-    import requests
-    url = 'https://nominatim.openstreetmap.org/search/' + zAddress +'?format=json'
-    resp0 = requests.get(url).json()
-    try:
-        resp=[float(resp0[0]['lat']),float(resp0[0]['lon'])]
-    except:
-        resp=[0,0]
-    return(resp)
-
+class getGeoLoc():
+    def __init__(self, zAddress=""):
+        self.zAddress = zAddress
+        import requests
+        url = 'https://nominatim.openstreetmap.org/search/' + zAddress +'?format=json'
+        resp0 = requests.get(url).json()
+        try:
+            resp=[float(resp0[0]['lat']),float(resp0[0]['lon'])]
+        except:
+            resp=[0,0]
+        self.lat=resp[0]
+        self.lon=resp[1]
+    
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file')
@@ -167,18 +171,11 @@ class Command(BaseCommand):
                 # If there are no lat or lon coords provided, attempt to figure
                 # them out
                 if not lat or not lon:
-                    #svc = LocationService()
-                    #ret = svc.get_coords(
-                    #    address=street,
-                    #    city=city,
-                    #    zip=postal_code,
-                    #    state_code=state_id,
-                    #    country_code="US"
-                    #)
-                    ret=osGeoLoc(street+", "+city+", "+state_id+" "+postal_code)
-                    if ret:
-                        lat = ret[0]
-                        lon = ret[1]
+                    # use new class object getGeoLoc to get geo info
+                    geoInfo=getGeoLoc(street+", "+city+", "+state_id+" "+postal_code)
+                    if geoInfo:
+                        lat = geoInfo.lat
+                        lon = geoInfo.lon
 
                 print("- model: address.address")
                 print("  pk:",i)
