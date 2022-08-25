@@ -1,6 +1,9 @@
+# removed 7/21/222 
 from geopy.geocoders import Nominatim
 import ssl
 import sys
+import requests
+
 
 from address.models import State, Country, Locality, Address
 
@@ -41,10 +44,14 @@ class LocationService(object):
             if not address:
                 address_str = "%s, %s %s %s" % (city, state_code, zip, country.name if country else "")
             try:
-                location = self._locator.geocode(address_str)
+                # get geo loc from Open Street Maps 7/11/22
+                # fmi see https://www.natasshaselvaraj.com/a-step-by-step-guide-on-geocoding-in-python/
+                #         https://nominatim.org/release-docs/latest/api/Overview/
+                url = 'https://nominatim.openstreetmap.org/search/' + address_str +'?format=json'
+                location = requests.get(url).json()
                 if location:
-                    latitude = location.latitude
-                    longitude = location.longitude
+                    latitude = float(location[0]['lat'])
+                    longitude = float(location[0]['lon'])
                 else:
                     print("Failed to find coordinates for %s " % address_str, file=sys.stderr) 
             except Exception as err:

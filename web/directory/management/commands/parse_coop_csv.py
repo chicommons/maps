@@ -8,27 +8,10 @@ from operator import itemgetter
 from yaml import load, dump
 from yaml import Loader, Dumper
 from commons.util.case_insensitive_set import CaseInsensitiveSet
-# removed 8/22/22 replaced with getGeoLoc
-# from ...services.location_service import LocationService
+from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
 
-# replace LocationService with getGeoLoc
-# getGeoLoc gets data from Open Street Maps 8/22/22
-# fmi see https://www.natasshaselvaraj.com/a-step-by-step-guide-on-geocoding-in-python/
-#         https://nominatim.org/release-docs/latest/api/Overview/
-class getGeoLoc():
-    def __init__(self, zAddress=""):
-        self.zAddress = zAddress
-        import requests
-        url = 'https://nominatim.openstreetmap.org/search/' + zAddress +'?format=json'
-        resp0 = requests.get(url).json()
-        try:
-            resp=[float(resp0[0]['lat']),float(resp0[0]['lon'])]
-        except:
-            resp=[0,0]
-        self.lat=resp[0]
-        self.lon=resp[1]
     
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -171,11 +154,14 @@ class Command(BaseCommand):
                 # If there are no lat or lon coords provided, attempt to figure
                 # them out
                 if not lat or not lon:
-                    # use new class object getGeoLoc to get geo info
-                    geoInfo=getGeoLoc(street+", "+city+", "+state_id+" "+postal_code)
-                    if geoInfo:
-                        lat = geoInfo.lat
-                        lon = geoInfo.lon
+                    svc = LocationService()
+                    ret = svc.get_coords(
+                        address=street,
+                        city=city,
+                        zip=postal_code,
+                        state_code=state_id,
+                        country_code="US"
+                    )
 
                 print("- model: address.address")
                 print("  pk:",i)
