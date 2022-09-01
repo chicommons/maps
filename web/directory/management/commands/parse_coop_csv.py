@@ -161,7 +161,9 @@ class Command(BaseCommand):
                         zip=postal_code,
                         state_code=state_id,
                         country_code="US"
-                    )
+                        )
+                    lat = ret[0]
+                    lon = ret[1]
 
                 print("- model: address.address")
                 print("  pk:",i)
