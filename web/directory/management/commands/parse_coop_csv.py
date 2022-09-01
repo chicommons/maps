@@ -162,8 +162,9 @@ class Command(BaseCommand):
                         state_code=state_id,
                         country_code="US"
                         )
-                    lat = ret[0]
-                    lon = ret[1]
+                    if ret:
+                        lat = ret[0]
+                        lon = ret[1]
 
                 print("- model: address.address")
                 print("  pk:",i)
