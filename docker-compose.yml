@@ -8,14 +8,22 @@ services:
       - 5105:5432
     environment:
       POSTGRES_DB: directory_data
-      POSTGRES_USER: chicommons #${DB_USER}
+      POSTGRES_USER: chicommons
       POSTGRES_PASSWORD: password
+    #volumes:
+    #  - my-db:/var/lib/mysql
+    #  - ./mysql/mysqlconf:/etc/mysql/conf.d:ro 
+    #command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   web:
     restart: always
     build: ./web
     ports:           # to access the container from outside
       - "8000:8000"
+    env_file: .env
+    environment:
+      DEBUG: 'true'
+      SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
@@ -24,7 +32,7 @@ services:
       DB_USER: chicommons
       DB_PASS: password
       DB_PORT: 5432
-    command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 2 -b :8000
+    command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 1 -b :8000
     volumes:
     - ./web/:/app
     depends_on:
@@ -38,6 +46,7 @@ services:
     ports:
       - '3001:3000'
     restart: always
+    container_name: web-app
     environment:
       - NODE_ENV=dockerdev
     depends_on:

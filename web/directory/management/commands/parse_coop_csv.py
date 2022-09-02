@@ -11,7 +11,8 @@ from commons.util.case_insensitive_set import CaseInsensitiveSet
 from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
-  
+
+    
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file')
@@ -52,7 +53,7 @@ class Command(BaseCommand):
                 try:
                     phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
-                    phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 if phone_pub.lower() != 'no':
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
@@ -71,6 +72,8 @@ class Command(BaseCommand):
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(id) 
+
+                # need to use flag: ent-adrs-pub to decide whether to publish
                 enabled = row['ent-include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
@@ -123,6 +126,18 @@ class Command(BaseCommand):
         i=1
         address_pks = dict()
         for row in input_file:
+
+            # code simplified June and July 2022s
+            # New code for testing whether the address can be public
+            #try:
+            adrs_pub = row.get('ent-adrs-pub',"00").strip().encode("utf-8", 'ignore').decode("utf-8")
+            #except KeyError:
+            #    adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            
+            # if address is not public, don't print
+            if adrs_pub.lower() != 'yes':
+                continue
+            
             street = load(Command.strip_invalid(row['ent-adrs'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
             parts = street.split(" ") if street is not None else ["None"]
             num = parts[0]
@@ -147,7 +162,7 @@ class Command(BaseCommand):
                         zip=postal_code,
                         state_code=state_id,
                         country_code="US"
-                    )
+                        )
                     if ret:
                         lat = ret[0]
                         lon = ret[1]
