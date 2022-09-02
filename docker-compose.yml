@@ -24,6 +24,14 @@ services:
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
+    environment:
+      DEBUG: 'true'
+      SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
+      DB_SERVICE: postgres # host.docker.internal
+      DB_NAME: directory_data
+      DB_USER: chicommons
+      DB_PASS: password
+      DB_PORT: 5432
     command: /usr/local/bin/gunicorn directory.wsgi:application --reload -w 1 -b :8000
     volumes:
     - ./web/:/app
