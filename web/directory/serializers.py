@@ -386,6 +386,8 @@ class CoopSearchSerializer(serializers.ModelSerializer):
     This Coop serializer contains a scaled down version of the model to streamline
     bandwidth used and processing.
     """
+    phone = ContactMethodPhoneSerializer()
+    email = ContactMethodEmailSerializer()
 
     class Meta:
         model = Coop
