@@ -209,7 +209,6 @@ const Search = (props) => {
     if (searchResults && searchResults.length) {
         if(listView){
           return (
-
             <RenderCoopList link={"/directory-additions-updates/"} searchResults={searchResults}  columnOneText={"Matching Entities"} columnTwoText={"Edit"} />
           )
         }else{
