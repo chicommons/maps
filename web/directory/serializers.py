@@ -388,10 +388,11 @@ class CoopSearchSerializer(serializers.ModelSerializer):
     """
     phone = ContactMethodPhoneSerializer()
     email = ContactMethodEmailSerializer()
+    types = CoopTypeSerializer(many=True, allow_empty=False)
 
     class Meta:
         model = Coop
-        fields = 'id', 'name', 'approved', 'coopaddresstags_set', 'phone', 'email', 'web_site'
+        fields = 'id', 'name', 'approved', 'coopaddresstags_set', 'phone', 'email', 'web_site', 'types'
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

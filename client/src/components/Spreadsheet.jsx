@@ -14,6 +14,7 @@ export default function Spreadsheet(props){
     setSelectedCoop([]);
   }
   const handleShow = () => setShow(true);
+  const [allquery, setAllquery] = useState({})
 
   const columnDefs= [
     {name: 'id', header: 'ID', filter: 'select', sortable: true, resizable:true, width:70},
@@ -36,79 +37,19 @@ export default function Spreadsheet(props){
     {name: 'country_id',header: 'Country Id', filter: 'select', sortable: true, resizable:true,width:100},
     {name: 'country',header: 'Country', filter: 'select', sortable: true, resizable:true,width:100},
     {name: 'country_code',header: 'Country Code', filter: 'select', sortable: true, resizable:true,width:100},
+    {name: 'entity_types',header: 'Entity Type', filter: 'select', sortable: true, resizable:true,width:100},
+    {name: 'country_code',header: 'Country Code', filter: 'select', sortable: true, resizable:true,width:100},
     {name: 'is_public',header: 'Is Public?', filter: 'select', sortable: true, resizable:true,width:120},
+    {name: 'approved',header: 'Approved?', filter: 'select', sortable: true, resizable:true,width:120},
   ];
   
   const gridRef = useRef(null)
   
-  const getData = async () => {
+  const renderAllCoops = async () => {
     await fetch(REACT_APP_PROXY + "/coops/all/")
     .then((result) => {
       return result.json()})
-    .then(data => {
-      data.forEach((obj)=>Object.keys(obj).forEach(
-        (key) => (obj[key] === null) ? obj[key] = '' : obj[key]
-      ))
-      const mapped = data.map(({ 
-        id, 
-        approved,
-        name, 
-        phone, 
-        email,
-        web_site,
-        coopaddresstags_set: [{ 
-          address: {
-            id:address_id,
-            street_number,
-            route,
-            raw,
-            formatted:formatted_address, 
-            latitude,
-            longitude,
-            locality: {
-              id:locality_id,
-              name:city, 
-              postal_code, 
-              state: { 
-                id:state_id,
-                code:state_code, 
-                name:state, 
-                country:{
-                  id:country_id,
-                  name:country,
-                  code:country_code
-                } 
-              }
-            }
-          },
-          is_public,
-        }]
-      }) => ({ 
-        id,
-        approved, 
-        name,
-        street_number,
-        route,
-        raw,
-        address:formatted_address,
-        latitude,
-        longitude,
-        phone:phone.phone, 
-        email:email.email, 
-        web_site,
-        locality_id,
-        city,
-        state_id,
-        state_code, 
-        state, 
-        postal_code,
-        country_id,
-        country, 
-        country_code,
-        is_public
-    }));
-      setDataArray(mapped);
-    })
+    .then(data => renderSearchData(data))
   }
 
   const renderSearchData = (data) => {
@@ -122,6 +63,9 @@ export default function Spreadsheet(props){
       phone, 
       email,
       web_site,
+      types:[{
+        name:entity_types,
+      }],
       coopaddresstags_set: [{ 
         address: {
           id:address_id,
@@ -171,7 +115,8 @@ export default function Spreadsheet(props){
       country_id,
       country, 
       country_code,
-      is_public
+      is_public,
+      entity_types
     }));
     setDataArray(mapped);
   }
@@ -185,7 +130,7 @@ export default function Spreadsheet(props){
     if(props.searchResults){
       renderSearchData(props.searchResults)
     } else {
-      getData();
+      renderAllCoops()
     }
   }, []);
 
