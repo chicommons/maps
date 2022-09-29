@@ -26,9 +26,19 @@ class Command(BaseCommand):
         city_pks = Command.get_city_pks(file_path)
         address_pks = Command.get_address_pks(file_path, city_pks)
 
+        # generate unique index keys on demand
+        def getID(IDset: set, ixPoint):
+            while ixPoint in IDset:
+                ixPoint+=1
+            IDset.add(ixPoint)
+            return ixPoint
+
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
         types_hash = {}
+        IDs = set()
+        iPoint=0
+        IDerr=0
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -40,11 +50,18 @@ class Command(BaseCommand):
                     types_hash[name] = CaseInsensitiveSet()
                 types = types_hash[name]
                 types.add(type) 
+            # set of IDs
+            if id in IDs:
+                # currently this error flag is not used
+                IDerr+=1
+            else:
+                IDs.add(id)
 
         input_file = csv.DictReader(open(file_path))
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            is_pub = load(Command.strip_invalid(row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
             if name in types_hash.keys():
                 types = types_hash[name]
                 state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -62,6 +79,10 @@ class Command(BaseCommand):
                     email_pub =  'yes'
                 if email_pub.lower() != 'no':
                     email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                try:
+                    adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                except KeyError:
+                    adrs_pub =  'no'
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -70,7 +91,9 @@ class Command(BaseCommand):
                 if address_pk:
                     # Output the contact methods
                     if email:
-                        contact_email_pk = int(id) * 2
+                        #contact_email_pk = int(id) * 2 + 1
+                        iPoint=getID(IDs,iPoint)
+                        contact_email_pk = int(iPoint)
                         print("- model: directory.contactmethod")
                         print("  pk:",contact_email_pk)
                         print("  fields:")
@@ -79,7 +102,9 @@ class Command(BaseCommand):
 
                     if phone:
                         print("- model: directory.contactmethod")
-                        contact_phone_pk = int(id) * 2 + 1
+                        #contact_phone_pk = int(id) * 2 + 1
+                        iPoint=getID(IDs,iPoint)
+                        contact_phone_pk=int(iPoint)
                         print("  pk:",contact_phone_pk)
                         print("  fields:")
                         print("    type: \"PHONE\"")
@@ -93,13 +118,24 @@ class Command(BaseCommand):
                     print("    types:")
                     for entry in types:
                         print("    - ['", entry, "']", sep='') 
-                    print("    addresses: [", address_pk, "]")                   
+                    #print("    addresses: [", address_pk, "]")                   
                     print("    enabled:",enabled)
                     if phone:
                         print("    phone:",contact_phone_pk)
                     if email:
                         print("    email:",contact_email_pk)
                     print("    web_site: \"",web_site,"\"", sep='')
+
+                    # new model to link addresses: 9/15/2022
+                    print("- model: directory.addresstag")
+                    #add_tag_pk = int(id) * 2 + 2
+                    iPoint=getID(IDs,iPoint)
+                    add_tag_pk=int(iPoint) 
+                    print("  pk:", add_tag_pk)
+                    print("  fields:")
+                    print("    is_public:", adrs_pub)
+                    print("    coop_id:",id)
+                    print("    address_id:",address_pk)
 
     @staticmethod
     def strip_invalid(s):
