@@ -234,11 +234,11 @@ class CoopAddressTagsSerializer(serializers.ModelSerializer):
         model = CoopAddressTags
         fields = ['id', 'address', 'is_public']
 
-    def to_representation(self, instance):
-        print("type of instance: %s" % type(instance))
-        rep = super().to_representation(instance)
-        rep['address'] = AddressSerializer(instance.address).data
-        return rep
+    #def to_representation(self, instance):
+    #    print("type of instance: %s" % type(instance))
+    #    rep = super().to_representation(instance)
+    #    rep['address'] = AddressSerializer(instance.address).data
+    #    return rep
 
     def update(self, instance, validated_data):
         """

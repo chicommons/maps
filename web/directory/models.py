@@ -1,12 +1,10 @@
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-
 from address.models import Address
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
-from datetime import datetime
-
+from django.db.models import Prefetch
 
 class ContactMethod(models.Model):
     class ContactTypes(models.TextChoices):
@@ -83,7 +81,11 @@ class CoopManager(models.Manager):
             q &= Q(addresses__locality__state__code=state_abbrev)
             q &= Q(addresses__locality__state__country__code="US")
 
-        queryset = Coop.objects.filter(q)
+        #addressPrefetcher = Prefetch('addresses', queryset=Address.objects.select_related('locality', 'locality__state', 'locality__state__country'))
+        addressTagsPrefetcher = Prefetch('coopaddresstags_set', queryset=CoopAddressTags.objects.select_related('address', 'address__locality', 'address__locality__state', 'address__locality__state__country'))
+        queryset = Coop.objects.filter(q).prefetch_related(addressTagsPrefetcher, 'types')
+        
+        queryset = queryset.select_related('phone', 'email')
         print(queryset.query)
         return queryset
 
