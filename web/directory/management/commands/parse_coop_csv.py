@@ -11,8 +11,7 @@ from commons.util.case_insensitive_set import CaseInsensitiveSet
 from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
-
-    
+  
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file')
@@ -27,9 +26,19 @@ class Command(BaseCommand):
         city_pks = Command.get_city_pks(file_path)
         address_pks = Command.get_address_pks(file_path, city_pks)
 
+        # generate unique index keys on demand
+        def getID(IDset: set, ixPoint):
+            while ixPoint in IDset:
+                ixPoint+=1
+            IDset.add(ixPoint)
+            return ixPoint
+
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
         types_hash = {}
+        IDs = set()
+        iPoint=0
+        IDerr=0
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -41,11 +50,18 @@ class Command(BaseCommand):
                     types_hash[name] = CaseInsensitiveSet()
                 types = types_hash[name]
                 types.add(type) 
+            # set of IDs
+            if id in IDs:
+                # currently this error flag is not used
+                IDerr+=1
+            else:
+                IDs.add(id)
 
         input_file = csv.DictReader(open(file_path))
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            is_pub = load(Command.strip_invalid(row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
             if name in types_hash.keys():
                 types = types_hash[name]
                 state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -53,32 +69,35 @@ class Command(BaseCommand):
                 try:
                     phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
-                    phone_pub = row['ent-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 if phone_pub.lower() != 'no':
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
+
                 try:
-                    # 'email_pub' changed to 'email' 11/18/21
-                    email = row['ent-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                    email_pub = row['ent-email-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 except KeyError:
-                    # 'email_pub' changed to 'email' 11/18/21
-                    email =  'yes'
-                    # '!= no' changed to '== yes' 11/18/21
-                if email.lower() == 'yes':
+                    email_pub =  'yes'
+                if email_pub.lower() != 'no':
                     email = row['ent-email'].strip().encode("utf-8", 'ignore').decode("utf-8")
-                if email.lower() == 'no':
-                    email=''
+
+                try:
+                    adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                except KeyError:
+                    adrs_pub =  'no'
+                adrs_pub = adrs_pub == 'yes'
+
                 web_site = row['website'].strip().encode('ascii','ignore').decode('ascii')
                 lat = row['lat'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 lon = row['lon'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 address_pk = address_pks.get(id) 
-
-                # need to use flag: ent-adrs-pub to decide whether to publish
                 enabled = row['ent-include'].lower() == 'yes'
                 if address_pk:
                     # Output the contact methods
                     if email:
-                        contact_email_pk = int(id) * 2
+                        #contact_email_pk = int(id) * 2 + 1
+                        iPoint=getID(IDs,iPoint)
+                        contact_email_pk = int(iPoint)
                         print("- model: directory.contactmethod")
                         print("  pk:",contact_email_pk)
                         print("  fields:")
@@ -87,7 +106,9 @@ class Command(BaseCommand):
 
                     if phone:
                         print("- model: directory.contactmethod")
-                        contact_phone_pk = int(id) * 2 + 1
+                        #contact_phone_pk = int(id) * 2 + 1
+                        iPoint=getID(IDs,iPoint)
+                        contact_phone_pk=int(iPoint)
                         print("  pk:",contact_phone_pk)
                         print("  fields:")
                         print("    type: \"PHONE\"")
@@ -101,14 +122,24 @@ class Command(BaseCommand):
                     print("    types:")
                     for entry in types:
                         print("    - ['", entry, "']", sep='') 
-                    print("    addresses: [", address_pk, "]")                   
+                    #print("    addresses: [", address_pk, "]")                   
                     print("    enabled:",enabled)
                     if phone:
                         print("    phone:",contact_phone_pk)
                     if email:
                         print("    email:",contact_email_pk)
                     print("    web_site: \"",web_site,"\"", sep='')
-                    print("    approved: True", sep='')
+
+                    # new model to link addresses: 9/15/2022
+                    print("- model: directory.coopaddresstags")
+                    #add_tag_pk = int(id) * 2 + 2
+                    iPoint=getID(IDs,iPoint)
+                    add_tag_pk=int(iPoint) 
+                    print("  pk:", add_tag_pk)
+                    print("  fields:")
+                    print("    is_public:", adrs_pub)
+                    print("    coop_id:",id)
+                    print("    address_id:",address_pk)
 
     @staticmethod
     def strip_invalid(s):
@@ -126,18 +157,6 @@ class Command(BaseCommand):
         i=1
         address_pks = dict()
         for row in input_file:
-
-            # code simplified June and July 2022s
-            # New code for testing whether the address can be public
-            #try:
-            adrs_pub = row.get('ent-adrs-pub',"00").strip().encode("utf-8", 'ignore').decode("utf-8")
-            #except KeyError:
-            #    adrs_pub = row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
-            
-            # if address is not public, don't print
-            if adrs_pub.lower() != 'yes':
-                continue
-            
             street = load(Command.strip_invalid(row['ent-adrs'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
             parts = street.split(" ") if street is not None else ["None"]
             num = parts[0]
@@ -162,7 +181,7 @@ class Command(BaseCommand):
                         zip=postal_code,
                         state_code=state_id,
                         country_code="US"
-                        )
+                    )
                     if ret:
                         lat = ret[0]
                         lon = ret[1]
