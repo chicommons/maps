@@ -102,6 +102,8 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class ContactMethodPhoneSerializer(serializers.ModelSerializer):
+    coop = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = ContactMethod
         fields = ['type', 'phone']
@@ -110,6 +112,8 @@ class ContactMethodPhoneSerializer(serializers.ModelSerializer):
 
 
 class ContactMethodEmailSerializer(serializers.ModelSerializer):
+    coop = serializers.PrimaryKeyRelatedField(read_only=True)
+    
     class Meta:
         model = ContactMethod
         fields = ['type', 'email']
@@ -262,8 +266,8 @@ class CoopAddressTagsSerializer(serializers.ModelSerializer):
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
     coopaddresstags_set = CoopAddressTagsSerializer(many=True)
-    phone = ContactMethodPhoneSerializer()
-    email = ContactMethodEmailSerializer()
+    phone = ContactMethodPhoneSerializer(many=True)
+    email = ContactMethodEmailSerializer(many=True)
 
     class Meta:
         model = Coop

@@ -19,6 +19,7 @@ class ContactMethod(models.Model):
     )
     phone = PhoneNumberField(null=True)
     email = models.EmailField(null=True)
+    coop = models.ForeignKey(Coop, on_delete=models.CASCADE, null=True, related_name='coop')
 
     class Meta:
         unique_together = ('phone', 'email',)
@@ -43,8 +44,7 @@ class CoopType(models.Model):
 class CoopManager(models.Manager):
     # Look up by coop type
     def get_by_type(self, type):
-        qset = Coop.objects.filter(types__name=type,
-                                   enabled=True)
+        qset = Coop.objects.filter(types__name=type, enabled=True)
         return qset
 
     def find(
@@ -95,8 +95,7 @@ class CoopManager(models.Manager):
             *[('types__name__icontains', type) for type in types_arr],
             _connector=Q.OR
         )
-        queryset = Coop.objects.filter(filter,
-                                       enabled=True)
+        queryset = Coop.objects.filter(filter, enabled=True)
         return queryset
 
     def find_wo_coords(self):
@@ -126,8 +125,13 @@ class Coop(models.Model):
     types = models.ManyToManyField(CoopType, blank=False)
     addresses = models.ManyToManyField(Address, through='CoopAddressTags')
     enabled = models.BooleanField(default=True, null=False)
-    phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
-    email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
+    # make phone & email one to many
+    # attempt 1 pseudocode:
+    # one-to-many: add a foreignkey relationship to phone and email, remove it from codeo
+    # attempt 2 pseudocode:
+    # many-to-many relationship: copy Address method with a CoopAddressTags-like table that joins the two.
+    # phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
+    # email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
@@ -135,14 +139,14 @@ class Coop(models.Model):
     reject_reason = models.TextField(null=True)
 
     def apply_proposed_changes(self):
-       proposed = self.proposed_changes
-       self.name = proposed.get('name')
-       self.web_site = proposed.get('web_site')
-       for type in proposed.get('types'):
-           self.types.add(CoopType.objects.get(name=type))
-       #for address in proposed.get('coopaddresstags_set'):
-       #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
-       self.save()  
+        proposed = self.proposed_changes
+        self.name = proposed.get('name')
+        self.web_site = proposed.get('web_site')
+        for type in proposed.get('types'):
+            self.types.add(CoopType.objects.get(name=type))
+        #for address in proposed.get('coopaddresstags_set'):
+        #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
+        self.save()  
 
 class CoopAddressTags(models.Model):
     # Retain referencing coop & address, but set "is_public" relation to NULL
@@ -163,8 +167,8 @@ def country_get_by_natural_key(self, name):
 Country.add_to_class("get_by_natural_key", country_get_by_natural_key)
 
 def state_get_by_natural_key(self, code, country):
-  country = Country.objects.get_or_create(name=country)[0]
-  return State.objects.get_or_create(code=code, country=country)[0]
+    country = Country.objects.get_or_create(name=country)[0]
+    return State.objects.get_or_create(code=code, country=country)[0]
 
 class StateCustomManager(models.Manager):
     def get_by_natural_key(self, code, country):
