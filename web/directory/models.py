@@ -6,25 +6,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
 from django.db.models import Prefetch
 
-class ContactMethod(models.Model):
-    class ContactTypes(models.TextChoices):
-        EMAIL = 'EMAIL', _('Email')
-        PHONE = 'PHONE', _('Phone')
-
-    is_public = models.BooleanField(default=True, null=False)
-    type = models.CharField(
-        null=False,
-        max_length=5,
-        choices=ContactTypes.choices,
-    )
-    phone = PhoneNumberField(null=True)
-    email = models.EmailField(null=True)
-    coop = models.ForeignKey(Coop, on_delete=models.CASCADE, null=True, related_name='coop')
-
-    class Meta:
-        unique_together = ('phone', 'email',)
-
-
 class CoopTypeManager(models.Manager):
 
     def get_by_natural_key(self, name):
@@ -147,6 +128,24 @@ class Coop(models.Model):
         #for address in proposed.get('coopaddresstags_set'):
         #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
         self.save()  
+
+class ContactMethod(models.Model):
+    class ContactTypes(models.TextChoices):
+        EMAIL = 'EMAIL', _('Email')
+        PHONE = 'PHONE', _('Phone')
+
+    is_public = models.BooleanField(default=True, null=False)
+    type = models.CharField(
+        null=False,
+        max_length=5,
+        choices=ContactTypes.choices,
+    )
+    phone = PhoneNumberField(null=True)
+    email = models.EmailField(null=True)
+    coop = models.ForeignKey(Coop, on_delete=models.CASCADE, null=True, related_name='coop')
+
+    class Meta:
+        unique_together = ('phone', 'email',)
 
 class CoopAddressTags(models.Model):
     # Retain referencing coop & address, but set "is_public" relation to NULL
