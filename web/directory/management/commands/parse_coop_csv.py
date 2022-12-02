@@ -1,6 +1,8 @@
 import re
-import csv
+import csv   
 import sys
+import pandas as pd
+import os
 from ruamel.yaml import YAML
 from ruamel.yaml.reader import Reader
 import codecs
@@ -11,7 +13,7 @@ from commons.util.case_insensitive_set import CaseInsensitiveSet
 from ...services.location_service import LocationService
 from django.core.management.base import BaseCommand
 from yaml import load
-  
+
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file')
@@ -35,20 +37,31 @@ class Command(BaseCommand):
 
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
+        name={};
+        type={};
+        names_hash = {}
         types_hash = {}
         IDs = set()
         iPoint=0
         IDerr=0
+        nList=[]
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             type = re.sub(
                 r"^\s+", "", row['ent-type'].strip().encode("utf-8", 'ignore').decode("utf-8"), flags=re.UNICODE
             )
+            # names is new 10/20/22
+            if name:
+                nList.append(name)
+                if not name in names_hash.keys():
+                    names_hash[name] = CaseInsensitiveSet()
+                names = names_hash[name]
+                names.add(name) 
             if type:
-                if not name in types_hash.keys():
-                    types_hash[name] = CaseInsensitiveSet()
-                types = types_hash[name]
+                if not type in types_hash.keys():
+                    types_hash[type] = CaseInsensitiveSet()
+                types = types_hash[type]
                 types.add(type) 
             # set of IDs
             if id in IDs:
@@ -56,12 +69,23 @@ class Command(BaseCommand):
                 IDerr+=1
             else:
                 IDs.add(id)
+        nkList=list(names_hash.keys())
 
         input_file = csv.DictReader(open(file_path))
+        coop_id_pretable=[]
         for row in input_file:
             id = row['ID'].strip().encode("utf-8", 'ignore').decode("utf-8")
             name = row['ent-name'].strip().encode("utf-8", 'ignore').decode("utf-8")
             is_pub = load(Command.strip_invalid(row['ent-adrs-pub'].strip().encode("utf-8", 'ignore').decode("utf-8"))) 
+            address=row['ent-adrs'].strip().encode("utf-8", 'ignore').decode("utf-8")
+            try:
+                coop_id=nkList.index(name)
+            except:
+                coop_id=9999
+            
+            # currently coop_id is numeric and id is string.
+            coop_id_pretable.append([coop_id, id, name, address])
+
             if name in types_hash.keys():
                 types = types_hash[name]
                 state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
@@ -116,7 +140,8 @@ class Command(BaseCommand):
 
                     # Output the coop
                     print("- model: directory.coop")
-                    print("  pk:",id)
+                    #print("  pk:",id)
+                    print("  pk:",coop_id)
                     print("  fields:")
                     print("    name: \"",name,"\"", sep='')
                     print("    types:")
@@ -132,14 +157,30 @@ class Command(BaseCommand):
 
                     # new model to link addresses: 9/15/2022
                     print("- model: directory.coopaddresstags")
-                    #add_tag_pk = int(id) * 2 + 2
                     iPoint=getID(IDs,iPoint)
                     add_tag_pk=int(iPoint) 
                     print("  pk:", add_tag_pk)
                     print("  fields:")
                     print("    is_public:", adrs_pub)
-                    print("    coop_id:",id)
-                    print("    address_id:",address_pk)
+                    print("    coop_id:", coop_id)
+                    print("    address_id:", address_pk)
+            
+        # create defacto coop unique names df
+        coop_id_table=pd.DataFrame(coop_id_pretable, columns=['coop_id','location_id','coop_name','coop_address'])
+
+        # check duplicates and multiple locations
+        unique_names=coop_id_table.groupby("coop_name").size().to_frame().reset_index().set_axis(["coop_name","count"], axis=1)
+        mult_locs_chk=unique_names.loc[unique_names['count']>1].merge(coop_id_table,on='coop_name')
+
+        # check duplicate addresses
+        unique_adds=coop_id_table.groupby("coop_address").size().to_frame().reset_index().set_axis(["coop_address","count"], axis=1)
+        mult_adds_chk=unique_adds.loc[unique_adds['count']>1].merge(coop_id_table,on='coop_address')
+
+        # write out results
+        dirpath = os.getcwd()
+        coop_id_table.to_csv(os.path.join(dirpath,"/tmp/coop_id_table.csv"))
+        mult_locs_chk.to_csv(os.path.join(dirpath,"/tmp/mult_locs_chk.csv"))
+        mult_adds_chk.to_csv(os.path.join(dirpath,"/tmp/mult_adds_chk.csv"))
 
     @staticmethod
     def strip_invalid(s):
