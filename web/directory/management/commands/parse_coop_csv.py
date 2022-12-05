@@ -72,6 +72,7 @@ class Command(BaseCommand):
                     phone_pub = row['end-phone-pub'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 if phone_pub.lower() != 'no':
                     phone = row['ent-phone'].strip().encode("utf-8", 'ignore').decode("utf-8")
+                
                 # Expecting 'ent-email-pub' to be included in the .csv file in later versions.
 
                 try:
@@ -103,16 +104,19 @@ class Command(BaseCommand):
                         print("  fields:")
                         print("    type: \"EMAIL\"")
                         print("    email:",email)
+                        print("    coop_id:", id)
 
                     if phone:
                         print("- model: directory.contactmethod")
                         #contact_phone_pk = int(id) * 2 + 1
+ 
                         iPoint=getID(IDs,iPoint)
                         contact_phone_pk=int(iPoint)
                         print("  pk:",contact_phone_pk)
                         print("  fields:")
                         print("    type: \"PHONE\"")
                         print("    phone:",phone)
+                        print("    coop_id:", id)
 
                     # Output the coop
                     print("- model: directory.coop")
@@ -124,10 +128,6 @@ class Command(BaseCommand):
                         print("    - ['", entry, "']", sep='') 
                     #print("    addresses: [", address_pk, "]")                   
                     print("    enabled:",enabled)
-                    if phone:
-                        print("    phone:",contact_phone_pk)
-                    if email:
-                        print("    email:",contact_email_pk)
                     print("    web_site: \"",web_site,"\"", sep='')
 
                     # new model to link addresses: 9/15/2022

@@ -1,5 +1,4 @@
-from collections import MutableSet
-
+from collections.abc import MutableSet
 
 class CaseInsensitiveSet(MutableSet):
     def __init__(self, *values):
