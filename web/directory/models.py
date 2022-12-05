@@ -106,13 +106,6 @@ class Coop(models.Model):
     types = models.ManyToManyField(CoopType, blank=False)
     addresses = models.ManyToManyField(Address, through='CoopAddressTags')
     enabled = models.BooleanField(default=True, null=False)
-    # make phone & email one to many
-    # attempt 1 pseudocode:
-    # one-to-many: add a foreignkey relationship to phone and email, remove it from codeo
-    # attempt 2 pseudocode:
-    # many-to-many relationship: copy Address method with a CoopAddressTags-like table that joins the two.
-    # phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
-    # email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     web_site = models.TextField()
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
