@@ -37,9 +37,10 @@ class Command(BaseCommand):
 
         input_file = csv.DictReader(open(file_path))
         # Key is coop name and key is a list of types
-        name={};
-        type={};
+        name={}
+        type={}
         names_hash = {}
+        name_to_types = {}
         types_hash = {}
         IDs = set()
         iPoint=0
@@ -60,9 +61,14 @@ class Command(BaseCommand):
                 names.add(name) 
             if type:
                 if not type in types_hash.keys():
-                    types_hash[type] = CaseInsensitiveSet()
-                types = types_hash[type]
-                types.add(type) 
+                    #types_hash[type] = CaseInsensitiveSet()
+                    types_hash[type] = [name]
+                #types = types_hash[type]
+                types_hash.setdefault(type, []).append(name)
+                name_to_types.setdefault(name, []).append(type)
+                #types.add(type) 
+            else:
+                name_to_types.setdefault(name, []).append("none")
             # set of IDs
             if id in IDs:
                 # currently this error flag is not used
@@ -86,8 +92,9 @@ class Command(BaseCommand):
             # currently coop_id is numeric and id is string.
             coop_id_pretable.append([coop_id, id, name, address])
 
-            if name in types_hash.keys():
-                types = types_hash[name]
+            # changed from "... in types_hash.keys() 12/8/22"
+            if coop_id != 9999:
+                types = name_to_types[name]
                 state_id = row['ent-st'].strip().encode("utf-8", 'ignore').decode("utf-8")
                 # Expecting 'end-phone-pub' to change name to 'ent-phone-pub'
                 try:
