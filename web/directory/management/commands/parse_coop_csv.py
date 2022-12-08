@@ -65,7 +65,8 @@ class Command(BaseCommand):
                     types_hash[type] = [name]
                 #types = types_hash[type]
                 types_hash.setdefault(type, []).append(name)
-                name_to_types.setdefault(name, []).append(type)
+                if not name in name_to_types.keys() or not type in name_to_types[name]:
+                    name_to_types.setdefault(name, []).append(type)
                 #types.add(type) 
             else:
                 name_to_types.setdefault(name, []).append("none")
