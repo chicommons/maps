@@ -19,6 +19,7 @@ class ContactMethod(models.Model):
     )
     phone = PhoneNumberField(null=True)
     email = models.EmailField(null=True)
+    coops = models.ManyToManyField('Coop')
 
     class Meta:
         unique_together = ('phone', 'email',)
@@ -95,8 +96,7 @@ class CoopManager(models.Manager):
             *[('types__name__icontains', type) for type in types_arr],
             _connector=Q.OR
         )
-        queryset = Coop.objects.filter(filter,
-                                       enabled=True)
+        queryset = Coop.objects.filter(filter, enabled=True)
         return queryset
 
     def find_wo_coords(self):
@@ -126,8 +126,10 @@ class Coop(models.Model):
     types = models.ManyToManyField(CoopType, blank=False)
     addresses = models.ManyToManyField(Address, through='CoopAddressTags')
     enabled = models.BooleanField(default=True, null=False)
-    phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
-    email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
+    # phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
+    # email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
+    phone = models.ManyToManyField(ContactMethod, null=True, related_name='contact_phone')
+    email = models.ManyToManyField(ContactMethod, null=True, related_name='contact_email')
     web_site = models.TextField()
     description = models.TextField(null=True)
     approved = models.BooleanField(default=False, null=True)
@@ -135,14 +137,14 @@ class Coop(models.Model):
     reject_reason = models.TextField(null=True)
 
     def apply_proposed_changes(self):
-       proposed = self.proposed_changes
-       self.name = proposed.get('name')
-       self.web_site = proposed.get('web_site')
-       for type in proposed.get('types'):
-           self.types.add(CoopType.objects.get(name=type))
-       #for address in proposed.get('coopaddresstags_set'):
-       #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
-       self.save()  
+        proposed = self.proposed_changes
+        self.name = proposed.get('name')
+        self.web_site = proposed.get('web_site')
+        for type in proposed.get('types'):
+            self.types.add(CoopType.objects.get(name=type))
+        #for address in proposed.get('coopaddresstags_set'):
+        #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
+        self.save()  
 
 class CoopAddressTags(models.Model):
     # Retain referencing coop & address, but set "is_public" relation to NULL
