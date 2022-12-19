@@ -126,8 +126,6 @@ class Coop(models.Model):
     types = models.ManyToManyField(CoopType, blank=False)
     addresses = models.ManyToManyField(Address, through='CoopAddressTags')
     enabled = models.BooleanField(default=True, null=False)
-    # phone = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_phone')
-    # email = models.ForeignKey(ContactMethod, on_delete=models.CASCADE, null=True, related_name='contact_email')
     phone = models.ManyToManyField(ContactMethod, null=True, related_name='contact_phone')
     email = models.ManyToManyField(ContactMethod, null=True, related_name='contact_email')
     web_site = models.TextField()
