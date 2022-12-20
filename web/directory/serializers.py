@@ -50,10 +50,11 @@ class ContactMethodField(serializers.PrimaryKeyRelatedField):
 
 
 class ContactMethodSerializer(serializers.ModelSerializer):
+    coops = CoopSerializer(many=True)
 
     class Meta:
         model = ContactMethod
-        fields = ['type', 'phone', 'email']
+        fields = ['type', 'phone', 'email', 'coops']
 
     def create(self, validated_data):
         contact_method = ContactMethod.objects.create(**validated_data)
@@ -102,17 +103,21 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class ContactMethodPhoneSerializer(serializers.ModelSerializer):
+    coops = CoopSerializer(many=True)
+
     class Meta:
         model = ContactMethod
-        fields = ['type', 'phone']
+        fields = ['type', 'phone', 'coops']
         read_only_fields = ['type']
         extra_kwargs = {'type': {'default': 'PHONE'}}
 
 
 class ContactMethodEmailSerializer(serializers.ModelSerializer):
+    coops = CoopSerializer(many=True)
+    
     class Meta:
         model = ContactMethod
-        fields = ['type', 'email']
+        fields = ['type', 'email', 'coops']
         read_only_fields = ['type']
         extra_kwargs = {'type': {'default': 'EMAIL'}}
 
@@ -262,8 +267,8 @@ class CoopAddressTagsSerializer(serializers.ModelSerializer):
 class CoopSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
     coopaddresstags_set = CoopAddressTagsSerializer(many=True)
-    phone = ContactMethodPhoneSerializer()
-    email = ContactMethodEmailSerializer()
+    phone = ContactMethodPhoneSerializer(many=True)
+    email = ContactMethodEmailSerializer(many=True)
 
     class Meta:
         model = Coop
