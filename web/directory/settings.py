@@ -30,6 +30,7 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.auth',
+    #'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -58,15 +59,25 @@ MIDDLEWARE = [
 
 #CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS = ['localhost', 'dev.chicommons.coop', 'map.chicommons.coop']
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.yahoo.com' #'smtppro.zohopro.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'laredotornado@yahoo.com' #str(os.getenv('EMAIL_USER'))
+EMAIL_HOST_PASSWORD = 'uspkrcwuilknrydb' # str(os.getenv('EMAIL_PASSWORD'))
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dev.chicommons.coop', 'prod.chicommons.coop', 'map.chicommons.coop', EMAIL_HOST]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000', 'http://localhost:3001'
+    'http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'
 ]
 
 CORS_EXPOSE_HEADERS = [
-    'Refresh-Token', 'Content-Type', 'Authorization'
+    'Refresh-Token', 'Content-Type', 'Authorization', 'X-CSRFToken'
 ]
+#CSRF_COOKIE_NAME = "csrftokennnnnn"
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1']
 
 ROOT_URLCONF = 'directory.urls'
 
@@ -197,4 +208,5 @@ LOGGING = {
         }
     }
 }
+
  

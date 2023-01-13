@@ -2,13 +2,15 @@ import React from "react";
 import "./App.css";
 import { AuthenticationProvider } from "./context/AuthenticationProvider";
 import DirectoryApp from "./components/DirectoryApp";
-import { unregister } from "./interceptors/fetch.js";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   return (
-    <AuthenticationProvider>
-      <DirectoryApp />
-    </AuthenticationProvider>
+    <CookiesProvider>
+      <AuthenticationProvider>
+        <DirectoryApp />
+      </AuthenticationProvider>
+    </CookiesProvider>
   );
 }
 

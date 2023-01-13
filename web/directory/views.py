@@ -1,33 +1,37 @@
-from directory.models import Coop, CoopType
-from address.models import State, Country, Locality
-from directory.serializers import *
-from directory.settings import SECRET_KEY
-from directory.services.google_sheet_service import GoogleSheetService
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
 import csv
-from django.http import HttpResponse
-from django.db.models.functions import Lower
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from django.contrib.auth import authenticate
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import (
-    HTTP_400_BAD_REQUEST,
-    HTTP_404_NOT_FOUND,
-    HTTP_200_OK,
-)
-from django.contrib.auth.models import User
-from rest_framework.authentication import TokenAuthentication
+import json
+import socket
 
+from address.models import Country, Locality, State
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models.functions import Lower
+from django.http import Http404, HttpResponse
+from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.status import (HTTP_200_OK, HTTP_400_BAD_REQUEST,
+                                   HTTP_404_NOT_FOUND)
+from rest_framework.views import APIView
+from django.utils.decorators import method_decorator
+
+from directory.authentication import expires_in
+from directory.models import Coop, CoopType
+from directory.serializers import *
+from directory.settings import EMAIL_HOST, EMAIL_PORT, SECRET_KEY
+
+from .authentication import expires_in, token_expire_handler
 from .serializers import UserSigninSerializer
-from .authentication import token_expire_handler, expires_in, ExpiringTokenAuthentication
+from django.contrib.auth.forms import PasswordResetForm
+from django.http import HttpRequest
+
 
 @api_view(["POST"])
 @permission_classes((AllowAny,))  # here we specify permission by default we set IsAuthenticated
@@ -330,3 +334,45 @@ class StateList(APIView):
         states = State.objects.filter(country__code=country_code)
         serializer = StateSerializer(states, many=True)
         return Response(serializer.data)
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    reset_password_template_name = 'templates/users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('users-home')
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        request.csrf_processing_done = True
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        email = json.loads(request.body).get('username')
+        print("email: %s" % email)
+        #try:
+        if 1 > 0:
+            if User.objects.get(email=email).is_active:
+                form = PasswordResetForm({'email': email})
+                print("form valid? %s" % form.is_valid())
+                if form.is_valid():
+                    request = HttpRequest()
+                    request.META['SERVER_NAME'] = socket.gethostbyname('localhost') #'127.0.0.1'
+                    request.META['SERVER_PORT'] = 8000
+                    # calling save() sends the email
+                    # check the form in the source code for the signature and defaults
+                    form.save(request=request,
+                        use_https=False,
+                        from_email="laredotornado@yahoo.com",
+                        email_template_name='../templates/users/password_reset_email.html')
+                print("email: %s " % email)
+                return super(ResetPasswordView, self).post(request, *args, **kwargs)
+        #except Exception as e:
+        #    print("\n\nerror ...\n\n")
+        #    print(e)
+        #    # this for if the email is not in the db of the system
+        #    return super(ResetPasswordView, self).post(request, *args, **kwargs)

@@ -50,7 +50,7 @@ class ContactMethodField(serializers.PrimaryKeyRelatedField):
 
 
 class ContactMethodSerializer(serializers.ModelSerializer):
-    coops = CoopSerializer(many=True)
+    #coops = CoopSerializer(many=True)
 
     class Meta:
         model = ContactMethod
@@ -103,7 +103,7 @@ class CoopTypeSerializer(serializers.ModelSerializer):
 
 
 class ContactMethodPhoneSerializer(serializers.ModelSerializer):
-    coops = CoopSerializer(many=True)
+    #coops = CoopSerializer(many=True)
 
     class Meta:
         model = ContactMethod
@@ -113,7 +113,7 @@ class ContactMethodPhoneSerializer(serializers.ModelSerializer):
 
 
 class ContactMethodEmailSerializer(serializers.ModelSerializer):
-    coops = CoopSerializer(many=True)
+    #coops = CoopSerializer(many=True)
     
     class Meta:
         model = ContactMethod

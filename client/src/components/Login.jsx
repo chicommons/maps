@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { FormGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import Input from './Input'
 import Button from './Button'
@@ -81,6 +82,9 @@ const Login = () => {
           )}
           <div className="form-group col-md-6" align="center">
             <Button buttonType={"primary"} type={"submit"} title={"Login"} />
+          </div>
+          <div className="form-group col-md-6" align="center">
+            Forgot password? Reset it <Link to='/reset-password'>here.</Link>
           </div>
         </FormGroup>
       </form>
