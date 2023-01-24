@@ -8296,7 +8296,7 @@
     - ['Housing Coop']
     addresses: [ 1 ]
     enabled: True
-    phone: 3
+    phone: [3]
     web_site: "https://www.dkcondo.com/managed-associations/1335-astor-co-op/"
     approved: True
 - model: directory.contactmethod
@@ -8312,7 +8312,7 @@
     - ['Housing Coop']
     addresses: [ 2 ]
     enabled: True
-    phone: 5
+    phone: [5]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -8358,7 +8358,7 @@
     - ['Community Garden']
     addresses: [ 6 ]
     enabled: True
-    phone: 13
+    phone: [13]
     web_site: "http://neighbor-space.org/2011/05/19/1900-s-ridgeway-enabling-garden-2/"
     approved: True
 - model: directory.coop
@@ -8384,7 +8384,7 @@
     - ['Housing Coop']
     addresses: [ 8 ]
     enabled: True
-    phone: 17
+    phone: [17]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -8420,7 +8420,7 @@
     - ['Housing Coop']
     addresses: [ 11 ]
     enabled: True
-    phone: 23
+    phone: [23]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -8446,7 +8446,7 @@
     - ['Housing Coop']
     addresses: [ 13 ]
     enabled: True
-    phone: 27
+    phone: [27]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -8502,7 +8502,7 @@
     - ['Housing Coop']
     addresses: [ 18 ]
     enabled: True
-    phone: 37
+    phone: [37]
     web_site: "https://www.semcoop.com/"
     approved: True
 - model: directory.coop
@@ -8598,7 +8598,7 @@
     - ['Credit Union']
     addresses: [ 27 ]
     enabled: True
-    phone: 55
+    phone: [55]
     web_site: "http://www.77thstreetdepotfcu.org/"
     approved: True
 - model: directory.coop
@@ -8674,7 +8674,7 @@
     - ['Credit Union']
     addresses: [ 34 ]
     enabled: True
-    phone: 69
+    phone: [69]
     web_site: "https://www.acmecontinentalcu.com/"
     approved: True
 - model: directory.coop
@@ -8800,7 +8800,7 @@
     - ['Credit Union']
     addresses: [ 46 ]
     enabled: True
-    phone: 93
+    phone: [93]
     web_site: "http://www.alliantcreditunion.org/"
     approved: True
 - model: directory.coop
@@ -8866,7 +8866,7 @@
     - ['Social Workshop']
     addresses: [ 52 ]
     enabled: True
-    phone: 105
+    phone: [105]
     web_site: "https://www.chicagoscores.org"
     approved: True
 - model: directory.contactmethod
@@ -8882,7 +8882,7 @@
     - ['Credit Union']
     addresses: [ 53 ]
     enabled: True
-    phone: 107
+    phone: [107]
     web_site: "https://www.abefcu.org/"
     approved: True
 - model: directory.coop
@@ -8908,7 +8908,7 @@
     - ['Mutual Insurance']
     addresses: [ 55 ]
     enabled: False
-    phone: 111
+    phone: [111]
     web_site: "https://www.ameritas.com/"
     approved: True
 - model: directory.coop
@@ -8954,7 +8954,7 @@
     - ['Credit Union']
     addresses: [ 59 ]
     enabled: True
-    phone: 119
+    phone: [119]
     web_site: "http://www.archerheights.com/"
     approved: True
 - model: directory.coop
@@ -9110,7 +9110,7 @@
     - ['Credit Union']
     addresses: [ 74 ]
     enabled: True
-    phone: 155
+    phone: [155]
     web_site: "http://bcu.org,http://cufx.coop"
     approved: True
 - model: directory.contactmethod
@@ -9126,7 +9126,7 @@
     - ['Credit Union']
     addresses: [ 75 ]
     enabled: True
-    phone: 157
+    phone: [157]
     web_site: "http://bcu.org"
     approved: True
 - model: directory.coop
@@ -9152,7 +9152,7 @@
     - ['Credit Union']
     addresses: [ 77 ]
     enabled: True
-    phone: 161
+    phone: [161]
     web_site: "http://creditunionaccess.com/cu66089.htm"
     approved: True
 - model: directory.contactmethod
@@ -9168,7 +9168,7 @@
     - ['Credit Union']
     addresses: [ 78 ]
     enabled: True
-    phone: 163
+    phone: [163]
     web_site: "http://creditunionaccess.com/cu65680.htm"
     approved: True
 - model: directory.contactmethod
@@ -9184,7 +9184,7 @@
     - ['Housing Coop']
     addresses: [ 79 ]
     enabled: True
-    phone: 165
+    phone: [165]
     web_site: "https://www.facebook.com/pages/Bethel-Terrace/111532478910586?ref=br_rs"
     approved: True
 - model: directory.coop
@@ -9280,7 +9280,7 @@
     - ['Social Workshop']
     addresses: [ 88 ]
     enabled: True
-    phone: 183
+    phone: [183]
     web_site: "blackstarproject.org/action"
     approved: True
 - model: directory.coop
@@ -9346,7 +9346,7 @@
     - ['Workers Collective']
     addresses: [ 94 ]
     enabled: True
-    phone: 195
+    phone: [195]
     web_site: "https://bleux.net"
     approved: True
 - model: directory.coop
@@ -9407,8 +9407,8 @@
     - ['Workers Collective']
     addresses: [ 99 ]
     enabled: True
-    phone: 211
-    email: 210
+    phone: [211]
+    email: [210]
     web_site: "http://bluestem.coop"
     approved: True
 - model: directory.coop
@@ -9574,7 +9574,7 @@
     - ['Workers Collective']
     addresses: [ 115 ]
     enabled: True
-    phone: 243
+    phone: [243]
     web_site: "https://www.facebook.com/BrothersHealthChicago/"
     approved: True
 - model: directory.coop
@@ -9640,7 +9640,7 @@
     - ['media']
     addresses: [ 121 ]
     enabled: True
-    email: 254
+    email: [254]
     web_site: "http://creators.coop,https://buylibre.org/"
     approved: True
 - model: directory.contactmethod
@@ -9656,7 +9656,7 @@
     - ['Credit Union']
     addresses: [ 122 ]
     enabled: True
-    phone: 257
+    phone: [257]
     web_site: "http://creditunionaccess.com/cu18882.htm"
     approved: True
 - model: directory.coop
@@ -9682,7 +9682,7 @@
     - ['Credit Union']
     addresses: [ 124 ]
     enabled: True
-    phone: 261
+    phone: [261]
     web_site: "https://www.creditunion1.org"
     approved: True
 - model: directory.coop
@@ -9778,7 +9778,7 @@
     - ['Housing Coop']
     addresses: [ 133 ]
     enabled: True
-    phone: 279
+    phone: [279]
     web_site: "http://chicagocoop.net/directory/"
     approved: True
 - model: directory.coop
@@ -9804,7 +9804,7 @@
     - ['Social Workshop']
     addresses: [ 135 ]
     enabled: True
-    phone: 283
+    phone: [283]
     web_site: "https://casel.org/"
     approved: True
 - model: directory.coop
@@ -9880,7 +9880,7 @@
     - ['credit union']
     addresses: [ 142 ]
     enabled: True
-    phone: 297
+    phone: [297]
     web_site: "http://centralcu.coop"
     approved: True
 - model: directory.contactmethod
@@ -9896,7 +9896,7 @@
     - ['credit union']
     addresses: [ 143 ]
     enabled: True
-    phone: 299
+    phone: [299]
     web_site: "http://centralcu.coop"
     approved: True
 - model: directory.coop
@@ -9942,7 +9942,7 @@
     - ['Social Workshop']
     addresses: [ 147 ]
     enabled: True
-    phone: 307
+    phone: [307]
     web_site: "changingworlds.org"
     approved: True
 - model: directory.coop
@@ -9968,7 +9968,7 @@
     - ['Workers Collective']
     addresses: [ 149 ]
     enabled: False
-    email: 310
+    email: [310]
     web_site: "http://charm.coop"
     approved: True
 - model: directory.coop
@@ -10004,7 +10004,7 @@
     - ['Credit Union']
     addresses: [ 152 ]
     enabled: True
-    phone: 317
+    phone: [317]
     web_site: "http://www.chicagoareafcu.org/"
     approved: True
 - model: directory.contactmethod
@@ -10020,7 +10020,7 @@
     - ['Credit Union']
     addresses: [ 153 ]
     enabled: True
-    phone: 319
+    phone: [319]
     web_site: "http://creditunionaccess.com/cu02495.htm"
     approved: True
 - model: directory.coop
@@ -10106,7 +10106,7 @@
     - ['Credit Union']
     addresses: [ 161 ]
     enabled: True
-    phone: 337
+    phone: [337]
     web_site: "http://www.cfoacu.org/"
     approved: True
 - model: directory.contactmethod
@@ -10122,7 +10122,7 @@
     - ['Credit Union']
     addresses: [ 162 ]
     enabled: True
-    phone: 339
+    phone: [339]
     web_site: "http://chicagofirefighterscu.com/"
     approved: True
 - model: directory.contactmethod
@@ -10138,7 +10138,7 @@
     - ['Credit Union']
     addresses: [ 163 ]
     enabled: True
-    phone: 341
+    phone: [341]
     web_site: "http://chicagofiremansacu.org/"
     approved: True
 - model: directory.contactmethod
@@ -10154,7 +10154,7 @@
     - ['Social Workshop']
     addresses: [ 164 ]
     enabled: True
-    phone: 347
+    phone: [347]
     web_site: "https://www.chicagofoodpolicy.com"
     approved: True
 - model: directory.coop
@@ -10190,7 +10190,7 @@
     - ['Workers Collective']
     addresses: [ 167 ]
     enabled: True
-    phone: 353
+    phone: [353]
     web_site: "https://www.chicagoglasscollective.com/"
     approved: True
 - model: directory.contactmethod
@@ -10206,7 +10206,7 @@
     - ['Credit Union']
     addresses: [ 168 ]
     enabled: True
-    phone: 355
+    phone: [355]
     web_site: "http://grassrootscurriculum.org"
     approved: True
 - model: directory.contactmethod
@@ -10222,7 +10222,7 @@
     - ['Food Cooperative']
     addresses: [ 169 ]
     enabled: True
-    phone: 357
+    phone: [357]
     web_site: "chicagohoneycoop.com"
     approved: True
 - model: directory.coop
@@ -10298,7 +10298,7 @@
     - ['Credit Union']
     addresses: [ 176 ]
     enabled: True
-    phone: 371
+    phone: [371]
     web_site: "http://www.cmecuonline.org/"
     approved: True
 - model: directory.contactmethod
@@ -10314,7 +10314,7 @@
     - ['Credit Union']
     addresses: [ 177 ]
     enabled: True
-    phone: 373
+    phone: [373]
     web_site: "http://www.cmecuonline.org/"
     approved: True
 - model: directory.contactmethod
@@ -10330,7 +10330,7 @@
     - ['Mutual Insurance']
     addresses: [ 178 ]
     enabled: False
-    phone: 375
+    phone: [375]
     web_site: "https://www.libertymutual.com/insurance-office-chicago-il"
     approved: True
 - model: directory.coop
@@ -10366,7 +10366,7 @@
     - ['Credit Union']
     addresses: [ 181 ]
     enabled: True
-    phone: 381
+    phone: [381]
     web_site: "www.cpdfcu.com"
     approved: True
 - model: directory.coop
@@ -10392,7 +10392,7 @@
     - ['Credit Union']
     addresses: [ 183 ]
     enabled: True
-    phone: 385
+    phone: [385]
     web_site: "http://cpoecu.com/"
     approved: True
 - model: directory.coop
@@ -10528,7 +10528,7 @@
     - ['Workers Collective']
     addresses: [ 196 ]
     enabled: True
-    phone: 411
+    phone: [411]
     web_site: "https://www.chifreshkitchen.com/"
     approved: True
 - model: directory.coop
@@ -10574,7 +10574,7 @@
     - ['Social Workshop']
     addresses: [ 200 ]
     enabled: True
-    phone: 419
+    phone: [419]
     web_site: "https://cli.org/"
     approved: True
 - model: directory.coop
@@ -10710,7 +10710,7 @@
     - ['Arts Centre']
     addresses: [ 213 ]
     enabled: True
-    phone: 445
+    phone: [445]
     web_site: "https://www.collectivedancechicago.com/"
     approved: True
 - model: directory.contactmethod
@@ -10726,7 +10726,7 @@
     - ['Credit Union']
     addresses: [ 214 ]
     enabled: True
-    phone: 447
+    phone: [447]
     web_site: "http://creditunionaccess.com/cu60688.htm"
     approved: True
 - model: directory.coop
@@ -10772,7 +10772,7 @@
     - ['Credit Union']
     addresses: [ 218 ]
     enabled: True
-    phone: 455
+    phone: [455]
     web_site: "http://creditunionaccess.com/cu07256.htm"
     approved: True
 - model: directory.coop
@@ -10808,7 +10808,7 @@
     - ['Credit Union']
     addresses: [ 221 ]
     enabled: True
-    phone: 465
+    phone: [465]
     web_site: "https://www.cafcu.org/"
     approved: True
 - model: directory.contactmethod
@@ -10824,7 +10824,7 @@
     - ['Credit Union']
     addresses: [ 222 ]
     enabled: True
-    phone: 467
+    phone: [467]
     web_site: "http://creditunionaccess.com/cu24188.htm"
     approved: True
 - model: directory.coop
@@ -10850,7 +10850,7 @@
     - ['hardware store']
     addresses: [ 224 ]
     enabled: False
-    phone: 471
+    phone: [471]
     web_site: "https://www.craftybeaver.com/"
     approved: True
 - model: directory.contactmethod
@@ -10866,7 +10866,7 @@
     - ['hardware store']
     addresses: [ 225 ]
     enabled: False
-    phone: 475
+    phone: [475]
     web_site: "https://www.craftybeaver.com/"
     approved: True
 - model: directory.contactmethod
@@ -10882,7 +10882,7 @@
     - ['hardware store']
     addresses: [ 226 ]
     enabled: False
-    phone: 477
+    phone: [477]
     web_site: "https://www.craftybeaver.com/"
     approved: True
 - model: directory.coop
@@ -10908,7 +10908,7 @@
     - ['credit union']
     addresses: [ 228 ]
     enabled: True
-    phone: 483
+    phone: [483]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.contactmethod
@@ -10924,7 +10924,7 @@
     - ['credit union']
     addresses: [ 229 ]
     enabled: True
-    phone: 485
+    phone: [485]
     web_site: "https://www.creditunion1.org/"
     approved: True
 - model: directory.contactmethod
@@ -10940,7 +10940,7 @@
     - ['credit union']
     addresses: [ 230 ]
     enabled: True
-    phone: 487
+    phone: [487]
     web_site: "creditunion1.org"
     approved: True
 - model: directory.coop
@@ -10976,7 +10976,7 @@
     - ['Credit Union']
     addresses: [ 233 ]
     enabled: True
-    phone: 493
+    phone: [493]
     web_site: "http://creditunionaccess.com/cu13533.htm"
     approved: True
 - model: directory.contactmethod
@@ -10992,7 +10992,7 @@
     - ['Credit Union']
     addresses: [ 234 ]
     enabled: True
-    phone: 495
+    phone: [495]
     web_site: "https://www.creditunionsonline.com/credit-union-3883.html"
     approved: True
 - model: directory.coop
@@ -11018,7 +11018,7 @@
     - ['Credit Union']
     addresses: [ 236 ]
     enabled: True
-    phone: 501
+    phone: [501]
     web_site: "http://www.dpuccreditunion.com/"
     approved: True
 - model: directory.coop
@@ -11224,7 +11224,7 @@
     - ['Credit Union']
     addresses: [ 256 ]
     enabled: True
-    phone: 543
+    phone: [543]
     web_site: "http://earthmovercu.coop"
     approved: True
 - model: directory.contactmethod
@@ -11240,7 +11240,7 @@
     - ['Credit Union']
     addresses: [ 257 ]
     enabled: True
-    phone: 545
+    phone: [545]
     web_site: "http://earthmovercu.coop"
     approved: True
 - model: directory.contactmethod
@@ -11256,7 +11256,7 @@
     - ['Credit Union']
     addresses: [ 258 ]
     enabled: True
-    phone: 547
+    phone: [547]
     web_site: "http://earthmovercu.coop"
     approved: True
 - model: directory.contactmethod
@@ -11272,7 +11272,7 @@
     - ['Credit Union']
     addresses: [ 259 ]
     enabled: True
-    phone: 549
+    phone: [549]
     web_site: "http://earthmovercu.coop"
     approved: True
 - model: directory.coop
@@ -11548,7 +11548,7 @@
     - ['Credit Union']
     addresses: [ 286 ]
     enabled: True
-    phone: 605
+    phone: [605]
     web_site: "https://www.creditunionsonline.com/credit-union-4990.html"
     approved: True
 - model: directory.coop
@@ -11574,7 +11574,7 @@
     - ['Credit Union']
     addresses: [ 288 ]
     enabled: True
-    phone: 609
+    phone: [609]
     web_site: "http://creditunionaccess.com/cu61448.htm"
     approved: True
 - model: directory.coop
@@ -11610,7 +11610,7 @@
     - ['School']
     addresses: [ 291 ]
     enabled: True
-    phone: 615
+    phone: [615]
     web_site: "ftcns.org"
     approved: True
 - model: directory.coop
@@ -11636,7 +11636,7 @@
     - ['cooperative']
     addresses: [ 293 ]
     enabled: True
-    phone: 619
+    phone: [619]
     web_site: "http://www.familywealthcollective.com/"
     approved: True
 - model: directory.contactmethod
@@ -11652,7 +11652,7 @@
     - ['cooperative']
     addresses: [ 294 ]
     enabled: True
-    phone: 621
+    phone: [621]
     web_site: "http://www.familywealthcollective.com/"
     approved: True
 - model: directory.coop
@@ -11678,7 +11678,7 @@
     - ['Credit Union']
     addresses: [ 296 ]
     enabled: True
-    phone: 627
+    phone: [627]
     web_site: "http://creditunionaccess.com/cu64252.htm"
     approved: True
 - model: directory.contactmethod
@@ -11694,7 +11694,7 @@
     - ['Cooperative']
     addresses: [ 297 ]
     enabled: True
-    phone: 629
+    phone: [629]
     web_site: "http://filmcollectiveproductions.com/"
     approved: True
 - model: directory.contactmethod
@@ -11710,7 +11710,7 @@
     - ['Credit Union']
     addresses: [ 298 ]
     enabled: True
-    phone: 633
+    phone: [633]
     web_site: "https://www.firstfcu.org/"
     approved: True
 - model: directory.contactmethod
@@ -11726,7 +11726,7 @@
     - ['Credit Union']
     addresses: [ 299 ]
     enabled: True
-    phone: 635
+    phone: [635]
     web_site: "https://www.fncu.org/"
     approved: True
 - model: directory.contactmethod
@@ -11742,7 +11742,7 @@
     - ['Credit Union']
     addresses: [ 300 ]
     enabled: True
-    phone: 637
+    phone: [637]
     web_site: "https://www.fncu.org/"
     approved: True
 - model: directory.contactmethod
@@ -11758,7 +11758,7 @@
     - ['Credit Union']
     addresses: [ 301 ]
     enabled: True
-    phone: 639
+    phone: [639]
     web_site: "https://www.fncu.org/"
     approved: True
 - model: directory.coop
@@ -11794,7 +11794,7 @@
     - ['Food Cooperative']
     addresses: [ 304 ]
     enabled: True
-    phone: 645
+    phone: [645]
     web_site: "http://foodshed.coop"
     approved: True
 - model: directory.coop
@@ -11900,7 +11900,7 @@
     - ['Arts Centre']
     addresses: [ 314 ]
     enabled: True
-    phone: 665
+    phone: [665]
     web_site: "fultonstreetcollective.com"
     approved: True
 - model: directory.coop
@@ -12036,7 +12036,7 @@
     - ['Housing Coop']
     addresses: [ 327 ]
     enabled: True
-    phone: 693
+    phone: [693]
     web_site: "http://chicagocoop.net/directory/"
     approved: True
 - model: directory.coop
@@ -12092,7 +12092,7 @@
     - ['Credit Union']
     addresses: [ 332 ]
     enabled: True
-    phone: 703
+    phone: [703]
     web_site: "http://creditunionaccess.com/cu81117.htm"
     approved: True
 - model: directory.coop
@@ -12118,7 +12118,7 @@
     - ['Credit Union']
     addresses: [ 334 ]
     enabled: True
-    phone: 709
+    phone: [709]
     web_site: "https://glcu.org"
     approved: True
 - model: directory.coop
@@ -12174,7 +12174,7 @@
     - ['Credit Union']
     addresses: [ 339 ]
     enabled: True
-    phone: 719
+    phone: [719]
     web_site: "http://creditunionaccess.com/cu65433.htm"
     approved: True
 - model: directory.coop
@@ -12430,7 +12430,7 @@
     - ['Housing Coop']
     addresses: [ 364 ]
     enabled: True
-    email: 768
+    email: [768]
     web_site: "http://hesedcommunity.com/"
     approved: True
 - model: directory.coop
@@ -12666,7 +12666,7 @@
     - ['Arts Centre']
     addresses: [ 387 ]
     enabled: True
-    phone: 817
+    phone: [817]
     web_site: "http://www.innervationdance.org"
     approved: True
 - model: directory.coop
@@ -12732,7 +12732,7 @@
     - ['Social Workshop']
     addresses: [ 393 ]
     enabled: True
-    phone: 829
+    phone: [829]
     web_site: "http://www.iraqimutualaid.org/"
     approved: True
 - model: directory.coop
@@ -12758,7 +12758,7 @@
     - ['Social Workshop']
     addresses: [ 395 ]
     enabled: True
-    phone: 835
+    phone: [835]
     web_site: "http://iskconchicago.com/"
     approved: True
 - model: directory.contactmethod
@@ -12774,7 +12774,7 @@
     - ['Credit Union']
     addresses: [ 396 ]
     enabled: True
-    phone: 839
+    phone: [839]
     web_site: "http://creditunionaccess.com/cu15673.htm"
     approved: True
 - model: directory.coop
@@ -12830,7 +12830,7 @@
     - ['Social Workshop']
     addresses: [ 401 ]
     enabled: True
-    phone: 849
+    phone: [849]
     web_site: "http://jmaschicago.org/"
     approved: True
 - model: directory.coop
@@ -12956,7 +12956,7 @@
     - ['Credit Union']
     addresses: [ 413 ]
     enabled: True
-    phone: 879
+    phone: [879]
     web_site: "https://www.creditunionsonline.com/credit-union-968-23.html"
     approved: True
 - model: directory.coop
@@ -12992,7 +12992,7 @@
     - ['Housing Coop']
     addresses: [ 416 ]
     enabled: True
-    phone: 887
+    phone: [887]
     web_site: "https://www.kenmoreplaza.com/"
     approved: True
 - model: directory.coop
@@ -13088,7 +13088,7 @@
     - ['Housing Coop']
     addresses: [ 425 ]
     enabled: True
-    phone: 907
+    phone: [907]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -13469,8 +13469,8 @@
     - ['Workers Collective']
     addresses: [ 462 ]
     enabled: True
-    phone: 995
-    email: 994
+    phone: [995]
+    email: [994]
     web_site: "https://www.facebook.com/LSGCleaning//"
     approved: True
 - model: directory.coop
@@ -13496,7 +13496,7 @@
     - ['Credit Union']
     addresses: [ 464 ]
     enabled: True
-    phone: 999
+    phone: [999]
     web_site: "http://creditunionaccess.com/cu24123.htm"
     approved: True
 - model: directory.coop
@@ -13562,7 +13562,7 @@
     - ['Credit Union']
     addresses: [ 470 ]
     enabled: True
-    phone: 1011
+    phone: [1011]
     web_site: "https://www.maroonfinancial.org/home.htm"
     approved: True
 - model: directory.coop
@@ -13798,7 +13798,7 @@
     - ['Credit Union']
     addresses: [ 493 ]
     enabled: True
-    phone: 1063
+    phone: [1063]
     web_site: "http://creditunionaccess.com/cu65843.htm"
     approved: True
 - model: directory.coop
@@ -13924,7 +13924,7 @@
     - ['Social Workshop']
     addresses: [ 505 ]
     enabled: True
-    phone: 1111
+    phone: [1111]
     web_site: "https://newleaders.org/"
     approved: True
 - model: directory.coop
@@ -13975,8 +13975,8 @@
     - ['Housing Coop']
     addresses: [ 509 ]
     enabled: True
-    phone: 1119
-    email: 1118
+    phone: [1119]
+    email: [1118]
     web_site: "https://www.nasco.coop"
     approved: True
 - model: directory.coop
@@ -14012,7 +14012,7 @@
     - ['Housing Coop']
     addresses: [ 512 ]
     enabled: True
-    phone: 1125
+    phone: [1125]
     web_site: "https://mahc.coop/north-park-towers-il/"
     approved: True
 - model: directory.coop
@@ -14048,7 +14048,7 @@
     - ['Credit Union']
     addresses: [ 515 ]
     enabled: True
-    phone: 1131
+    phone: [1131]
     web_site: "http://creditunionaccess.com/cu02467.htm"
     approved: True
 - model: directory.contactmethod
@@ -14064,7 +14064,7 @@
     - ['School']
     addresses: [ 516 ]
     enabled: True
-    phone: 1133
+    phone: [1133]
     web_site: "https://www.northernraptorkungfu.biz/"
     approved: True
 - model: directory.contactmethod
@@ -14080,7 +14080,7 @@
     - ['Credit Union']
     addresses: [ 517 ]
     enabled: True
-    phone: 1137
+    phone: [1137]
     web_site: "https://www.nscu.org"
     approved: True
 - model: directory.coop
@@ -14156,7 +14156,7 @@
     - ['Credit Union']
     addresses: [ 524 ]
     enabled: True
-    phone: 1159
+    phone: [1159]
     web_site: "http://numarkcu.coop"
     approved: True
 - model: directory.coop
@@ -14247,8 +14247,8 @@
     - ['Housing Coop']
     addresses: [ 533 ]
     enabled: True
-    phone: 1181
-    email: 1180
+    phone: [1181]
+    email: [1180]
     web_site: "http://parkforest.coop"
     approved: True
 - model: directory.coop
@@ -14294,7 +14294,7 @@
     - ['School']
     addresses: [ 537 ]
     enabled: True
-    phone: 1191
+    phone: [1191]
     web_site: "https://www.facebook.com/ParentCooperative"
     approved: True
 - model: directory.coop
@@ -14330,7 +14330,7 @@
     - ['Credit Union']
     addresses: [ 540 ]
     enabled: True
-    phone: 1199
+    phone: [1199]
     web_site: "http://www.parkmanorchristianchurch.org/uploads/PMCCCreditUnion.pdf"
     approved: True
 - model: directory.coop
@@ -14356,7 +14356,7 @@
     - ['School']
     addresses: [ 542 ]
     enabled: True
-    phone: 1203
+    phone: [1203]
     web_site: "parkwestcoop.org"
     approved: True
 - model: directory.contactmethod
@@ -14372,7 +14372,7 @@
     - ['Housing Coop']
     addresses: [ 543 ]
     enabled: True
-    phone: 1205
+    phone: [1205]
     web_site: "https://www.facebook.com/pages/Parkshore-The-Co-Op/122918464432614"
     approved: True
 - model: directory.coop
@@ -14438,7 +14438,7 @@
     - ['Credit Union']
     addresses: [ 549 ]
     enabled: True
-    phone: 1217
+    phone: [1217]
     web_site: "http://www.peoplesenergycu.org/"
     approved: True
 - model: directory.coop
@@ -14474,7 +14474,7 @@
     - ['Credit Union']
     addresses: [ 552 ]
     enabled: True
-    phone: 1223
+    phone: [1223]
     web_site: "https://www.glcu.org/pccu/"
     approved: True
 - model: directory.contactmethod
@@ -14490,7 +14490,7 @@
     - ['Credit Union']
     addresses: [ 553 ]
     enabled: True
-    phone: 1225
+    phone: [1225]
     web_site: "http://creditunionaccess.com/cu65231.htm"
     approved: True
 - model: directory.contactmethod
@@ -14511,8 +14511,8 @@
     - ['book store']
     addresses: [ 554 ]
     enabled: True
-    phone: 1227
-    email: 1226
+    phone: [1227]
+    email: [1226]
     web_site: "https://pilsencommunitybooks.com/"
     approved: True
 - model: directory.coop
@@ -14548,7 +14548,7 @@
     - ['Credit Union']
     addresses: [ 557 ]
     enabled: True
-    phone: 1233
+    phone: [1233]
     web_site: "http://www.planites.org/"
     approved: True
 - model: directory.coop
@@ -14754,7 +14754,7 @@
     - ['Association Office']
     addresses: [ 577 ]
     enabled: True
-    phone: 1275
+    phone: [1275]
     web_site: "http://www.prcc-chgo.org/"
     approved: True
 - model: directory.coop
@@ -14830,7 +14830,7 @@
     - ['cooperative']
     addresses: [ 584 ]
     enabled: True
-    phone: 1289
+    phone: [1289]
     web_site: "https://www.rei.com/"
     approved: True
 - model: directory.coop
@@ -14956,7 +14956,7 @@
     - ['Credit Union']
     addresses: [ 596 ]
     enabled: True
-    phone: 1313
+    phone: [1313]
     web_site: "http://creditunionaccess.com/cu15240.htm"
     approved: True
 - model: directory.coop
@@ -15092,7 +15092,7 @@
     - ['social Workshop']
     addresses: [ 609 ]
     enabled: True
-    phone: 1339
+    phone: [1339]
     web_site: "https://soul-program.org/"
     approved: True
 - model: directory.coop
@@ -15148,7 +15148,7 @@
     - ['Credit Union']
     addresses: [ 614 ]
     enabled: True
-    phone: 1351
+    phone: [1351]
     web_site: "http://www.selfreliance.com/"
     approved: True
 - model: directory.coop
@@ -15194,7 +15194,7 @@
     - ['Credit Union']
     addresses: [ 618 ]
     enabled: True
-    phone: 1361
+    phone: [1361]
     web_site: "http://creditunionaccess.com/cu15454.htm"
     approved: True
 - model: directory.contactmethod
@@ -15210,7 +15210,7 @@
     - ['Housing Coop']
     addresses: [ 619 ]
     enabled: True
-    phone: 1363
+    phone: [1363]
     web_site: "https://www.facebook.com/pages/Silent-Cooperative/117493831645655"
     approved: True
 - model: directory.coop
@@ -15276,7 +15276,7 @@
     - ['Credit Union']
     addresses: [ 625 ]
     enabled: True
-    phone: 1379
+    phone: [1379]
     web_site: "http://chicago.source1cu.com/"
     approved: True
 - model: directory.coop
@@ -15312,7 +15312,7 @@
     - ['Credit Union']
     addresses: [ 628 ]
     enabled: True
-    phone: 1385
+    phone: [1385]
     web_site: "https://mce.uwcc.wisc.edu/Cooperatives_map/"
     approved: True
 - model: directory.coop
@@ -15368,7 +15368,7 @@
     - ['Credit Union']
     addresses: [ 633 ]
     enabled: True
-    phone: 1395
+    phone: [1395]
     web_site: "https://southshopfcu.org"
     approved: True
 - model: directory.coop
@@ -15404,7 +15404,7 @@
     - ['Credit Union']
     addresses: [ 636 ]
     enabled: True
-    phone: 1403
+    phone: [1403]
     web_site: "http://www.southsidecommunityfcu.org/"
     approved: True
 - model: directory.contactmethod
@@ -15420,7 +15420,7 @@
     - ['Credit Union']
     addresses: [ 637 ]
     enabled: True
-    phone: 1405
+    phone: [1405]
     web_site: "http://www.southsidecommunityfcu.org/"
     approved: True
 - model: directory.coop
@@ -15456,7 +15456,7 @@
     - ['Cooperative']
     addresses: [ 640 ]
     enabled: True
-    phone: 1411
+    phone: [1411]
     web_site: "https://www.sedata.com/"
     approved: True
 - model: directory.coop
@@ -15522,7 +15522,7 @@
     - ['Credit Union']
     addresses: [ 646 ]
     enabled: True
-    phone: 1425
+    phone: [1425]
     web_site: "http://creditunionaccess.com/cu65484.htm"
     approved: True
 - model: directory.coop
@@ -15548,7 +15548,7 @@
     - ['Credit Union']
     addresses: [ 648 ]
     enabled: True
-    phone: 1429
+    phone: [1429]
     web_site: "http://stgregorycu.org/"
     approved: True
 - model: directory.contactmethod
@@ -15564,7 +15564,7 @@
     - ['Credit Union']
     addresses: [ 649 ]
     enabled: True
-    phone: 1431
+    phone: [1431]
     web_site: "http://creditunionaccess.com/cu65232.htm"
     approved: True
 - model: directory.contactmethod
@@ -15580,7 +15580,7 @@
     - ['Credit Union']
     addresses: [ 650 ]
     enabled: True
-    phone: 1433
+    phone: [1433]
     web_site: "http://creditunionaccess.com/cu60680.htm"
     approved: True
 - model: directory.contactmethod
@@ -15596,7 +15596,7 @@
     - ['Credit Union']
     addresses: [ 651 ]
     enabled: True
-    phone: 1435
+    phone: [1435]
     web_site: "http://creditunionaccess.com/cu66296.htm"
     approved: True
 - model: directory.contactmethod
@@ -15612,7 +15612,7 @@
     - ['Credit Union']
     addresses: [ 652 ]
     enabled: True
-    phone: 1437
+    phone: [1437]
     web_site: "http://creditunionaccess.com/cu61566.htm"
     approved: True
 - model: directory.coop
@@ -15638,7 +15638,7 @@
     - ['Credit Union']
     addresses: [ 654 ]
     enabled: True
-    phone: 1441
+    phone: [1441]
     web_site: "http://creditunionaccess.com/cu14058.htm"
     approved: True
 - model: directory.contactmethod
@@ -15654,7 +15654,7 @@
     - ['Social Workshop']
     addresses: [ 655 ]
     enabled: True
-    phone: 1443
+    phone: [1443]
     web_site: "https://www.starfishchicago.org/"
     approved: True
 - model: directory.coop
@@ -15680,7 +15680,7 @@
     - ['Arts Centre']
     addresses: [ 657 ]
     enabled: True
-    phone: 1447
+    phone: [1447]
     web_site: "http://stillpointtheatrecollective.org/"
     approved: True
 - model: directory.coop
@@ -15756,7 +15756,7 @@
     - ['Credit Union']
     addresses: [ 664 ]
     enabled: True
-    phone: 1463
+    phone: [1463]
     web_site: "http://synergypartnerscu.org/"
     approved: True
 - model: directory.coop
@@ -15842,7 +15842,7 @@
     - ['Social Workshop']
     addresses: [ 673 ]
     enabled: True
-    phone: 1483
+    phone: [1483]
     web_site: "https://actorsfund.org/services-and-programs/dancers-resource"
     approved: True
 - model: directory.coop
@@ -15918,7 +15918,7 @@
     - ['Bicycle Store']
     addresses: [ 680 ]
     enabled: True
-    phone: 1501
+    phone: [1501]
     web_site: "therecyclery.org"
     approved: True
 - model: directory.coop
@@ -15964,7 +15964,7 @@
     - ['book store']
     addresses: [ 684 ]
     enabled: True
-    phone: 1511
+    phone: [1511]
     web_site: "semcoop.com"
     approved: True
 - model: directory.coop
@@ -16070,7 +16070,7 @@
     - ['Credit Union']
     addresses: [ 694 ]
     enabled: True
-    phone: 1535
+    phone: [1535]
     web_site: "http://creditunionaccess.com/cu23245.htm"
     approved: True
 - model: directory.coop
@@ -16106,7 +16106,7 @@
     - ['cooperative']
     addresses: [ 697 ]
     enabled: True
-    phone: 1541
+    phone: [1541]
     web_site: "http://www.trustmarkcompanies.com"
     approved: True
 - model: directory.contactmethod
@@ -16122,7 +16122,7 @@
     - ['Housing Coop']
     addresses: [ 698 ]
     enabled: True
-    phone: 1543
+    phone: [1543]
     web_site: "http://chicagocoop.net/directory/"
     approved: True
 - model: directory.coop
@@ -16168,7 +16168,7 @@
     - ['Credit Union']
     addresses: [ 702 ]
     enabled: True
-    phone: 1551
+    phone: [1551]
     web_site: "https://www.myusecu.org/"
     approved: True
 - model: directory.coop
@@ -16214,7 +16214,7 @@
     - ['Credit Union']
     addresses: [ 706 ]
     enabled: True
-    phone: 1561
+    phone: [1561]
     web_site: "http://uhifcu.virtualcu.net/"
     approved: True
 - model: directory.contactmethod
@@ -16230,7 +16230,7 @@
     - ['Credit Union']
     addresses: [ 707 ]
     enabled: True
-    phone: 1563
+    phone: [1563]
     web_site: "https://www.unitedcreditunion.com/contact-us/"
     approved: True
 - model: directory.contactmethod
@@ -16246,7 +16246,7 @@
     - ['Credit Union']
     addresses: [ 708 ]
     enabled: True
-    phone: 1565
+    phone: [1565]
     web_site: "http://www.unitedcreditunion.com/"
     approved: True
 - model: directory.contactmethod
@@ -16262,7 +16262,7 @@
     - ['Credit Union']
     addresses: [ 709 ]
     enabled: True
-    phone: 1567
+    phone: [1567]
     web_site: "https://www.unitedcreditunion.com/contact-us/"
     approved: True
 - model: directory.contactmethod
@@ -16278,7 +16278,7 @@
     - ['Credit Union']
     addresses: [ 710 ]
     enabled: True
-    phone: 1569
+    phone: [1569]
     web_site: "https://www.unitedcreditunion.com/"
     approved: True
 - model: directory.coop
@@ -16364,7 +16364,7 @@
     - ['Farm']
     addresses: [ 718 ]
     enabled: True
-    phone: 1587
+    phone: [1587]
     web_site: "https://www.facebook.com/pg/urbangrowerscollective/about/?ref=page_internal"
     approved: True
 - model: directory.coop
@@ -16390,7 +16390,7 @@
     - ['Credit Union']
     addresses: [ 720 ]
     enabled: True
-    phone: 1591
+    phone: [1591]
     web_site: "https://www.myusecu.org"
     approved: True
 - model: directory.contactmethod
@@ -16406,7 +16406,7 @@
     - ['Credit Union']
     addresses: [ 721 ]
     enabled: True
-    phone: 1593
+    phone: [1593]
     web_site: "https://www.myusecu.org"
     approved: True
 - model: directory.contactmethod
@@ -16422,7 +16422,7 @@
     - ['Credit Union']
     addresses: [ 722 ]
     enabled: True
-    phone: 1595
+    phone: [1595]
     web_site: "https://www.sdcu.org"
     approved: True
 - model: directory.coop
@@ -16698,7 +16698,7 @@
     - ['Credit Union']
     addresses: [ 748 ]
     enabled: True
-    phone: 1649
+    phone: [1649]
     web_site: "http://winhoodcu.com/"
     approved: True
 - model: directory.coop
@@ -16914,7 +16914,7 @@
     - ['Workers Collective']
     addresses: [ 769 ]
     enabled: True
-    email: 1708
+    email: [1708]
     web_site: "thecollectiveyogacoop.com"
     approved: True
 - model: directory.coop
