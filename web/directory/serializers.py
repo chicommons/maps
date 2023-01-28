@@ -391,8 +391,6 @@ class CoopSearchSerializer(serializers.ModelSerializer):
     This Coop serializer contains a scaled down version of the model to streamline
     bandwidth used and processing.
     """
-    phone = ContactMethodPhoneSerializer()
-    email = ContactMethodEmailSerializer()
     types = CoopTypeSerializer(many=True, allow_empty=False)
 
     class Meta:
@@ -402,6 +400,8 @@ class CoopSearchSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
+        rep['phone'] = ContactMethodSerializer(instance.phone.all(), many=True).data
+        rep['email'] = ContactMethodSerializer(instance.email.all(), many=True).data
         return rep
 
 class ValidateNewCoopSerializer(serializers.Serializer):

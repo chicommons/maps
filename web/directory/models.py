@@ -82,11 +82,12 @@ class CoopManager(models.Manager):
             q &= Q(addresses__locality__state__code=state_abbrev)
             q &= Q(addresses__locality__state__country__code="US")
 
-        #addressPrefetcher = Prefetch('addresses', queryset=Address.objects.select_related('locality', 'locality__state', 'locality__state__country'))
         addressTagsPrefetcher = Prefetch('coopaddresstags_set', queryset=CoopAddressTags.objects.select_related('address', 'address__locality', 'address__locality__state', 'address__locality__state__country'))
         queryset = Coop.objects.filter(q).prefetch_related(addressTagsPrefetcher, 'types')
         
-        queryset = queryset.select_related('phone', 'email')
+        phonePrefetcher = Prefetch('phone', queryset=ContactMethod.objects.all())
+        emailPrefetcher = Prefetch('email', queryset=ContactMethod.objects.all())
+        queryset = queryset.prefetch_related(phonePrefetcher).prefetch_related(emailPrefetcher)
         print(queryset.query)
         return queryset
 
@@ -140,8 +141,6 @@ class Coop(models.Model):
         self.web_site = proposed.get('web_site')
         for type in proposed.get('types'):
             self.types.add(CoopType.objects.get(name=type))
-        #for address in proposed.get('coopaddresstags_set'):
-        #    self.coopaddresstags_set.add(CoopType.objects.get(name=address))
         self.save()  
 
 class CoopAddressTags(models.Model):
