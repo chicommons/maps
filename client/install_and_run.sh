@@ -3,7 +3,7 @@
 cd /app
 
 #$ install everything
-npm install
+yarn install
 
 # Run it
 npm start
