@@ -122,12 +122,12 @@ class Command(BaseCommand):
                     print("    types:")
                     for entry in types:
                         print("    - ['", entry, "']", sep='') 
-                    #print("    addresses: [", address_pk, "]")                   
+                    print("    addresses: [", address_pk, "]")                   
                     print("    enabled:",enabled)
                     if phone:
-                        print("    phone:",contact_phone_pk)
+                        print("    phone: [",contact_phone_pk, "]")
                     if email:
-                        print("    email:",contact_email_pk)
+                        print("    email: [",contact_email_pk, "]")
                     print("    web_site: \"",web_site,"\"", sep='')
 
                     # new model to link addresses: 9/15/2022
