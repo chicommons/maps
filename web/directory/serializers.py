@@ -6,6 +6,36 @@ from address.models import Address, Locality, State, Country
 from .services.location_service import LocationService
 import re
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email', 'id', 'first_name', 'last_name')
+    
+    def validate(self, data):
+        errors = {}
+
+        # required fields
+        required_fields = ['username', 'password', 'email']
+        for field in required_fields:
+            if not data.get(field):
+                errors[field] = 'This field is required.'
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data.get('username'),
+            password=validated_data.get('password'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
+            email=validated_data.get('email')
+        )
+
+        return user
+
 
 class AddressTypeField(serializers.PrimaryKeyRelatedField):
 
@@ -107,7 +137,7 @@ class ContactMethodPhoneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactMethod
-        fields = ['type', 'phone', 'coops']
+        fields = ['type', 'phone', 'coops', 'phone_is_public']
         read_only_fields = ['type']
         extra_kwargs = {'type': {'default': 'PHONE'}}
 
@@ -117,7 +147,7 @@ class ContactMethodEmailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ContactMethod
-        fields = ['type', 'email', 'coops']
+        fields = ['type', 'email', 'coops', 'email_is_public']
         read_only_fields = ['type']
         extra_kwargs = {'type': {'default': 'EMAIL'}}
 
@@ -269,15 +299,17 @@ class CoopSerializer(serializers.ModelSerializer):
     coopaddresstags_set = CoopAddressTagsSerializer(many=True)
     phone = ContactMethodPhoneSerializer(many=True)
     email = ContactMethodEmailSerializer(many=True)
+    rec_updated_by = UserSerializer(many=True)
 
     class Meta:
         model = Coop
-        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved', 'reject_reason']
+        fields = ['name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'proposed_changes', 'approved', 'reject_reason', 'coop_public', 'status', 'scope', 'tags', 'rec_source', 'rec_updated_by', 'rec_updated_date']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['types'] = CoopTypeSerializer(instance.types.all(), many=True).data
         rep['coopaddresstags_set'] = CoopAddressTagsSerializer(instance.coopaddresstags_set.all(), many=True).data
+        rep['rec_updated_by'] = UserSerializer(instance.rec_updated_by.all(), many=True).data
         return rep
 
     def create(self, validated_data):
@@ -351,7 +383,7 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = ['id', 'first_name', 'last_name', 'coops', 'contact_methods']
+        fields = ['id', 'first_name', 'last_name', 'coops', 'contact_methods', 'is_public']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -452,36 +484,6 @@ class ValidateNewCoopSerializer(serializers.Serializer):
 
         return data
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', 'password', 'email', 'id', 'first_name', 'last_name')
-    
-    def validate(self, data):
-        errors = {}
-
-        # required fields
-        required_fields = ['username', 'password', 'email']
-        for field in required_fields:
-            if not data.get(field):
-                errors[field] = 'This field is required.'
-
-        if errors:
-            raise serializers.ValidationError(errors)
-
-        return data
-
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data.get('username'),
-            password=validated_data.get('password'),
-            first_name=validated_data.get('first_name'),
-            last_name=validated_data.get('last_name'),
-            email=validated_data.get('email')
-        )
-
-        return user
-
 
 class UserSigninSerializer(serializers.Serializer):
     username = serializers.CharField(required = True)
@@ -491,12 +493,13 @@ class UserSigninSerializer(serializers.Serializer):
 class CoopSpreadsheetSerializer(serializers.ModelSerializer):
     types = CoopTypeSerializer(many=True, allow_empty=False)
     coopaddresstags_set = CoopAddressTagsSerializer(many=True)
-    phone = ContactMethodPhoneSerializer()
-    email = ContactMethodEmailSerializer()
+    phone = ContactMethodPhoneSerializer(many=True)
+    email = ContactMethodEmailSerializer(many=True)
+    rec_updated_by = UserSerializer(many=True)
 
     class Meta:
         model = Coop
-        fields = ['id', 'name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'approved']
+        fields = ['id', 'name', 'description', 'types', 'phone', 'email', 'web_site', 'coopaddresstags_set', 'approved', 'reject_reason', 'coop_public', 'status', 'scope', 'tags', 'rec_source', 'rec_updated_by', 'rec_updated_date']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

@@ -2,9 +2,11 @@ from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from address.models import Address
+from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from address.models import State, Country, Locality
 from django.db.models import Prefetch
+from django.utils.timezone import now
 
 class ContactMethod(models.Model):
     class ContactTypes(models.TextChoices):
@@ -20,6 +22,8 @@ class ContactMethod(models.Model):
     phone = PhoneNumberField(null=True)
     email = models.EmailField(null=True)
     coops = models.ManyToManyField('Coop')
+    email_is_public = models.BooleanField(default=True, null=False)
+    phone_is_public = models.BooleanField(default=True, null=False)
 
     class Meta:
         unique_together = ('phone', 'email',)
@@ -134,6 +138,13 @@ class Coop(models.Model):
     approved = models.BooleanField(default=False, null=True)
     proposed_changes = models.JSONField("Proposed Changes", null=True)
     reject_reason = models.TextField(null=True)
+    coop_public = models.BooleanField(default=True, null=False)
+    status = models.TextField(null=True)
+    scope = models.TextField(null=True)
+    tags = models.TextField(null=True)
+    rec_source = models.TextField(null=True)
+    rec_updated_by = models.ManyToManyField(User, null=True)
+    rec_updated_date = models.DateTimeField(default=now, blank=True)
 
     def apply_proposed_changes(self):
         proposed = self.proposed_changes
@@ -154,6 +165,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=250, null=False)
     coops = models.ManyToManyField(Coop)
     contact_methods = models.ManyToManyField(ContactMethod)
+    is_public = models.BooleanField(default=True, null=False)
 
 
 def country_get_by_natural_key(self, name):
