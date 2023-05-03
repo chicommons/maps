@@ -24,9 +24,6 @@ services:
     environment:
       DEBUG: 'true'
       SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
-    environment:
-      DEBUG: 'true'
-      SERVICE_CREDS_JSON_FILE: '/my-app/credentials.json'
       DB_SERVICE: postgres # host.docker.internal
       DB_NAME: directory_data
       DB_USER: chicommons
