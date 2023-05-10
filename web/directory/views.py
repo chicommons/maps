@@ -260,7 +260,7 @@ class PersonList(APIView):
         if coop:
             people = Person.objects.filter(coops__in=[coop])
         else:
-            people = People.objects.all()
+            people = Person.objects.all()
         serializer = PersonSerializer(people, many=True)
         return Response(serializer.data)
 
