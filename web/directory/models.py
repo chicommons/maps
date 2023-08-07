@@ -163,7 +163,7 @@ class CoopAddressTags(models.Model):
 class Person(models.Model):
     first_name = models.CharField(max_length=250, null=False)
     last_name = models.CharField(max_length=250, null=False)
-    coops = models.ManyToManyField(Coop)
+    coops = models.ManyToManyField(Coop, related_name='people')
     contact_methods = models.ManyToManyField(ContactMethod)
     is_public = models.BooleanField(default=True, null=False)
 
