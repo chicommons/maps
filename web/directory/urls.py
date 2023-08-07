@@ -13,7 +13,7 @@ urlpatterns = [
     path('coops/', views.CoopList.as_view()),
     path('coops/<int:pk>/', views.CoopDetail.as_view()),
     path('coops/all/', views.CoopListAll.as_view()),
-    path('people/', views.PersonList.as_view()),
+    path('people/', views.PersonWithCoopList.as_view()),
     path('people/<int:pk>/', views.PersonDetail.as_view()),
     path('users/', views.CreateUserView.as_view()),
     path('predefined_types/', views.CoopTypeList.as_view()),
