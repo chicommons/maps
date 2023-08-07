@@ -42,9 +42,11 @@ export default function Spreadsheet(props){
     {name: 'scope',header: 'Geographic Scope', filter: 'select', sortable: true, resizable:true,width:120},
     {name: 'tags',header: 'Tags', filter: 'select', sortable: true, resizable:true,width:120},
     {name: 'rec_source',header: 'Record source', filter: 'select', sortable: true, resizable:true,width:120},
-    {name: 'rec_updated_date"',header: 'Record updated date"', filter: 'select', sortable: true, resizable:true,width:120},
-    {name: 'rec_updated_by"',header: 'Record updated by', filter: 'select', sortable: true, resizable:true,width:120},
-
+    {name: 'rec_updated_date',header: 'Record updated date"', filter: 'select', sortable: true, resizable:true,width:120},
+    {name: 'rec_updated_by',header: 'Record updated by', filter: 'select', sortable: true, resizable:true,width:120},
+    {name: 'contact_first',header: 'Contact First Name', filter: 'select', sortable: true, resizable:true,width:120},
+    {name: 'contact_last',header: 'Contact Last Name', filter: 'select', sortable: true, resizable:true,width:120},
+    {name: 'contact_public',header: 'Contact Public?', filter: 'select', sortable: true, resizable:true,width:120},
   ];
   
   const gridRef = useRef(null)
@@ -106,7 +108,8 @@ export default function Spreadsheet(props){
               rec_updated_by,
               rec_updated_date,
             }
-          ]
+          ],
+          people: [ people = {}]
         }
     ) => (
       { 
@@ -137,6 +140,10 @@ export default function Spreadsheet(props){
         rec_source,
         rec_updated_by,
         rec_updated_date,
+        contact_first: people.first_name,
+        contact_last: people.last_name,
+        contact_public: people.is_public,
+
       }
     )
   );
