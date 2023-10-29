@@ -435,12 +435,19 @@ console.log('[phone value]',contactPhone)
     setContactEmail(updatedValues)
   }
 
-  // const addPhoneField = (e) => {
-  //   e.preventDefault()
-  //   const newPhoneArray = [...contactPhone]
-  //   newPhoneArray.push({})
-  //   setContactPhone(newPhoneArray)
-  // }
+  const addPhoneField = () => {
+    let newPhoneArray = [...contactPhone]
+    let newField = { type: "PHONE", phone: "", phone_is_public: false }
+    newPhoneArray.push(newField)
+    setContactPhone(newPhoneArray)
+  }
+
+  const addEmailField = () => {
+    let newEmailArray = [...contactEmail]
+    let newField = { type: "EMAIL", email: "", email_is_public: false }
+    newEmailArray.push(newField)
+    setContactEmail(newEmailArray)
+  }
 
   return (
     <div className="directory-form">
@@ -615,16 +622,16 @@ console.log('[phone value]',contactPhone)
               <div className="form-group col-12 form__desc required">
                 You must include at least either a phone number or an e-mail address.
               </div>
-              {contactEmail && contactEmail.map((email) => (
+              {contactEmail && contactEmail.map((email,index) => (
                 <>
                   <div key={email.id} className="form-group col-md-4 col-lg-4">
                     <Input
                       type={"email"}
                       title={"Contact Email Address"}
-                      name={email.id}
+                      name={index}
                       value={email.email}
                       placeholder={"Contact email"}
-                      handleChange={(e) => setContactEmail(e.target.value)}
+                      handleChange={(e) => handleEmailChange(e, 'email')}
                       errors={errors}
                     />{" "}
                   </div>
@@ -634,10 +641,10 @@ console.log('[phone value]',contactPhone)
                       type={"select"}
                       as={"select"}
                       title={"Is Email to be public on the map?"}
-                      name={email.id}
+                      name={index}
                       multiple={""}
                       value={email.email_is_public}
-                      handleChange={(e) => handleEmailChange(e,'email')}
+                      handleChange={(e) => handleEmailChange(e,'email_is_public')}
                       options={[
                         { id: "yes", name: "Yes" },
                         { id: "no", name: "No" },
@@ -646,17 +653,14 @@ console.log('[phone value]',contactPhone)
                   </div>
                 </>
               ))}
-                <div className="form-group col-md-4 col-lg-4">
-                    <Input
-                      type={"email"}
-                      title={"Contact Email Address"}
-                      name={"contact_email"}
-                      placeholder={"Contact email"}
-                      handleChange={(e) => setContactEmail(e,'email_is_public')}
-                      errors={errors}
-                    />{" "}
-                  </div>
-                <div className="form-group col-md-6 col-lg-6"></div>
+              <div className="form-group col-md-6 col-lg-6">
+                <Button 
+                  buttonType={"primary"} 
+                  title={"Add Email"} 
+                  type={"button"}
+                  action={addEmailField}
+                />
+              </div>
               {contactPhone && contactPhone.map((phone, index) => (
                 <>
                 <div key={phone.id} className="form-group col-md-4 col-lg-4">
@@ -689,73 +693,14 @@ console.log('[phone value]',contactPhone)
                 </div>
               </>
               ))}
-              {/* <div className="form-group col-md-6 col-lg-6">
+              <div className="form-group col-md-6 col-lg-6">
                 <Button 
                   buttonType={"primary"} 
                   title={"Add Phone"} 
                   type={"button"}
-                  onClick={addPhoneField()}
+                  action={addPhoneField}
                 />
-              </div> */}
-                {/* <div className="form-group col-md-4 col-lg-4">
-                  <Input
-                    key={phone.id} 
-                    type={"tel"}
-                    title={"Contact Phone Number"}
-                    name={phone.id}
-                    value={phone.phone}
-                    placeholder={"Contact phone"}
-                    handleChange={(e) => handlePhoneChange(e)}
-                    errors={errors}
-                  />
-                </div>
-                <div className="form-group col-md-6 col-lg-6">
-                  <DropDownInput
-                    className={"required"}
-                    type={"select"}
-                    as={"select"}
-                    title={"Is Phone number to be public on the map?"}
-                    name={"contact_phone_public"}
-                    multiple={""}
-                    value={phone.phone_is_public}
-                    handleChange={(e) => setContactPhonePublic(e.target.value)}
-                    options={[
-                      { id: "Yes", name: "true" },
-                      { id: "No", name: "false" },
-                    ]}
-                  />
-                </div> */}
-              {/* <div className="form-group col-md-4 col-lg-4">
-                <Input
-                  type={"tel"}
-                  title={"Contact Phone Number"}
-                  name={"contact_phone"}
-                  value={contactPhone}
-                  placeholder={"Contact phone"}
-                  handleChange={(e) => setContactPhone(e.target.value)}
-                  errors={errors}
-                />{" "}
               </div>
-              {contactPhone ? (
-                <div className="form-group col-md-8 col-lg-6">
-                  <DropDownInput
-                    className={"required"}
-                    type={"select"}
-                    as={"select"}
-                    title={"Is Phone number to be public on the map?"}
-                    name={"contact_phone_public"}
-                    value={contactPhonePublic}
-                    multiple={""}
-                    handleChange={(e) => setContactPhonePublic(e.target.value)}
-                    options={[
-                      { id: "yes", name: "Yes" },
-                      { id: "no", name: "No" },
-                    ]}
-                  />
-                </div>
-              ) : (
-                <div className="form-group col-md-8 col-lg-6"></div>
-              )} */}
               <div className="col-12">
                 <Input
                   type={"hidden"}
