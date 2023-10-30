@@ -653,7 +653,7 @@ console.log('[phone value]',contactPhone)
                   </div>
                 </>
               ))}
-              <div className="form-group col-md-6 col-lg-6">
+              <div className="form-group col-md-4 col-lg-4">
                 <Button 
                   buttonType={"primary"} 
                   title={"Add Email"} 
@@ -661,6 +661,7 @@ console.log('[phone value]',contactPhone)
                   action={addEmailField}
                 />
               </div>
+              <div className="form-group col-md-6 col-lg-6"></div>
               {contactPhone && contactPhone.map((phone, index) => (
                 <>
                 <div key={phone.id} className="form-group col-md-4 col-lg-4">
@@ -693,7 +694,7 @@ console.log('[phone value]',contactPhone)
                 </div>
               </>
               ))}
-              <div className="form-group col-md-6 col-lg-6">
+              <div className="form-group col-md-4 col-lg-4">
                 <Button 
                   buttonType={"primary"} 
                   title={"Add Phone"} 
@@ -701,6 +702,7 @@ console.log('[phone value]',contactPhone)
                   action={addPhoneField}
                 />
               </div>
+              <div className="form-group col-md-6 col-lg-6"></div>
               <div className="col-12">
                 <Input
                   type={"hidden"}
