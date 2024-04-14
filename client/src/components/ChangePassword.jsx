@@ -114,9 +114,6 @@ const ChangePassword = () => {
           <div className="form-group col-md-6" align="center">
             <Button buttonType={"primary"} type={"submit"} title={"Change Password"} />
           </div>
-          <div className="form-group col-md-6" align="center">
-            Forgot password? Reset it <Link to='/reset-password'>here.</Link>
-          </div>
         </FormGroup>
       </form>
     </div>

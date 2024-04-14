@@ -46,7 +46,7 @@ const DirectoryApp = () => {
                 <Switch>
                   <Route exact path="/" component={Map} />
                   <Route path="/login" component={Login} />
-                  <Route path="/change-password" component={ChangePassword} />
+                  <PrivateRoute authed={isAuthenticated} path="/change-password" component={ChangePassword} />
                   <Route path="/reset-password" component={ResetPassword} />
                   <PrivateRoute authed={isAuthenticated} path="/signup" component={NewUser} />
                   <Route path="/add" component={Add} />
