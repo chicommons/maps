@@ -8,6 +8,7 @@ import Add from "./Add";
 import Edit from "./Edit";
 import Search from "./Search";
 import Login from "./Login";
+import ChangePassword from "./ChangePassword";
 import ResetPassword from "./ResetPassword";
 import NewUser from "./NewUser";
 import NoCoordsSearch from "./NoCoordsSearch";
@@ -45,6 +46,7 @@ const DirectoryApp = () => {
                 <Switch>
                   <Route exact path="/" component={Map} />
                   <Route path="/login" component={Login} />
+                  <Route path="/change-password" component={ChangePassword} />
                   <Route path="/reset-password" component={ResetPassword} />
                   <PrivateRoute authed={isAuthenticated} path="/signup" component={NewUser} />
                   <Route path="/add" component={Add} />
