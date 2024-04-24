@@ -29,9 +29,15 @@ ul.hamburgerDropDown {
   display: inline-block;
 }
 
-.nav-link {
+.nav-link, .nav-btn {
   color: #2295a2;
   padding: 0;
+  background: none;
+  border: none;
+
+  &:hover {
+    color: #2295a2;
+  }
 }
 
 .navbar ul {

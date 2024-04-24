@@ -5,6 +5,8 @@ import { isMobile } from 'react-device-detect';
 import { useAuthentication } from '../hooks';
 import './NavBar.css';
 
+const { REACT_APP_PROXY } = process.env;
+
 class NavBar extends Component {
   constructor() {
     super();
@@ -37,6 +39,20 @@ class NavBar extends Component {
       />
     );
   };
+
+  logOut = () => {
+    fetch(REACT_APP_PROXY + '/logout', {
+      method: 'GET',
+      headers: {
+        Authorization: `Token ${sessionStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+    }).then(res => {
+      sessionStorage.removeItem('token');
+    }).catch(err => {
+      console.log(err);
+    });
+  }
 
   displayNavBar = () => {
     return (
@@ -78,11 +94,18 @@ class NavBar extends Component {
             </NavLink>
           </li>
         ) : (
-          <li className="nav-link">
-            <NavLink to="/signup" className="nav-link">
-              New User
-            </NavLink>
-          </li>
+          <>
+            <li className="nav-link">
+              <NavLink to="/signup" className="nav-link">
+                New User
+              </NavLink>
+            </li>
+            <li className="nav-btn">
+              <button className="nav-btn" onClick={this.logOut}>
+                Logout
+              </button>
+            </li>
+          </>
         )}
       </ul>
     );
