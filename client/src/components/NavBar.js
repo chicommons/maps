@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import HamburgerMenu from 'react-hamburger-menu';
 import { isMobile } from 'react-device-detect';
+import useAuthentication from '../hooks/useAuthentication';
 import './NavBar.css';
 
-class NavBar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      open: false,
-      hideOrShowHambugerDropDown: 'nav'
-    };
 
-    this.logOut = (e) => {
-      e.preventDefault();
-      sessionStorage.removeItem('token');
-      window.location.reload();
-    }
-  }
 
-  handleClick = () => {
-    this.setState({ open: !this.state.open });
+const NavBar = () => {
+  const [open, setOpen] = useState(false);
+  const [hideOrShowHamburgerDropDown, setHideOrShowHamburgerDropDown] = useState('nav');
+  const { isAuthenticated } = useAuthentication();
+
+  useEffect(() => {
+    console.log("NavBar re-rendered, isAuthenticated:", isAuthenticated);
+  }, [isAuthenticated]);
+
+  const handleClick = () => {
+    setOpen(!open);
+    setHideOrShowHamburgerDropDown(open ? 'hamburgerDropDown' : 'nav');
   };
 
-  handleSelect = () => {
-    this.setState({ open: false });
+  const handleSelect = () => {
+    setOpen(false);
+    setHideOrShowHamburgerDropDown('nav');
   };
 
-  displayHamburgerMenu = () => {
+  const displayHamburgerMenu = () => {
     return (
       <HamburgerMenu
-        isOpen={this.state.open}
-        menuClicked={this.handleClick.bind(this)}
+        isOpen={open}
+        menuClicked={handleClick}
         width={18}
         height={15}
         strokeWidth={1}
@@ -43,107 +42,44 @@ class NavBar extends Component {
     );
   };
 
-  displayNavBar = () => {
+
+  const displayNavBar = () => {
     return (
       <ul className="nav">
-        <li className="nav-link">
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <NavLink className="nav-link" to="/directory-additions-updates">
-            Add
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <NavLink to="/search" className="nav-link">
-            Search
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <a
-            href="https://www.chicommons.coop/cooperative-map/"
-            className="nav-link"
-          >
-            Return
-          </a>
-        </li>
-        { this.props.authed && (
+        <li className="nav-link"><NavLink className="nav-link" to="/">Home</NavLink></li>
+        <li className="nav-link"><NavLink className="nav-link" to="/directory-additions-updates">Add</NavLink></li>
+        <li className="nav-link"><NavLink to="/search" className="nav-link">Search</NavLink></li>
+        <li className="nav-link"><a href="https://www.chicommons.coop/cooperative-map/" className="nav-link">Return</a></li>
+        {isAuthenticated ? (                                                                                                            //rerender navbar based on  authentication state
           <>
-          <li className="nav-link">
-            <NavLink to="/spreadsheet" className="nav-link">
-              Update Coops
-            </NavLink>
-          </li>
-          <li className="nav-link">
-            <NavLink to="/signup" className="nav-link">
-              New User
-            </NavLink>
-          </li>
-          <li className="nav-link">
-            <button onClick={this.logOut} className="nav-link">
-              Logout
-            </button>
-          </li>
+            <li className="nav-link"><NavLink to="/spreadsheet" className="nav-link">Update Coops</NavLink></li>
+            <li className="nav-link"><NavLink to="/signup" className="nav-link">New User</NavLink></li>
           </>
-        ) }
-        { !this.props.authed && (
-          <li className="nav-link">
-            <NavLink to="/login" className="nav-link">
-              Login
-            </NavLink>
-          </li>
-        ) }
+        ) : (
+          <li className="nav-link"><NavLink to="/login" className="nav-link">Login</NavLink></li>                                 // if unauthetnicated display login link 
+        )}
       </ul>
     );
   };
 
-  displayMobileMenu = () => {
+  const displayMobileMenu = () => {
     return (
-      <ul className="hamburgerDropDown" onClick={this.handleSelect}>
-        <li className="nav-link">
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <NavLink to="/directory-additions-updates">Add</NavLink>
-        </li>
-        <li className="nav-link">
-          <NavLink to="/search" className="nav-link">
-            Search
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <NavLink to="/nocoords" className="nav-link">
-            No Coords Search
-          </NavLink>
-        </li>
-        <li className="nav-link">
-          <a
-            href="https://www.chicommons.coop/cooperative-map/"
-            className="nav-link"
-          >
-            Return
-          </a>
-        </li>
+      <ul className={hideOrShowHamburgerDropDown} onClick={handleSelect}>
+        <li className="nav-link"><NavLink className="nav-link" to="/">Home</NavLink></li>
+        <li className="nav-link"><NavLink to="/directory-additions-updates">Add</NavLink></li>
+        <li className="nav-link"><NavLink to="/search" className="nav-link">Search</NavLink></li>
+        <li className="nav-link"><NavLink to="/nocoords" className="nav-link">No Coords Search</NavLink></li>
+        <li className="nav-link"><a href="https://www.chicommons.coop/cooperative-map/" className="nav-link">Return</a></li>
       </ul>
     );
   };
 
-  render() {
-    return (
-      <div className="navbar">
-        {isMobile ? this.displayHamburgerMenu() : this.displayNavBar()}
-        {this.state.open ? this.displayMobileMenu() : null}
-      </div>
-    );
-  }
-}
-
-const navLinkStyle = {
-  backgroundColor: '#2295a2'
+  return (
+    <div className="navbar">
+      {isMobile ? displayHamburgerMenu() : displayNavBar()}
+      {open ? displayMobileMenu() : null}
+    </div>
+  );
 };
 
 export default NavBar;

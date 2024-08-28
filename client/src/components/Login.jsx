@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Input from './Input';
 import Button from './Button';
-import { createModuleResolutionCache } from 'typescript';
+import { useAuthenticationDispatch } from '../context';  // Import the dispatch hook
 
 const { REACT_APP_PROXY } = process.env;
 
@@ -13,8 +13,9 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-
   const [errors, setErrors] = useState();
+
+  const dispatch = useAuthenticationDispatch();  // Get the dispatch function
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -35,8 +36,12 @@ const Login = () => {
         }
         if (jsob.access) {
           sessionStorage.setItem('token', jsob.access);
+          dispatch({
+            type: 'field',
+            fieldName: 'isAuthenticated',
+            payload: true,
+          });
           setRedirect(true);
-          window.location.reload();
         }
       });
   };
