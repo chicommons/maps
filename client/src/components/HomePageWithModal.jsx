@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HomePage from './HomePage'; // Adjust the import based on where your HomePage is
+import HomePage from './DirectoryApp'; // Adjust the import based on where your HomePage is
 import { Modal, Button } from 'react-bootstrap'; // Or use your preferred modal library
 
 const HomePageWithModal = () => {
