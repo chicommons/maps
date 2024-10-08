@@ -23,7 +23,6 @@ import UnapprovedList from './UnapprovedList';
 import PrivateRoute from './PrivateRoute';
 import Spreadsheet from './Spreadsheet';
 import fourZeroFour from './404';
-import Modal from './Modal';
 
 const DirectoryApp = () => {
   console.log('starting get hook value ...');
