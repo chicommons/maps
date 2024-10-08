@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HomePage from './DirectoryApp'; // Adjust the import based on where your HomePage is
+import Home from './Map.js'; // Adjust the import based on where your HomePage is
 import { Modal, Button } from 'react-bootstrap'; // Or use your preferred modal library
 
 const HomePageWithModal = () => {
@@ -17,7 +17,7 @@ const HomePageWithModal = () => {
 
   return (
     <>
-      <HomePage /> {/* Render the original home page content */}
+      <Home /> {/* Render the original home page content */}
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Welcome!</Modal.Title>
