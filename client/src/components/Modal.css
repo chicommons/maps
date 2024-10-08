@@ -1,9 +1,9 @@
-/* .modal{
-    background-color: #f6fbfb;
-} */
+.modal-content{
+    background-color: #fffcf5;
+}
 
-.modal-header{
-    color: lightcoral;
+.modal-dialog{
+    width: 500px;
 }
 
 /* light blue background #f6fbfb */
