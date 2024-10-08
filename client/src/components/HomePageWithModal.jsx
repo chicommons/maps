@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Home from './Map.js'; // Adjust the import based on where your HomePage is
 import { Modal, Button } from 'react-bootstrap'; // Or use your preferred modal library
+import "./Modal.css";
 
 const HomePageWithModal = () => {
   const [showModal, setShowModal] = useState(false);
