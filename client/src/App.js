@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Modal from ".Modal";
+import Modal from "./Modal";
 import { AuthenticationProvider } from "./context/AuthenticationProvider";
 import DirectoryApp from "./components/DirectoryApp";
 import { CookiesProvider } from "react-cookie";
