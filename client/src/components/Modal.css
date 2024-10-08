@@ -1,10 +1,10 @@
-.modal{
+/* .modal{
     background-color: #f6fbfb;
-}
-
-/* .modal-header{
-
 } */
+
+.modal-header{
+    color: lightcoral;
+}
 
 /* light blue background #f6fbfb */
 /* dark blue text #67afbc*/
