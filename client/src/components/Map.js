@@ -1,6 +1,5 @@
 import React from "react";
 import "../containers/MapContainer.css";
-import Modal from './Modal';
 
 export default function Home() {
   return (
