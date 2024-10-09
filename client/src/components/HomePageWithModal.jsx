@@ -20,11 +20,11 @@ const HomePageWithModal = () => {
     <>
       <Home /> {/* Render the original home page content */}
       <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header className="modal-header" closeButton>
           <Modal.Title>Welcome!</Modal.Title>
         </Modal.Header>
         <Modal.Body>ChiCommons would like to acknowledge that we are on the traditional lands of the first people of present-day Illinois and Indiana: the Potawatomi, Peoria, Kaskaskia, Miami, Mascoutin, Mesquaki, Odawa, Piankashaw, Wea, Sauk, Kickapoo, Ojibwe, Delaware, Shawnee, and Chickasaw Nations. We share gratitude for the land itself and for the people of these Nations, past and present.</Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="modal-footer">
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
