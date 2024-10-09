@@ -3,9 +3,9 @@
     justify-content: center;
     align-items: center;
     height: 100vh; /* Full viewport height */
-    position: fixed;
+    /* position: fixed;
     top: 0;
-    left: 0;
+    left: 0; */
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Optional overlay */
   }
