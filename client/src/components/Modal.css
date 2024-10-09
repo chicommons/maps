@@ -11,11 +11,15 @@
   }
   
   .modal-content {
-    background-color: white;
+    background-color: #fffcf5;
     padding: 20px;
     border-radius: 8px;
     max-width: 800px;
     width: 100%;
+  }
+
+  .modal-body .modal-header{
+    font-family: "Alegreya Sans", Arial, sans-serif;
   }
 
 
