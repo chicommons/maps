@@ -22,6 +22,10 @@
     font-family: "Alegreya Sans", Arial, sans-serif;
   }
 
+  .modal-header .modal-footer{
+    background-color: #f6fbfb;
+  }
+
 
 /* .modal-content{
     background-color: #fffcf5;
