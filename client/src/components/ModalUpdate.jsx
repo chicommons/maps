@@ -401,7 +401,7 @@ export default function ModalUpdate(props) {
       });
 
     // Get initial provinces (states)
-    fetch(REACT_APP_PROXY + '/api/v1/states/' + DEFAULT_COUNTRY_CODE)
+    fetch(REACT_APP_PROXY + '/api/v1/geo/states/' + DEFAULT_COUNTRY_CODE)
       .then((response) => {
         return response.json();
       })
