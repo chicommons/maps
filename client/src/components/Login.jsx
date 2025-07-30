@@ -19,10 +19,10 @@ const Login = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const request = {
-      username: username,
+      email: username,
       password: password
     };
-    fetch(REACT_APP_PROXY + '/api/v1/token/', {
+    fetch(REACT_APP_PROXY + '/api/v1/auth/token/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(request)

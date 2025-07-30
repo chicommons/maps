@@ -28,7 +28,7 @@ const NewUser = () => {
       setErrors({passConfirm: ["Must match password"]})
       return
     }
-    fetch(REACT_APP_PROXY + '/api/v1/register/', {
+    fetch(REACT_APP_PROXY + '/api/v1/auth/register/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Authorization': `Token ${sessionStorage.getItem('token')}`},
       body: JSON.stringify({first_name, last_name, username, password, email})
