@@ -139,7 +139,7 @@ const Search = (props) => {
 
   useEffect(() => {
     // Get all possible coop types to populate search form
-    fetch(REACT_APP_PROXY + '/api/v1/coop_types/')
+    fetch(REACT_APP_PROXY + '/api/v1/coops/types/')
       .then((response) => {
         return response.json();
       })
@@ -153,7 +153,7 @@ const Search = (props) => {
 
   useEffect(() => {
     // Get initial provinces (states)
-    fetch(REACT_APP_PROXY + '/api/v1/states/' + DEFAULT_COUNTRY_CODE)
+    fetch(REACT_APP_PROXY + '/api/v1/geo/states/' + DEFAULT_COUNTRY_CODE)
       .then((response) => {
         return response.json();
       })

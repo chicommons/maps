@@ -190,7 +190,7 @@ const FormContainer = (props) => {
       });
 
     // Get all possible coop types
-    fetch(REACT_APP_PROXY + "/coop_types/")
+    fetch(REACT_APP_PROXY + "/api/v1/coops/types/")
       .then((response) => {
         return response.json();
       })
