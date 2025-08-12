@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router';
 import { FormGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -15,6 +15,16 @@ const Login = () => {
   const [redirect, setRedirect] = useState(false);
 
   const [errors, setErrors] = useState();
+
+  // Ref for the username input
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    // Focus on the username field on page load
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +70,7 @@ const Login = () => {
         <FormGroup>
           <div className="form-group col-md-8">
             <Input
+              ref={usernameRef} // Add ref to Input component
               className={'required'}
               type={'text'}
               title={'Username'}
