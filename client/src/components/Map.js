@@ -13,7 +13,5 @@ export default function Home() {
         src="//umap.openstreetmap.fr/en/map/chicommons-map_80079?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=caption&captionBar=false"
       ></iframe>
     </div>
-
-    
   );
 }
