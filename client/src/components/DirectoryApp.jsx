@@ -23,6 +23,7 @@ import UnapprovedList from './UnapprovedList';
 import PrivateRoute from './PrivateRoute';
 import Spreadsheet from './Spreadsheet';
 import fourZeroFour from './404';
+import HomePageWithModal from './HomePageWithModal';
 
 const DirectoryApp = () => {
   console.log('starting get hook value ...');
@@ -45,7 +46,7 @@ const DirectoryApp = () => {
           <div className="auth-wrapper">
             <div className="auth-inner">
               <Switch>
-                <Route exact path="/" component={Map} />
+                <Route exact path="/" component={HomePageWithModal} />
                 <Route path="/login" component={Login} />
                 <Route path="/reset-password" component={ResetPassword} />
                 <Route path="/reset-verify/:uid/:token" component={ResetVerify} />

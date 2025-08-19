@@ -1,0 +1,23 @@
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional overlay */
+  }
+  
+  .modal-content {
+    background-color: #fffcf5;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .modal-body .modal-header{
+    font-family: "Alegreya Sans", Arial, sans-serif;
+  }
