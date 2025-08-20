@@ -5,7 +5,7 @@ backoff==2.2.1
 cachetools==5.3.3
 certifi==2024.6.2
 charset-normalizer==3.3.2
-Django==3.2.24
+Django==4.2.22
 django-address==0.2.8
 django-cors-headers==4.3.1
 django-extensions==3.2.3
