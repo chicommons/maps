@@ -35,7 +35,10 @@ CORS_EXPOSE_HEADERS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1'
+]
 
 LOGGING = {
     'version': 1,
