@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.39.4'
 
 services:
 
@@ -13,7 +13,7 @@ services:
 
   web:
     container_name: web-prod
-    restart: no
+    restart: 'no'
     build:
       context: ./web
       dockerfile: Dockerfile_prod
@@ -41,7 +41,7 @@ services:
   nginx:
     container_name: nginx-prod
     image: nginx:1.23.1
-    restart: always
+    restart: 'always'
     volumes:
      - ./nginx/:/etc/nginx/templates
      - uwsgi_socket_volume:/config/uwsgi/socket/
