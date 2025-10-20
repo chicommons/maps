@@ -50,12 +50,12 @@ fi
 # API CALL 1: LOGIN
 login_req_json=$(cat << EOF
 {
-  "username": "$username",
+  "email": "$username",
   "password": "$password"
 }
 EOF
 )
-url="http://localhost:8000/api/v1/token/"
+url="http://localhost:8000/api/v1/auth/token/"
 
 login_response=$( curl -s -X POST "$url" -H "Content-type: application/json" -d "$login_req_json" )
 access_token=$( echo "$login_response" | jq -r '.access' )  # Extract "access" value from response json.
@@ -97,6 +97,9 @@ create_coop_req_json=$(cat << EOF
 }
 EOF
 )
+
+echo "Access token: $access_token"
+
 url="http://localhost:8000/api/v1/coops/proposal/create/"
 access_header="Authorization: Bearer "$access_token""
 create_coop_response=$( curl -s -X POST "$url" -H "$access_header" -H "Content-type: application/json" -d "$create_coop_req_json" )
