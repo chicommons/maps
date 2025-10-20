@@ -5,14 +5,13 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /code/
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends vim postgresql-client \
+    && apt-get install -y --no-install-recommends vim postgresql-client python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --upgrade pip
+COPY pyproject.toml .
 
-COPY requirements.txt .
-
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install --root-user-action ignore --upgrade pip uv
+RUN uv sync
 
 COPY . /code/
 

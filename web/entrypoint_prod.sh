@@ -6,5 +6,5 @@ chown -R www-data:www-data /config/uwsgi/socket/
 
 cd /code/MapsApi/
 
-python manage.py collectstatic --no-input --settings=MapsApi.settings.prod
+uv python manage.py collectstatic --no-input --settings=MapsApi.settings.prod
 uwsgi --ini /code/MapsApi/uwsgi.ini
