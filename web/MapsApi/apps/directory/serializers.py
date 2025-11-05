@@ -298,9 +298,9 @@ class CoopProposalCreateSerializer(serializers.ModelSerializer):
         # Copy active Coop object. Save as new object.
         try:
             copied_coop = Coop.objects.get(status="ACTIVE", coop_public_id=validated_data["coop_public_id"])
-        except Coop.MultipleObjectsReturned as e:
+        except Coop.MultipleObjectsReturned:
             raise Coop.MultipleObjectsReturned()
-        except Coop.DoesNotExist as e:
+        except Coop.DoesNotExist:
             raise Coop.DoesNotExist()
         copied_coop.pk = None # Setting 'pk' to None creates a new instance when saved
         copied_coop.status = coop_data["status"]
@@ -429,7 +429,7 @@ class CoopProposalReviewSerializer(serializers.ModelSerializer):
     def _get_active_coop(self, coop_proposal):
         try:
             active_coop = Coop.objects.get(status="ACTIVE", coop_public_id=coop_proposal.coop_public.id)
-        except Coop.MultipleObjectsReturned as e:
+        except Coop.MultipleObjectsReturned:
             raise Coop.MultipleObjectsReturned
         return active_coop
     

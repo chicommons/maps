@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 
-from apps.directory.models import ContactMethod, CoopType, Address, AddressCache, CoopAddressTags, CoopPublic, Coop, CoopProposal, Person
-from apps.directory.serializers import *
+from apps.directory.models import ContactMethod, CoopType, CoopAddressTags, Coop, CoopProposal, Person
+from apps.directory.serializers import CoopProposalCreateSerializer, CoopProposalListSerializer, CoopProposalRetrieveSerializer, CoopProposalReviewSerializer, CoopSerializer, CoopTypeSerializer
 from apps.directory.renderers import CSVRenderer
 from apps.directory.pagination import StandardResultsSetPagination
 
@@ -219,13 +219,13 @@ class CoopProposalList(generics.ListAPIView):
             try:
                 proposal_status = CoopProposal.ProposalStatusEnum(proposal_status_query).value
                 queryset = queryset.filter(proposal_status=proposal_status)
-            except:
+            except Exception:
                 pass
         if operation_query:
             try:
                 operation = CoopProposal.OperationTypes(operation_query).value
                 queryset = queryset.filter(operation=operation)
-            except:
+            except Exception:
                 pass
 
         queryset = queryset.select_related('coop')

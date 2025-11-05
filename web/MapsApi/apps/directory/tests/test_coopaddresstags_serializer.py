@@ -1,6 +1,5 @@
 from apps.directory.models import CoopAddressTags, Address
 from apps.directory.serializers import CoopAddressTagsSerializer
-from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
 class TestCoopAddressTagsSerializer(APITestCase):

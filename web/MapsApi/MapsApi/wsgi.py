@@ -11,8 +11,6 @@ import time
 import traceback
 import signal
 import sys
-import pathlib
-from django.core.handlers.wsgi import WSGIHandler
 import os
 from django.core.wsgi import get_wsgi_application
 

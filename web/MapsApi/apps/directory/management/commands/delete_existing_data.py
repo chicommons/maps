@@ -1,4 +1,3 @@
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from apps.directory.models import Coop, CoopType, Address, CoopAddressTags, ContactMethod, AddressCache, Person, CoopProposal, CoopPublic
