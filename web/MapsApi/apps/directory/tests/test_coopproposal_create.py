@@ -1,12 +1,6 @@
 from apps.directory.models import CoopProposal, CoopPublic, Coop, CoopType, ContactMethod, Address, CoopAddressTags, Person, User
-from apps.directory.serializers import CoopProposalReviewSerializer, CoopProposalCreateSerializer
 from rest_framework.test import APITestCase
-import json
-from unittest.mock import patch, MagicMock
-from apps.directory.services.location_service import LocationService
-from ratelimit import limits, RateLimitException
-import datetime
-from django.core.serializers import serialize
+from unittest.mock import patch
 import pathlib
 from . import helpers
 from django.urls import reverse

@@ -1,4 +1,4 @@
-from .base import *
+from .base import REPO_ROOT_DIR
 import os
 from datetime import timedelta
 

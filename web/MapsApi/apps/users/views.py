@@ -2,21 +2,21 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils import timezone
 
 from rest_framework import status, generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken
 
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, extend_schema_view, inline_serializer
-from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, extend_schema_view, inline_serializer
 
-from apps.users.models import *
-from apps.users.serializers import *
+from apps.users.models import User
+from apps.users.serializers import serializers, EmailTokenObtainPairSerializer, UserSerializer
 from django.conf import settings
+
+import uuid
 
 @extend_schema_view(
     get=extend_schema(
@@ -95,7 +95,7 @@ class CreateUserView(generics.CreateAPIView):
 class VerifyEmailView(APIView):
     def get(self, request, token):
         try:
-            uuid_obj = uuid.UUID(token)
+            uuid.UUID(token)
         except ValueError:
             return Response({'non_field_errors': ['Invalid token.']}, status=status.HTTP_404_NOT_FOUND)
         
@@ -154,7 +154,7 @@ class PasswordResetVerifyView(APIView):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
-        except:
+        except Exception:
             user = None
         token_generator = PasswordResetTokenGenerator()
         print(user)

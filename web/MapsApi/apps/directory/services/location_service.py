@@ -35,7 +35,7 @@ class LocationService(object):
             raise RateLimitException("Rate limit exceeded", period_remaining=60)
         except GeocoderQueryError:
             raise Exception("Invalid LocationService query: '%s' %s" %(self.address))
-        except:
+        except Exception:
             raise Exception("Address could not be geocoded: %s" %(self.address))
 
     def _fetch_geo_response(self):
@@ -45,7 +45,7 @@ class LocationService(object):
         try:
             cached_address = AddressCache.objects.get(query=self.query)
             self.geo_response = json.loads(cached_address.response)
-        except ObjectDoesNotExist as e:
+        except ObjectDoesNotExist:
             cached_address = None
             geocode = self._call_geocoder_api()
             self.geo_response = geocode
@@ -53,7 +53,7 @@ class LocationService(object):
             AddressCache.objects.create( query=self.query, response=response_json, place_id=self.geo_response["place_id"])
 
     def get_coords(self) -> tuple[float, float]:
-        if self.geo_response == None:
+        if self.geo_response is None:
             self._fetch_geo_response()
         
         if self.geo_response["lat"] and self.geo_response["lon"]:
@@ -62,7 +62,7 @@ class LocationService(object):
             raise Exception("Unexpected response format for geocode_task: %s" %(self.geo_response))
     
     def save_coords(self): 
-        if self.geo_response == None:
+        if self.geo_response is None:
             self._fetch_geo_response()
         
         latitude, longitude = self.get_coords()
@@ -75,7 +75,7 @@ class LocationService(object):
             raise Exception("save_coords failed")
     
     def get_county(self) -> str:
-        if self.geo_response == None:
+        if self.geo_response is None:
             self._fetch_geo_response()
         
         if self.geo_response["address"]["county"]:
@@ -84,7 +84,7 @@ class LocationService(object):
             raise Exception("Unexpected response format for geocode_task: %s" %(self.geo_response))
     
     def save_county(self):
-        if self.geo_response == None:
+        if self.geo_response is None:
             self._fetch_geo_response()
         
         county = self.get_county()

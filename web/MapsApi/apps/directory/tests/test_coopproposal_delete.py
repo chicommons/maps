@@ -1,8 +1,6 @@
 from apps.directory.models import CoopProposal, CoopPublic, Coop, CoopType, ContactMethod, Address, CoopAddressTags, Person, User
 from rest_framework.test import APITestCase
-from unittest.mock import patch, MagicMock
-from apps.directory.services.location_service import LocationService
-from ratelimit import limits, RateLimitException
+from unittest.mock import patch
 import pathlib
 from . import helpers
 from django.urls import reverse

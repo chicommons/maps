@@ -4,9 +4,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from . import helpers
-import json
 import pathlib
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 class TestCoopList(APITestCase):
     fixtures = ["testcooplist.json"]

@@ -1,7 +1,5 @@
-from django.urls import path, include
+from django.urls import path
 from apps.directory import views
-from django.contrib import admin
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('', views.CoopList.as_view(), name='coop-list'),

@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 import json
 from unittest.mock import patch, MagicMock
 from apps.directory.services.location_service import LocationService
-from ratelimit import limits, RateLimitException
+from ratelimit import RateLimitException
 
 class TestAddressSerializer(APITestCase):
     @classmethod

@@ -1,5 +1,4 @@
 import os
-import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
