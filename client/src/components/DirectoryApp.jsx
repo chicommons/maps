@@ -22,7 +22,7 @@ import Logo from '../logo.png';
 import UnapprovedList from './UnapprovedList';
 import PrivateRoute from './PrivateRoute';
 import Spreadsheet from './Spreadsheet';
-import fourZeroFour from './404';
+import FourZeroFour from './404';
 import HomePageWithModal from './HomePageWithModal';
 
 const DirectoryApp = () => {
@@ -92,7 +92,7 @@ const DirectoryApp = () => {
                   path="/spreadsheet"
                   component={Spreadsheet}
                 />
-                <Route path="*" component={fourZeroFour} />
+                <Route path="*" component={FourZeroFour} />
               </Switch>
             </div>
           </div>
