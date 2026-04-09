@@ -18,7 +18,8 @@ const DropDownInput = (props) => {
         name={props.name}
         value={props.value}
         onChange={props.handleChange}
-        multiple={props.multiple && "multiple"}
+        multiple={!!props.multiple}
+        aria-label={props.name}
       >
         {!props.multiple && (
           <option value="" disabled>

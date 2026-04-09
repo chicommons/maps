@@ -1,4 +1,24 @@
-import { screen, within } from "@testing-library/react";
+import React from "react";
+import { render, type RenderOptions, screen, within } from "@testing-library/react";
+import {type ReactNode, type ReactElement } from "react";
+import { AuthenticationProvider } from "../context";
+import { CookiesProvider } from "react-cookie";
+
+//TODO verify logic
+const AllTheProviders = ({ children }: { children: ReactNode }) => {
+  return (
+    <CookiesProvider>
+      <AuthenticationProvider>
+        {children}
+      </AuthenticationProvider>
+    </CookiesProvider>
+  );
+};
+export const customRender = (
+  ui: ReactElement,
+  options?: Omit<RenderOptions, "wrapper">
+) => render(ui, { wrapper: AllTheProviders, ...options });
+
 
 export const verifyNavBar = (isLoggedIn: false) => {
   const navBar = screen.getByRole("navigation");
@@ -44,3 +64,6 @@ export const verifyFooter = () => {
     );
   });
 };
+
+
+export * from '@testing-library/react'
