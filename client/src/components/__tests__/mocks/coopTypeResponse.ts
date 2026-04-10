@@ -1,4 +1,4 @@
-interface CoopType {
+export interface CoopType {
   id: number;
   name: string;
 }

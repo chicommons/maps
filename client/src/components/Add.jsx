@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 import FormContainer from "../containers/FormContainer";
 
-const initNewCoop = () => {
-  return {
+const Add = () => {
+  const initNewCoop = {
     name: "",
     types: [],
     addresses: [
@@ -36,11 +36,8 @@ const initNewCoop = () => {
     },
     web_site: "",
   };
+
+  return <FormContainer coop={initNewCoop} />;
 };
 
-export default class Add extends Component {
-  render() {
-    const newCoop = initNewCoop();
-    return <FormContainer coop={newCoop} />;
-  }
-}
+export default Add;

@@ -107,16 +107,16 @@ wheels = [
 
 [[package]]
 name = "django"
-version = "5.2.7"
+version = "6.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "sqlparse" },
     { name = "tzdata", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/96/bd84e2bb997994de8bcda47ae4560991084e86536541d7214393880f01a8/django-5.2.7.tar.gz", hash = "sha256:e0f6f12e2551b1716a95a63a1366ca91bbcd7be059862c1b18f989b1da356cdd", size = 10865812, upload-time = "2025-10-01T14:22:12.081Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/b9/4155091ad1788b38563bd77a7258c0834e8c12a7f56f6975deaf54f8b61d/django-6.0.4.tar.gz", hash = "sha256:8cfa2572b3f2768b2e84983cf3c4811877a01edb64e817986ec5d60751c113ac", size = 10907407, upload-time = "2026-04-07T13:55:44.961Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8f/ef/81f3372b5dd35d8d354321155d1a38894b2b766f576d0abffac4d8ae78d9/django-5.2.7-py3-none-any.whl", hash = "sha256:59a13a6515f787dec9d97a0438cd2efac78c8aca1c80025244b0fe507fe0754b", size = 8307145, upload-time = "2025-10-01T14:22:49.476Z" },
+    { url = "https://files.pythonhosted.org/packages/e9/47/3d61d611609764aa71a37f7037b870e7bfb22937366974c4fd46cada7bab/django-6.0.4-py3-none-any.whl", hash = "sha256:14359c809fc16e8f81fd2b59d7d348e4d2d799da6840b10522b6edf7b8afc1da", size = 8368342, upload-time = "2026-04-07T13:55:37.999Z" },
 ]
 
 [[package]]
@@ -127,37 +127,6 @@ dependencies = [
     { name = "django" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4f/5a/488ff3c27477da39cc469aa81b52773169f166dcdc450678913c05aece11/django-address-0.2.8.tar.gz", hash = "sha256:aa0c5b90524d4dee43162929cceb1c546f859c4a16a3fc0497a4896b7ace4236", size = 25152, upload-time = "2022-05-06T19:58:53.694Z" }
-
-[[package]]
-name = "django-classy-tags"
-version = "4.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/91/7f/18da9d8fcc469fc7aa74abc526aacaa3cc7180ad2208f80d43e8b670aed6/django-classy-tags-4.1.0.tar.gz", hash = "sha256:c8d9d1aa2fa6e71c4d866df4dd11d23a69b8d25bbb750b2490a17b161774ee59", size = 24692, upload-time = "2023-07-29T09:06:18.646Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/10/13afc12b7d9657ed67f8d49c1cf0585a4331b197ed98ea654e9ed8034e79/django_classy_tags-4.1.0-py3-none-any.whl", hash = "sha256:1c784cf1bac49c20a77b8f7d1541867c64076642a160a847ff449588d4e01e55", size = 14095, upload-time = "2023-07-29T09:06:16.951Z" },
-]
-
-[[package]]
-name = "django-cms"
-version = "5.0.4"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "django-classy-tags" },
-    { name = "django-formtools" },
-    { name = "django-sekizai" },
-    { name = "django-treebeard" },
-    { name = "djangocms-admin-style" },
-    { name = "packaging" },
-    { name = "setuptools" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4e/59/c260af81e775676563c53e30693c1d93dea04cb39342626b39c730afb917/django_cms-5.0.4.tar.gz", hash = "sha256:ea161ee070805af2074f308ebeb4a666832190506aa4641bc1070cbf6085488a", size = 4937514, upload-time = "2025-10-03T18:56:38.876Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f3/87/f0dc803adc7f6c27d5b21c78733bbf0bccad4a2a134e12b9fbc660aaa313/django_cms-5.0.4-py2.py3-none-any.whl", hash = "sha256:1d7464a5cbe928fa1c094f07fdf1aed3defef1a17baf6351823d8485bc8c7d12", size = 2888393, upload-time = "2025-10-03T18:56:36.458Z" },
-]
 
 [[package]]
 name = "django-cors-headers"
@@ -185,18 +154,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-formtools"
-version = "2.5.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/73/f8/bb9b228fc33230186f3612a6fc96274a81bab3509817498f2632d7aa6367/django-formtools-2.5.1.tar.gz", hash = "sha256:47cb34552c6efca088863d693284d04fc36eaaf350eb21e1a1d935e0df523c93", size = 88637, upload-time = "2023-12-19T10:30:59.78Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/12/63/91a107e3aaaf3987bad036494dfd8cc2675f4a66d22e65ffd6711f84ba70/django_formtools-2.5.1-py3-none-any.whl", hash = "sha256:bce9b64eda52cc1eef6961cc649cf75aacd1a707c2fff08d6c3efcbc8e7e761a", size = 170651, upload-time = "2023-12-19T10:30:02.816Z" },
-]
-
-[[package]]
 name = "django-phonenumber-field"
 version = "8.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -206,43 +163,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/cf/65/93e52cdc84803e62be6b2b953ed7b5c7ce21d5ff75e149433c6aaba22c00/django_phonenumber_field-8.3.0.tar.gz", hash = "sha256:193b3acc3b83ff4aad95dd9530a6d01e1c7c1cecbdfa8a56159789bbb85ab0e2", size = 45239, upload-time = "2025-10-06T14:57:01.447Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/55/fd4a0976805a05402ca04f3938f5d999f3803471a1eef8b65a9e259e5914/django_phonenumber_field-8.3.0-py3-none-any.whl", hash = "sha256:afaf8b16693c8d64646acf7693f5a9c4a809e7f1f9b66a84dabbe04a2d6c1513", size = 69530, upload-time = "2025-10-06T14:57:00.259Z" },
-]
-
-[[package]]
-name = "django-sekizai"
-version = "4.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "django-classy-tags" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/be/b7/399f7d84fa34c67e7c8e1da39744c9a2f83b61fa600c854cbe43bf6aab56/django-sekizai-4.1.0.tar.gz", hash = "sha256:2aca36cbae0b5c0cefed9565416ec442335767fb3145bff11e58622fc653cdad", size = 14591, upload-time = "2023-05-02T15:39:23.417Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/4f/8d1df68be504d7664cdeae7279134e77cf15babe2a5911b50f3e31d493f2/django_sekizai-4.1.0-py3-none-any.whl", hash = "sha256:aa12e66ba0335fbe726b7d74cf4e8716b89a0be99a1304a9b9e8b191229e2e4a", size = 8597, upload-time = "2023-05-02T15:39:21.655Z" },
-]
-
-[[package]]
-name = "django-treebeard"
-version = "4.7.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/bb/24/eaccbce17355380cb3a8fe6ad92a85b76453dc1f0ecd04f48bfe8929065b/django-treebeard-4.7.1.tar.gz", hash = "sha256:846e462904b437155f76e04907ba4e48480716855f88b898df4122bdcfbd6e98", size = 294139, upload-time = "2024-01-31T16:35:19.751Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/87/79/259966820614746cc4d81762edf97a53bf1e3b8e74797c010d310c6f4a8f/django_treebeard-4.7.1-py3-none-any.whl", hash = "sha256:995c7120153ab999898fe3043bbdcd8a0fc77cc106eb94de7350e9d02c885135", size = 93210, upload-time = "2024-01-31T16:35:17.843Z" },
-]
-
-[[package]]
-name = "djangocms-admin-style"
-version = "3.3.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6c/1e/47b2d031c6d8f4ac5394b4b3dc863a8f21fd6d92aadf260ba1fc633b286f/djangocms-admin-style-3.3.1.tar.gz", hash = "sha256:da20de3831f1a1a74de33fe12bbd3865a0027a982878c02aa1d102b1c799d767", size = 319126, upload-time = "2024-02-29T22:12:45.167Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/f2/e0ed0cf8036708f7b7a26a4586a27b5e53891cf8d965f1e4751bf4f50de3/djangocms_admin_style-3.3.1-py3-none-any.whl", hash = "sha256:9b76aafda245205e0a88d57efd5097a96c1a7fcb78d7f3efa50955eb980079de", size = 408789, upload-time = "2024-02-29T22:12:42.557Z" },
 ]
 
 [[package]]
@@ -704,8 +624,10 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/11/32/b2ffe8f3853c181e88f0a157c5fb4e383102238d73c52ac6d93a5c8bffe6/psycopg2_binary-2.9.11-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:8c55b385daa2f92cb64b12ec4536c66954ac53654c7f15a203578da4e78105c0", size = 4411242, upload-time = "2025-10-10T11:12:42.388Z" },
     { url = "https://files.pythonhosted.org/packages/10/04/6ca7477e6160ae258dc96f67c371157776564679aefd247b66f4661501a2/psycopg2_binary-2.9.11-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.whl", hash = "sha256:c0377174bf1dd416993d16edc15357f6eb17ac998244cca19bc67cdc0e2e5766", size = 4468258, upload-time = "2025-10-10T11:12:48.654Z" },
     { url = "https://files.pythonhosted.org/packages/3c/7e/6a1a38f86412df101435809f225d57c1a021307dd0689f7a5e7fe83588b1/psycopg2_binary-2.9.11-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:5c6ff3335ce08c75afaed19e08699e8aacf95d4a260b495a4a8545244fe2ceb3", size = 4166295, upload-time = "2025-10-10T11:12:52.525Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/7d/c07374c501b45f3579a9eb761cbf2604ddef3d96ad48679112c2c5aa9c25/psycopg2_binary-2.9.11-cp313-cp313-manylinux_2_38_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:84011ba3109e06ac412f95399b704d3d6950e386b7994475b231cf61eec2fc1f", size = 3983133, upload-time = "2025-10-30T02:55:24.329Z" },
     { url = "https://files.pythonhosted.org/packages/82/56/993b7104cb8345ad7d4516538ccf8f0d0ac640b1ebd8c754a7b024e76878/psycopg2_binary-2.9.11-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:ba34475ceb08cccbdd98f6b46916917ae6eeb92b5ae111df10b544c3a4621dc4", size = 3652383, upload-time = "2025-10-10T11:12:56.387Z" },
     { url = "https://files.pythonhosted.org/packages/2d/ac/eaeb6029362fd8d454a27374d84c6866c82c33bfc24587b4face5a8e43ef/psycopg2_binary-2.9.11-cp313-cp313-musllinux_1_2_ppc64le.whl", hash = "sha256:b31e90fdd0f968c2de3b26ab014314fe814225b6c324f770952f7d38abf17e3c", size = 3298168, upload-time = "2025-10-10T11:13:00.403Z" },
+    { url = "https://files.pythonhosted.org/packages/2b/39/50c3facc66bded9ada5cbc0de867499a703dc6bca6be03070b4e3b65da6c/psycopg2_binary-2.9.11-cp313-cp313-musllinux_1_2_riscv64.whl", hash = "sha256:d526864e0f67f74937a8fce859bd56c979f5e2ec57ca7c627f5f1071ef7fee60", size = 3044712, upload-time = "2025-10-30T02:55:27.975Z" },
     { url = "https://files.pythonhosted.org/packages/9c/8e/b7de019a1f562f72ada81081a12823d3c1590bedc48d7d2559410a2763fe/psycopg2_binary-2.9.11-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:04195548662fa544626c8ea0f06561eb6203f1984ba5b4562764fbeb4c3d14b1", size = 3347549, upload-time = "2025-10-10T11:13:03.971Z" },
     { url = "https://files.pythonhosted.org/packages/80/2d/1bb683f64737bbb1f86c82b7359db1eb2be4e2c0c13b947f80efefa7d3e5/psycopg2_binary-2.9.11-cp313-cp313-win_amd64.whl", hash = "sha256:efff12b432179443f54e230fdf60de1f6cc726b6c832db8701227d089310e8aa", size = 2714215, upload-time = "2025-10-10T11:13:07.14Z" },
     { url = "https://files.pythonhosted.org/packages/64/12/93ef0098590cf51d9732b4f139533732565704f45bdc1ffa741b7c95fb54/psycopg2_binary-2.9.11-cp314-cp314-macosx_10_13_x86_64.whl", hash = "sha256:92e3b669236327083a2e33ccfa0d320dd01b9803b3e14dd986a4fc54aa00f4e1", size = 3756567, upload-time = "2025-10-10T11:13:11.885Z" },
@@ -713,8 +635,10 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/13/1e/98874ce72fd29cbde93209977b196a2edae03f8490d1bd8158e7f1daf3a0/psycopg2_binary-2.9.11-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:9b52a3f9bb540a3e4ec0f6ba6d31339727b2950c9772850d6545b7eae0b9d7c5", size = 4411646, upload-time = "2025-10-10T11:13:24.432Z" },
     { url = "https://files.pythonhosted.org/packages/5a/bd/a335ce6645334fb8d758cc358810defca14a1d19ffbc8a10bd38a2328565/psycopg2_binary-2.9.11-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.whl", hash = "sha256:db4fd476874ccfdbb630a54426964959e58da4c61c9feba73e6094d51303d7d8", size = 4468701, upload-time = "2025-10-10T11:13:29.266Z" },
     { url = "https://files.pythonhosted.org/packages/44/d6/c8b4f53f34e295e45709b7568bf9b9407a612ea30387d35eb9fa84f269b4/psycopg2_binary-2.9.11-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:47f212c1d3be608a12937cc131bd85502954398aaa1320cb4c14421a0ffccf4c", size = 4166293, upload-time = "2025-10-10T11:13:33.336Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/e0/f8cc36eadd1b716ab36bb290618a3292e009867e5c97ce4aba908cb99644/psycopg2_binary-2.9.11-cp314-cp314-manylinux_2_38_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:e35b7abae2b0adab776add56111df1735ccc71406e56203515e228a8dc07089f", size = 3983184, upload-time = "2025-10-30T02:55:32.483Z" },
     { url = "https://files.pythonhosted.org/packages/53/3e/2a8fe18a4e61cfb3417da67b6318e12691772c0696d79434184a511906dc/psycopg2_binary-2.9.11-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:fcf21be3ce5f5659daefd2b3b3b6e4727b028221ddc94e6c1523425579664747", size = 3652650, upload-time = "2025-10-10T11:13:38.181Z" },
     { url = "https://files.pythonhosted.org/packages/76/36/03801461b31b29fe58d228c24388f999fe814dfc302856e0d17f97d7c54d/psycopg2_binary-2.9.11-cp314-cp314-musllinux_1_2_ppc64le.whl", hash = "sha256:9bd81e64e8de111237737b29d68039b9c813bdf520156af36d26819c9a979e5f", size = 3298663, upload-time = "2025-10-10T11:13:44.878Z" },
+    { url = "https://files.pythonhosted.org/packages/97/77/21b0ea2e1a73aa5fa9222b2a6b8ba325c43c3a8d54272839c991f2345656/psycopg2_binary-2.9.11-cp314-cp314-musllinux_1_2_riscv64.whl", hash = "sha256:32770a4d666fbdafab017086655bcddab791d7cb260a16679cc5a7338b64343b", size = 3044737, upload-time = "2025-10-30T02:55:35.69Z" },
     { url = "https://files.pythonhosted.org/packages/67/69/f36abe5f118c1dca6d3726ceae164b9356985805480731ac6712a63f24f0/psycopg2_binary-2.9.11-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:c3cb3a676873d7506825221045bd70e0427c905b9c8ee8d6acd70cfcbd6e576d", size = 3347643, upload-time = "2025-10-10T11:13:53.499Z" },
     { url = "https://files.pythonhosted.org/packages/e1/36/9c0c326fe3a4227953dfb29f5d0c8ae3b8eb8c1cd2967aa569f50cb3c61f/psycopg2_binary-2.9.11-cp314-cp314-win_amd64.whl", hash = "sha256:4012c9c954dfaccd28f94e84ab9f94e12df76b4afb22331b1f0d3154893a6316", size = 2803913, upload-time = "2025-10-10T11:13:57.058Z" },
 ]
@@ -993,15 +917,6 @@ wheels = [
 ]
 
 [[package]]
-name = "setuptools"
-version = "80.9.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz", hash = "sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c", size = 1319958, upload-time = "2025-05-27T00:56:51.443Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl", hash = "sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922", size = 1201486, upload-time = "2025-05-27T00:56:49.664Z" },
-]
-
-[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1075,7 +990,6 @@ dependencies = [
     { name = "charset-normalizer" },
     { name = "django" },
     { name = "django-address" },
-    { name = "django-cms" },
     { name = "django-cors-headers" },
     { name = "django-extensions" },
     { name = "django-phonenumber-field" },
@@ -1130,9 +1044,8 @@ requires-dist = [
     { name = "cachetools", specifier = ">=6.2.0" },
     { name = "certifi", specifier = ">=2025.10.5" },
     { name = "charset-normalizer", specifier = ">=3.4.3" },
-    { name = "django", specifier = ">=5.2.7" },
+    { name = "django", specifier = ">=5.2.8" },
     { name = "django-address", specifier = ">=0.2.8" },
-    { name = "django-cms", specifier = ">=5.0.4" },
     { name = "django-cors-headers", specifier = ">=4.9.0" },
     { name = "django-extensions", specifier = ">=4.1" },
     { name = "django-phonenumber-field", specifier = ">=8.3.0" },

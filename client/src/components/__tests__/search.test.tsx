@@ -5,6 +5,7 @@ import {
   waitFor,
   act,
   within,
+  logRoles,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Search from "../Search.jsx";
@@ -12,9 +13,9 @@ import { customRender as render } from "../../utils/test-utils";
 import { coopTypeResponse } from "./mocks/coopTypeResponse";
 import { statesFetchResponse } from "./mocks/statesFetchResponse";
 import {
-  verifyCoOpTypeOption,
-  verifyStateTypeOption,
+  verifyDropdownOptions,
 } from "../Utils/test-utils";
+//TODO finish up testing
 
 beforeEach(() => {
   () => sessionStorage.clear();
@@ -36,14 +37,12 @@ beforeEach(() => {
 describe("<Search/>", () => {
   test.only("it should render all inputs and options ", async () => {
     sessionStorage.setItem("token", "valid-web-token");
-    render(<Search />);
-
-    const select = screen.getByLabelText("type");
+    const { container } = render(<Search />);
+    logRoles(container);
 
     // 2. Look specifically inside that select
-
-    verifyCoOpTypeOption();
-    verifyStateTypeOption();
+    await verifyDropdownOptions("listbox", /CoOp Type/i, coopTypeResponse);
+    await verifyDropdownOptions("combobox", /state/i, statesFetchResponse);
   });
   test.skip("it should render loading when fetching submission", () => {});
   test.skip("it should render results when button is submitted", () => {});

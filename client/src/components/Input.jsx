@@ -7,7 +7,11 @@ const Input = React.forwardRef((props, ref) => {
 
   return (
     <div className="form-group">
-      <FormLabel className={props.className} style={inputStyle}>
+      <FormLabel
+        className={props.className}
+        style={inputStyle}
+        htmlFor={props.name}
+      >
         {props.title}
       </FormLabel>
       <FormControl

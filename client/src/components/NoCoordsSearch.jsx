@@ -9,7 +9,7 @@ import _ from 'lodash';
 const { REACT_APP_PROXY } = process.env;
 
 let abortController = new window.AbortController();
-
+//TODO Verify if this is still used. 
 const doSearch = (query, setSearchResults, setLoading) => {
   abortController.abort();
   abortController = new window.AbortController();
@@ -76,7 +76,7 @@ const Search = (props) => {
       <div>
         {renderSearchResults()}
         {loading && (
-          <div class="loading">
+          <div className="loading">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>
             </div>

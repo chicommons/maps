@@ -150,7 +150,7 @@ const PersonFormContainer = (props) => {
     <div className="form">
       <h5>{person.coops[0]?.name}</h5>
       <form className="container-fluid" onSubmit={handleFormSubmit}>
-        <FormGroup controlId="formBasicText">
+        <FormGroup >
           <Input
             inputType={"text"}
             title={"First Name"}

@@ -7,12 +7,17 @@ const DropDownInput = (props) => {
 
   return (
     <div className="form-group">
-      <FormLabel className={props.className}>{props.title}</FormLabel>
+      <FormLabel
+        className={props.className}
+        htmlFor={`${props.name} ${props.title}`}
+      >
+        {props.title}
+      </FormLabel>
 
       <FormControl
         isInvalid={props.errors && errorsArr}
         as={props.as}
-        id={props.name}
+        id={`${props.name} ${props.title}`}
         data-index={props.index}
         data-parent={props.parent}
         name={props.name}

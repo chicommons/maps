@@ -1,4 +1,4 @@
-interface statesType {
+export interface statesType {
   id: number;
   code: string;
   name: string;
