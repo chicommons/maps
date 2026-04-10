@@ -1,4 +1,4 @@
-import {type ByRoleMatcher, fireEvent, screen, within } from "@testing-library/react";
+import {type ByRoleMatcher, screen, within } from "@testing-library/react";
 import {
   coopTypeResponse,
 } from "../__tests__/mocks/coopTypeResponse";
@@ -12,6 +12,7 @@ import {
 import {
   countriesSearchResponse,
 } from "../__tests__/mocks/countriesSearchResponse";
+import userEvent from "@testing-library/user-event";
 
 
 export const verifyDropdownOptions = async <T extends { name: string; code?: string }>(
@@ -19,7 +20,6 @@ export const verifyDropdownOptions = async <T extends { name: string; code?: str
   labelName: string | RegExp,
   expectedData: T[],
 ) => {
-  // Use a regex for the label to be safe with casing/wildcards
   const selectTag =  screen.getByRole(roleType, {
     name: labelName,
   });
@@ -49,6 +49,17 @@ export const verifyButtons = async (buttonNames: string[], isEnabled: boolean)=>
 })
 }
 
+export const verifyLinks = async(parentRoleContainer:ByRoleMatcher,linkArr: {name:string | RegExp, href:string}[])=>{
+   const container = screen.getByRole(parentRoleContainer);
+
+  linkArr.forEach(({ name, href }) => {
+  expect(within(container).getByRole("link", { name })).toHaveAttribute(
+      "href",
+      href,
+    );
+    })
+}
+
 export const verifyFormLabels = async (formLabel:string[])=> {
    formLabel.forEach((label) => {
     expect(screen.getByLabelText(label)).toBeInTheDocument();
@@ -68,3 +79,27 @@ export const verifyDirectoryAddUpdateView = async () => {
   await verifyDropdownOptions("listbox", /entity_types/i, coopTypeResponse);
 
 };
+
+
+//Modal from home page
+export const verifyAcknowledgeModal = async(closeAfterVerify: boolean)=> {
+  const user = userEvent.setup();
+  const closeModalButton = screen.getAllByRole("button", { name: "Close" });
+  
+    expect(screen.getByText("Welcome!")).toBeInTheDocument();
+    expect(
+      screen.getByText(/ChiCommons would like to acknowledge/i),
+    ).toBeInTheDocument();
+    expect(closeModalButton).toHaveLength(2);
+    closeModalButton.forEach((item) => {
+      expect(item).toBeEnabled();
+    });
+    //close modal
+    if(closeAfterVerify) {
+  await user.click(closeModalButton[0]);
+    expect(
+      screen.queryByText(/ChiCommons would like to acknowledge/i),
+    ).not.toBeInTheDocument();
+    }
+  
+}

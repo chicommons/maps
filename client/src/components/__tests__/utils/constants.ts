@@ -1,4 +1,41 @@
-//used at directory-additions-updates
+
+export const LOGGED_IN_USER_NAVBAR_LINKS = [
+  { name: "Home", href: "/" },
+  { name: "Add", href: "/directory-additions-updates" },
+  { name: "Search", href: "/search" },
+  {
+    name: "Return",
+    href: "https://www.chicommons.coop/cooperative-map/",
+  },
+];
+//TODO verify if this should be button or converted to link like rest of navbar
+export const LOGOUT_BUTTON = ["logout"];
+
+export const NEW_USER_NAVBAR_LINKS = [
+  { name: "Home", href: "/" },
+  { name: "Add", href: "/directory-additions-updates" },
+  { name: "Search", href: "/search" },
+  {
+    name: "Return",
+    href: "https://www.chicommons.coop/cooperative-map/",
+  },
+  { name: "Login", href: "/login" },
+];
+
+export const FOOTER_LINKS = [
+  {
+    name: /Privacy Policy/i,
+    href: "https://www.chicommons.coop/privacy-policy/",
+  },
+  { name: /Dave Alvarado/i, href: "https://github.com/laredotornado" },
+  { name: /Davey Anians/i, href: "https://github.com/DaveyDevs" },
+  {
+    name: /Elena Smith/i,
+    href: "https://github.com/ozzysChiefDataScientist",
+  },
+  { name: /Nick Hou/i, href: "https://github.com/nick-hou" },
+];
+//used at directory-additions-updates view
 export const REQUIRED_DIR_ADD_UPDATE_LABELS = [
   "Cooperative/Entity Name",
   "Street Address",
@@ -36,12 +73,12 @@ export const REQUIRED_DIR_ADD_UPDATE_BUTTONS = [
 
 // used at /search
 export const SEARCH_VIEW_LABELS = [
-  'Name',
+  "Name",
   "Street",
   "City",
   "Postal Code",
   "County",
   "State",
-  "Enabled"
-]
+  "Enabled",
+];
 export const REQUIRED_SEARCH_VIEW_BUTTONS = ["Submit", "Cancel"];

@@ -5,7 +5,11 @@ import "@testing-library/jest-dom";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import App from "./App";
-import { verifyFooter, verifyNavBar } from "./utils/test-utils";
+import {
+  FOOTER_LINKS,
+  NEW_USER_NAVBAR_LINKS,
+} from "./components/__tests__/utils/constants";
+import { verifyLinks } from "./components/Utils/test-utils";
 
 //mocking to fix SyntaxError: Cannot use import statement outside a module for import { WithContext as ReactTags } from "react-tag-input"; in CoopTypes.jsx
 jest.mock("react-tag-input", () => ({
@@ -46,8 +50,8 @@ test("full app rendering/navigating", async () => {
   expect(mapIframe).toBeInTheDocument();
 
   //verify navbar and footer links
-  verifyNavBar(false);
-  verifyFooter();
+ await verifyLinks("navigation", NEW_USER_NAVBAR_LINKS);
+ await verifyLinks("contentinfo", FOOTER_LINKS);
 });
 
 //TODO. Currently does not work due to BrowserRouter ignoring history obj. Update once update to React Router Dom 6
