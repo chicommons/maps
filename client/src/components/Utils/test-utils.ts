@@ -6,6 +6,8 @@ import {
   statesFetchResponse,
 } from "../__tests__/mocks/statesFetchResponse";
 import {
+  FOOTER_LINKS,
+  NEW_USER_NAVBAR_LINKS,
   REQUIRED_DIR_ADD_UPDATE_BUTTONS,
   REQUIRED_DIR_ADD_UPDATE_LABELS,
 } from "../__tests__/utils/constants";
@@ -102,4 +104,18 @@ export const verifyAcknowledgeModal = async(closeAfterVerify: boolean)=> {
     ).not.toBeInTheDocument();
     }
   
+}
+
+//Login page
+
+export const verifyLoginPage = async () => {
+     expect(screen.getByRole("heading", {level:1})).toHaveTextContent("Login")
+      expect(screen.getByText("Please login with your username and password.")).toBeInTheDocument()
+     expect(screen.getByLabelText("Username")).toBeInTheDocument()
+     expect(screen.getByLabelText("Password")).toBeInTheDocument()
+     expect(screen.getByRole("button", {name:"Login"}))
+     expect(screen.getByText("Forgot password? Reset it")).toBeInTheDocument()
+     await verifyLinks("navigation", NEW_USER_NAVBAR_LINKS);
+        await verifyLinks("contentinfo", FOOTER_LINKS);
+
 }
