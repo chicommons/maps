@@ -107,8 +107,8 @@ const AddressInputGroup = ({
           multiple={""}
           handleChange={(e) => setAddressPublic(e.target.value)}
           options={[
-            { id: "yes", name: "Yes" },
-            { id: "no", name: "No" },
+            { id: "yes-id", name: "Yes" },
+            { id: "no-id", name: "No" },
           ]}
         />
       </div>

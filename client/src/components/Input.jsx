@@ -6,7 +6,7 @@ const Input = React.forwardRef((props, ref) => {
   const errorsArr = _.get(props.errors, props.name);
 
   return (
-    <div className="form-group">
+    <div className='form-group'>
       <FormLabel
         className={props.className}
         style={inputStyle}
@@ -28,15 +28,22 @@ const Input = React.forwardRef((props, ref) => {
       />
 
       {errorsArr && (
-        <FormControl.Feedback type="invalid">
-          {errorsArr.map((error, index) => (
-            <div
-              key={`field-error-${props.name}-${index}`}
-              className="fieldError"
-            >
-              {error}
+        <FormControl.Feedback type='invalid'>
+          {Array.isArray(errorsArr) ? (
+            errorsArr.map((error, index) => (
+              <div
+                key={`field-error-${props.name}-${index}`}
+                className='fieldError'
+              >
+                {error}
+              </div>
+            ))
+          ) : (
+            <div className='fieldError'>
+              {/* TODO Verify if valid */}
+              {errorsArr}
             </div>
-          ))}
+          )}
         </FormControl.Feedback>
       )}
     </div>

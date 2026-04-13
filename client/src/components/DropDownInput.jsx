@@ -6,7 +6,7 @@ const DropDownInput = (props) => {
   const errorsArr = _.get(props.errors, props.name);
 
   return (
-    <div className="form-group">
+    <Form className='form-group'>
       <FormLabel
         className={props.className}
         htmlFor={`${props.name} ${props.title}`}
@@ -26,33 +26,36 @@ const DropDownInput = (props) => {
         multiple={!!props.multiple}
         aria-label={props.name}
       >
+        
         {!props.multiple && (
-          <option value="" disabled>
+          <option value='' disabled>
             Select
           </option>
         )}
         {props.options.map((option) => {
           return (
-            <option key={option.id} value={option.name}>
-              {option.name}
-            </option>
+            
+              <option key={option.id} value={option.name}>
+                {option.name}
+              </option>
+       
           );
         })}
       </FormControl>
 
       {errorsArr && (
-        <FormControl.Feedback type="invalid">
+        <FormControl.Feedback type='invalid'>
           {errorsArr.map((error, index) => (
             <div
               key={`field-error-${props.name}-${index}`}
-              className="fieldError"
+              className='fieldError'
             >
               {error}
             </div>
           ))}
         </FormControl.Feedback>
       )}
-    </div>
+    </Form>
   );
 };
 

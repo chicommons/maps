@@ -19,7 +19,8 @@
       "react",
       "@testing-library/jest-dom",
       "@types/react-router-dom",
-      "@types/react-dom"
+      "@types/react-dom",
+      "@types/lodash"
     ]
   },
   "include": ["src"]
