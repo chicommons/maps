@@ -67,8 +67,8 @@ describe("AddressInputGroup", () => {
 
   test("calls setAddressPublic when the dropdown changes", async () => {
     const user = userEvent.setup();
-    const { container } = renderComponent();
-    logRoles(container);
+    renderComponent();
+
     const publicDropdown = screen.getByRole("combobox", {
       name: "address_public",
     });

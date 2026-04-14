@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, FormLabel } from "react-bootstrap";
 import _ from "lodash";
-
+//TODO Refactor to include Form Group. Will allow to leverage lib's built in validation
 const Input = React.forwardRef((props, ref) => {
   const errorsArr = _.get(props.errors, props.name);
 
