@@ -22,7 +22,7 @@ const Input = React.forwardRef((props, ref) => {
         data-index={props.index}
         data-parent={props.parent}
         name={props.name}
-        value={props.value}
+        value={props.value || ""}
         placeholder={props.placeholder}
         onChange={props.handleChange}
       />

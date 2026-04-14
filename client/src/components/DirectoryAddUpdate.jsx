@@ -637,6 +637,7 @@ export default function DirectoryAddUpdate() {
               {contactPerson &&
                 contactPerson.map((person, index) => (
                   <ContactPersonInput
+                   key={index}
                     person={person}
                     index={index}
                     handlePersonChange={handlePersonChange}

@@ -3,10 +3,8 @@
 import React from "react";
 import {
   fireEvent,
-  logRoles,
   customRender as render,
   screen,
-  within,
 } from "../../utils/test-utils";
 import AddressInputGroup from "../AddressInputGroup";
 import { MemoryRouter } from "react-router-dom";

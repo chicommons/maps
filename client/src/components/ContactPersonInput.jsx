@@ -77,8 +77,8 @@ const ContactPersonInput = ({
           multiple={''}
           name={'contact_person_public' + index}
           options={[
-            { id: 'yes', name: 'Yes' },
-            { id: 'no', name: 'No' },
+            { id: 'yes-id', name: 'Yes' },
+            { id: 'no-id', name: 'No' },
           ]}
           title={'Is Contact name to be public on the map?'}
           type={'select'}

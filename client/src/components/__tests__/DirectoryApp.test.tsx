@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  customRender as render,
-  screen,
-  logRoles,
-} from "../../utils/test-utils";
+import { customRender as render, screen } from "../../utils/test-utils";
 import DirectoryApp from "../DirectoryApp";
 import {
   verifyAcknowledgeModal,
@@ -97,9 +93,9 @@ describe("<DirectoryApp/>", () => {
   describe("unauthorized user", () => {
     test("Navigation through pages", async () => {
       const user = userEvent.setup();
-      const { container } = render(<DirectoryApp />);
+      render(<DirectoryApp />);
       await verifyAcknowledgeModal(true);
-      logRoles(container);
+
       await verifyLinks("navigation", NEW_USER_NAVBAR_LINKS);
       await verifyLinks("contentinfo", FOOTER_LINKS);
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(

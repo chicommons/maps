@@ -1,20 +1,11 @@
 import React from "react";
-import {
-  fireEvent,
-  screen,
-  waitFor,
-  act,
-  within,
-  logRoles,
-} from "@testing-library/react";
+import { screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Search from "../Search.jsx";
 import { customRender as render } from "../../utils/test-utils";
 import { coopTypeResponse } from "./mocks/coopTypeResponse";
 import { statesFetchResponse } from "./mocks/statesFetchResponse";
-import {
-  verifyDropdownOptions,
-} from "../Utils/test-utils";
+import { verifyDropdownOptions } from "../Utils/test-utils";
 //TODO finish up testing
 
 beforeEach(() => {
@@ -37,8 +28,7 @@ beforeEach(() => {
 describe("<Search/>", () => {
   test.only("it should render all inputs and options ", async () => {
     sessionStorage.setItem("token", "valid-web-token");
-    const { container } = render(<Search />);
-    logRoles(container);
+    render(<Search />);
 
     // 2. Look specifically inside that select
     await verifyDropdownOptions("listbox", /CoOp Type/i, coopTypeResponse);

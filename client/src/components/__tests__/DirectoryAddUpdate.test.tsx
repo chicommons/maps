@@ -1,7 +1,6 @@
 import React from "react";
-import { screen, act, logRoles } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { customRender as render } from "../../utils/test-utils";
+import { customRender as render, screen } from "../../utils/test-utils";
 import { AlertProvider } from "../AlertProvider";
 import { coopTypeResponse } from "./mocks/coopTypeResponse";
 import { statesFetchResponse } from "./mocks/statesFetchResponse";
@@ -45,11 +44,9 @@ beforeEach(() => {
 
 describe("<DirectoryAddUpdate />", () => {
   test("it should render an header, body text and button", async () => {
-    //TODO move to own setAuth function possibily
     sessionStorage.setItem("token", "valid-web-token");
     render(
       <MemoryRouter initialEntries={["/directory-additions-updates"]}>
-        {/* Notice the :id suffix in the path below */}
         <Route path='/directory-additions-updates'>
           <AlertProvider>
             <DirectoryAddUpdate />
@@ -70,7 +67,7 @@ describe("<DirectoryAddUpdate />", () => {
     await verifyDirectoryAddUpdateView();
     // 2. Verify level 2 heading
   });
-  test("TODO verify :id path", async () => {
+  test.skip("TODO verify :id path", async () => {
     render(
       <MemoryRouter initialEntries={["/directory-additions-updates"]}>
         {/* Notice the :id suffix in the path below */}

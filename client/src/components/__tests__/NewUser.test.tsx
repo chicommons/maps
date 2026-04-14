@@ -1,11 +1,7 @@
 //TODO
 import React from "react";
 import userEvent from "@testing-library/user-event";
-import {
-  logRoles,
-  customRender as render,
-  screen,
-} from "../../utils/test-utils";
+import { customRender as render, screen } from "../../utils/test-utils";
 import NewUser from "../NewUser";
 import { MemoryRouter } from "react-router-dom";
 
@@ -22,7 +18,7 @@ describe("<NewUser />", () => {
   test("should render success when all inputs are filled out", async () => {
     sessionStorage.setItem("token", "valid-web-token");
     const user = userEvent.setup();
-    // Mock a successful fetch response 
+    // Mock a successful fetch response
     //TODO fix ts error
     //@ts-ignore
     fetch.mockResolvedValueOnce({
