@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, createContext } from "react";
-import Alert from "./Alert";
+import { Alert } from "reactstrap";
 
 const AlertContext = createContext();
 
@@ -19,17 +19,16 @@ export function AlertProvider(props) {
         setOpen(false);
       }, 10000);
     },
-    [setMessage, setOpen],
+    [setMessage, setOpen]
   );
 
   return (
     <AlertContext.Provider value={[handleOpen, handleClose]}>
       <Alert
-        color='info'
+        color="info"
         isOpen={open}
         fade={true}
         style={{ marginBottom: "0rem" }}
-        toggle={handleClose}
       >
         {message}
       </Alert>
@@ -42,7 +41,7 @@ export function useAlert() {
   const context = useContext(AlertContext);
   if (!context)
     throw new Error(
-      "`useAlert()` must be called inside an `AlertProvider` child.",
+      "`useAlert()` must be called inside an `AlertProvider` child."
     );
 
   return context;

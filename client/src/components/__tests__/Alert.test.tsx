@@ -1,3 +1,4 @@
+//TODO
 import React from "react";
 import {
   act,
@@ -8,8 +9,11 @@ import {
 import { MemoryRouter } from "react-router-dom";
 import { AlertProvider, useAlert } from "../AlertProvider";
 import userEvent from "@testing-library/user-event";
+import { alertService } from "../../services/alert.service";
+
 
 describe("<Alert />", () => {
+
   test("success and alert should when func close from useAlert is clicked", async () => {
     const mockTimer = jest.useFakeTimers();
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
@@ -25,6 +29,7 @@ describe("<Alert />", () => {
         </>
       );
     };
+    alertService;
     const { container } = render(
       <AlertProvider>
         <MemoryRouter initialEntries={["/"]}>
@@ -62,7 +67,7 @@ describe("<Alert />", () => {
         </>
       );
     };
-  
+    alertService;
     const { container } = render(
       <AlertProvider>
         <MemoryRouter initialEntries={["/"]}>
@@ -87,4 +92,6 @@ describe("<Alert />", () => {
     ).not.toBeInTheDocument();
     logRoles(container);
   });
+
+  test("varies errors", () => {});
 });
