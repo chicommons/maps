@@ -21,7 +21,7 @@ export function AlertProvider(props) {
     },
     [setMessage, setOpen],
   );
-//TODO updated Alert to Alert component
+
   return (
     <AlertContext.Provider value={[handleOpen, handleClose]}>
       <Alert
@@ -29,6 +29,7 @@ export function AlertProvider(props) {
         isOpen={open}
         fade={true}
         style={{ marginBottom: "0rem" }}
+        toggle={handleClose}
       >
         {message}
       </Alert>
