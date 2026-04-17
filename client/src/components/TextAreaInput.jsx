@@ -6,8 +6,8 @@ const TextAreaInput = (props) => {
   const errorsArr = _.get(props.errors, props.name);
 
   return (
-    <div className="form-group">
-      //TODO update htmlFor to unique value to avoid future collisions
+    <div className='form-group'>
+      {/* TODO update htmlFor to unique value to avoid future collisions */}
       <FormLabel className={props.className} htmlFor={props.name}>
         {props.title}
       </FormLabel>
@@ -23,11 +23,11 @@ const TextAreaInput = (props) => {
         onChange={props.handleChange}
       />
       {errorsArr && (
-        <FormControl.Feedback type="invalid">
+        <FormControl.Feedback type='invalid'>
           {errorsArr.map((error, index) => (
             <div
               key={`field-error-${props.name}-${index}`}
-              className="fieldError"
+              className='fieldError'
             >
               {error}
             </div>

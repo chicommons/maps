@@ -8,7 +8,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const { REACT_APP_PROXY } = process.env;
-
+//TODO refactor 
 const handleClearForm = () => {
   // Logic for resetting the form
 };

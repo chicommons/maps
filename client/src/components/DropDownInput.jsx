@@ -1,12 +1,12 @@
 import React from "react";
-import { Form, FormControl, FormLabel } from "react-bootstrap";
+import { FormControl, FormLabel } from "react-bootstrap";
 import _ from "lodash";
 
 const DropDownInput = (props) => {
   const errorsArr = _.get(props.errors, props.name);
 
   return (
-    <Form className='form-group'>
+    <form className='form-group'>
       <FormLabel
         className={props.className}
         htmlFor={`${props.name} ${props.title}`}
@@ -26,7 +26,6 @@ const DropDownInput = (props) => {
         multiple={!!props.multiple}
         aria-label={props.name}
       >
-        
         {!props.multiple && (
           <option value='' disabled>
             Select
@@ -34,11 +33,9 @@ const DropDownInput = (props) => {
         )}
         {props.options.map((option) => {
           return (
-            
-              <option key={option.id} value={option.name}>
-                {option.name}
-              </option>
-       
+            <option key={option.id} value={option.name}>
+              {option.name}
+            </option>
           );
         })}
       </FormControl>
@@ -55,7 +52,7 @@ const DropDownInput = (props) => {
           ))}
         </FormControl.Feedback>
       )}
-    </Form>
+    </form>
   );
 };
 

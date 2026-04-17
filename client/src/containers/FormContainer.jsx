@@ -353,7 +353,7 @@ const FormContainer = (props) => {
               }}
               checked={checked}
             />
-            <label for="enabled">Show on Map</label>
+            <label htmlFor='enabled'>Show on Map</label>
           </div>
           <Button
             action={handleFormSubmit}
