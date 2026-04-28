@@ -655,6 +655,8 @@ export default function DirectoryAddUpdate() {
               </div>
               <div className="form-group col-md-6 col-lg-6"></div>
               <div className="col-12">
+                {/* TODO verify if label should also be hidden if input is hidden
+                error The label's for attribute doesn't match any element id */}
                 <Input
                   type={'hidden'}
                   title={''}

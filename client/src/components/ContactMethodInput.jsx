@@ -29,7 +29,7 @@ const ContactMethodInput = ({
           errors={errors}
           handleChange={(e) => handleContactMethodChange(e, valueType)}
           index={index}
-          name={'contact_method' + index}
+          name={'contact_method_type' + parent + index}
           parent={parent}
           placeholder={placeholder}
           title={title}
@@ -45,7 +45,7 @@ const ContactMethodInput = ({
           index={index}
           parent={parent}
           multiple={''}
-          name={'contact_method_type' + index}
+          name={'contact_method_type' + parent + index}
           options={[
             { id: 'phone', name: 'PHONE' },
             { id: 'email', name: 'EMAIL' },
@@ -63,7 +63,7 @@ const ContactMethodInput = ({
           index={index}
           parent={parent}
           multiple={''}
-          name={index}
+          name={parent + index}
           options={[
             { id: 'yes', name: 'Yes' },
             { id: 'no', name: 'No' },

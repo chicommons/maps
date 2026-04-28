@@ -28,6 +28,7 @@ class Country extends React.Component {
           value={this.props.value}
           onChange={this.props.handleChange}
           className='form-control'
+          autoComplete="on"
         >
           <option value='' disabled>
             {this.props.placeholder}

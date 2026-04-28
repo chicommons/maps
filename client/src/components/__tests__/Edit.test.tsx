@@ -47,7 +47,7 @@ beforeEach(async () => {
         json: () => Promise.resolve(countriesSearchResponse),
       });
     }
-    if (urlStr.includes("/api/people?coop")) {
+    if (urlStr.includes("/people?coop=")) {
       return Promise.resolve({
         id: lastVal,
         first_name: "john",

@@ -4,20 +4,17 @@ import _ from "lodash";
 
 const DropDownInput = (props) => {
   const errorsArr = _.get(props.errors, props.name);
-
+  const labelId = `${props.name} ${props.title} ${props.index}`;
   return (
     <form className='form-group'>
-      <FormLabel
-        className={props.className}
-        htmlFor={`${props.name} ${props.title}`}
-      >
+      <FormLabel className={props.className} htmlFor={labelId}>
         {props.title}
       </FormLabel>
 
       <FormControl
         isInvalid={props.errors && errorsArr}
         as={props.as}
-        id={`${props.name} ${props.title}`}
+        id={labelId}
         data-index={props.index}
         data-parent={props.parent}
         name={props.name}
