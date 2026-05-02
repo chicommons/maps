@@ -1,5 +1,6 @@
 const { REACT_APP_PROXY } = process.env;
-
+// src/services/PersonService.jsx
+// Array.prototype.map() expects a return value from arrow function  array-callback-return
 class PersonService {
   getById(id, callback) {
     fetch(REACT_APP_PROXY + "/people/" + id)

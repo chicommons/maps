@@ -1,0 +1,355 @@
+export interface statesType {
+  id: number;
+  code: string;
+  name: string;
+  country: {
+    id: number;
+    code: "US";
+    name: "United States";
+  };
+}
+
+export const statesFetchResponse: statesType[] = [
+  {
+    id: 19298,
+    code: "AL",
+    name: "Alabama",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19297,
+    code: "AK",
+    name: "Alaska",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19300,
+    code: "AS",
+    name: "American Samoa",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19301,
+    code: "AZ",
+    name: "Arizona",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19299,
+    code: "AR",
+    name: "Arkansas",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19302,
+    code: "CA",
+    name: "California",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19303,
+    code: "CO",
+    name: "Colorado",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19304,
+    code: "CT",
+    name: "Connecticut",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19306,
+    code: "DE",
+    name: "Delaware",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19305,
+    code: "DC",
+    name: "District of Columbia",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19307,
+    code: "FL",
+    name: "Florida",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19308,
+    code: "GA",
+    name: "Georgia",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19309,
+    code: "GU",
+    name: "Guam",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19310,
+    code: "HI",
+    name: "Hawaii",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19312,
+    code: "ID",
+    name: "Idaho",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19313,
+    code: "IL",
+    name: "Illinois",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19314,
+    code: "IN",
+    name: "Indiana",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19311,
+    code: "IA",
+    name: "Iowa",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19315,
+    code: "KS",
+    name: "Kansas",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19316,
+    code: "KY",
+    name: "Kentucky",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19317,
+    code: "LA",
+    name: "Louisiana",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19320,
+    code: "ME",
+    name: "Maine",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19319,
+    code: "MD",
+    name: "Maryland",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19318,
+    code: "MA",
+    name: "Massachusetts",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19321,
+    code: "MI",
+    name: "Michigan",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19322,
+    code: "MN",
+    name: "Minnesota",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19325,
+    code: "MS",
+    name: "Mississippi",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19323,
+    code: "MO",
+    name: "Missouri",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19326,
+    code: "MT",
+    name: "Montana",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19329,
+    code: "NE",
+    name: "Nebraska",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19333,
+    code: "NV",
+    name: "Nevada",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19330,
+    code: "NH",
+    name: "New Hampshire",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19331,
+    code: "NJ",
+    name: "New Jersey",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19332,
+    code: "NM",
+    name: "New Mexico",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19334,
+    code: "NY",
+    name: "New York",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19327,
+    code: "NC",
+    name: "North Carolina",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19328,
+    code: "ND",
+    name: "North Dakota",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19324,
+    code: "MP",
+    name: "Northern Mariana Islands",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19335,
+    code: "OH",
+    name: "Ohio",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19336,
+    code: "OK",
+    name: "Oklahoma",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19337,
+    code: "OR",
+    name: "Oregon",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19338,
+    code: "PA",
+    name: "Pennsylvania",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19339,
+    code: "PR",
+    name: "Puerto Rico",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19340,
+    code: "RI",
+    name: "Rhode Island",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19341,
+    code: "SC",
+    name: "South Carolina",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19342,
+    code: "SD",
+    name: "South Dakota",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19343,
+    code: "TN",
+    name: "Tennessee",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19344,
+    code: "TX",
+    name: "Texas",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19345,
+    code: "UM",
+    name: "United States Minor Outlying Islands",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19346,
+    code: "UT",
+    name: "Utah",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19349,
+    code: "VT",
+    name: "Vermont",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19348,
+    code: "VI",
+    name: "Virgin Islands",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19347,
+    code: "VA",
+    name: "Virginia",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19350,
+    code: "WA",
+    name: "Washington",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19352,
+    code: "WV",
+    name: "West Virginia",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19351,
+    code: "WI",
+    name: "Wisconsin",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+  {
+    id: 19353,
+    code: "WY",
+    name: "Wyoming",
+    country: { id: 484, name: "United States", code: "US" },
+  },
+];

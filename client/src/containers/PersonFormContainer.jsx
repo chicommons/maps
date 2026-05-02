@@ -8,7 +8,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 const { REACT_APP_PROXY } = process.env;
-
+//TODO refactor 
 const handleClearForm = () => {
   // Logic for resetting the form
 };
@@ -150,7 +150,7 @@ const PersonFormContainer = (props) => {
     <div className="form">
       <h5>{person.coops[0]?.name}</h5>
       <form className="container-fluid" onSubmit={handleFormSubmit}>
-        <FormGroup controlId="formBasicText">
+        <FormGroup >
           <Input
             inputType={"text"}
             title={"First Name"}

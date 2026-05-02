@@ -1,64 +1,71 @@
-import React, { useState } from 'react';
-import { FormGroup } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from "react";
+import { FormGroup } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
-import Input from './Input'
-import Button from './Button'
+import Input from "./Input";
+import Button from "./Button";
 
 const { REACT_APP_PROXY } = process.env;
-
+/*TODO Refactor. Leverage react-bootstrap form to handle validation vs manual error states. 
+currently only password mismatch is being checked. May need to move formControl ton input. Combine states to object [formData, setFormData] = useState({...})*/
 const NewUser = () => {
-
-
   //using snake case here when we use destructuring to pass the info to the database our object will match what the database expects.
-  const [first_name, setFirstName] = useState("")
-  const [last_name, setLastName] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [passConfirm, setPassConfirm] = useState("")
-  const [email, setEmail] = useState("")
-
-  const [errors, setErrors] = useState()
-  const [redirect, setRedirect] = useState(false)
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passConfirm, setPassConfirm] = useState("");
+  const [email, setEmail] = useState("");
+  //TODO errors is never used.
+  const [errors, setErrors] = useState();
+  const [redirect, setRedirect] = useState(false);
 
   const handleFormSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password != passConfirm) {
       //handle password doesn't match password confirm on submit
-      setErrors({passConfirm: ["Must match password"]})
-      return
+      setErrors({ passConfirm: ["Must match password"] });
+      return;
     }
-    fetch(REACT_APP_PROXY + '/api/v1/auth/register/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Authorization': `Token ${sessionStorage.getItem('token')}`},
-      body: JSON.stringify({first_name, last_name, username, password, email})
+    fetch(REACT_APP_PROXY + "/api/v1/auth/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        first_name,
+        last_name,
+        username,
+        password,
+        email,
+      }),
     }).then((response) => {
       if (response.ok) {
-        setRedirect(true)
+        setRedirect(true);
       } else {
-        setErrors(response)
-        console.log(response)
+        setErrors(response);
+        console.log(response);
       }
-    })
-  }
+    });
+  };
 
-  return(
-    <div className="login-form">
-      {redirect && <Redirect to="/" />}
-      <h1 className="form__title">Sign Up</h1>
-      <h2 className="form__desc">
-        Please choose a username and password.
-      </h2>
-      <h2 className="form__desc">
+  return (
+    <div className='login-form'>
+      {redirect && <Redirect to='/' />}
+      <h1 className='form__title'>Sign Up</h1>
+      <h2 className='form__desc'>Please choose a username and password.</h2>
+      <h2 className='form__desc'>
         <span style={{ color: "red" }}>*</span> = required
       </h2>
       <form
-      onSubmit={handleFormSubmit}
-      className="container-fluid"
-      id="login-form"
-      noValidate>
+        onSubmit={handleFormSubmit}
+        className='container-fluid'
+        id='login-form'
+        noValidate
+      >
         <FormGroup>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"text"}
@@ -69,7 +76,7 @@ const NewUser = () => {
               handleChange={(e) => setFirstName(e.target.value)}
             />
           </div>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"text"}
@@ -80,7 +87,7 @@ const NewUser = () => {
               handleChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"text"}
@@ -91,7 +98,7 @@ const NewUser = () => {
               handleChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"password"}
@@ -102,7 +109,7 @@ const NewUser = () => {
               handleChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"password"}
@@ -111,9 +118,10 @@ const NewUser = () => {
               value={passConfirm}
               placeholder={"Confirm Password"}
               handleChange={(e) => setPassConfirm(e.target.value)}
+              errors={errors}
             />
           </div>
-          <div className="form-group col-md-8">
+          <div className='form-group col-md-8'>
             <Input
               className={"required"}
               type={"text"}
@@ -124,13 +132,13 @@ const NewUser = () => {
               handleChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="form-group col-md-6" align="center">
+          <div className='form-group col-md-6' align='center'>
             <Button buttonType={"primary"} type={"submit"} title={"Sign Up"} />
           </div>
         </FormGroup>
-    </form>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewUser
+export default NewUser;

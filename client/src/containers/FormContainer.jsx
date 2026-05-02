@@ -26,8 +26,7 @@ const FormContainer = (props) => {
   const history = useHistory();
   const [open, close] = useAlert();
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  console.log("coop:");
-  console.log(coop);
+  console.log(`coop:${coop}`);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -45,12 +44,12 @@ const FormContainer = (props) => {
           state: { coop: result, message: "Success" },
         });
         window.scrollTo(0, 0);
-      }
+      },
     );
   };
 
   const handleClearForm = () => {
-    // Logic for resetting the form
+    //TODO Logic for resetting the form
   };
 
   const handleCoopTypeAddition = (tag) => {
@@ -215,7 +214,7 @@ const FormContainer = (props) => {
   return (
     <div className="form">
       <form className="container-fluid" onSubmit={handleFormSubmit}>
-        <FormGroup controlId="formBasicText">
+        <FormGroup >
           <Input
             className={"required"}
             inputType={"text"}
@@ -245,7 +244,7 @@ const FormContainer = (props) => {
             inputType={"text"}
             title={"Street"}
             name={"coopaddresstags_set[0].address.formatted"}
-            value={coop.coopaddresstags_set[0].address.formatted}
+            value={coop.coopaddresstags_set?.[0].address.formatted}
             placeholder={"Enter address street"}
             handleChange={handleInput}
             errors={errors}
@@ -257,7 +256,9 @@ const FormContainer = (props) => {
             inputType={"text"}
             title={"City"}
             name={"coopaddresstags_set[0].address.locality.name"}
-            value={coop.coopaddresstags_set[0].address.REACT_APP_PROXYlocality.name}
+            value={
+              coop.coopaddresstags_set?.[0].address.REACT_APP_PROXY.locality.name
+            }
             placeholder={"Enter address city"}
             handleChange={handleInput}
             errors={errors}
@@ -269,7 +270,9 @@ const FormContainer = (props) => {
             title={"Country"}
             name={"coopaddresstags_set[0].address.locality.state.country.code"}
             options={countries}
-            countryCode={coop.coopaddresstags_set[0].address.locality.state.country.code}
+            countryCode={
+              coop.coopaddresstags_set?.[0].address.locality.state.country.code
+            }
             placeholder={"Select Country"}
             handleChange={handleInput}
             style={inputStyle}
@@ -280,7 +283,7 @@ const FormContainer = (props) => {
             title={"State"}
             name={"coopaddresstags_set[0].address.locality.state.name"}
             options={provinces}
-            value={coop.coopaddresstags_set[0].address.locality.state.code}
+            value={coop.coopaddresstags_set?.[0].address.locality.state.code}
             placeholder={"Select State"}
             handleChange={handleProvinceChange}
             style={inputStyle}
@@ -291,19 +294,20 @@ const FormContainer = (props) => {
             inputType={"text"}
             title={"Postal Code"}
             name={"coopaddresstags_set[0].address.locality.postal_code"}
-            value={coop.coopaddresstags_set[0].address.locality.postal_code}
+            value={coop.coopaddresstags_set?.[0].address.locality.postal_code}
             placeholder={"Enter postal code"}
             handleChange={handleInput}
             errors={errors}
             style={inputStyle}
           />{" "}
           {/* Address postal code of the cooperative */}
-          {coop.coopaddresstags_set[0].address?.latitude && coop.coopaddresstags_set[0].address?.longitude && (
-            <div>
-              Lat: {coop.coopaddresstags_set[0].address?.latitude.toFixed(3)} Lon:{" "}
-              {coop.coopaddresstags_set[0].address?.longitude.toFixed(3)}
-            </div>
-          )}
+          {coop.coopaddresstags_set?.[0].address?.latitude &&
+            coop.coopaddresstags_set?.[0].address?.longitude && (
+              <div>
+                Lat: {coop.coopaddresstags_set?.[0].address?.latitude.toFixed(3)}{" "}
+                Lon: {coop.coopaddresstags_set?.[0].address?.longitude.toFixed(3)}
+              </div>
+            )}
           <Input
             className={"required"}
             inputType={"text"}
@@ -349,7 +353,7 @@ const FormContainer = (props) => {
               }}
               checked={checked}
             />
-            <label for="enabled">Show on Map</label>
+            <label htmlFor='enabled'>Show on Map</label>
           </div>
           <Button
             action={handleFormSubmit}

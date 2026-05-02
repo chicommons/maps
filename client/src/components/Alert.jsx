@@ -13,7 +13,8 @@ const defaultProps = {
   id: "default-alert",
   fade: true,
 };
-
+//VERIFY IF COMPONENT CAN BE DELETED. NOT USED ANYWHERE IN APP
+//TODO rewrite in the future to remove Warning: Alert: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.
 function Alert({ id, fade }) {
   const history = useHistory();
   const [alerts, setAlerts] = useState([]);
@@ -60,7 +61,7 @@ function Alert({ id, fade }) {
       // fade out alert
       const alertWithFade = { ...alert, fade: true };
       setAlerts((alerts) =>
-        alerts.map((x) => (x === alert ? alertWithFade : x))
+        alerts.map((x) => (x === alert ? alertWithFade : x)),
       );
 
       // remove alert after faded out

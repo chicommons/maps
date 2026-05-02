@@ -1,27 +1,30 @@
 import React from "react";
-import { Form, FormControl, FormLabel } from "react-bootstrap";
+import { FormControl, FormLabel } from "react-bootstrap";
 import _ from "lodash";
 
 const DropDownInput = (props) => {
   const errorsArr = _.get(props.errors, props.name);
-
+  const labelId = `${props.name} ${props.title} ${props.index}`;
   return (
-    <div className="form-group">
-      <FormLabel className={props.className}>{props.title}</FormLabel>
+    <form className='form-group'>
+      <FormLabel className={props.className} htmlFor={labelId}>
+        {props.title}
+      </FormLabel>
 
       <FormControl
         isInvalid={props.errors && errorsArr}
         as={props.as}
-        id={props.name}
+        id={labelId}
         data-index={props.index}
         data-parent={props.parent}
         name={props.name}
         value={props.value}
         onChange={props.handleChange}
-        multiple={props.multiple && "multiple"}
+        multiple={!!props.multiple}
+        aria-label={props.name}
       >
         {!props.multiple && (
-          <option value="" disabled>
+          <option value='' disabled>
             Select
           </option>
         )}
@@ -35,18 +38,18 @@ const DropDownInput = (props) => {
       </FormControl>
 
       {errorsArr && (
-        <FormControl.Feedback type="invalid">
+        <FormControl.Feedback type='invalid'>
           {errorsArr.map((error, index) => (
             <div
               key={`field-error-${props.name}-${index}`}
-              className="fieldError"
+              className='fieldError'
             >
               {error}
             </div>
           ))}
         </FormControl.Feedback>
       )}
-    </div>
+    </form>
   );
 };
 

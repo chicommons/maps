@@ -9,7 +9,7 @@ import { DEFAULT_COUNTRY_CODE } from "../utils/constants";
 import CoopService from "../services/CoopService";
 
 const { REACT_APP_PROXY } = process.env;
-
+//TODO are props needed here?
 const Edit = (props) => {
   const { id } = useParams();
   const [key, setKey] = useState("home");
